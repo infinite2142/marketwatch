@@ -1,0 +1,23 @@
+# Secrets / tokens -- must never be committed
+*token*
+*.secret
+*.secrets
+.env
+.env.*
+*.pem
+*.key
+credentials*.json
+service-account*.json
+
+# Python build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Local build / editor / OS cruft
+*.log
+.DS_Store
+.idea/
+.vscode/

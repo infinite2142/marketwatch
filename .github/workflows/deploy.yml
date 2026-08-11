@@ -1,0 +1,77 @@
+name: Build and deploy Market Watch
+
+# Triggers:
+#   - schedule: once a day at 06:30 UTC (after US close, before UK/EU open)
+#   - workflow_dispatch: manual "Run workflow" button
+#   - push to main: republish when code/design/data is edited by hand
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+# GITHUB_TOKEN needs to write commits back and publish Pages. No PAT required.
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Never run two deploys at once; let an in-flight run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch latest market data
+        run: python fetch_data.py
+
+      - name: Rebuild index.html
+        run: python generator.py
+
+      - name: Commit refreshed data + page (if changed)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html market_watch_data.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            # [skip ci] stops this bot commit from re-triggering the push job (loop guard)
+            git commit -m "chore: daily data refresh + rebuild [skip ci]"
+            git push
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Publish the repo root so index.html is served at the site root.
+          path: "."
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

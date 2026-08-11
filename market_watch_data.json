@@ -1,0 +1,3328 @@
+{
+  "meta": {
+    "schema_version": "2a.1",
+    "report_date": "2026-08-10",
+    "report_date_long": "Monday 10 August 2026",
+    "build_date": "2026-08-10",
+    "refresh_label": "Last refresh 08:15 BST",
+    "title": "Market Watch V2.7 — real-data preview",
+    "generator": "generator.py (reads this file + template_v27.html)",
+    "provenance": {
+      "state_of_play": "Tile values real where verified (S&P/10Y/VIX/gold/BTC/DXY); internationals estimated (estimate:true). Sparkline SERIES are synthetic-illustrative (seeded PRNG) pending 2b history wiring.",
+      "crash_risk": "Real read carried from valuations.csv (8 Aug weekly): 4/7 clusters flashing. Composite is a derived 0–100 scalar (estimate). Per-indicator source/cadence/estimate attached.",
+      "sectors": {
+        "as_of": "2026-08-10",
+        "source": "editorial (theme-ledger.md conviction/trajectory)",
+        "cadence": "daily",
+        "estimate": true,
+        "note": "Ratings, weights and momentum are the desk's ledger-derived judgements, not a market feed."
+      },
+      "drivers": {
+        "as_of": "2026-08-10",
+        "source": "editorial (theme-ledger.md driving factors)",
+        "cadence": "daily",
+        "estimate": true,
+        "note": "Direction/trajectory/conviction are ledger judgements; evidence lines are dated facts."
+      },
+      "themes": {
+        "as_of": "2026-08-10",
+        "source": "editorial (theme-ledger.md); bubble x/y/size and runway are desk estimates",
+        "cadence": "daily",
+        "estimate": true,
+        "note": "Market-size figures are order-of-magnitude estimates (est. flagged on the card)."
+      },
+      "signals": {
+        "as_of": "2026-08-10",
+        "source": "theme-ledger.md / latest daily .md (cited article URLs where available)",
+        "cadence": "daily",
+        "estimate": false,
+        "note": "daysAgo is relative to the report date; empty url = internal ledger note."
+      },
+      "stocks": {
+        "as_of": "2026-08-10",
+        "source": "prices: editorial anchors (to be wired to Stooq CSV (stooq.com/q/l/), free, no key/Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key in 2b). Performance windows (1d/1w/1m/3m/6m/1y/since-flagged): SYNTHETIC-ILLUSTRATIVE (seeded PRNG in the render layer) pending 2b price-history wiring.",
+        "cadence": "daily (once wired)",
+        "estimate": true,
+        "note": "Blended assessment (driver/risk/thesis/flag) is real ledger content; the numeric perf columns are placeholders."
+      },
+      "not_yet_sourced": [
+        "Forward P/E",
+        "China credit impulse (feed)",
+        "sparkline daily series",
+        "stock performance windows (compute)"
+      ]
+    }
+  },
+  "windows": {
+    "1W": {
+      "pts": 6,
+      "vol": 0.7,
+      "start": "3 Aug",
+      "end": "10 Aug",
+      "cap": "last 5 sessions (~1 week)"
+    },
+    "1M": {
+      "pts": 22,
+      "vol": 1.0,
+      "start": "10 Jul",
+      "end": "10 Aug",
+      "cap": "last ~22 sessions (~1 month)"
+    },
+    "3M": {
+      "pts": 30,
+      "vol": 1.4,
+      "start": "10 May",
+      "end": "10 Aug",
+      "cap": "last ~65 sessions (~3 months)"
+    },
+    "6M": {
+      "pts": 30,
+      "vol": 1.9,
+      "start": "10 Feb",
+      "end": "10 Aug",
+      "cap": "last ~125 sessions (~6 months)"
+    },
+    "1Y": {
+      "pts": 30,
+      "vol": 2.6,
+      "start": "Aug 2025",
+      "end": "Aug 2026",
+      "cap": "last ~250 sessions (~1 year)"
+    }
+  },
+  "state_of_play": {
+    "narrative": "Risk stays bid worldwide as the AI-capex complex broadens, but the tape is now capex-<em>discriminated</em>: reward the recipients of AI capex (memory, optics, power) and fade the payers (capex-heavy builders, pre-payback neoclouds). US indices sit at Friday's record closes into a stacked catalyst week — <em>RKLB tonight, CoreWeave Tue, and a twin midweek gate Wed 12 Aug where July CPI lands on the same session as the US–China tariff-truce deadline</em>. Gold holds ~$4,329 just off its record, the dollar firmed to ~99.8, and a still-low VIX (~15) signals calm rather than conviction. The crack worth watching is the US labour turn — July payrolls fell 23k with 103k of downward revisions.",
+    "tiles": [
+      {
+        "lbl": "S&P 500",
+        "region": "US",
+        "val": "7,757.64",
+        "chg": "+0.78%",
+        "dir": "up",
+        "seed": 11,
+        "back": "S&P 500 — the 500 largest US stocks; the broad risk barometer. Rising = risk-on.",
+        "chartRead": "At Friday's record close; futures mixed pre-open into CPI/earnings week.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^GSPC) / Stooq ^spx",
+          "cadence": "daily",
+          "estimate": false,
+          "note": "Level = Fri 7 Aug cash close (pipeline convention); day-change is last session."
+        }
+      },
+      {
+        "lbl": "US 10Y",
+        "region": "US",
+        "val": "4.65%",
+        "chg": "+1 bp",
+        "dir": "up",
+        "seed": 22,
+        "back": "US 10-year Treasury yield — the risk-free anchor for global assets; higher yields pressure long-duration equities.",
+        "chartRead": "~4.6–4.65% after the dovish jobs shock; CPI Wed the gate.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "FRED (fredgraph.csv / api), free, no key (DGS10)",
+          "cadence": "daily",
+          "estimate": false
+        }
+      },
+      {
+        "lbl": "Gold",
+        "region": "GL",
+        "val": "$4,329",
+        "chg": "-0.10%",
+        "dir": "down",
+        "seed": 33,
+        "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
+        "chartRead": "First mild pause off the ~$4,356 record; +8.2% off the 14 Jul call.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Stooq CSV (stooq.com/q/l/), free, no key (xauusd) / Yahoo GC=F",
+          "cadence": "daily",
+          "estimate": false
+        }
+      },
+      {
+        "lbl": "Bitcoin",
+        "region": "GL",
+        "val": "$64,896",
+        "chg": "-0.10%",
+        "dir": "down",
+        "seed": 44,
+        "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
+        "chartRead": "Range-bound ~$65k; +3% on the week off the 1 Aug ~$62.2k low.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (BTC-USD) / Stooq btcusd",
+          "cadence": "daily",
+          "estimate": false
+        }
+      },
+      {
+        "lbl": "US Dollar (DXY)",
+        "region": "FX",
+        "val": "99.81",
+        "chg": "+0.27%",
+        "dir": "up",
+        "seed": 55,
+        "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
+        "chartRead": "Firmed to ~99.8; down ~1.4% on the month.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f) / Yahoo DX-Y.NYB",
+          "cadence": "daily",
+          "estimate": false
+        }
+      },
+      {
+        "lbl": "VIX",
+        "region": "US",
+        "val": "15.44",
+        "chg": "+3.62%",
+        "dir": "up",
+        "seed": 66,
+        "back": "CBOE Volatility Index — 30-day implied vol on S&P options; the 'fear gauge'. Low = calm, high = stress.",
+        "chartRead": "Low-mid teens — calm, not complacent, into the CPI/earnings gate.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
+          "cadence": "daily",
+          "estimate": false
+        }
+      },
+      {
+        "lbl": "Brent",
+        "region": "GL",
+        "val": "$66.50",
+        "chg": "-0.90%",
+        "dir": "down",
+        "seed": 77,
+        "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
+        "chartRead": "Softer as Iran–Oman Hormuz-management reports ease the supply premium.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Stooq CSV (stooq.com/q/l/), free, no key (cb.f) / Yahoo BZ=F",
+          "cadence": "daily",
+          "estimate": true,
+          "note": "Level approximate — not verified this run; oil eased ~5% early week."
+        }
+      },
+      {
+        "lbl": "STOXX 600",
+        "region": "EU",
+        "val": "~560",
+        "chg": "+0.4%",
+        "dir": "up",
+        "seed": 88,
+        "back": "STOXX Europe 600 — the broad European equity benchmark; a read on euro-area risk appetite.",
+        "chartRead": "+1.7% on the week; the ex-US rotation broadening.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^STOXX)",
+          "cadence": "daily",
+          "estimate": true,
+          "note": "Absolute level not verified this run; weekly change (+1.7%) confirmed."
+        }
+      },
+      {
+        "lbl": "FTSE 100",
+        "region": "UK",
+        "val": "~9,240",
+        "chg": "+0.3%",
+        "dir": "up",
+        "seed": 99,
+        "back": "FTSE 100 — the UK large-cap index, heavy in energy, miners and financials; a global-value proxy.",
+        "chartRead": "+0.3% on the week, grinding near highs.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Stooq CSV (stooq.com/q/l/), free, no key (^ftm) / Yahoo ^FTSE",
+          "cadence": "daily",
+          "estimate": true,
+          "note": "Level not verified this run; weekly change (+0.3%) confirmed."
+        }
+      },
+      {
+        "lbl": "Nikkei 225",
+        "region": "JP",
+        "val": "~42,200",
+        "chg": "+0.7%",
+        "dir": "up",
+        "seed": 111,
+        "back": "Nikkei 225 — Japan's headline equity index; sensitive to the yen and global tech demand.",
+        "chartRead": "+1.9% on the week, leading DM on a softer yen.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "Stooq CSV (stooq.com/q/l/), free, no key (^nkx) / Yahoo ^N225",
+          "cadence": "daily",
+          "estimate": true,
+          "note": "Level not verified this run; weekly change (+1.9%) confirmed."
+        }
+      },
+      {
+        "lbl": "MSCI EM",
+        "region": "EM",
+        "val": "~1,205",
+        "chg": "+0.5%",
+        "dir": "up",
+        "seed": 122,
+        "back": "MSCI Emerging Markets — a broad EM-equity gauge; rises as the dollar softens and risk appetite improves.",
+        "chartRead": "Turning up as the dollar path softens; China +0.3% Mon.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "EEM/EMXC ETF proxy via Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (MSCI index itself is licensed)",
+          "cadence": "daily",
+          "estimate": true,
+          "note": "The index level is proprietary/licensed — use an ETF proxy (EEM). Estimate this run."
+        }
+      },
+      {
+        "lbl": "EUR/USD",
+        "region": "FX",
+        "val": "~1.086",
+        "chg": "-0.25%",
+        "dir": "down",
+        "seed": 133,
+        "back": "Euro vs US dollar — the world's main currency pair; up = a weaker dollar and easier global conditions.",
+        "chartRead": "Easing as the dollar firms back toward ~99.8 DXY.",
+        "meta": {
+          "as_of": "2026-08-10",
+          "source": "FRED (fredgraph.csv / api), free, no key (DEXUSEU) / Stooq eurusd / Yahoo EURUSD=X",
+          "cadence": "daily",
+          "estimate": true,
+          "note": "Inferred from DXY move this run; direct feed available in 2b."
+        }
+      }
+    ]
+  },
+  "crash_risk": {
+    "composite": 60,
+    "level": "Elevated",
+    "as_of": "2026-08-08 (weekly)",
+    "cadence": "weekly (next append Fri 14 Aug)",
+    "composite_meta": {
+      "as_of": "2026-08-08",
+      "source": "computed/derived — no single clean free feed — blended 0–100 score, not in source",
+      "cadence": "weekly",
+      "estimate": true,
+      "note": "Source records '4 of 7 signal clusters flashing'; composite is our derived scalar."
+    },
+    "read": "Rich valuations and top-heavy concentration (the hot cluster) are offset by calm credit, low vol and a positive curve. 4 of 7 clusters flashing. The hot-NFP timing trigger resolved dovishly; July CPI (Wed 12 Aug) is the next timing test. Depth risk ~15–25% on a catalyst; timing un-triggered.",
+    "buckets": [
+      {
+        "nm": "Valuation",
+        "summary": "Hot — CAPE ~41.8 (~97th pct), fwd P/E ~20.6, excess CAPE yield ~1.4%.",
+        "inds": [
+          {
+            "nm": "Shiller CAPE",
+            "val": "41.8",
+            "status": "stress",
+            "tr": "up",
+            "mean": "Cyclically-adjusted P/E; ~97th percentile since 1881.",
+            "meta": {
+              "as_of": "2026-08-08",
+              "source": "multpl.com / Shiller data (Yale) — scrape/CSV, free",
+              "cadence": "monthly",
+              "estimate": false
+            }
+          },
+          {
+            "nm": "Forward P/E",
+            "val": "20.6",
+            "status": "watch",
+            "tr": "flat",
+            "mean": "Next-12-month earnings multiple; rich vs history.",
+            "meta": {
+              "as_of": "2026-08-08",
+              "source": "valuations.csv (editorial); no clean single free feed",
+              "cadence": "weekly",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "Excess CAPE yield",
+            "val": "1.4%",
+            "status": "watch",
+            "tr": "down",
+            "mean": "CAPE earnings yield minus real 10Y; thin equity risk premium.",
+            "meta": {
+              "as_of": "2026-08-08",
+              "source": "derived (CAPE + FRED (fredgraph.csv / api), free, no key DFII10)",
+              "cadence": "weekly",
+              "estimate": false
+            }
+          },
+          {
+            "nm": "Buffett indicator",
+            "val": "~217%",
+            "status": "stress",
+            "tr": "up",
+            "mean": "Total market cap ÷ GDP; >150% is stretched.",
+            "meta": {
+              "as_of": "2026-08-08",
+              "source": "computed/derived — no single clean free feed (Wilshire 5000 via FRED ÷ GDP; quarterly GDP lag)",
+              "cadence": "quarterly",
+              "estimate": true
+            }
+          }
+        ]
+      },
+      {
+        "nm": "Credit",
+        "summary": "Calm — HY OAS ~271bp, IG ~85bp; spreads tight.",
+        "inds": [
+          {
+            "nm": "US HY OAS spread",
+            "val": "271 bp",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "High-yield risk premium; tight = complacent credit.",
+            "meta": {
+              "as_of": "2026-08-06",
+              "source": "FRED (fredgraph.csv / api), free, no key (BAMLH0A0HYM2)",
+              "cadence": "daily",
+              "estimate": false
+            }
+          },
+          {
+            "nm": "IG OAS spread",
+            "val": "~85 bp",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "Investment-grade spread; low = easy credit conditions.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (BAMLC0A0CM)",
+              "cadence": "daily",
+              "estimate": true,
+              "note": "Approx this run; clean FRED daily feed."
+            }
+          }
+        ]
+      },
+      {
+        "nm": "Volatility",
+        "summary": "Calm — VIX ~15.4, contango; MOVE ~72.",
+        "inds": [
+          {
+            "nm": "VIX",
+            "val": "15.4",
+            "status": "calm",
+            "tr": "up",
+            "mean": "30-day implied equity vol; low = calm markets.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
+              "cadence": "daily",
+              "estimate": false
+            }
+          },
+          {
+            "nm": "VIX term structure",
+            "val": "Contango",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "Front < back month = calm; backwardation = stress.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "computed/derived — no single clean free feed (VIX vs VIX3M / futures curve)",
+              "cadence": "daily",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "MOVE index",
+            "val": "72",
+            "status": "calm",
+            "tr": "down",
+            "mean": "Treasury-market implied vol; rising = rate stress.",
+            "meta": {
+              "as_of": "2026-08-07",
+              "source": "Yahoo ^MOVE (delayed) — no clean official free feed",
+              "cadence": "daily",
+              "estimate": true,
+              "note": "ICE MOVE is licensed; Yahoo mirror works but is unofficial."
+            }
+          }
+        ]
+      },
+      {
+        "nm": "Breadth",
+        "summary": "Improved but top-heavy — ~62% > 200-DMA, top-10 concentration elevated.",
+        "inds": [
+          {
+            "nm": "% S&P > 200-DMA",
+            "val": "~62%",
+            "status": "watch",
+            "tr": "up",
+            "mean": "Share of stocks in uptrends; improved on the relief rally.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "computed/derived — no single clean free feed (compute from 500 constituents' 200-DMA via Stooq CSV (stooq.com/q/l/), free, no key)",
+              "cadence": "daily",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "New highs − new lows",
+            "val": "positive",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "Net new 52-week highs; positive = healthy internals.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "computed/derived — no single clean free feed (compute from constituent data) / WSJ market-data",
+              "cadence": "daily",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "Top-10 concentration",
+            "val": "elevated",
+            "status": "stress",
+            "tr": "up",
+            "mean": "Index weight in 10 names; high = fragile leadership.",
+            "meta": {
+              "as_of": "2026-08-08",
+              "source": "computed/derived — no single clean free feed (index weights; S&P/Slickcharts scrape)",
+              "cadence": "weekly",
+              "estimate": true
+            }
+          }
+        ]
+      },
+      {
+        "nm": "Funding & liquidity",
+        "summary": "Ample — NFCI loose, SOFR-OIS tight, dollar firm but orderly.",
+        "inds": [
+          {
+            "nm": "Chicago Fed NFCI",
+            "val": "~-0.50",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "Financial conditions; negative = loose / easy.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (NFCI)",
+              "cadence": "weekly",
+              "estimate": true,
+              "note": "Approx this run; clean FRED weekly feed."
+            }
+          },
+          {
+            "nm": "SOFR-OIS spread",
+            "val": "~10 bp",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "Short-term funding stress; low = ample liquidity.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (SOFR - OIS/EFFR proxy)",
+              "cadence": "daily",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "USD (DXY) funding",
+            "val": "99.8",
+            "status": "calm",
+            "tr": "up",
+            "mean": "Dollar demand; sharp spikes signal funding stress.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
+              "cadence": "daily",
+              "estimate": false
+            }
+          }
+        ]
+      },
+      {
+        "nm": "Macro / recession",
+        "summary": "Turning — curve positive, Sahm ~0.2–0.3pp, claims the near-term tell.",
+        "inds": [
+          {
+            "nm": "10Y-2Y curve",
+            "val": "positive",
+            "status": "calm",
+            "tr": "up",
+            "mean": "Positive/steepening post-inversion; watch the shape.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (T10Y2Y)",
+              "cadence": "daily",
+              "estimate": false
+            }
+          },
+          {
+            "nm": "Sahm-rule gap",
+            "val": "~0.2–0.3 pp",
+            "status": "watch",
+            "tr": "up",
+            "mean": "Unemployment vs 12-mo low; ≥0.5 triggers the recession signal.",
+            "meta": {
+              "as_of": "2026-08-01",
+              "source": "FRED (fredgraph.csv / api), free, no key (SAHMREALTIME / UNRATE)",
+              "cadence": "monthly",
+              "estimate": true,
+              "note": "Rose on the July -23k NFP + revisions."
+            }
+          },
+          {
+            "nm": "Jobless-claims trend",
+            "val": "watch",
+            "status": "watch",
+            "tr": "up",
+            "mean": "Initial-claims direction; the near-term labour tell (Thu 13 Aug).",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (ICSA / CCSA)",
+              "cadence": "weekly",
+              "estimate": false
+            }
+          }
+        ]
+      },
+      {
+        "nm": "Global / contagion",
+        "summary": "Contained — EM steady; China impulse soft; periphery calm.",
+        "inds": [
+          {
+            "nm": "EM $-credit spread",
+            "val": "~300 bp",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "EM hard-currency sovereign/credit premium; low = risk-on EM.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "FRED (fredgraph.csv / api), free, no key (BAMLEMHBHYCRPIOAS / EMBI proxy)",
+              "cadence": "daily",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "China credit impulse",
+            "val": "negative",
+            "status": "watch",
+            "tr": "down",
+            "mean": "Change in new credit vs GDP; negative = a drag on global growth.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "computed/derived — no single clean free feed (PBoC TSF vs GDP; no clean free daily feed)",
+              "cadence": "monthly",
+              "estimate": true,
+              "note": "Persistent-deflation prints Mon corroborate a soft impulse."
+            }
+          },
+          {
+            "nm": "Italy-Germany 10Y",
+            "val": "~100 bp",
+            "status": "calm",
+            "tr": "flat",
+            "mean": "Peripheral-Europe sovereign stress (BTP-Bund); wide = fragmentation risk.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "computed/derived — no single clean free feed (FRED (fredgraph.csv / api), free, no key IRLTLT01ITM/DEM or Stooq 10Y yields)",
+              "cadence": "daily",
+              "estimate": true
+            }
+          },
+          {
+            "nm": "USD (DXY) stress",
+            "val": "99.8",
+            "status": "calm",
+            "tr": "up",
+            "mean": "Global dollar strength; sharp spikes tighten worldwide conditions.",
+            "meta": {
+              "as_of": "2026-08-10",
+              "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
+              "cadence": "daily",
+              "estimate": false
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "sectors": [
+    {
+      "nm": "AI / Semiconductors",
+      "value": 16,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Master-factor anchor; recipient of AI capex, order books into 2027."
+    },
+    {
+      "nm": "AI Memory / HBM",
+      "value": 12,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Cleanest confirmed recipient; SanDisk blowout, HBM sold out to 2028."
+    },
+    {
+      "nm": "AI Power & Electrical",
+      "value": 12,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "The capex destination; now producing signed SMR offtake (Google–Kairos–TVA)."
+    },
+    {
+      "nm": "Gold / Precious Metals",
+      "value": 9,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Real-yield override + central-bank bid; +8% off call, Citi $4,500 target."
+    },
+    {
+      "nm": "AI Optical Interconnect",
+      "value": 9,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Demand +60% + reshoring (FCC optics-ban drafted); Lumentum reports Thu."
+    },
+    {
+      "nm": "Neoclouds",
+      "value": 8,
+      "mom": "flat",
+      "r": "OW",
+      "rationale": "Payer layer under the capex factor; CRWV/NBIS prints this week are confirm/kill."
+    },
+    {
+      "nm": "Nuclear / Uranium & SMRs",
+      "value": 7,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Datacentre baseload; signed PPAs (Hermes 2, Oklo–Meta) moving forecast to contract."
+    },
+    {
+      "nm": "Robotics & Automation",
+      "value": 6,
+      "mom": "flat",
+      "r": "N",
+      "rationale": "Physical-AI leg quiet 2.5+ weeks — drifting toward fading absent fresh evidence."
+    },
+    {
+      "nm": "Defence",
+      "value": 6,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "UK primes firing (BAE £84bn backlog, RR); EU laggard (RHM -40% YTD)."
+    },
+    {
+      "nm": "Critical Minerals / Rare Earths",
+      "value": 4,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "US-content driver; part of the metals→optics→solar reshoring convergence."
+    },
+    {
+      "nm": "Crypto / Digital Assets",
+      "value": 5,
+      "mom": "det",
+      "r": "N",
+      "rationale": "Range-bound ~$65k; Clarity Act the driver over price. MSTR exit leaning wrong."
+    },
+    {
+      "nm": "Cybersecurity",
+      "value": 4,
+      "mom": "imp",
+      "r": "N",
+      "rationale": "Structural spend + platform consolidation; quality compounders."
+    },
+    {
+      "nm": "Space / Launch",
+      "value": 4,
+      "mom": "imp",
+      "r": "N",
+      "rationale": "Goes public via RKLB Q2 tonight; first launch-economics read since SPCX."
+    },
+    {
+      "nm": "Electrification / Grid",
+      "value": 3,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Interconnect queues at record backlog; downstream of the power theme."
+    },
+    {
+      "nm": "Energy",
+      "value": 2,
+      "mom": "det",
+      "r": "UW",
+      "rationale": "Supply premium easing on Iran–Oman Hormuz reports; oil the swing factor."
+    }
+  ],
+  "drivers": [
+    {
+      "id": "capex",
+      "nm": "Capex-intensity repricing",
+      "master": true,
+      "dir": "tailwind",
+      "traj": "up",
+      "trajLbl": "Strengthening",
+      "conv": 5,
+      "oneLiner": "Master factor: reward the recipients of AI capex, fade the payers — first hard tests this week.",
+      "drives": [
+        [
+          "Semis",
+          "semis"
+        ],
+        [
+          "Memory",
+          "memory"
+        ],
+        [
+          "Optics",
+          "optics"
+        ],
+        [
+          "Neoclouds",
+          "neoclouds"
+        ],
+        [
+          "AI power",
+          "power"
+        ]
+      ],
+      "summary": [
+        "The repricing of the AI tape around who PAYS for capex vs who RECEIVES it — the master factor.",
+        "Confirmed (market-structure), strengthening; held through the dovish jobs shock.",
+        "Invalidation: a broad capex-guide rollover, or the tape resuming payment for capex-heavy builders."
+      ],
+      "ev": [
+        "CRWV Q2 (Tue) + NBIS Q2 (Wed) are the payer-neocloud confirm/kill prints",
+        "Cerebras -35% post-debut (crowding) vs memory holding its re-rating",
+        "SitAware ~$13.7bn Q1: long recipients (SNDK/IREN/AMD/TSM), puts on payers/leaders"
+      ]
+    },
+    {
+      "id": "rates",
+      "nm": "Rate & liquidity regime",
+      "dir": "tailwind",
+      "traj": "up",
+      "trajLbl": "Dovish tilt",
+      "conv": 4,
+      "oneLiner": "July -23k NFP flipped the tape dovish; CPI Wed the next timing test (Sept-hike odds ~42%).",
+      "drives": [
+        [
+          "Gold",
+          "gold"
+        ],
+        [
+          "Crypto",
+          "crypto"
+        ],
+        [
+          "Semis",
+          "semis"
+        ],
+        [
+          "Defensives",
+          null
+        ]
+      ],
+      "summary": [
+        "The path of policy rates and system liquidity after the labour shock.",
+        "Dovish tilt held; 10Y ~4.6%, but Warsh would still hike on a hot CPI.",
+        "Watch July CPI (Wed 12 Aug): soft extends relief, hot revives timing risk."
+      ],
+      "ev": [
+        "July NFP -23k (first outright decline in months) + May/Jun revised -103k",
+        "10Y eased to ~4.6% on the jobs data",
+        "Sept-HIKE odds ~42% — a hike risk, not a cut"
+      ]
+    },
+    {
+      "id": "energy",
+      "nm": "Energy & electrification demand",
+      "dir": "tailwind",
+      "traj": "up",
+      "trajLbl": "Strengthening",
+      "conv": 5,
+      "oneLiner": "Load forecasts and interconnect queues keep hitting records; now signing nuclear offtake.",
+      "drives": [
+        [
+          "AI power",
+          "power"
+        ],
+        [
+          "Nuclear",
+          "nuclear"
+        ],
+        [
+          "Electrification",
+          null
+        ],
+        [
+          "Semis",
+          "semis"
+        ]
+      ],
+      "summary": [
+        "Structural electricity demand from datacentres and broad electrification.",
+        "Strengthening: the theme is producing signed PPAs, not just forecasts.",
+        "Watch grid build-out bottlenecks and SMR licensing/cost slippage."
+      ],
+      "ev": [
+        "Google–Kairos–TVA 50 MW Hermes 2 SMR PPA (part of ~500 MW by 2035)",
+        "Oklo–Meta 1.2 GW Ohio campus (Jan 2026) the prior anchor",
+        "Grid-interconnect queues at record backlogs"
+      ]
+    },
+    {
+      "id": "fiscal",
+      "nm": "Fiscal & defence spending",
+      "dir": "tailwind",
+      "traj": "flat",
+      "trajLbl": "Steady",
+      "conv": 3,
+      "oneLiner": "Budgets supportive and backlogs long, but much is already priced; UK primes lead the EU laggard.",
+      "drives": [
+        [
+          "Defence",
+          "defence"
+        ],
+        [
+          "Space",
+          "space"
+        ],
+        [
+          "Nuclear",
+          "nuclear"
+        ]
+      ],
+      "summary": [
+        "Government spending on defence and strategic programmes.",
+        "Steady: UK primes firing (BAE record £84bn backlog), RHM.DE lagging.",
+        "Watch procurement slippage or a durable Ukraine ceasefire."
+      ],
+      "ev": [
+        "BAE record £84bn backlog; RR raised targets",
+        "RKLB $663m Space Force contract (Neutron defense mission)",
+        "RHM.DE -40% YTD — the EU laggard"
+      ]
+    },
+    {
+      "id": "reshore",
+      "nm": "Reshoring-by-tariff",
+      "dir": "tailwind",
+      "traj": "up",
+      "trajLbl": "Broadening",
+      "conv": 4,
+      "oneLiner": "US-content driver jumping sectors: metals → optics → solar; 12 Aug truce deadline the swing.",
+      "drives": [
+        [
+          "Rare earths",
+          "minerals"
+        ],
+        [
+          "Semis",
+          "semis"
+        ],
+        [
+          "Optics",
+          "optics"
+        ],
+        [
+          "Solar (FSLR)",
+          null
+        ]
+      ],
+      "summary": [
+        "Tariff- and content-rule-driven reshoring of supply chains.",
+        "Strengthening/broadening: each new tariff mints a fresh domestic-content beneficiary.",
+        "Kill: a broad US–China deal that negotiates content tariffs down — watch Wed 12 Aug."
+      ],
+      "ev": [
+        "New polysilicon tariff (12.5% China) lifted FSLR +~5% Fri",
+        "FCC Chinese-optics ban drafted, targeted for later-2026 publication",
+        "US–China tariff-truce deadline Wed 12 Aug (extension widely expected)"
+      ]
+    },
+    {
+      "id": "supply",
+      "nm": "Supply-chain security / deglobalization",
+      "dir": "tailwind",
+      "traj": "up",
+      "trajLbl": "Strengthening",
+      "conv": 3,
+      "oneLiner": "Export controls widening; friend-shoring of critical inputs accelerating.",
+      "drives": [
+        [
+          "Defence",
+          "defence"
+        ],
+        [
+          "Semis",
+          "semis"
+        ],
+        [
+          "Cyber",
+          "cyber"
+        ],
+        [
+          "Rare earths",
+          "minerals"
+        ]
+      ],
+      "summary": [
+        "Security-driven reshaping of critical supply chains.",
+        "Strengthening: export controls and friend-shoring widening.",
+        "Watch escalation that disrupts, rather than redirects, supply."
+      ],
+      "ev": [
+        "China rare-earth & magnet export controls tightening",
+        "Export controls widening on advanced tech",
+        "Strategic stockpiling of key materials"
+      ]
+    },
+    {
+      "id": "labour",
+      "nm": "Labour-market turn",
+      "newest": true,
+      "dir": "rotational",
+      "traj": "up",
+      "trajLbl": "Emerging",
+      "conv": 3,
+      "oneLiner": "July -23k + 103k revisions is one turn; a second soft print + rising claims would confirm it.",
+      "drives": [
+        [
+          "Gold",
+          "gold"
+        ],
+        [
+          "Duration (TLT)",
+          null
+        ],
+        [
+          "Quality/low-vol",
+          null
+        ]
+      ],
+      "summary": [
+        "A softening US labour market rotating leadership toward quality/duration defensives.",
+        "Emerging watch: not a one-print artefact after the -103k revisions.",
+        "Confirm: a second soft payroll + rising continuing claims (jobless claims Thu 13 Aug)."
+      ],
+      "ev": [
+        "July NFP -23k, first outright decline in months",
+        "May/Jun revised down a combined -103k",
+        "Jobless claims Thu 13 Aug the near-term corroboration"
+      ]
+    },
+    {
+      "id": "intl",
+      "nm": "International / ex-US rotation",
+      "dir": "tailwind",
+      "traj": "up",
+      "trajLbl": "Strengthening",
+      "conv": 3,
+      "oneLiner": "Capital tilting to Europe, Japan and EM on the valuation gap and a softer dollar path.",
+      "drives": [
+        [
+          "Defence",
+          "defence"
+        ],
+        [
+          "Gold",
+          "gold"
+        ],
+        [
+          "Europe",
+          null
+        ],
+        [
+          "Japan",
+          null
+        ],
+        [
+          "EM",
+          null
+        ]
+      ],
+      "summary": [
+        "Capital rotating toward ex-US markets on the valuation gap and dollar trend.",
+        "Strengthening: STOXX +1.7% / Nikkei +1.9% on the week; China +0.3% Mon.",
+        "Watch a dollar reversal or a US-growth surprise that pulls flows home."
+      ],
+      "ev": [
+        "STOXX 600 +1.7% and Nikkei +1.9% on the week",
+        "EM turning up as the dollar path softens",
+        "Ex-US value at a wide discount to the US"
+      ]
+    },
+    {
+      "id": "geo",
+      "nm": "Geopolitics",
+      "dir": "rotational",
+      "traj": "flat",
+      "trajLbl": "De-escalating (fragile)",
+      "conv": 4,
+      "oneLiner": "Iran–Oman Hormuz reports ease the energy premium; US–China truce deadline Wed the swing.",
+      "drives": [
+        [
+          "Defence",
+          "defence"
+        ],
+        [
+          "Nuclear",
+          "nuclear"
+        ],
+        [
+          "Rare earths",
+          "minerals"
+        ],
+        [
+          "Gold",
+          "gold"
+        ],
+        [
+          "Energy",
+          null
+        ]
+      ],
+      "summary": [
+        "Cross-cutting geopolitical risk — conflict, trade policy, resource nationalism.",
+        "De-escalating but fragile: Hormuz-management reports soften oil; truce deadline looms.",
+        "Watch Wed 12 Aug: a truce breakdown would collide with the CPI read."
+      ],
+      "ev": [
+        "Iran–Oman deal to manage the Strait of Hormuz (reports)",
+        "US–China tariff-truce deadline Wed 12 Aug",
+        "Export controls on critical minerals structural"
+      ]
+    }
+  ],
+  "cat": {
+    "compute": {
+      "c": "#8b6cff",
+      "label": "Compute & hardware"
+    },
+    "infra": {
+      "c": "#5b8dff",
+      "label": "AI infrastructure"
+    },
+    "industrial": {
+      "c": "#26d17f",
+      "label": "Industrial & physical"
+    },
+    "realasset": {
+      "c": "#e5b45a",
+      "label": "Real assets"
+    },
+    "digitalsec": {
+      "c": "#57c8d6",
+      "label": "Digital & security"
+    },
+    "resources": {
+      "c": "#e0794b",
+      "label": "Resources & materials"
+    }
+  },
+  "investible_themes": [
+    {
+      "id": "semis",
+      "nm": "AI / semiconductors",
+      "cat": "compute",
+      "x": 72,
+      "y": 50,
+      "size": 900,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 5,
+      "first_seen": "2026-07-13",
+      "includes": "GPUs & accelerators, CPUs, foundry and EDA — the compute core of AI.",
+      "read": "Late-mid run; still the anchor but valuations rich — hold quality, add on pullbacks.",
+      "now": "~$650bn",
+      "proj": "~$1.1tn",
+      "hz": "2028 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 55,
+      "sizeUnit": "AI-accelerator + logic revenue",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Medium"
+        ],
+        [
+          "Market",
+          "~$650bn → ~$1.1tn"
+        ]
+      ],
+      "price": [
+        [
+          "NVDA"
+        ],
+        [
+          ", "
+        ],
+        [
+          "AVGO"
+        ],
+        [
+          ", "
+        ],
+        [
+          "TSM"
+        ],
+        [
+          ", "
+        ],
+        [
+          "AMD"
+        ],
+        [
+          " extending trend"
+        ]
+      ],
+      "flows": [
+        "Semis remain the largest weight in growth funds",
+        "Steady ETF inflows into the group"
+      ],
+      "tail": [
+        "Accelerator order books extend into 2027",
+        "Pricing power intact on constrained supply"
+      ]
+    },
+    {
+      "id": "memory",
+      "nm": "AI memory / HBM / NAND",
+      "cat": "compute",
+      "x": 58,
+      "y": 60,
+      "size": 240,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 5,
+      "first_seen": "2026-08-02",
+      "includes": "HBM, DRAM and NAND — the memory wall around AI compute.",
+      "read": "Cleanest confirmed recipient; MU exit thesis inverted — respect the cycle, hold quality.",
+      "now": "~$180bn",
+      "proj": "~$320bn",
+      "hz": "2028 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 48,
+      "sizeUnit": "combined memory market",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Medium-high"
+        ],
+        [
+          "Market",
+          "~$180bn → ~$320bn"
+        ]
+      ],
+      "price": [
+        [
+          "MU"
+        ],
+        [
+          ", "
+        ],
+        [
+          "SNDK"
+        ],
+        [
+          " leading; HBM order books sold out to 2028"
+        ]
+      ],
+      "flows": [
+        "Memory weightings raised across semis funds",
+        "Cyclical-recovery inflows into the group"
+      ],
+      "tail": [
+        "SanDisk Q4 blowout (rev $8.97bn, GM 84.6%, $14bn buyback)",
+        "HBM/DRAM +58–63% QoQ; shortage to 2028"
+      ]
+    },
+    {
+      "id": "optics",
+      "nm": "AI optical interconnect",
+      "cat": "infra",
+      "x": 34,
+      "y": 80,
+      "size": 95,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 5,
+      "first_seen": "2026-08-05",
+      "includes": "Transceivers, optical DSPs, co-packaged optics and fibre — the data-movement layer.",
+      "read": "Strongest recent theme; demand + reshoring, but valuations rich (COHR/LITE >127x) — selective.",
+      "now": "~$26bn",
+      "proj": "~$60bn",
+      "hz": "2028 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 30,
+      "sizeUnit": "optical-transceiver TAM",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "TAM",
+          "~$26bn → ~$60bn"
+        ]
+      ],
+      "price": [
+        [
+          "ANET"
+        ],
+        [
+          ", "
+        ],
+        [
+          "COHR"
+        ],
+        [
+          ", "
+        ],
+        [
+          "LITE"
+        ],
+        [
+          ", "
+        ],
+        [
+          "AAOI"
+        ],
+        [
+          " — Lumentum reports Thu"
+        ]
+      ],
+      "flows": [
+        "Optics allocations rising in Q2 13F filings",
+        "Dedicated networking sleeves in AI funds"
+      ],
+      "tail": [
+        "FCC Chinese-optics ban drafted (later-2026 target)",
+        "800G→1.6T upgrade cycle; AI-cluster optics +60% to ~$26bn"
+      ]
+    },
+    {
+      "id": "neoclouds",
+      "nm": "Neoclouds / AI-infra rental",
+      "cat": "infra",
+      "x": 40,
+      "y": 70,
+      "size": 110,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 4,
+      "first_seen": "2026-08-06",
+      "includes": "GPU-rental clouds and AI-infra operators renting compute by the hour.",
+      "read": "The payer layer under the master factor; CRWV/NBIS prints this week are the confirm/kill.",
+      "now": "~$18bn",
+      "proj": "~$55bn",
+      "hz": "2028 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 32,
+      "sizeUnit": "GPU-rental revenue run-rate",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "High"
+        ],
+        [
+          "Run-rate",
+          "~$18bn → ~$55bn"
+        ]
+      ],
+      "price": [
+        [
+          "NBIS"
+        ],
+        [
+          " +122% YTD, "
+        ],
+        [
+          "CRWV"
+        ],
+        [
+          " +25% YTD, "
+        ],
+        [
+          "IREN"
+        ],
+        [
+          " — market paying up for NBIS"
+        ]
+      ],
+      "flows": [
+        "Private credit funding GPU fleets at scale",
+        "Sovereign & enterprise pre-commitments rising"
+      ],
+      "tail": [
+        "CRWV Q2 cons ~$2.56bn (Tue) — capex→revenue test",
+        "NBIS Q2 cons ~$573m, +400%+ y/y (Wed)"
+      ]
+    },
+    {
+      "id": "power",
+      "nm": "AI power & electrical infrastructure",
+      "cat": "infra",
+      "x": 50,
+      "y": 74,
+      "size": 520,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 5,
+      "first_seen": "2026-07-24",
+      "includes": "Grid equipment, switchgear, transformers, cooling and backup — plus SMR offtake.",
+      "read": "High-conviction build; the capex destination now signing nuclear contracts — core overweight.",
+      "now": "~$310bn",
+      "proj": "~$650bn",
+      "hz": "2030 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 34,
+      "sizeUnit": "grid + datacentre electrical spend",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Spend",
+          "~$310bn → ~$650bn"
+        ]
+      ],
+      "price": [
+        [
+          "GEV"
+        ],
+        [
+          ", "
+        ],
+        [
+          "VRT"
+        ],
+        [
+          ", "
+        ],
+        [
+          "ETN"
+        ],
+        [
+          " + "
+        ],
+        [
+          "OKLO"
+        ],
+        [
+          "/"
+        ],
+        [
+          "CCJ"
+        ],
+        [
+          " on SMR offtake"
+        ]
+      ],
+      "flows": [
+        "Infrastructure & utility funds adding electrical names",
+        "Power-theme ETFs gathering assets fast"
+      ],
+      "tail": [
+        "Google–Kairos–TVA 50 MW Hermes 2 SMR PPA (signed)",
+        "Datacentre load forecasts revised up repeatedly"
+      ]
+    },
+    {
+      "id": "robotics",
+      "nm": "Robotics & automation",
+      "cat": "industrial",
+      "x": 29,
+      "y": 66,
+      "size": 180,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 3,
+      "first_seen": "2026-07-24",
+      "includes": "Industrial, warehouse and surgical robotics plus automation enablers.",
+      "read": "Physical-AI leg quiet 2.5+ weeks — drifting toward fading absent fresh evidence; starter only.",
+      "now": "~$45bn",
+      "proj": "~$120bn",
+      "hz": "2030 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 26,
+      "sizeUnit": "industrial + surgical robotics",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "High"
+        ],
+        [
+          "Market",
+          "~$45bn → ~$120bn"
+        ]
+      ],
+      "price": [
+        [
+          "ISRG"
+        ],
+        [
+          ", "
+        ],
+        [
+          "TER"
+        ],
+        [
+          ", "
+        ],
+        [
+          "ABB"
+        ],
+        [
+          ", "
+        ],
+        [
+          "SYM"
+        ],
+        [
+          " — awaiting a fresh catalyst"
+        ]
+      ],
+      "flows": [
+        "Automation baskets attracting fresh allocations",
+        "Humanoid-robotics venture funding surging"
+      ],
+      "tail": [
+        "Labour costs and reshoring drive automation capex",
+        "AI models closing the physical-task gap"
+      ]
+    },
+    {
+      "id": "nuclear",
+      "nm": "Nuclear / uranium & SMRs",
+      "cat": "industrial",
+      "x": 36,
+      "y": 82,
+      "size": 130,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 4,
+      "first_seen": "2026-08-10",
+      "includes": "Uranium miners, enrichment and small-modular-reactor developers.",
+      "read": "Moving from forecast to signed offtake; datacentre demand the catalyst — building, volatile.",
+      "now": "~$40bn",
+      "proj": "~$110bn",
+      "hz": "2032 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 24,
+      "sizeUnit": "uranium + reactor build value",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Market",
+          "~$40bn → ~$110bn"
+        ]
+      ],
+      "price": [
+        [
+          "CCJ"
+        ],
+        [
+          ", "
+        ],
+        [
+          "LEU"
+        ],
+        [
+          ", "
+        ],
+        [
+          "SMR"
+        ],
+        [
+          ", "
+        ],
+        [
+          "OKLO"
+        ],
+        [
+          " re-rating on datacentre demand"
+        ]
+      ],
+      "flows": [
+        "Dedicated nuclear/uranium ETFs gathering assets",
+        "Utility & tech PPAs underwriting new capacity"
+      ],
+      "tail": [
+        "Signed SMR offtake (Hermes 2; Oklo–Meta 1.2 GW)",
+        "Policy support for SMR licensing accelerating"
+      ]
+    },
+    {
+      "id": "minerals",
+      "nm": "Critical minerals / rare earths",
+      "cat": "resources",
+      "x": 26,
+      "y": 80,
+      "size": 90,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 3,
+      "first_seen": "2026-07-24",
+      "includes": "Rare-earth miners, processors and magnet makers — inputs to EVs, motors, defence.",
+      "read": "Policy-driven US-content leg of reshoring; Western supply build vs China dominance — starter.",
+      "now": "~$12bn",
+      "proj": "~$40bn",
+      "hz": "2032 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 20,
+      "sizeUnit": "ex-China rare-earth + magnet supply",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Market",
+          "~$12bn → ~$40bn"
+        ]
+      ],
+      "price": [
+        [
+          "MP"
+        ],
+        [
+          ", "
+        ],
+        [
+          "FCX"
+        ],
+        [
+          ", "
+        ],
+        [
+          "CENX"
+        ],
+        [
+          " re-rating on supply-security demand"
+        ]
+      ],
+      "flows": [
+        "Dedicated critical-minerals / rare-earth ETFs launching",
+        "Government offtake and price-floor support emerging"
+      ],
+      "tail": [
+        "China export controls tightening on rare earths & magnets",
+        "Western reshoring and defence-demand incentives"
+      ]
+    },
+    {
+      "id": "space",
+      "nm": "Space / launch",
+      "cat": "industrial",
+      "x": 20,
+      "y": 82,
+      "size": 70,
+      "stage": "emerging",
+      "stageLbl": "Emerging",
+      "conv": 3,
+      "first_seen": "2026-07-25",
+      "includes": "Commercial launch, satellites and payload operators.",
+      "read": "Goes public via RKLB Q2 tonight (±15% implied); first launch-economics read since SPCX — watch-list.",
+      "now": "~$15bn",
+      "proj": "~$60bn",
+      "hz": "2032 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 18,
+      "sizeUnit": "commercial launch + payload",
+      "tt": [
+        [
+          "Maturity",
+          "Emerging"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Market",
+          "~$15bn → ~$60bn"
+        ]
+      ],
+      "price": [
+        [
+          "RKLB"
+        ],
+        [
+          " ~$75.67 (+16% into print), "
+        ],
+        [
+          "ASTS"
+        ],
+        [
+          " also reporting"
+        ]
+      ],
+      "flows": [
+        "Early space-theme fund launches gathering assets",
+        "Defence primes expanding space exposure"
+      ],
+      "tail": [
+        "RKLB record $2.2bn backlog (+20% q/q)",
+        "Neutron first-flight-by-year-end the swing factor"
+      ]
+    },
+    {
+      "id": "defence",
+      "nm": "Defence",
+      "cat": "industrial",
+      "x": 70,
+      "y": 40,
+      "size": 320,
+      "stage": "late",
+      "stageLbl": "Late-stage",
+      "conv": 4,
+      "first_seen": "2026-07-27",
+      "includes": "Prime contractors and munitions — US and European primes.",
+      "read": "Late-stage but UK primes re-accelerating; EU laggard (RHM). Budgets support, valuations full — selective.",
+      "now": "~$280bn",
+      "proj": "~$400bn",
+      "hz": "2029 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 58,
+      "sizeUnit": "global prime-contractor revenue",
+      "tt": [
+        [
+          "Maturity",
+          "Late-stage"
+        ],
+        [
+          "Upside left",
+          "Medium"
+        ],
+        [
+          "Market",
+          "~$280bn → ~$400bn"
+        ]
+      ],
+      "price": [
+        [
+          "BA.L"
+        ],
+        [
+          ", "
+        ],
+        [
+          "RR.L"
+        ],
+        [
+          " firing; "
+        ],
+        [
+          "RHM.DE"
+        ],
+        [
+          " lagging (-40% YTD)"
+        ]
+      ],
+      "flows": [
+        "Defence & European-defence ETFs seeing steady inflows",
+        "UK primes leading on order intake"
+      ],
+      "tail": [
+        "BAE record £84bn backlog; RR raised targets",
+        "NATO budgets lifting across the alliance"
+      ]
+    },
+    {
+      "id": "gold",
+      "nm": "Gold / precious metals",
+      "cat": "realasset",
+      "x": 62,
+      "y": 56,
+      "size": 400,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 5,
+      "first_seen": "2026-07-17",
+      "includes": "Bullion, ETFs and senior/junior miners.",
+      "read": "Confirmed uptrend, first mild pause off the record; real-rate + central-bank tailwind — core hold.",
+      "now": "~$4,329/oz",
+      "proj": "~$4,500/oz",
+      "hz": "2027 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 50,
+      "sizeUnit": "spot + miner leverage",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Medium-high"
+        ],
+        [
+          "Spot",
+          "~$4,329 → ~$4,500 (Citi)"
+        ]
+      ],
+      "price": [
+        [
+          "GLD"
+        ],
+        [
+          ", "
+        ],
+        [
+          "NEM"
+        ],
+        [
+          ", "
+        ],
+        [
+          "AEM"
+        ],
+        [
+          " holding record ground"
+        ]
+      ],
+      "flows": [
+        "Central-bank buying at multi-decade highs",
+        "Gold-ETF holdings rising after long outflows"
+      ],
+      "tail": [
+        "Real-yield override intact into CPI",
+        "Reserve diversification away from the dollar"
+      ]
+    },
+    {
+      "id": "crypto",
+      "nm": "Crypto / digital assets",
+      "cat": "digitalsec",
+      "x": 60,
+      "y": 46,
+      "size": 250,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 3,
+      "first_seen": "2026-08-04",
+      "includes": "Bitcoin/ether proxies, exchanges and spot ETFs; stablecoin rails.",
+      "read": "Range-bound ~$65k; Clarity Act the driver over price — smaller, tactical. MSTR exit leaning wrong.",
+      "now": "~$2.3tn",
+      "proj": "~$4tn",
+      "hz": "2027 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 55,
+      "sizeUnit": "total digital-asset market cap",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Medium"
+        ],
+        [
+          "Mkt cap",
+          "~$2.3tn → ~$4tn"
+        ]
+      ],
+      "price": [
+        [
+          "COIN"
+        ],
+        [
+          ", "
+        ],
+        [
+          "MSTR"
+        ],
+        [
+          " ~$92–102, "
+        ],
+        [
+          "IBIT"
+        ],
+        [
+          " consolidating"
+        ]
+      ],
+      "flows": [
+        "Spot-ETF flows steadier after the surge",
+        "Corporate treasuries still adding on dips"
+      ],
+      "tail": [
+        "Clarity Act (market-structure rails) taking shape",
+        "Rate-path support for risk appetite"
+      ]
+    },
+    {
+      "id": "cyber",
+      "nm": "Cybersecurity",
+      "cat": "digitalsec",
+      "x": 66,
+      "y": 52,
+      "size": 220,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 4,
+      "first_seen": "2026-07-27",
+      "includes": "Endpoint, network and cloud-security platforms.",
+      "read": "Structural spend growth; platform consolidation — quality compounders (carried).",
+      "now": "~$190bn",
+      "proj": "~$300bn",
+      "hz": "2028 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 52,
+      "sizeUnit": "security software + services",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Medium"
+        ],
+        [
+          "Market",
+          "~$190bn → ~$300bn"
+        ]
+      ],
+      "price": [
+        [
+          "PANW"
+        ],
+        [
+          ", "
+        ],
+        [
+          "CRWD"
+        ],
+        [
+          ", "
+        ],
+        [
+          "ZS"
+        ],
+        [
+          " leading platform consolidation"
+        ]
+      ],
+      "flows": [
+        "Software funds overweight security platforms",
+        "Steady inflows into cyber-theme ETFs"
+      ],
+      "tail": [
+        "AI-driven threat volume lifting security spend",
+        "Board-level mandates and compliance pressure"
+      ]
+    }
+  ],
+  "spine": [
+    {
+      "stage": "Radar",
+      "items": [
+        [
+          "Quantum",
+          "radar-quantum"
+        ],
+        [
+          "Humanoid-RaaS",
+          "radar-humanoid"
+        ],
+        [
+          "Stablecoin infra",
+          "radar-stablecoin"
+        ],
+        [
+          "Skilled trades",
+          "radar-trades"
+        ],
+        [
+          "Labour defensives",
+          "radar-labourdef"
+        ]
+      ]
+    },
+    {
+      "stage": "Emerging",
+      "items": [
+        [
+          "Space / launch",
+          "theme-space"
+        ]
+      ]
+    },
+    {
+      "stage": "Building",
+      "items": [
+        [
+          "AI optics",
+          "theme-optics"
+        ],
+        [
+          "Neoclouds",
+          "theme-neoclouds"
+        ],
+        [
+          "AI power",
+          "theme-power"
+        ],
+        [
+          "Nuclear / SMR",
+          "theme-nuclear"
+        ],
+        [
+          "Rare earths",
+          "theme-minerals"
+        ],
+        [
+          "Robotics",
+          "theme-robotics"
+        ]
+      ]
+    },
+    {
+      "stage": "Confirmed",
+      "items": [
+        [
+          "Semis",
+          "theme-semis"
+        ],
+        [
+          "AI memory",
+          "theme-memory"
+        ],
+        [
+          "Gold",
+          "theme-gold"
+        ],
+        [
+          "Crypto",
+          "theme-crypto"
+        ],
+        [
+          "Cyber",
+          "theme-cyber"
+        ]
+      ]
+    },
+    {
+      "stage": "Fading",
+      "items": [
+        [
+          "Defence",
+          "theme-defence"
+        ],
+        [
+          "Robotics (physical-AI)",
+          "theme-robotics"
+        ]
+      ]
+    },
+    {
+      "stage": "Faded / Retired",
+      "items": [
+        [
+          "MU exit-flag",
+          "faded-mu"
+        ],
+        [
+          "SPCX catalyst",
+          "faded-spcx"
+        ],
+        [
+          "Physical AI",
+          "faded-physicalai"
+        ]
+      ]
+    }
+  ],
+  "critLabels": [
+    [
+      "Basket",
+      "An investible basket actually exists"
+    ],
+    [
+      "3-bucket",
+      "Price + capital flows + tailwind all present"
+    ],
+    [
+      "Persistence",
+      "Holds up over several weeks"
+    ],
+    [
+      "Distinct",
+      "Different from themes already in the book"
+    ],
+    [
+      "Runway",
+      "Credible multi-year runway"
+    ]
+  ],
+  "radar": [
+    {
+      "id": "radar-quantum",
+      "nm": "Quantum computing",
+      "status": "climbing",
+      "met": [
+        false,
+        false,
+        false,
+        true,
+        true
+      ],
+      "what": "Gate-based & annealing hardware, error-correction and quantum-cloud access.",
+      "summ": "Distinct with a long runway, but no clean basket and confirmation still thin.",
+      "needs": "A clean investible basket and sustained, cluster-wide price confirmation.",
+      "evidence": [
+        "Error-correction milestones from two labs",
+        "Quantum-cloud usage disclosed by hyperscalers",
+        "Rising mentions in filings and earnings calls"
+      ],
+      "eta": "12–24 months"
+    },
+    {
+      "id": "radar-humanoid",
+      "nm": "Humanoid robotics-as-a-service",
+      "status": "climbing",
+      "met": [
+        false,
+        true,
+        false,
+        true,
+        true
+      ],
+      "what": "General-purpose humanoids rented per-task; fleet operators & enablers.",
+      "summ": "Price and catalyst building; overlaps robotics — watching for a distinct, rentable basket.",
+      "needs": "A distinct, rentable basket separate from industrial robotics, plus persistence.",
+      "evidence": [
+        "Humanoid pilots at logistics and auto plants",
+        "Surging venture funding into fleet operators",
+        "Enabler names (actuators, vision) firming"
+      ],
+      "eta": "6–12 months"
+    },
+    {
+      "id": "radar-stablecoin",
+      "nm": "Stablecoin payments infrastructure",
+      "status": "graduated",
+      "met": [
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      "what": "On-chain settlement rails, issuers and merchant / FX plumbing.",
+      "summ": "Confirmed across the buckets — promoted into the crypto market-structure book.",
+      "needs": "Already promoted — now tracked as an investible theme (Clarity Act the driver).",
+      "evidence": [
+        "Record on-chain settlement volumes",
+        "Issuer and rails names re-rating",
+        "Clarity Act market-structure rails advancing"
+      ],
+      "eta": "Graduated"
+    },
+    {
+      "id": "radar-trades",
+      "nm": "Skilled-trades / vocational education",
+      "status": "climbing",
+      "met": [
+        true,
+        true,
+        false,
+        true,
+        true
+      ],
+      "what": "For-profit trade & vocational educators (LINC, UTI, ATGE) riding a skills-gap tailwind.",
+      "summ": "Real basket and tailwind; persistence fading — no fresh evidence for ~2 weeks (re-test at earnings).",
+      "needs": "Fresh evidence by ~16 Aug or it drifts toward fading; earnings the next test.",
+      "evidence": [
+        "LINC starts +19% y/y",
+        "BlackRock $100m + DOL $145m funding",
+        "Skills-gap policy tailwind"
+      ],
+      "eta": "6–12 months (persistence at risk)"
+    },
+    {
+      "id": "radar-labourdef",
+      "nm": "Labour-market-turn defensives",
+      "status": "climbing",
+      "met": [
+        true,
+        false,
+        false,
+        false,
+        true
+      ],
+      "what": "Long-duration Treasuries (TLT), quality/low-vol (QUAL, USMV) if the labour turn confirms.",
+      "summ": "One data point (July -23k + revisions); needs a second soft print + rising claims to persist.",
+      "needs": "A second soft payroll and rising continuing claims (jobless claims Thu 13 Aug the tell).",
+      "evidence": [
+        "July NFP -23k, first decline in months",
+        "May/Jun revised -103k combined",
+        "Jobless claims Thu 13 Aug"
+      ],
+      "eta": "6–18 months"
+    }
+  ],
+  "faded": {
+    "retired": [
+      {
+        "id": "faded-mu",
+        "nm": "MU memory-exit flag (id 3)",
+        "ran": "14 Jul – 10 Aug 2026",
+        "peak": "retired 10 Aug",
+        "why": "The exit thesis inverted — memory became the cleanest confirmed recipient of AI capex, not a fade.",
+        "call": "miss",
+        "callTxt": "Scored WRONG-ON-THESIS in the 8 Aug weekly; retired 10 Aug (closed, kept for the lesson).",
+        "reviveIf": "A DRAM/HBM ASP sequential rollover, or CXMT reaching HBM-capable output ahead of the 2028–30 base case."
+      },
+      {
+        "id": "faded-spcx",
+        "nm": "SPCX discrete-catalyst watch (id 4)",
+        "ran": "15 Jul – 10 Aug 2026",
+        "peak": "catalyst spent 10 Aug",
+        "why": "Right on direction (-28% off $142) but the lock-up catalyst is behind it — downgraded to theme-level watch.",
+        "call": "good",
+        "callTxt": "Scored RIGHT on direction; downgraded from discrete-catalyst to launch-economics theme-watch.",
+        "revived": true,
+        "reviveIf": "Already folded into the space/launch theme — RKLB Q2 tonight re-prices the launch-economics read."
+      }
+    ],
+    "dormant": [
+      {
+        "id": "faded-physicalai",
+        "nm": "Physical AI — robotics & autonomy",
+        "ran": "from 24 Jul 2026",
+        "peak": "no evidence 2.5+ weeks",
+        "why": "Embodied-AI successor theme with no fresh evidence 28 Jul–10 Aug — moved to fading, retained for revival.",
+        "call": "mixed",
+        "callTxt": "Logged early; drifted for lack of dated catalysts. Retained for revival detection.",
+        "revived": false,
+        "reviveIf": "A fresh humanoid/autonomy catalyst or funding print — watch the humanoid-RaaS radar item."
+      },
+      {
+        "id": "faded-fertility",
+        "nm": "Fertility / IVF benefits",
+        "ran": "from 2 Aug 2026",
+        "peak": "watch-only",
+        "why": "Policy tailwind real but the only listed pure-play (PGNY) guided weak (-22% on print) — not investable.",
+        "call": "mixed",
+        "callTxt": "Logged watch-only, not added. Revisit after 2027 guidance.",
+        "revived": false,
+        "reviveIf": "A cleaner investible basket emerges, or PGNY 2027 guidance re-rates the space."
+      },
+      {
+        "id": "faded-adtech",
+        "nm": "Adtech (TTD) — structural break",
+        "ran": "flagged 6 Aug 2026",
+        "peak": "avoid (not an opportunity)",
+        "why": "TTD -22% AH on a Q2 miss; H1 already -52% (Publicis dispute, fee-stacking) — idiosyncratic/structural, not an ad-cycle read.",
+        "call": "good",
+        "callTxt": "Logged as AVOID to prevent mistaking the drawdown for a value setup.",
+        "revived": false,
+        "reviveIf": "A resolution of the structural issues (dispute, fee model) — not on the horizon; do not read as macro."
+      },
+      {
+        "id": "faded-semicycle",
+        "nm": "Semiconductor cycle (pre-AI)",
+        "ran": "2020 – 2022",
+        "peak": "peaked early 2022",
+        "why": "Inventory glut and a demand air-pocket after the pandemic pull-forward.",
+        "call": "good",
+        "callTxt": "Called the 2022 top; re-entered for the AI cycle.",
+        "revived": true,
+        "reviveIf": "Already revived — folded into the AI-semiconductor cycle."
+      }
+    ]
+  },
+  "sigTag": {
+    "semis": {
+      "l": "AI semis",
+      "c": "violet"
+    },
+    "memory": {
+      "l": "AI memory",
+      "c": "violet"
+    },
+    "optics": {
+      "l": "AI optics",
+      "c": "blue"
+    },
+    "neoclouds": {
+      "l": "Neoclouds",
+      "c": "blue"
+    },
+    "power": {
+      "l": "AI power",
+      "c": "blue"
+    },
+    "robotics": {
+      "l": "Robotics",
+      "c": "green"
+    },
+    "nuclear": {
+      "l": "Nuclear",
+      "c": "green"
+    },
+    "minerals": {
+      "l": "Rare earths",
+      "c": "orange"
+    },
+    "space": {
+      "l": "Space",
+      "c": "green"
+    },
+    "defence": {
+      "l": "Defence",
+      "c": "green"
+    },
+    "gold": {
+      "l": "Gold",
+      "c": "gold"
+    },
+    "crypto": {
+      "l": "Crypto",
+      "c": "cyan"
+    },
+    "cyber": {
+      "l": "Cyber",
+      "c": "cyan"
+    },
+    "capex": {
+      "l": "Capex factor",
+      "c": "violet"
+    },
+    "rates": {
+      "l": "Rate regime",
+      "c": "gold"
+    },
+    "energy": {
+      "l": "Energy demand",
+      "c": "blue"
+    },
+    "fiscal": {
+      "l": "Fiscal",
+      "c": "green"
+    },
+    "reshore": {
+      "l": "Reshoring",
+      "c": "cyan"
+    },
+    "supply": {
+      "l": "Supply security",
+      "c": "green"
+    },
+    "labour": {
+      "l": "Labour turn",
+      "c": "orange"
+    },
+    "intl": {
+      "l": "Intl rotation",
+      "c": "cyan"
+    },
+    "geo": {
+      "l": "Geopolitics",
+      "c": "orange"
+    }
+  },
+  "signals": [
+    {
+      "daysAgo": 0,
+      "sector": "power",
+      "headline": "Google–Kairos–TVA sign 50 MW SMR PPA (Hermes 2) for datacenters",
+      "src": "ETF Trends",
+      "url": "https://www.etftrends.com/disruptive-technology-content-hub/data-centers-embracing-nuclear-smrs-ai-needs/",
+      "summary": [
+        "First signed nuclear offtake feeding Google's Alabama/Tennessee datacenters (~2030 online).",
+        "Part of a larger ~500 MW-by-2035 arrangement; Oklo–Meta 1.2 GW Ohio the prior anchor.",
+        "The AI-power theme moving from capex forecast to signed contract."
+      ],
+      "assessment": "Strengthens the AI-power 'capex destination' recipient; OKLO/SMR/CCJ reinforced."
+    },
+    {
+      "daysAgo": 0,
+      "sector": "gold",
+      "headline": "Gold ~$4,329, first mild pause off the ~$4,356 record",
+      "src": "150currency",
+      "url": "https://www.150currency.com/gold-price/united_states/",
+      "summary": [
+        "-0.1% Monday, the first consolidation dot off the record anchor.",
+        "Real-yield override intact into July CPI (Wed).",
+        "+8.2% off the 14 Jul $4,001 call; Citi $4,500 target stands."
+      ],
+      "assessment": "Right/working (id 2); a hot CPI is the clearest near-term risk to the level."
+    },
+    {
+      "daysAgo": 0,
+      "sector": "capex",
+      "headline": "Confirm-week opens: CRWV (Tue) + NBIS (Wed) the payer-neocloud tests",
+      "src": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/article/2-key-checks-on-ai-infrastructure-and-inflation-what-to-watch-this-week-100000678.html",
+      "summary": [
+        "CRWV Q2 cons ~$2.56bn — does record hyperscaler capex convert to neocloud revenue/backlog.",
+        "NBIS Q2 cons ~$573m, +400%+ y/y; NBIS +122% YTD raises the bar.",
+        "Reward utilization/backlog proof; punish another capex raise with revenue lagging."
+      ],
+      "assessment": "The single most important AI prints of the week for the master factor."
+    },
+    {
+      "daysAgo": 0,
+      "sector": "space",
+      "headline": "Rocket Lab Q2 after close tonight (±15% implied)",
+      "src": "TipRanks",
+      "url": "https://www.tipranks.com/news/rocket-lab-is-about-to-report-q2-earnings-options-traders-brace-for-a-15-move-in-rklb-stock",
+      "summary": [
+        "Cons rev ~$231.6m (+~60% y/y), loss ~$0.06/sh; record $2.2bn backlog (+20% q/q).",
+        "RKLB ~$75.67, +16% into the print on the $663m Space Force contract.",
+        "First public launch-economics read since the SPCX debut; Neutron timeline the swing."
+      ],
+      "assessment": "Emerging; revenue thin — watch-list sizing, but a clean Neutron reaffirmation validates the theme."
+    },
+    {
+      "daysAgo": 1,
+      "sector": "memory",
+      "headline": "MU exit-flag retired — memory is the confirmed recipient",
+      "src": "theme-ledger.md",
+      "url": "",
+      "summary": [
+        "The MU exit thesis inverted; memory kept re-rating through the tape.",
+        "SanDisk Q4 blowout (rev $8.97bn, GM 84.6%, $14bn buyback) the cleanest recipient print.",
+        "Scored wrong-on-thesis in the 8 Aug weekly; closed, kept for the lesson."
+      ],
+      "assessment": "Recipient status reinforced; MU stays a recipient watch, not an exit."
+    },
+    {
+      "daysAgo": 2,
+      "sector": "reshore",
+      "headline": "New polysilicon tariff lifts First Solar; reshoring jumps to solar",
+      "src": "theme-ledger.md",
+      "url": "",
+      "summary": [
+        "12.5% Chinese polysilicon tariff (Canada 50%, Brazil 25%, ~60 partners 10–12%).",
+        "FSLR +~5% Friday; metals → optics → solar, one US-content driver jumping sectors.",
+        "US–China truce deadline Wed 12 Aug is the near-term swing."
+      ],
+      "assessment": "Reshoring-by-tariff broadening; repeat-signal convergence across sectors."
+    },
+    {
+      "daysAgo": 3,
+      "sector": "labour",
+      "headline": "July payrolls -23k with 103k of downward revisions",
+      "src": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/06/stock-market-today-live-updates.html",
+      "summary": [
+        "First outright payroll decline in months; May/Jun revised down a combined -103k.",
+        "Flipped the tape dovish; 10Y eased to ~4.6%, Sept-hike odds ~42%.",
+        "A labour market shedding jobs is a slow-burn recession signal."
+      ],
+      "assessment": "First real crack in the labour data; nudges the book toward duration/quality defensives."
+    },
+    {
+      "daysAgo": 3,
+      "sector": "optics",
+      "headline": "Lumentum reports Thu — first optics-demand read of the confirm week",
+      "src": "theme-ledger.md",
+      "url": "",
+      "summary": [
+        "A strong 800G/1.6T order print corroborates the demand leg.",
+        "AI-cluster optics +60% to ~$26bn in 2026 (LightCounting).",
+        "Caveat: rich valuations (COHR/LITE >127x trailing), whippy tape."
+      ],
+      "assessment": "Strongest recent theme; a clean print extends the demand + reshoring case."
+    },
+    {
+      "daysAgo": 4,
+      "sector": "geo",
+      "headline": "Iran–Oman reports to manage the Strait of Hormuz ease oil premium",
+      "src": "ATB Financial",
+      "url": "https://www.atb.com/wealth/good-advice/markets/weekly-market-update-august-10-2026/",
+      "summary": [
+        "Reports of a deal to manage Hormuz softened the energy-supply premium.",
+        "Oil the swing factor; Brent eased into the weekend.",
+        "Fragile, not resolved — carried as WATCH."
+      ],
+      "assessment": "Geopolitics de-escalating but fragile; a truce breakdown Wed would collide with CPI."
+    },
+    {
+      "daysAgo": 5,
+      "sector": "crypto",
+      "headline": "BTC ~$64.9k, +3% on the week off the 1 Aug capitulation low",
+      "src": "Coinbase",
+      "url": "https://www.coinbase.com/price/bitcoin",
+      "summary": [
+        "Range-bound ~$65k; Clarity Act (market-structure rails) the driver over price.",
+        "MSTR tracks it in a ~$92–102 band (exit id 1 leaning wrong).",
+        "+3% on the week off the ~$62.2k low."
+      ],
+      "assessment": "Flat-to-strengthening; legislation over price is the theme."
+    },
+    {
+      "daysAgo": 6,
+      "sector": "intl",
+      "headline": "European and Japanese equities extend on the ex-US rotation",
+      "src": "T. Rowe Price",
+      "url": "https://www.troweprice.com/personal-investing/resources/insights/global-markets-weekly-update.html",
+      "summary": [
+        "STOXX 600 +1.7% and Nikkei +1.9% on the week.",
+        "A softer dollar path and cheap valuations pulling in flows.",
+        "China +0.3% Mon on US–China truce-extension hopes."
+      ],
+      "assessment": "Ex-US rotation strengthening; supports the international driver."
+    },
+    {
+      "daysAgo": 7,
+      "sector": "semis",
+      "headline": "Cerebras -35% post-debut — the crowding/valuation tell",
+      "src": "theme-ledger.md",
+      "url": "",
+      "summary": [
+        "Newest AI cohort punished on crowding/valuation vs memory holding its re-rating.",
+        "A corroborating positioning tell for the capex-intensity factor.",
+        "Recipients firm, payers/newest-cohort soft."
+      ],
+      "assessment": "Confirms the recipient-vs-payer split within the AI trade."
+    },
+    {
+      "daysAgo": 9,
+      "sector": "defence",
+      "headline": "UK primes fire (BAE £84bn backlog) while RHM lags",
+      "src": "theme-ledger.md",
+      "url": "",
+      "summary": [
+        "BAE record £84bn backlog; RR raised targets.",
+        "RHM.DE -40% YTD — the EU laggard.",
+        "RKLB defense mission (Neutron) cross-links here."
+      ],
+      "assessment": "UK-prime restage-up firing; EU weak — selective on valuation."
+    },
+    {
+      "daysAgo": 12,
+      "sector": "rates",
+      "headline": "10Y ~4.6% after the jobs shock; Sept-HIKE odds ~42%",
+      "src": "TradingEconomics",
+      "url": "https://tradingeconomics.com/united-states/government-bond-yield/news/512273",
+      "summary": [
+        "Dovish tilt held; but the regime is a hike risk, not a cut.",
+        "Chair Warsh has signalled he would still hike on a hot CPI.",
+        "July CPI Wed the macro gate (cons +0.2% m/m, 3.4% headline, 2.5% core)."
+      ],
+      "assessment": "Easing bias supports gold/crypto/duration; CPI the next timing test."
+    },
+    {
+      "daysAgo": 18,
+      "sector": "nuclear",
+      "headline": "SMR offtake momentum: Hermes 2 follows Oklo–Meta Ohio",
+      "src": "Carbon Credits",
+      "url": "https://carboncredits.com/2026-the-year-nuclear-power-reclaims-relevance-with-15-reactors-ai-demand-and-chinas-expansion/",
+      "summary": [
+        "Datacentre operators contracting nuclear baseload batteries can't cover.",
+        "First SMR units are 2030+; licensing progress the confirm.",
+        "Uranium term firmness the tell; break <$80 the kill."
+      ],
+      "assessment": "Datacentre-nuclear link strengthening; early-stage but increasingly real."
+    },
+    {
+      "daysAgo": 22,
+      "sector": "minerals",
+      "headline": "China tightens rare-earth and magnet export controls",
+      "src": "Reuters",
+      "url": "https://www.reuters.com/markets/commodities/china-rare-earth-export-controls-2026",
+      "summary": [
+        "New licences required for several rare-earth magnet exports.",
+        "Western miners and processors rallied on supply-security demand.",
+        "Governments accelerated offtake and stockpiling plans."
+      ],
+      "assessment": "Structural tailwind for ex-China rare-earth supply; volatile but strategic."
+    }
+  ],
+  "stocks": {
+    "segments": [
+      {
+        "id": "semis",
+        "name": "AI / semiconductors",
+        "stage": "Confirmed",
+        "runway": 55,
+        "thesis": "intact",
+        "driver": "recipient of the capex master factor",
+        "risk": "valuation",
+        "strength": 1,
+        "rows": [
+          [
+            "NVDA",
+            "Nvidia",
+            182
+          ],
+          [
+            "AVGO",
+            "Broadcom",
+            412
+          ],
+          [
+            "AMD",
+            "Adv. Micro Devices",
+            228
+          ]
+        ]
+      },
+      {
+        "id": "memory",
+        "name": "AI memory / HBM / NAND",
+        "stage": "Confirmed",
+        "runway": 48,
+        "thesis": "intact",
+        "driver": "HBM cycle + AI demand (confirmed recipient)",
+        "risk": "cyclicality",
+        "strength": 0.95,
+        "rows": [
+          [
+            "MU",
+            "Micron",
+            214
+          ],
+          [
+            "SNDK",
+            "SanDisk",
+            78
+          ],
+          [
+            "WDC",
+            "Western Digital",
+            96
+          ]
+        ]
+      },
+      {
+        "id": "optics",
+        "name": "AI optical interconnect",
+        "stage": "Building",
+        "runway": 30,
+        "thesis": "intact",
+        "driver": "capex factor + FCC optics-ban",
+        "risk": "rich valuation",
+        "strength": 1,
+        "rows": [
+          [
+            "COHR",
+            "Coherent",
+            132
+          ],
+          [
+            "LITE",
+            "Lumentum",
+            118
+          ],
+          [
+            "ANET",
+            "Arista Networks",
+            138
+          ]
+        ]
+      },
+      {
+        "id": "neoclouds",
+        "name": "Neoclouds / AI-infra rental",
+        "stage": "Building",
+        "runway": 32,
+        "thesis": "watch",
+        "driver": "GPU-rental demand (payer layer)",
+        "risk": "financing / capex→revenue",
+        "strength": 0.75,
+        "rows": [
+          [
+            "NBIS",
+            "Nebius",
+            78
+          ],
+          [
+            "CRWV",
+            "CoreWeave",
+            142
+          ],
+          [
+            "IREN",
+            "Iren",
+            26
+          ]
+        ]
+      },
+      {
+        "id": "power",
+        "name": "AI power & electrical",
+        "stage": "Building",
+        "runway": 34,
+        "thesis": "intact",
+        "driver": "energy & electrification + SMR offtake",
+        "risk": "valuation",
+        "strength": 1,
+        "rows": [
+          [
+            "GEV",
+            "GE Vernova",
+            685
+          ],
+          [
+            "VRT",
+            "Vertiv",
+            148
+          ],
+          [
+            "ETN",
+            "Eaton",
+            392
+          ]
+        ]
+      },
+      {
+        "id": "nuclear",
+        "name": "Nuclear / uranium & SMRs",
+        "stage": "Building",
+        "runway": 24,
+        "thesis": "intact",
+        "driver": "datacentre baseload (signed PPAs)",
+        "risk": "execution / licensing",
+        "strength": 0.9,
+        "rows": [
+          [
+            "CCJ",
+            "Cameco",
+            82
+          ],
+          [
+            "OKLO",
+            "Oklo",
+            96
+          ],
+          [
+            "SMR",
+            "NuScale Power",
+            38
+          ]
+        ]
+      },
+      {
+        "id": "optics2",
+        "name": "AI power — electrical secondaries",
+        "stage": "Building",
+        "runway": 30,
+        "thesis": "intact",
+        "driver": "grid + electrical build-out",
+        "risk": "valuation",
+        "strength": 0.85,
+        "rows": [
+          [
+            "GRID",
+            "ETF: grid infra",
+            118
+          ],
+          [
+            "CEG",
+            "Constellation Energy",
+            295
+          ],
+          [
+            "ETN",
+            "Eaton",
+            392
+          ]
+        ]
+      },
+      {
+        "id": "robotics",
+        "name": "Robotics & automation",
+        "stage": "Building",
+        "runway": 26,
+        "thesis": "watch",
+        "driver": "reshoring + automation capex",
+        "risk": "execution / stalling evidence",
+        "strength": 0.7,
+        "rows": [
+          [
+            "ISRG",
+            "Intuitive Surgical",
+            560
+          ],
+          [
+            "SYM",
+            "Symbotic",
+            48
+          ],
+          [
+            "TER",
+            "Teradyne",
+            168
+          ]
+        ]
+      },
+      {
+        "id": "minerals",
+        "name": "Critical minerals / rare earths",
+        "stage": "Building",
+        "runway": 20,
+        "thesis": "intact",
+        "driver": "supply-security + reshoring",
+        "risk": "volatility & execution",
+        "strength": 0.75,
+        "rows": [
+          [
+            "MP",
+            "MP Materials",
+            42
+          ],
+          [
+            "FCX",
+            "Freeport-McMoRan",
+            52
+          ],
+          [
+            "CENX",
+            "Century Aluminum",
+            24
+          ]
+        ]
+      },
+      {
+        "id": "space",
+        "name": "Space / launch",
+        "stage": "Emerging",
+        "runway": 18,
+        "thesis": "watch",
+        "driver": "launch cadence + fiscal (RKLB print tonight)",
+        "risk": "execution / Neutron timeline",
+        "strength": 0.7,
+        "rows": [
+          [
+            "RKLB",
+            "Rocket Lab",
+            76
+          ],
+          [
+            "ASTS",
+            "AST SpaceMobile",
+            38
+          ],
+          [
+            "LMT",
+            "Lockheed Martin",
+            512
+          ]
+        ]
+      },
+      {
+        "id": "defence",
+        "name": "Defence (UK primes lead)",
+        "stage": "Late-stage",
+        "runway": 58,
+        "thesis": "intact",
+        "driver": "rearmament + geopolitics (UK firing, EU laggard)",
+        "risk": "full valuations",
+        "strength": 0.75,
+        "rows": [
+          [
+            "BA.L",
+            "BAE Systems",
+            1420
+          ],
+          [
+            "RR.L",
+            "Rolls-Royce",
+            620
+          ],
+          [
+            "RHM.DE",
+            "Rheinmetall",
+            1780
+          ],
+          [
+            "LMT",
+            "Lockheed Martin",
+            512
+          ],
+          [
+            "RTX",
+            "RTX Corp",
+            168
+          ]
+        ]
+      },
+      {
+        "id": "gold",
+        "name": "Gold / precious metals",
+        "stage": "Confirmed",
+        "runway": 50,
+        "thesis": "intact",
+        "driver": "real-yield override + central-bank buying",
+        "risk": "a hot-CPI real-yield spike",
+        "strength": 0.95,
+        "rows": [
+          [
+            "NEM",
+            "Newmont",
+            78
+          ],
+          [
+            "AEM",
+            "Agnico Eagle",
+            168
+          ],
+          [
+            "GLD",
+            "SPDR Gold",
+            402
+          ]
+        ]
+      },
+      {
+        "id": "crypto",
+        "name": "Crypto / digital assets",
+        "stage": "Confirmed",
+        "runway": 55,
+        "thesis": "watch",
+        "driver": "Clarity Act rails + rate path",
+        "risk": "volatility (MSTR exit leaning wrong)",
+        "strength": 0.6,
+        "rows": [
+          [
+            "COIN",
+            "Coinbase",
+            342
+          ],
+          [
+            "MSTR",
+            "MicroStrategy",
+            98
+          ],
+          [
+            "IBIT",
+            "iShares Bitcoin",
+            62
+          ]
+        ]
+      },
+      {
+        "id": "cyber",
+        "name": "Cybersecurity",
+        "stage": "Confirmed",
+        "runway": 52,
+        "thesis": "intact",
+        "driver": "supply-chain security spend",
+        "risk": "valuation",
+        "strength": 0.85,
+        "rows": [
+          [
+            "PANW",
+            "Palo Alto Networks",
+            205
+          ],
+          [
+            "CRWD",
+            "CrowdStrike",
+            468
+          ],
+          [
+            "ZS",
+            "Zscaler",
+            302
+          ]
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "tk": "PLTR",
+        "name": "Palantir",
+        "price": 158,
+        "theme": "capex-light monetizer",
+        "stage": "Confirmed"
+      },
+      {
+        "tk": "ARM",
+        "name": "Arm Holdings",
+        "price": 168,
+        "theme": "Semiconductor IP",
+        "stage": "Confirmed"
+      },
+      {
+        "tk": "ASML",
+        "name": "ASML",
+        "price": 1120,
+        "theme": "Semi equipment",
+        "stage": "Confirmed"
+      },
+      {
+        "tk": "FSLR",
+        "name": "First Solar",
+        "price": 242,
+        "theme": "Reshoring / solar",
+        "stage": "Building"
+      },
+      {
+        "tk": "DELL",
+        "name": "Dell Technologies",
+        "price": 148,
+        "theme": "AI servers",
+        "stage": "Building"
+      },
+      {
+        "tk": "CEG",
+        "name": "Constellation Energy",
+        "price": 295,
+        "theme": "Nuclear / power",
+        "stage": "Building"
+      }
+    ]
+  },
+  "feasibility": {
+    "sandbox_result": {
+      "bash_curl": "BLOCKED — every external domain returns HTTP 403 'blocked-by-allowlist' via the egress proxy (verified FRED/Stooq/Yahoo/Google/Wikipedia/GitHub etc.).",
+      "web_fetch_tool": "BLOCKED — times out (180s) on raw CSV/JSON data endpoints (FRED/Stooq/Yahoo).",
+      "websearch_tool": "WORKS — returned live values (10Y 4.65%, VIX 15.44, HY OAS 2.71%, MOVE 72.03, DXY 99.81).",
+      "note": "The daily pipeline runs in a networked environment; endpoint feasibility below is for that context. Live values this run came via WebSearch."
+    },
+    "metrics": [
+      {
+        "metric": "S&P 500 / Nasdaq / Dow",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq ^spx,^ndq,^dji · yahoo ^GSPC,^IXIC,^DJI",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Clean CSV/JSON; index levels + history for sparklines."
+      },
+      {
+        "metric": "US 10Y yield (DGS10)",
+        "source": "FRED",
+        "endpoint": "fredgraph.csv?id=DGS10",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official, one-day lag."
+      },
+      {
+        "metric": "VIX",
+        "source": "FRED / Yahoo",
+        "endpoint": "FRED VIXCLS · yahoo ^VIX",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "FRED official (1-day lag); Yahoo intraday."
+      },
+      {
+        "metric": "Gold (spot)",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq xauusd · yahoo GC=F",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Futures proxy; spot via stooq."
+      },
+      {
+        "metric": "Bitcoin",
+        "source": "Yahoo / Stooq",
+        "endpoint": "yahoo BTC-USD · stooq btcusd",
+        "cadence": "daily (24/7)",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Deep history."
+      },
+      {
+        "metric": "DXY dollar index",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq dx.f · yahoo DX-Y.NYB",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "ICE DXY licensed; Stooq/Yahoo mirror works."
+      },
+      {
+        "metric": "Brent crude",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq cb.f · yahoo BZ=F",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Futures continuous."
+      },
+      {
+        "metric": "STOXX 600",
+        "source": "Yahoo",
+        "endpoint": "yahoo ^STOXX",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "PARTIAL",
+        "notes": "Yahoo mirror OK; official STOXX is licensed."
+      },
+      {
+        "metric": "FTSE 100",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq ^ftm · yahoo ^FTSE",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Clean."
+      },
+      {
+        "metric": "Nikkei 225",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq ^nkx · yahoo ^N225",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Clean."
+      },
+      {
+        "metric": "MSCI EM",
+        "source": "ETF proxy (EEM/EMXC)",
+        "endpoint": "yahoo EEM",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "PARTIAL",
+        "notes": "MSCI index licensed; use EEM ETF as proxy."
+      },
+      {
+        "metric": "EUR/USD",
+        "source": "FRED / Stooq / Yahoo",
+        "endpoint": "FRED DEXUSEU · stooq eurusd · yahoo EURUSD=X",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "FRED daily (H.10)."
+      },
+      {
+        "metric": "Shiller CAPE",
+        "source": "multpl / Shiller (Yale)",
+        "endpoint": "multpl.com scrape · Shiller xls",
+        "cadence": "monthly",
+        "free": "free",
+        "feasible": "PARTIAL",
+        "notes": "No JSON API; scrape multpl or parse Shiller spreadsheet."
+      },
+      {
+        "metric": "Forward P/E",
+        "source": "—",
+        "endpoint": "no clean free feed (FactSet/Yardeni paywalled)",
+        "cadence": "weekly",
+        "free": "—",
+        "feasible": "NO",
+        "notes": "Manual/estimate; keep editorial."
+      },
+      {
+        "metric": "Excess CAPE yield",
+        "source": "derived",
+        "endpoint": "CAPE earnings-yield − FRED DFII10",
+        "cadence": "weekly",
+        "free": "free",
+        "feasible": "YES",
+        "notes": "Compute from CAPE + real 10Y."
+      },
+      {
+        "metric": "Buffett indicator",
+        "source": "derived (FRED)",
+        "endpoint": "Wilshire 5000 (WILL5000IND) ÷ GDP (GDP)",
+        "cadence": "quarterly (GDP lag)",
+        "free": "free",
+        "feasible": "PARTIAL",
+        "notes": "Numerator daily; GDP quarterly + revised — indicator lags."
+      },
+      {
+        "metric": "US HY OAS",
+        "source": "FRED",
+        "endpoint": "BAMLH0A0HYM2",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official ICE-BofA via FRED."
+      },
+      {
+        "metric": "IG OAS",
+        "source": "FRED",
+        "endpoint": "BAMLC0A0CM",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official."
+      },
+      {
+        "metric": "MOVE index",
+        "source": "Yahoo (unofficial)",
+        "endpoint": "yahoo ^MOVE",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "PARTIAL",
+        "notes": "ICE MOVE licensed; Yahoo mirror unofficial but works."
+      },
+      {
+        "metric": "VIX term structure",
+        "source": "derived",
+        "endpoint": "VIX vs VIX3M (yahoo ^VIX,^VIX3M)",
+        "cadence": "daily",
+        "free": "free",
+        "feasible": "YES",
+        "notes": "Compute contango/backwardation ratio."
+      },
+      {
+        "metric": "% S&P > 200-DMA",
+        "source": "derived",
+        "endpoint": "compute from 500 constituents (Stooq)",
+        "cadence": "daily",
+        "free": "free",
+        "feasible": "PARTIAL",
+        "notes": "Feasible but heavy (500 pulls); or scrape barchart/WSJ."
+      },
+      {
+        "metric": "New highs − new lows",
+        "source": "derived / WSJ market-data",
+        "endpoint": "compute or scrape",
+        "cadence": "daily",
+        "free": "free",
+        "feasible": "PARTIAL",
+        "notes": "Same compute cost as breadth."
+      },
+      {
+        "metric": "Top-10 concentration",
+        "source": "derived / Slickcharts",
+        "endpoint": "scrape S&P weights",
+        "cadence": "weekly",
+        "free": "free",
+        "feasible": "PARTIAL",
+        "notes": "Scrape index weights; no clean API."
+      },
+      {
+        "metric": "Chicago Fed NFCI",
+        "source": "FRED",
+        "endpoint": "NFCI",
+        "cadence": "weekly",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official, weekly."
+      },
+      {
+        "metric": "SOFR-OIS",
+        "source": "FRED",
+        "endpoint": "SOFR − OIS/EFFR proxy",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Compute from two FRED series."
+      },
+      {
+        "metric": "10Y-2Y curve",
+        "source": "FRED",
+        "endpoint": "T10Y2Y",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official single series."
+      },
+      {
+        "metric": "Sahm rule",
+        "source": "FRED",
+        "endpoint": "SAHMREALTIME",
+        "cadence": "monthly",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official real-time Sahm series."
+      },
+      {
+        "metric": "Jobless claims",
+        "source": "FRED",
+        "endpoint": "ICSA / CCSA",
+        "cadence": "weekly",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Official; Thu release."
+      },
+      {
+        "metric": "EM $-credit spread",
+        "source": "FRED",
+        "endpoint": "BAMLEMHBHYCRPIOAS (or EMBI proxy)",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "ICE-BofA EM index via FRED."
+      },
+      {
+        "metric": "China credit impulse",
+        "source": "derived (PBoC TSF)",
+        "endpoint": "no clean free daily feed",
+        "cadence": "monthly",
+        "free": "—",
+        "feasible": "NO",
+        "notes": "Manual/estimate; narrative-only in 2a."
+      },
+      {
+        "metric": "Italy-Germany 10Y",
+        "source": "derived (FRED / Stooq)",
+        "endpoint": "IRLTLT01ITM − IRLTLT01DEM, or stooq 10Y yields",
+        "cadence": "daily/monthly",
+        "free": "free",
+        "feasible": "PARTIAL",
+        "notes": "FRED monthly; daily needs a yields feed."
+      },
+      {
+        "metric": "Stock prices",
+        "source": "Stooq / Yahoo",
+        "endpoint": "stooq <tk>.us · yahoo <tk>",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "US clean; .L/.DE handled by suffix; ETFs OK."
+      },
+      {
+        "metric": "Stock performance windows",
+        "source": "derived (Stooq/Yahoo history)",
+        "endpoint": "chart history → compute 1d/1w/1m/3m/6m/1y/since-flagged",
+        "cadence": "daily",
+        "free": "free, no key",
+        "feasible": "YES",
+        "notes": "Compute from history; currently synthetic placeholder in 2a."
+      }
+    ]
+  }
+}
