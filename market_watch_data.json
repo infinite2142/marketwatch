@@ -51,7 +51,8 @@
         "sparkline daily series",
         "stock performance windows (compute)"
       ]
-    }
+    },
+    "last_fetch": "2026-08-11T22:12:39Z"
   },
   "windows": {
     "1W": {
@@ -96,14 +97,14 @@
       {
         "lbl": "S&P 500",
         "region": "US",
-        "val": "7,757.64",
-        "chg": "+0.78%",
-        "dir": "up",
+        "val": "7,728.20",
+        "chg": "-0.32%",
+        "dir": "down",
         "seed": 11,
         "back": "S&P 500 — the 500 largest US stocks; the broad risk barometer. Rising = risk-on.",
         "chartRead": "At Friday's record close; futures mixed pre-open into CPI/earnings week.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^GSPC) / Stooq ^spx",
           "cadence": "daily",
           "estimate": false,
@@ -113,8 +114,8 @@
       {
         "lbl": "US 10Y",
         "region": "US",
-        "val": "4.65%",
-        "chg": "+1 bp",
+        "val": "4.72%",
+        "chg": "+7 bp",
         "dir": "up",
         "seed": 22,
         "back": "US 10-year Treasury yield — the risk-free anchor for global assets; higher yields pressure long-duration equities.",
@@ -129,14 +130,14 @@
       {
         "lbl": "Gold",
         "region": "GL",
-        "val": "$4,329",
-        "chg": "-0.10%",
-        "dir": "down",
+        "val": "$4,429",
+        "chg": "+1.55%",
+        "dir": "up",
         "seed": 33,
         "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
         "chartRead": "First mild pause off the ~$4,356 record; +8.2% off the 14 Jul call.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (xauusd) / Yahoo GC=F",
           "cadence": "daily",
           "estimate": false
@@ -145,14 +146,14 @@
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$64,896",
-        "chg": "-0.10%",
+        "val": "$63,665",
+        "chg": "-0.38%",
         "dir": "down",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
         "chartRead": "Range-bound ~$65k; +3% on the week off the 1 Aug ~$62.2k low.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (BTC-USD) / Stooq btcusd",
           "cadence": "daily",
           "estimate": false
@@ -162,13 +163,13 @@
         "lbl": "US Dollar (DXY)",
         "region": "FX",
         "val": "99.81",
-        "chg": "+0.27%",
+        "chg": "+0.00%",
         "dir": "up",
         "seed": 55,
         "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
         "chartRead": "Firmed to ~99.8; down ~1.4% on the month.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f) / Yahoo DX-Y.NYB",
           "cadence": "daily",
           "estimate": false
@@ -177,8 +178,8 @@
       {
         "lbl": "VIX",
         "region": "US",
-        "val": "15.44",
-        "chg": "+3.62%",
+        "val": "15.46",
+        "chg": "+3.76%",
         "dir": "up",
         "seed": 66,
         "back": "CBOE Volatility Index — 30-day implied vol on S&P options; the 'fear gauge'. Low = calm, high = stress.",
@@ -193,59 +194,59 @@
       {
         "lbl": "Brent",
         "region": "GL",
-        "val": "$66.50",
-        "chg": "-0.90%",
-        "dir": "down",
+        "val": "$89.22",
+        "chg": "+1.71%",
+        "dir": "up",
         "seed": 77,
         "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
         "chartRead": "Softer as Iran–Oman Hormuz-management reports ease the supply premium.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (cb.f) / Yahoo BZ=F",
           "cadence": "daily",
-          "estimate": true,
+          "estimate": false,
           "note": "Level approximate — not verified this run; oil eased ~5% early week."
         }
       },
       {
         "lbl": "STOXX 600",
         "region": "EU",
-        "val": "~560",
-        "chg": "+0.4%",
+        "val": "660",
+        "chg": "+0.03%",
         "dir": "up",
         "seed": 88,
         "back": "STOXX Europe 600 — the broad European equity benchmark; a read on euro-area risk appetite.",
         "chartRead": "+1.7% on the week; the ex-US rotation broadening.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^STOXX)",
           "cadence": "daily",
-          "estimate": true,
+          "estimate": false,
           "note": "Absolute level not verified this run; weekly change (+1.7%) confirmed."
         }
       },
       {
         "lbl": "FTSE 100",
         "region": "UK",
-        "val": "~9,240",
-        "chg": "+0.3%",
-        "dir": "up",
+        "val": "10,844",
+        "chg": "-0.17%",
+        "dir": "down",
         "seed": 99,
         "back": "FTSE 100 — the UK large-cap index, heavy in energy, miners and financials; a global-value proxy.",
         "chartRead": "+0.3% on the week, grinding near highs.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (^ftm) / Yahoo ^FTSE",
           "cadence": "daily",
-          "estimate": true,
+          "estimate": false,
           "note": "Level not verified this run; weekly change (+0.3%) confirmed."
         }
       },
       {
         "lbl": "Nikkei 225",
         "region": "JP",
-        "val": "~42,200",
-        "chg": "+0.7%",
+        "val": "66,970",
+        "chg": "+2.08%",
         "dir": "up",
         "seed": 111,
         "back": "Nikkei 225 — Japan's headline equity index; sensitive to the yen and global tech demand.",
@@ -254,41 +255,41 @@
           "as_of": "2026-08-10",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (^nkx) / Yahoo ^N225",
           "cadence": "daily",
-          "estimate": true,
+          "estimate": false,
           "note": "Level not verified this run; weekly change (+1.9%) confirmed."
         }
       },
       {
         "lbl": "MSCI EM",
         "region": "EM",
-        "val": "~1,205",
-        "chg": "+0.5%",
+        "val": "65",
+        "chg": "+0.40%",
         "dir": "up",
         "seed": 122,
         "back": "MSCI Emerging Markets — a broad EM-equity gauge; rises as the dollar softens and risk appetite improves.",
         "chartRead": "Turning up as the dollar path softens; China +0.3% Mon.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-11",
           "source": "EEM/EMXC ETF proxy via Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (MSCI index itself is licensed)",
           "cadence": "daily",
-          "estimate": true,
+          "estimate": false,
           "note": "The index level is proprietary/licensed — use an ETF proxy (EEM). Estimate this run."
         }
       },
       {
         "lbl": "EUR/USD",
         "region": "FX",
-        "val": "~1.086",
-        "chg": "-0.25%",
-        "dir": "down",
+        "val": "1.156",
+        "chg": "+0.33%",
+        "dir": "up",
         "seed": 133,
         "back": "Euro vs US dollar — the world's main currency pair; up = a weaker dollar and easier global conditions.",
         "chartRead": "Easing as the dollar firms back toward ~99.8 DXY.",
         "meta": {
-          "as_of": "2026-08-10",
+          "as_of": "2026-08-07",
           "source": "FRED (fredgraph.csv / api), free, no key (DEXUSEU) / Stooq eurusd / Yahoo EURUSD=X",
           "cadence": "daily",
-          "estimate": true,
+          "estimate": false,
           "note": "Inferred from DXY move this run; direct feed available in 2b."
         }
       }
@@ -372,12 +373,12 @@
         "inds": [
           {
             "nm": "US HY OAS spread",
-            "val": "271 bp",
+            "val": "270 bp",
             "status": "calm",
             "tr": "flat",
             "mean": "High-yield risk premium; tight = complacent credit.",
             "meta": {
-              "as_of": "2026-08-06",
+              "as_of": "2026-08-10",
               "source": "FRED (fredgraph.csv / api), free, no key (BAMLH0A0HYM2)",
               "cadence": "daily",
               "estimate": false
@@ -385,7 +386,7 @@
           },
           {
             "nm": "IG OAS spread",
-            "val": "~85 bp",
+            "val": "78 bp",
             "status": "calm",
             "tr": "flat",
             "mean": "Investment-grade spread; low = easy credit conditions.",
@@ -393,7 +394,7 @@
               "as_of": "2026-08-10",
               "source": "FRED (fredgraph.csv / api), free, no key (BAMLC0A0CM)",
               "cadence": "daily",
-              "estimate": true,
+              "estimate": false,
               "note": "Approx this run; clean FRED daily feed."
             }
           }
@@ -405,7 +406,7 @@
         "inds": [
           {
             "nm": "VIX",
-            "val": "15.4",
+            "val": "15.5",
             "status": "calm",
             "tr": "up",
             "mean": "30-day implied equity vol; low = calm markets.",
@@ -496,15 +497,15 @@
         "inds": [
           {
             "nm": "Chicago Fed NFCI",
-            "val": "~-0.50",
+            "val": "-0.53",
             "status": "calm",
             "tr": "flat",
             "mean": "Financial conditions; negative = loose / easy.",
             "meta": {
-              "as_of": "2026-08-10",
+              "as_of": "2026-07-31",
               "source": "FRED (fredgraph.csv / api), free, no key (NFCI)",
               "cadence": "weekly",
-              "estimate": true,
+              "estimate": false,
               "note": "Approx this run; clean FRED weekly feed."
             }
           },
@@ -531,7 +532,10 @@
               "as_of": "2026-08-10",
               "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
               "cadence": "daily",
-              "estimate": false
+              "estimate": false,
+              "stale": true,
+              "stale_reason": "fetch failed 2026-08-11: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
+              "stale_since": "2026-08-11"
             }
           }
         ]
@@ -588,7 +592,7 @@
         "inds": [
           {
             "nm": "EM $-credit spread",
-            "val": "~300 bp",
+            "val": "281 bp",
             "status": "calm",
             "tr": "flat",
             "mean": "EM hard-currency sovereign/credit premium; low = risk-on EM.",
@@ -596,7 +600,7 @@
               "as_of": "2026-08-10",
               "source": "FRED (fredgraph.csv / api), free, no key (BAMLEMHBHYCRPIOAS / EMBI proxy)",
               "cadence": "daily",
-              "estimate": true
+              "estimate": false
             }
           },
           {
@@ -636,7 +640,10 @@
               "as_of": "2026-08-10",
               "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
               "cadence": "daily",
-              "estimate": false
+              "estimate": false,
+              "stale": true,
+              "stale_reason": "fetch failed 2026-08-11: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
+              "stale_since": "2026-08-11"
             }
           }
         ]
@@ -2597,17 +2604,17 @@
           [
             "NVDA",
             "Nvidia",
-            182
+            218
           ],
           [
             "AVGO",
             "Broadcom",
-            412
+            416
           ],
           [
             "AMD",
             "Adv. Micro Devices",
-            228
+            474
           ]
         ]
       },
@@ -2624,17 +2631,17 @@
           [
             "MU",
             "Micron",
-            214
+            869
           ],
           [
             "SNDK",
             "SanDisk",
-            78
+            1271
           ],
           [
             "WDC",
             "Western Digital",
-            96
+            438
           ]
         ]
       },
@@ -2651,17 +2658,17 @@
           [
             "COHR",
             "Coherent",
-            132
+            329
           ],
           [
             "LITE",
             "Lumentum",
-            118
+            821
           ],
           [
             "ANET",
             "Arista Networks",
-            138
+            198
           ]
         ]
       },
@@ -2678,17 +2685,17 @@
           [
             "NBIS",
             "Nebius",
-            78
+            193
           ],
           [
             "CRWV",
             "CoreWeave",
-            142
+            90.32
           ],
           [
             "IREN",
             "Iren",
-            26
+            39.75
           ]
         ]
       },
@@ -2705,17 +2712,17 @@
           [
             "GEV",
             "GE Vernova",
-            685
+            1012
           ],
           [
             "VRT",
             "Vertiv",
-            148
+            282
           ],
           [
             "ETN",
             "Eaton",
-            392
+            459
           ]
         ]
       },
@@ -2732,17 +2739,17 @@
           [
             "CCJ",
             "Cameco",
-            82
+            98.73
           ],
           [
             "OKLO",
             "Oklo",
-            96
+            47.01
           ],
           [
             "SMR",
             "NuScale Power",
-            38
+            9.89
           ]
         ]
       },
@@ -2759,17 +2766,17 @@
           [
             "GRID",
             "ETF: grid infra",
-            118
+            187
           ],
           [
             "CEG",
             "Constellation Energy",
-            295
+            278
           ],
           [
             "ETN",
             "Eaton",
-            392
+            459
           ]
         ]
       },
@@ -2786,17 +2793,17 @@
           [
             "ISRG",
             "Intuitive Surgical",
-            560
+            401
           ],
           [
             "SYM",
             "Symbotic",
-            48
+            41.69
           ],
           [
             "TER",
             "Teradyne",
-            168
+            380
           ]
         ]
       },
@@ -2813,17 +2820,17 @@
           [
             "MP",
             "MP Materials",
-            42
+            55.24
           ],
           [
             "FCX",
             "Freeport-McMoRan",
-            52
+            68.87
           ],
           [
             "CENX",
             "Century Aluminum",
-            24
+            52.29
           ]
         ]
       },
@@ -2840,17 +2847,17 @@
           [
             "RKLB",
             "Rocket Lab",
-            76
+            80.01
           ],
           [
             "ASTS",
             "AST SpaceMobile",
-            38
+            71.63
           ],
           [
             "LMT",
             "Lockheed Martin",
-            512
+            598
           ]
         ]
       },
@@ -2867,27 +2874,27 @@
           [
             "BA.L",
             "BAE Systems",
-            1420
+            2230
           ],
           [
             "RR.L",
             "Rolls-Royce",
-            620
+            1533
           ],
           [
             "RHM.DE",
             "Rheinmetall",
-            1780
+            1142
           ],
           [
             "LMT",
             "Lockheed Martin",
-            512
+            598
           ],
           [
             "RTX",
             "RTX Corp",
-            168
+            224
           ]
         ]
       },
@@ -2904,17 +2911,17 @@
           [
             "NEM",
             "Newmont",
-            78
+            117
           ],
           [
             "AEM",
             "Agnico Eagle",
-            168
+            182
           ],
           [
             "GLD",
             "SPDR Gold",
-            402
+            401
           ]
         ]
       },
@@ -2931,17 +2938,17 @@
           [
             "COIN",
             "Coinbase",
-            342
+            149
           ],
           [
             "MSTR",
             "MicroStrategy",
-            98
+            96.09
           ],
           [
             "IBIT",
             "iShares Bitcoin",
-            62
+            35.94
           ]
         ]
       },
@@ -2958,17 +2965,17 @@
           [
             "PANW",
             "Palo Alto Networks",
-            205
+            384
           ],
           [
             "CRWD",
             "CrowdStrike",
-            468
+            222
           ],
           [
             "ZS",
             "Zscaler",
-            302
+            179
           ]
         ]
       }
@@ -2977,42 +2984,42 @@
       {
         "tk": "PLTR",
         "name": "Palantir",
-        "price": 158,
+        "price": 175,
         "theme": "capex-light monetizer",
         "stage": "Confirmed"
       },
       {
         "tk": "ARM",
         "name": "Arm Holdings",
-        "price": 168,
+        "price": 269,
         "theme": "Semiconductor IP",
         "stage": "Confirmed"
       },
       {
         "tk": "ASML",
         "name": "ASML",
-        "price": 1120,
+        "price": 1799,
         "theme": "Semi equipment",
         "stage": "Confirmed"
       },
       {
         "tk": "FSLR",
         "name": "First Solar",
-        "price": 242,
+        "price": 241,
         "theme": "Reshoring / solar",
         "stage": "Building"
       },
       {
         "tk": "DELL",
         "name": "Dell Technologies",
-        "price": 148,
+        "price": 441,
         "theme": "AI servers",
         "stage": "Building"
       },
       {
         "tk": "CEG",
         "name": "Constellation Energy",
-        "price": 295,
+        "price": 278,
         "theme": "Nuclear / power",
         "stage": "Building"
       }
