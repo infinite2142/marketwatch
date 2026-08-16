@@ -482,6 +482,25 @@
     .tile-back .fliphint{display:none}
   }
   @media(max-width:400px){.strip{grid-template-columns:repeat(2,1fr)}.tile{height:114px}}
+
+  /* hero — page purpose + at-a-glance state, ~two indicator-rows tall */
+  .hero{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+    margin:18px 0 6px;padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius);
+    background:linear-gradient(135deg,rgba(91,141,255,.10),rgba(139,108,255,.05) 45%,transparent 75%),var(--panel);
+    box-shadow:var(--shadow)}
+  .hero-main{flex:1 1 440px;min-width:280px}
+  .hero-main h2{margin:0 0 8px;font-size:19px;font-weight:650;letter-spacing:.2px;color:var(--txt)}
+  .hero-main p{margin:0;font-size:13px;line-height:1.62;color:var(--txt-2);max-width:74ch}
+  .hero-main .heronote{margin-top:9px;font-size:11px;color:var(--txt-3);letter-spacing:.3px}
+  .hero-stats{display:flex;gap:10px;flex-wrap:wrap}
+  .hstat{min-width:96px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
+    background:var(--panel-2);text-align:center}
+  .hstat-v{font-family:var(--mono);font-size:20px;font-weight:600;line-height:1.2;color:var(--txt)}
+  .hstat-v.risk{color:var(--gold)}
+  .hstat-s{font-size:10px;color:var(--txt-3);letter-spacing:.4px}
+  .hstat-k{margin-top:3px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3)}
+  @media(max-width:720px){.hero{padding:16px;gap:16px}.hero-main h2{font-size:17px}
+    .hero-stats{width:100%}.hstat{flex:1 1 40%;min-width:0}}
 </style>
 </head>
 <body>
@@ -527,6 +546,27 @@
     </div>
     <button class="gearbtn" id="gearbtn" title="Alerts &amp; email">&#9881;</button>
   </nav>
+
+  <section class="hero" id="hero">
+    <div class="hero-main">
+      <h2>Daily market and theme tracker</h2>
+      <p>A daily read on markets, macro drivers and crash risk, alongside a running register of
+         investible themes tracked from first sighting on the radar through to played-out. Ratings,
+         convictions and stages are the desk's own judgement; each one carries its evidence and date.</p>
+      <div class="heronote">Long-only research aid. Not financial advice.</div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-v risk" id="hero-crash">&mdash;</div>
+        <div class="hstat-s" id="hero-crash-lvl">&nbsp;</div><div class="hstat-k">Crash risk</div></div>
+      <div class="hstat"><div class="hstat-v" id="hero-themes">&mdash;</div>
+        <div class="hstat-s">&nbsp;</div><div class="hstat-k">Investible</div></div>
+      <div class="hstat"><div class="hstat-v" id="hero-radar">&mdash;</div>
+        <div class="hstat-s">&nbsp;</div><div class="hstat-k">On radar</div></div>
+      <div class="hstat"><div class="hstat-v" id="hero-signals">&mdash;</div>
+        <div class="hstat-s">&nbsp;</div><div class="hstat-k">Signals</div></div>
+    </div>
+  </section>
+
 
   <div class="drawer" id="drawer">
     <div class="drawer-bg" id="drawer-bg"></div>
@@ -1690,6 +1730,18 @@ document.addEventListener("DOMContentLoaded",()=>{
   spy();
 });
 spy();
+</script>
+
+<script>
+/* hero counters — read from the data literals already injected above */
+(function(){
+  var set=function(id,v,sub){var e=document.getElementById(id);if(e&&v!=null)e.innerHTML=v;
+    if(sub!=null){var t=document.getElementById(id+'-lvl');if(t)t.textContent=sub;}};
+  try{ if(typeof crash!=='undefined'&&crash) set('hero-crash',crash.composite,crash.level||''); }catch(e){}
+  try{ if(typeof themes!=='undefined'&&themes.length) set('hero-themes',themes.length); }catch(e){}
+  try{ if(typeof radar!=='undefined'&&radar.length) set('hero-radar',radar.length); }catch(e){}
+  try{ if(typeof signals!=='undefined'&&signals.length) set('hero-signals',signals.length); }catch(e){}
+})();
 </script>
 </body>
 </html>
