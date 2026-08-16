@@ -104,7 +104,14 @@ def main():
     # 3) stamp build / report dates (header vbadge, sub, footer, datechip, JS base date)
     html = html.replace("built 2026-08-10", "built " + build_date)     # vbadge + footer
     html = html.replace("Sunday 9 August 2026", report_long)           # header .sub
-    html = html.replace("Last refresh 07:30 BST", refresh)             # datechip
+    # datechip: fetch_data.py refreshes the numbers daily but does NOT touch
+    # meta.report_date — that is the analytical layer's field. When the two
+    # diverge the page must say so rather than imply the analysis is current.
+    if report_date == build_date:
+        chip = refresh
+    else:
+        chip = "Data %s \u00b7 analysis %s" % (build_date, report_date)
+    html = html.replace("Last refresh 07:30 BST", chip)                # datechip
     # JS relative-date base -> report date (month is 0-indexed in JS)
     y, mo, dy = (int(x) for x in report_date.split("-"))
     html = html.replace("new Date(2026,7,9)", "new Date(%d,%d,%d)" % (y, mo - 1, dy))
