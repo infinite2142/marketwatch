@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-15T07:48:44Z"
+    "last_fetch": "2026-08-16T07:51:05Z"
   },
   "windows": {
     "1W": {
@@ -130,8 +130,8 @@
       {
         "lbl": "Gold",
         "region": "GL",
-        "val": "$4,380",
-        "chg": "+0.38%",
+        "val": "$4,437",
+        "chg": "+1.69%",
         "dir": "up",
         "seed": 33,
         "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
@@ -146,14 +146,14 @@
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$63,005",
-        "chg": "+0.05%",
-        "dir": "up",
+        "val": "$62,986",
+        "chg": "-0.06%",
+        "dir": "down",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
         "chartRead": "Range-bound ~$65k; +3% on the week off the 1 Aug ~$62.2k low.",
         "meta": {
-          "as_of": "2026-08-15",
+          "as_of": "2026-08-16",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (BTC-USD) / Stooq btcusd",
           "cadence": "daily",
           "estimate": false
@@ -169,7 +169,7 @@
         "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
         "chartRead": "Firmed to ~99.8; down ~1.4% on the month.",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-16",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f) / Yahoo DX-Y.NYB",
           "cadence": "daily",
           "estimate": false
@@ -534,8 +534,8 @@
               "cadence": "daily",
               "estimate": false,
               "stale": true,
-              "stale_reason": "fetch failed 2026-08-15: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
-              "stale_since": "2026-08-15"
+              "stale_reason": "fetch failed 2026-08-16: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
+              "stale_since": "2026-08-16"
             }
           }
         ]
@@ -642,8 +642,8 @@
               "cadence": "daily",
               "estimate": false,
               "stale": true,
-              "stale_reason": "fetch failed 2026-08-15: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
-              "stale_since": "2026-08-15"
+              "stale_reason": "fetch failed 2026-08-16: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
+              "stale_since": "2026-08-16"
             }
           }
         ]
@@ -2874,17 +2874,17 @@
           [
             "BA.L",
             "BAE Systems",
-            2236
+            2258
           ],
           [
             "RR.L",
             "Rolls-Royce",
-            1525
+            1541
           ],
           [
             "RHM.DE",
             "Rheinmetall",
-            1165
+            1202
           ],
           [
             "LMT",
