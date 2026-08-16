@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-16T18:12:02Z"
+    "last_fetch": "2026-08-16T18:45:09Z"
   },
   "windows": {
     "1W": {
@@ -146,8 +146,8 @@
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$63,096",
-        "chg": "+0.11%",
+        "val": "$63,070",
+        "chg": "+0.07%",
         "dir": "up",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
