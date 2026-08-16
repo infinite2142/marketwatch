@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-16T07:51:05Z"
+    "last_fetch": "2026-08-16T17:31:54Z"
   },
   "windows": {
     "1W": {
@@ -146,9 +146,9 @@
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$62,986",
-        "chg": "-0.06%",
-        "dir": "down",
+        "val": "$63,121",
+        "chg": "+0.15%",
+        "dir": "up",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
         "chartRead": "Range-bound ~$65k; +3% on the week off the 1 Aug ~$62.2k low.",
