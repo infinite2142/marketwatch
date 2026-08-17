@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-17T08:27:05Z"
+    "last_fetch": "2026-08-17T11:47:01Z"
   },
   "windows": {
     "1W": {
@@ -130,8 +130,8 @@
       {
         "lbl": "Gold",
         "region": "GL",
-        "val": "$4,459",
-        "chg": "+1.79%",
+        "val": "$4,460",
+        "chg": "+1.81%",
         "dir": "up",
         "seed": 33,
         "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
@@ -146,8 +146,8 @@
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$63,362",
-        "chg": "+0.87%",
+        "val": "$63,675",
+        "chg": "+1.36%",
         "dir": "up",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
@@ -162,8 +162,8 @@
       {
         "lbl": "US Dollar (DXY)",
         "region": "FX",
-        "val": "99.34",
-        "chg": "-0.33%",
+        "val": "99.47",
+        "chg": "-0.20%",
         "dir": "down",
         "seed": 55,
         "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
@@ -194,8 +194,8 @@
       {
         "lbl": "Brent",
         "region": "GL",
-        "val": "$88.78",
-        "chg": "+0.29%",
+        "val": "$88.93",
+        "chg": "+0.46%",
         "dir": "up",
         "seed": 77,
         "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
@@ -212,7 +212,7 @@
         "lbl": "STOXX 600",
         "region": "EU",
         "val": "659",
-        "chg": "+0.12%",
+        "chg": "+0.16%",
         "dir": "up",
         "seed": 88,
         "back": "STOXX Europe 600 — the broad European equity benchmark; a read on euro-area risk appetite.",
@@ -228,8 +228,8 @@
       {
         "lbl": "FTSE 100",
         "region": "UK",
-        "val": "10,766",
-        "chg": "+0.14%",
+        "val": "10,772",
+        "chg": "+0.21%",
         "dir": "up",
         "seed": 99,
         "back": "FTSE 100 — the UK large-cap index, heavy in energy, miners and financials; a global-value proxy.",
@@ -2874,17 +2874,17 @@
           [
             "BA.L",
             "BAE Systems",
-            2261
+            2253
           ],
           [
             "RR.L",
             "Rolls-Royce",
-            1565
+            1570
           ],
           [
             "RHM.DE",
             "Rheinmetall",
-            1222
+            1219
           ],
           [
             "LMT",
