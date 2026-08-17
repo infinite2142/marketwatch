@@ -34,7 +34,8 @@ from the laptop is fine and is the intended workflow: the mini's next run opens 
 
 A template or workflow change pushed from the laptop deploys in ~2 minutes through Actions without
 involving the mini at all. An algo change (`fetch_data.py`, `generator.py`, `daily-prompt.md`,
-`daily-task.md`) takes effect on the mini's next run.
+`daily-task.md`) takes effect on the mini's next run — as does a change to `daily-update.sh`
+itself, which hashes itself before the pull and re-execs if the pull replaced it.
 
 `fetch_data.py` and `generator.py` use only the standard library, so they do not care which machine
 or which `python3` runs them. Keep it that way — a third-party import is what broke the fetch over
