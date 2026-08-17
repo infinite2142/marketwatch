@@ -27,9 +27,12 @@ PRIOR value is kept and the field is marked stale (meta.stale = true, with a not
 rather than crashing the run. A single bad feed never blocks the rest.
 
 NOTE: this script cannot be exercised in the Cowork sandbox -- FRED/Stooq/Yahoo
-are blocked there by the egress allowlist (verified in the Phase 2a spike). It is
-written for GitHub Actions, whose runners have open outbound network, and is
-invoked there by .github/workflows/deploy.yml.
+are blocked there by the egress allowlist (verified in the Phase 2a spike). It
+runs on the Mac mini, invoked by marketwatch-core/daily-update.sh ahead of the
+analysis step. .github/workflows/deploy.yml no longer runs it: the workflow does
+not write to the repo, because a second writer only causes push conflicts.
+
+Uses only the standard library. See _get() for why.
 """
 
 import json
@@ -39,11 +42,8 @@ import csv
 import sys
 import time
 import datetime
-
-try:
-    import requests
-except ImportError:  # pragma: no cover - requests is installed in the workflow
-    requests = None
+import urllib.error
+import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(HERE, "market_watch_data.json")
@@ -58,16 +58,26 @@ RETRIES = 3
 # Low-level HTTP with retry
 # --------------------------------------------------------------------------- #
 def _get(url):
-    """GET with retries. Returns response text, or raises on final failure."""
-    if requests is None:
-        raise RuntimeError("requests not available")
+    """GET with retries. Returns response text, or raises on final failure.
+
+    Deliberately uses urllib from the standard library rather than requests.
+    This script is invoked by launchd, by hand from a login shell, and by CI --
+    and those do not all resolve to the same python3. A third-party dependency
+    turned that into a total fetch failure whenever the chosen interpreter
+    lacked it: every tile carried `requests not available` and went stale for
+    the 12-17 Aug 2026 stretch. The stdlib is present in every interpreter, so
+    this class of failure cannot recur.
+    """
     last = None
     for attempt in range(RETRIES):
         try:
-            r = requests.get(url, headers=UA, timeout=TIMEOUT)
-            if r.status_code == 200 and r.text:
-                return r.text
-            last = "HTTP %s" % r.status_code
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                if r.status == 200:
+                    text = r.read().decode("utf-8", "replace")
+                    if text:
+                        return text
+                last = "HTTP %s" % r.status
         except Exception as e:  # noqa: BLE001 - want to retry any network error
             last = str(e)
         time.sleep(1.5 * (attempt + 1))
