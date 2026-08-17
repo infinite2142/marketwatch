@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-16T18:45:09Z"
+    "last_fetch": "2026-08-17T08:27:05Z"
   },
   "windows": {
     "1W": {
@@ -130,14 +130,14 @@
       {
         "lbl": "Gold",
         "region": "GL",
-        "val": "$4,437",
-        "chg": "+1.69%",
+        "val": "$4,459",
+        "chg": "+1.79%",
         "dir": "up",
         "seed": 33,
         "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
         "chartRead": "First mild pause off the ~$4,356 record; +8.2% off the 14 Jul call.",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (xauusd) / Yahoo GC=F",
           "cadence": "daily",
           "estimate": false
@@ -146,14 +146,14 @@
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$63,070",
-        "chg": "+0.07%",
+        "val": "$63,362",
+        "chg": "+0.87%",
         "dir": "up",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
         "chartRead": "Range-bound ~$65k; +3% on the week off the 1 Aug ~$62.2k low.",
         "meta": {
-          "as_of": "2026-08-16",
+          "as_of": "2026-08-17",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (BTC-USD) / Stooq btcusd",
           "cadence": "daily",
           "estimate": false
@@ -162,14 +162,14 @@
       {
         "lbl": "US Dollar (DXY)",
         "region": "FX",
-        "val": "99.67",
-        "chg": "-0.29%",
+        "val": "99.34",
+        "chg": "-0.33%",
         "dir": "down",
         "seed": 55,
         "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
         "chartRead": "Firmed to ~99.8; down ~1.4% on the month.",
         "meta": {
-          "as_of": "2026-08-16",
+          "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f) / Yahoo DX-Y.NYB",
           "cadence": "daily",
           "estimate": false
@@ -194,14 +194,14 @@
       {
         "lbl": "Brent",
         "region": "GL",
-        "val": "$88.52",
-        "chg": "+1.67%",
+        "val": "$88.78",
+        "chg": "+0.29%",
         "dir": "up",
         "seed": 77,
         "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
         "chartRead": "Softer as Iran–Oman Hormuz-management reports ease the supply premium.",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (cb.f) / Yahoo BZ=F",
           "cadence": "daily",
           "estimate": false,
@@ -211,14 +211,14 @@
       {
         "lbl": "STOXX 600",
         "region": "EU",
-        "val": "658",
-        "chg": "-0.21%",
-        "dir": "down",
+        "val": "659",
+        "chg": "+0.12%",
+        "dir": "up",
         "seed": 88,
         "back": "STOXX Europe 600 — the broad European equity benchmark; a read on euro-area risk appetite.",
         "chartRead": "+1.7% on the week; the ex-US rotation broadening.",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^STOXX)",
           "cadence": "daily",
           "estimate": false,
@@ -228,14 +228,14 @@
       {
         "lbl": "FTSE 100",
         "region": "UK",
-        "val": "10,750",
-        "chg": "-0.21%",
-        "dir": "down",
+        "val": "10,766",
+        "chg": "+0.14%",
+        "dir": "up",
         "seed": 99,
         "back": "FTSE 100 — the UK large-cap index, heavy in energy, miners and financials; a global-value proxy.",
         "chartRead": "+0.3% on the week, grinding near highs.",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (^ftm) / Yahoo ^FTSE",
           "cadence": "daily",
           "estimate": false,
@@ -245,14 +245,14 @@
       {
         "lbl": "Nikkei 225",
         "region": "JP",
-        "val": "68,714",
-        "chg": "+0.59%",
+        "val": "69,220",
+        "chg": "+0.74%",
         "dir": "up",
         "seed": 111,
         "back": "Nikkei 225 — Japan's headline equity index; sensitive to the yen and global tech demand.",
         "chartRead": "+1.9% on the week, leading DM on a softer yen.",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (^nkx) / Yahoo ^N225",
           "cadence": "daily",
           "estimate": false,
@@ -534,8 +534,8 @@
               "cadence": "daily",
               "estimate": false,
               "stale": true,
-              "stale_reason": "fetch failed 2026-08-16: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
-              "stale_since": "2026-08-16"
+              "stale_reason": "fetch failed 2026-08-17: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
+              "stale_since": "2026-08-17"
             }
           }
         ]
@@ -642,8 +642,8 @@
               "cadence": "daily",
               "estimate": false,
               "stale": true,
-              "stale_reason": "fetch failed 2026-08-16: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
-              "stale_since": "2026-08-16"
+              "stale_reason": "fetch failed 2026-08-17: fetch_stooq(dx.f): Stooq dx.f: unexpected payload",
+              "stale_since": "2026-08-17"
             }
           }
         ]
@@ -2874,17 +2874,17 @@
           [
             "BA.L",
             "BAE Systems",
-            2258
+            2261
           ],
           [
             "RR.L",
             "Rolls-Royce",
-            1541
+            1565
           ],
           [
             "RHM.DE",
             "Rheinmetall",
-            1202
+            1222
           ],
           [
             "LMT",
