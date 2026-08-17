@@ -555,6 +555,21 @@
     .hero-bg svg{width:320px;right:-70px;opacity:.45}
     .hl-key{gap:5px 14px;font-size:10.5px}
   }
+
+  /* collapsible sections */
+  .sec-toggle{margin-left:auto;flex:none;width:26px;height:26px;padding:0;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    border:1px solid var(--border);border-radius:8px;background:var(--panel-2);
+    color:var(--txt-3);font-size:11px;line-height:1;transition:color .15s,border-color .15s}
+  .sec-toggle:hover{color:var(--txt);border-color:var(--border-hi)}
+  .sec-toggle .chev{display:block;transition:transform .18s ease}
+  section.collapsed .sec-toggle .chev{transform:rotate(-90deg)}
+  section.collapsed .sec-body{display:none}
+  section.collapsed .sec-head{padding-bottom:0;margin-bottom:6px}
+  /* timeframe row — sits directly above the tiles it drives */
+  .tfrow{display:flex;align-items:center;gap:9px;margin:14px 0 8px}
+  .tfrow label{font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--txt-3)}
+  @media(max-width:700px){.sec-toggle{width:30px;height:30px}}
 </style>
 </head>
 <body>
@@ -1864,6 +1879,45 @@ spy();
       });
     }
   }catch(e){}
+})();
+</script>
+<script>
+/* Collapsible sections + timeframe selector placement.
+   Done in JS after everything has rendered rather than by restructuring the
+   markup, so the render engine, scrollspy and element ids are untouched. */
+(function(){
+  /* 1) move the timeframe selector out of the section header to just above the
+        tiles it actually drives — it does not affect the narrative. */
+  var sel=document.getElementById("tfsel"), cap=document.getElementById("stripcap");
+  if(sel&&cap&&cap.parentNode){
+    var row=document.createElement("div"); row.className="tfrow";
+    var lab=document.createElement("label"); lab.setAttribute("for","tfsel");
+    lab.textContent="Timeframe";
+    row.appendChild(lab); row.appendChild(sel);
+    cap.parentNode.insertBefore(row,cap);
+  }
+  /* 2) give every titled section a collapse control. Expanded on load. */
+  document.querySelectorAll(".wrap section[id]").forEach(function(sec){
+    if(sec.id==="hero") return;
+    var head=sec.querySelector(".sec-head"); if(!head) return;
+    if(head.querySelector(".sec-toggle")) return;
+    var body=document.createElement("div"); body.className="sec-body";
+    var n=head.nextSibling;
+    while(n){var next=n.nextSibling; body.appendChild(n); n=next;}
+    sec.appendChild(body);
+    var btn=document.createElement("button");
+    btn.type="button"; btn.className="sec-toggle";
+    btn.setAttribute("aria-expanded","true");
+    var t=head.querySelector("h2");
+    btn.setAttribute("aria-label",(t?t.textContent:"section")+" — collapse");
+    btn.innerHTML='<span class="chev">&#9662;</span>';
+    btn.addEventListener("click",function(){
+      var collapsed=sec.classList.toggle("collapsed");
+      btn.setAttribute("aria-expanded",collapsed?"false":"true");
+      btn.setAttribute("aria-label",(t?t.textContent:"section")+(collapsed?" — expand":" — collapse"));
+    });
+    head.appendChild(btn);
+  });
 })();
 </script>
 </body>

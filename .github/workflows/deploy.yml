@@ -16,9 +16,13 @@ permissions:
   pages: write
   id-token: write
 
+# Two pushes minutes apart both queue on this group. With cancel-in-progress
+# false the older deploy can land last and overwrite the newer page — which is
+# exactly what happened on 17 Aug. The page is regenerated from scratch every
+# run, so newest-wins is always correct here.
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
