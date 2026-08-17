@@ -511,10 +511,8 @@
   .hero-bg svg{position:absolute;right:-40px;top:-18px;width:560px;height:200px}
   .hero-top{position:relative;display:flex;align-items:center;gap:34px}
   .hero-main{flex:1 1 auto;min-width:0}
-  .hero-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;
+  .hero-eyebrow{display:inline-block;font-size:10.5px;font-weight:600;
     letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:11px}
-  .hero-eyebrow::before{content:"";width:16px;height:2px;border-radius:2px;
-    background:linear-gradient(90deg,var(--accent),var(--accent-2))}
   .hero-main h2{margin:0 0 10px;font-size:27px;line-height:1.22;font-weight:680;
     letter-spacing:-.3px;color:var(--txt);max-width:22ch}
   .hero-main h2 em{font-style:normal;
@@ -718,13 +716,13 @@
 
     <section id="sectors-sec">
       <div class="sec-head"><h2>Key sectors</h2><div class="rule"></div></div>
-      <p class="sec-sub">Book at a glance — <em>area = conviction weight (adjustable); colour = trend / momentum</em></p>
+      <p class="sec-sub">Where the conviction sits — <em>area = strength of the case; colour = trend / momentum</em></p>
       <div class="tmcard">
         <div class="tmhd"><div class="tmlegend">
           <span><i style="background:rgba(38,209,127,.55)"></i>Improving</span>
           <span><i style="background:rgba(131,148,176,.5)"></i>Flat</span>
           <span><i style="background:rgba(255,93,108,.55)"></i>Deteriorating</span>
-          <span style="color:var(--txt-3)">&middot; badge = rating (OW / N / UW)</span>
+          <span style="color:var(--txt-3)">&middot; badge = conviction band</span>
         </div></div>
         <svg id="treemap" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
@@ -796,7 +794,7 @@
 
     <section id="faded-sec">
       <div class="sec-head"><h2>Faded &middot; history &amp; revival-watch</h2><div class="rule"></div></div>
-      <p class="sec-sub">Themes that had a run and rolled over — <em>with our track record on each. Split by dead vs merely cyclical.</em></p>
+      <p class="sec-sub">Themes that had a run and rolled over — <em>with how each call scored. Split by dead vs merely cyclical.</em></p>
       <div class="expand-hint">&#8690; Tap any card to expand</div>
       <div class="faded">
         <div class="fcol retired"><h3><i></i>Played-out / retired</h3><div class="fentries" id="faded-retired"></div></div>
@@ -830,7 +828,7 @@
   <div class="page" id="page-stocks">
     <section id="topstocks-sec" style="margin-top:34px">
       <div class="sec-head"><h2>Top stocks by segment</h2><div class="rule"></div></div>
-      <p class="sec-sub">Three-plus leaders per investible segment — <em>performance windows, trend, and a blended assessment (public data + ledger position + our track record).</em></p>
+      <p class="sec-sub">Three-plus leaders per investible segment — <em>performance windows, trend, and a blended assessment (public data + ledger position + how each call scored).</em></p>
       <div class="stbl-wrap"><table class="stbl" id="topstocks"></table></div>
     </section>
     <section id="watchlist-sec">
