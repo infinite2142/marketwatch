@@ -76,12 +76,51 @@ def replace_js_literal(html, name, value):
     payload = json.dumps(value, ensure_ascii=False)
     return html[:start] + payload + html[end:]
 
+
+def derive_sector_reads(data):
+    """Attach each sector's conviction and a derived timing read, joined from
+    investible_themes by name. The timing read is COMPUTED from stage / momentum /
+    runway so it can never contradict the fields beneath it. Unmatched sectors are
+    reported — they are the sector/theme drift, and they should be resolved in the
+    ledger rather than papered over here."""
+    def norm(s):
+        return "".join(ch for ch in s.lower() if ch.isalnum())
+    themes = data.get("investible_themes", [])
+    idx = {norm(t["nm"]): t for t in themes}
+    orphans = []
+    for sec in data.get("sectors", []):
+        key = norm(sec["nm"])
+        th = idx.get(key)
+        if th is None:                      # prefix match either direction
+            for k, t in idx.items():
+                if k.startswith(key[:12]) or key.startswith(k[:12]):
+                    th = t; break
+        if th is None:
+            orphans.append(sec["nm"]); sec["conv"] = None; sec["timing"] = None
+            continue
+        sec["conv"] = th.get("conv")
+        stage  = (th.get("stage") or "").lower()
+        runway = th.get("runway") or 0
+        mom    = sec.get("mom")
+        if mom == "det":                        t = "Rolling over"
+        elif stage == "late" or runway >= 58:   t = "Late"
+        elif stage == "emerging":               t = "Forming"
+        elif mom == "flat":                     t = "Stalled"
+        elif stage == "building":               t = "Early"
+        else:                                   t = "Running"
+        sec["timing"] = t
+    if orphans:
+        print("WARN: sectors with no matching theme (resolve in the ledger): %s"
+              % ", ".join(orphans), file=sys.stderr)
+    return data
+
 def main():
     with open(DATA_PATH, encoding="utf-8") as f:
         data = json.load(f)
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         html = f.read()
 
+    data = derive_sector_reads(data)
     meta = data["meta"]
     build_date  = datetime.date.today().isoformat()   # stamp fresh each run
     report_date = meta.get("report_date", build_date)
