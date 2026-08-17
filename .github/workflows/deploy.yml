@@ -1,29 +1,28 @@
 name: Build and deploy Market Watch
 
-# Triggers:
-#   - schedule: once a day at 06:30 UTC (after US close, before UK/EU open)
-#   - workflow_dispatch: manual "Run workflow" button
-#   - push to main: republish when code/design/data is edited by hand
+# The daily update runs on the Mac mini: it fetches the numbers, does the
+# analysis, renders the page and pushes. This workflow does not write to the
+# repo — a second writer only causes push conflicts. It builds and serves the
+# page when the mini pushes, and checks freshness on a schedule.
 on:
   schedule:
-    - cron: "30 6 * * *"
+    - cron: "0 8 * * *"        # staleness check only; does not build or commit
   workflow_dispatch:
   push:
     branches: [main]
 
-# GITHUB_TOKEN needs to write commits back and publish Pages. No PAT required.
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
-# Never run two deploys at once; let an in-flight run finish.
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
   build:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,29 +33,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Fetch latest market data
-        run: python fetch_data.py
-
-      - name: Rebuild index.html
+      # index.html is gitignored, so it is rendered here from the committed
+      # data and template and published straight from the artifact.
+      - name: Render index.html
         run: python generator.py
-
-      - name: Commit refreshed data + page (if changed)
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # index.html is generated and gitignored — the Pages artifact picks it
-          # up from the working tree, so committing it only creates conflicts.
-          git add market_watch_data.json
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            # [skip ci] stops this bot commit from re-triggering the push job (loop guard)
-            git commit -m "chore: daily data refresh + rebuild [skip ci]"
-            git push
-          fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -64,10 +44,10 @@ jobs:
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Publish the repo root so index.html is served at the site root.
           path: "."
 
   deploy:
+    if: github.event_name != 'schedule'
     needs: build
     runs-on: ubuntu-latest
     environment:
@@ -78,12 +58,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # The numbers refresh here daily; the narrative is written by the separate
-  # analytical task. If that task stops running the page keeps publishing fresh
-  # prices under a stale analysis. This job never blocks the deploy — it fails
-  # on its own so GitHub's workflow-failure email is the alarm.
+  # Fails on its own when the analysis falls behind, so GitHub's
+  # workflow-failure email is the alarm. Never blocks publication.
   staleness:
-    needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -106,7 +83,7 @@ jobs:
               with open(summary, "a") as f:
                   f.write("### Analysis freshness\n\n%s\n" % line)
           if gap >= 3:
-              print("::error::%s The analytical task has not run for %d days." % (line, gap))
+              print("::error::%s The daily update on the mini has not landed for %d days." % (line, gap))
               sys.exit(1)
           if gap >= 1:
               print("::warning::%s" % line)
