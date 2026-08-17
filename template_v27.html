@@ -483,41 +483,6 @@
   }
   @media(max-width:400px){.strip{grid-template-columns:repeat(2,1fr)}.tile{height:114px}}
 
-  /* hero — page purpose + at-a-glance state, ~two indicator-rows tall */
-  .hero{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
-    margin:18px 0 6px;padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius);
-    background:linear-gradient(135deg,rgba(91,141,255,.10),rgba(139,108,255,.05) 45%,transparent 75%),var(--panel);
-    box-shadow:var(--shadow)}
-  .hero-main{flex:1 1 440px;min-width:280px}
-  .hero-main h2{margin:0 0 8px;font-size:19px;font-weight:650;letter-spacing:.2px;color:var(--txt)}
-  .hero-main p{margin:0;font-size:13px;line-height:1.62;color:var(--txt-2);max-width:74ch}
-  .hero-main .heronote{margin-top:9px;font-size:11px;color:var(--txt-3);letter-spacing:.3px}
-  .hero-stats{display:flex;gap:10px;flex-wrap:wrap}
-  .hstat{min-width:96px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
-    background:var(--panel-2);text-align:center}
-  .hstat-v{font-family:var(--mono);font-size:20px;font-weight:600;line-height:1.2;color:var(--txt)}
-  .hstat-v.risk{color:var(--gold)}
-  .hstat-s{font-size:10px;color:var(--txt-3);letter-spacing:.4px}
-  .hstat-k{margin-top:3px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3)}
-  @media(max-width:720px){.hero{padding:16px;gap:16px}.hero-main h2{font-size:17px}
-    .hero-stats{width:100%}.hstat{flex:1 1 40%;min-width:0}}
-
-  /* hero visuals */
-  .hero-vis{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
-  .hgauge{text-align:center;flex:none}
-  .hgauge svg{width:124px;height:74px;display:block}
-  .hg-cap{margin-top:2px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3)}
-  .hg-cap b{font-weight:600;letter-spacing:.3px}
-  .hlife{flex:1 1 240px;min-width:200px}
-  .hl-head{display:flex;justify-content:space-between;align-items:baseline;
-    font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3);margin-bottom:7px}
-  .hl-head b{font-family:var(--mono);font-size:11px;color:var(--txt-2);font-weight:600}
-  .hl-bar{display:flex;gap:2px;height:10px;border-radius:5px;overflow:hidden;background:var(--panel-2)}
-  .hl-seg{display:block;min-width:4px}
-  .hl-key{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:10.5px;color:var(--txt-3)}
-  .hl-key i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:middle}
-  .hl-key b{color:var(--txt-2);font-family:var(--mono);font-weight:600}
-  @media(max-width:720px){.hero-vis{width:100%}.hgauge svg{width:104px;height:62px}}
 
   /* how to get exposure — access routes inside a theme card */
   .access{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
@@ -533,6 +498,65 @@
   .aroute .aro{font-size:11px;color:var(--txt-3);line-height:1.45}
   .aroute.private{border-color:rgba(229,180,90,.4)}
   .aroute.private .art{color:var(--gold)}
+
+  /* ============================ HERO ============================ */
+  .hero{position:relative;overflow:hidden;margin:22px 0 14px;padding:30px 30px 22px;
+    border-radius:20px;border:1px solid var(--border-hi);
+    background:
+      radial-gradient(700px 280px at 86% -40%, rgba(91,141,255,.22), transparent 66%),
+      radial-gradient(560px 240px at 6% 130%, rgba(139,108,255,.16), transparent 62%),
+      linear-gradient(170deg, var(--panel-hi) 0%, var(--panel) 55%, var(--bg-2) 100%);
+    box-shadow:0 1px 0 rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.42)}
+  .hero-bg{position:absolute;inset:0;pointer-events:none;opacity:.5}
+  .hero-bg svg{position:absolute;right:-40px;top:-18px;width:560px;height:200px}
+  .hero-top{position:relative;display:flex;align-items:center;gap:34px}
+  .hero-main{flex:1 1 auto;min-width:0}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;
+    letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:11px}
+  .hero-eyebrow::before{content:"";width:16px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  .hero-main h2{margin:0 0 10px;font-size:27px;line-height:1.22;font-weight:680;
+    letter-spacing:-.3px;color:var(--txt);max-width:22ch}
+  .hero-main h2 em{font-style:normal;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero-main p{margin:0;font-size:13.5px;line-height:1.62;color:var(--txt-2);max-width:62ch}
+  .hero-main .heronote{margin-top:12px;font-size:10.5px;letter-spacing:.4px;color:var(--txt-3)}
+
+  .hgauge{flex:none;text-align:center;padding:14px 18px 10px;border-radius:14px;
+    border:1px solid var(--border);background:rgba(11,14,20,.5);backdrop-filter:blur(2px)}
+  .hgauge svg{width:132px;height:78px;display:block}
+  .hg-cap{margin-top:1px;font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--txt-3)}
+  .hg-cap b{display:block;margin-top:2px;font-size:10.5px;font-weight:700;letter-spacing:.5px}
+
+  /* full-width lifecycle rail */
+  .hlife{position:relative;margin-top:24px;padding-top:18px;border-top:1px solid var(--border)}
+  .hl-head{display:flex;justify-content:space-between;align-items:baseline;
+    font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:var(--txt-3);margin-bottom:9px}
+  .hl-head b{font-family:var(--mono);font-size:11.5px;color:var(--txt-2);font-weight:600;letter-spacing:0}
+  .hl-bar{display:flex;gap:3px;height:13px;border-radius:7px;overflow:hidden;background:rgba(11,14,20,.55)}
+  .hl-seg{display:block;min-width:5px;border-radius:3px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+  .hl-key{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:11px;font-size:11px;color:var(--txt-3)}
+  .hl-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .hl-key b{color:var(--txt-2);font-family:var(--mono);font-weight:600}
+
+  @media(max-width:860px){
+    .hero-main h2{font-size:23px;max-width:none}
+    .hero-bg svg{width:420px;opacity:.7}
+  }
+  @media(max-width:700px){
+    .hero{padding:22px 18px 18px;border-radius:16px}
+    .hero-top{flex-direction:column;align-items:stretch;gap:18px}
+    .hero-main h2{font-size:20px}
+    .hero-main p{font-size:13px}
+    .hgauge{display:flex;align-items:center;gap:14px;text-align:left;padding:12px 14px}
+    .hgauge svg{width:104px;height:62px}
+    .hg-cap{margin-top:0}
+    .hg-cap b{display:inline;margin-left:6px}
+    .hero-bg svg{width:320px;right:-70px;opacity:.45}
+    .hl-key{gap:5px 14px;font-size:10.5px}
+  }
 </style>
 </head>
 <body>
@@ -580,27 +604,45 @@
   </nav>
 
   <section class="hero" id="hero">
-    <div class="hero-main">
-      <h2>Daily market and theme tracker</h2>
-      <p>A daily read on markets, macro drivers and crash risk, alongside a running register of
-         investible themes tracked from first sighting on the radar through to played-out. Ratings,
-         convictions and stages are the desk's own judgement; each one carries its evidence and date.</p>
-      <div class="heronote">Long-only research aid. Not financial advice.</div>
+    <div class="hero-bg" aria-hidden="true">
+      <svg viewBox="0 0 560 200" fill="none">
+        <defs>
+          <linearGradient id="hgl" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#5b8dff" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#8b6cff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0 150 L70 128 L120 138 L180 96 L240 108 L300 62 L360 76 L420 38 L480 52 L560 16"
+              stroke="url(#hgl)" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M0 150 L70 128 L120 138 L180 96 L240 108 L300 62 L360 76 L420 38 L480 52 L560 16 L560 200 L0 200 Z"
+              fill="url(#hgl)" opacity=".1"/>
+        <circle cx="300" cy="62" r="3" fill="#5b8dff" opacity=".8"/>
+        <circle cx="420" cy="38" r="3" fill="#8b6cff" opacity=".8"/>
+      </svg>
     </div>
-    <div class="hero-vis">
+    <div class="hero-top">
+      <div class="hero-main">
+        <div class="hero-eyebrow">Daily research terminal</div>
+        <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
+        <p>A daily read on markets, macro drivers and crash risk, alongside a running register of
+           investible themes tracked from first sighting on the radar through to played-out.
+           Ratings, convictions and stages are the desk's own judgement; each carries its evidence
+           and date.</p>
+        <div class="heronote">Long-only research aid. Not financial advice.</div>
+      </div>
       <div class="hgauge">
         <svg viewBox="0 0 124 74" aria-label="Crash risk gauge">
           <path d="M 12 62 A 50 50 0 0 1 112 62" fill="none" stroke="#212c42" stroke-width="9" stroke-linecap="round"/>
           <path id="hg-arc" d="" fill="none" stroke="var(--gold)" stroke-width="9" stroke-linecap="round"/>
-          <text id="hg-val" x="62" y="56" text-anchor="middle" font-size="26" font-weight="700" fill="#e7ecf5" font-family="var(--mono)">&mdash;</text>
+          <text id="hg-val" x="62" y="56" text-anchor="middle" font-size="27" font-weight="700" fill="#e7ecf5">&mdash;</text>
         </svg>
-        <div class="hg-cap">Crash risk <b id="hg-lvl"></b></div>
+        <div class="hg-cap">Crash risk<b id="hg-lvl"></b></div>
       </div>
-      <div class="hlife">
-        <div class="hl-head"><span>Theme lifecycle</span><b id="hl-total"></b></div>
-        <div class="hl-bar" id="hl-bar"></div>
-        <div class="hl-key" id="hl-key"></div>
-      </div>
+    </div>
+    <div class="hlife">
+      <div class="hl-head"><span>Theme lifecycle</span><b id="hl-total"></b></div>
+      <div class="hl-bar" id="hl-bar"></div>
+      <div class="hl-key" id="hl-key"></div>
     </div>
   </section>
 
