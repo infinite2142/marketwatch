@@ -21,3 +21,7 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+
+# Generated page — rebuilt by generator.py on every run and published
+# straight from the Pages artifact. Tracking it causes push conflicts.
+index.html

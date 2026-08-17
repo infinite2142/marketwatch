@@ -47,7 +47,9 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html market_watch_data.json
+          # index.html is generated and gitignored — the Pages artifact picks it
+          # up from the working tree, so committing it only creates conflicts.
+          git add market_watch_data.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
@@ -75,3 +77,37 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # The numbers refresh here daily; the narrative is written by the separate
+  # analytical task. If that task stops running the page keeps publishing fresh
+  # prices under a stale analysis. This job never blocks the deploy — it fails
+  # on its own so GitHub's workflow-failure email is the alarm.
+  staleness:
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compare analysis date with today
+        run: |
+          python3 - <<'EOF'
+          import datetime, json, os, sys
+          meta = json.load(open("market_watch_data.json"))["meta"]
+          report = meta.get("report_date")
+          today = datetime.date.today()
+          summary = os.environ.get("GITHUB_STEP_SUMMARY")
+          if not report:
+              print("::warning::meta.report_date is missing"); sys.exit(0)
+          gap = (today - datetime.date.fromisoformat(report)).days
+          line = "Analysis date %s, today %s -> %d day(s) behind." % (report, today, gap)
+          print(line)
+          if summary:
+              with open(summary, "a") as f:
+                  f.write("### Analysis freshness\n\n%s\n" % line)
+          if gap >= 3:
+              print("::error::%s The analytical task has not run for %d days." % (line, gap))
+              sys.exit(1)
+          if gap >= 1:
+              print("::warning::%s" % line)
+          EOF
