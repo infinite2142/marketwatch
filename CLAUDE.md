@@ -16,6 +16,30 @@ it is the spec, and this file only summarises it.
 
 Everything in this repo is public. Nothing sensitive belongs in `market_watch_data.json`.
 
+## Two machines
+
+Both repos are cloned on two machines, with different jobs. Check `whoami` / `hostname` before
+assuming which one you are on.
+
+| | The mini | The laptop |
+|---|---|---|
+| role | always on; runs the daily update unattended | occasional edits to the algo and the page |
+| writes | the analysis, the ledger, the numeric tiles | the template, the Python, the specs, the ledger |
+| schedule | launchd → `daily-update.sh` at 07:00 local | nothing scheduled — correct, leave it that way |
+
+**Do not run `daily-update.sh` or `fetch_data.py` from the laptop.** They are the mini's job, and a
+second writer of the same generated state is how a day's publish gets lost. Editing and pushing
+from the laptop is fine and is the intended workflow: the mini's next run opens with
+`git pull --rebase --autostash`, so anything pushed lands there automatically.
+
+A template or workflow change pushed from the laptop deploys in ~2 minutes through Actions without
+involving the mini at all. An algo change (`fetch_data.py`, `generator.py`, `daily-prompt.md`,
+`daily-task.md`) takes effect on the mini's next run.
+
+`fetch_data.py` and `generator.py` use only the standard library, so they do not care which machine
+or which `python3` runs them. Keep it that way — a third-party import is what broke the fetch over
+12-17 Aug 2026.
+
 ## Files
 
 | File | Role |
@@ -32,8 +56,12 @@ artifact. Never commit it — tracking it causes push conflicts.
 ## Publish path
 
 Edit the JSON or the template → commit → push to `main` → Actions renders `index.html` and
-deploys. The workflow does **not** write to the repo; the Mac mini is the only writer, because a
-second writer only causes push conflicts.
+deploys. The workflow does **not** write to the repo — only the two machines do, and only the mini
+writes generated state.
+
+Concurrent pushes are safe in both directions: `deploy.yml` uses `concurrency: pages` with
+`cancel-in-progress: true` so the newest deploy wins, and `daily-update.sh`'s `publish()` rebases
+onto origin and retries if a laptop push landed while the analysis step was running.
 
 `python3 generator.py` renders locally for preview. Not required before pushing.
 
