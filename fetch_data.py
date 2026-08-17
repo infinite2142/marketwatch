@@ -98,7 +98,16 @@ def fetch_fred(series):
         raise RuntimeError("FRED %s returned no numeric observations" % series)
     latest_date, latest = clean[-1]
     prev = clean[-2][1] if len(clean) >= 2 else None
+    _SERIES["closes"] = [c for _, c in clean[-HIST_KEEP:]]
     return latest, prev, latest_date
+
+
+# The feeds return years of daily closes; we used to keep only the last two rows.
+# _SERIES holds the full series from whichever fetcher last succeeded, so the tile
+# loop can compute real window changes and a real sparkline from the same data.
+WINDOW_DAYS = {"1W": 5, "1M": 22, "3M": 65, "6M": 125, "1Y": 250}
+HIST_KEEP = 260
+_SERIES = {}
 
 
 def fetch_stooq(symbol):
@@ -124,9 +133,9 @@ def fetch_stooq(symbol):
 
 
 def fetch_yahoo(symbol):
-    """Yahoo chart JSON, 5 daily bars. Fallback for symbols Stooq lacks."""
+    """Yahoo chart JSON, two years of daily bars. Fallback for symbols Stooq lacks."""
     url = ("https://query1.finance.yahoo.com/v8/finance/chart/%s"
-           "?range=5d&interval=1d" % symbol)
+           "?range=2y&interval=1d" % symbol)
     text = _get(url)
     data = json.loads(text)
     result = data["chart"]["result"][0]
@@ -138,12 +147,14 @@ def fetch_yahoo(symbol):
     as_of = datetime.datetime.utcfromtimestamp(ts).date().isoformat()
     latest = float(closes[-1])
     prev = float(closes[-2]) if len(closes) >= 2 else None
+    _SERIES["closes"] = [float(c) for c in closes[-HIST_KEEP:]]
     return latest, prev, as_of
 
 
 def fetch_chain(*fetchers):
     """Try each (fn, arg) in order; return the first success. Raise if all fail."""
     errors = []
+    _SERIES.pop("closes", None)
     for fn, arg in fetchers:
         try:
             return fn(arg)
@@ -294,6 +305,21 @@ def update_tiles(data, report):
             meta["as_of"] = as_of or TODAY
             meta["estimate"] = False  # now a real print
             clear_stale(meta)
+            # Real history -> real sparkline and real per-window change. Both are
+            # written together, so the page never shows a true delta beside a
+            # synthetic line. Absent history leaves both fields off and the page
+            # falls back to the 1-day change.
+            closes = _SERIES.get("closes") or []
+            if len(closes) >= 30:
+                tile["hist"] = [round(float(c), 6) for c in closes]
+                chgw = {}
+                for wk, back in WINDOW_DAYS.items():
+                    if len(closes) > back:
+                        wchg, _d = fmt_change(tile.get("chg", ""), latest, closes[-1 - back])
+                        chgw[wk] = wchg
+                if chgw:
+                    tile["chgw"] = chgw
+                meta["hist_points"] = len(closes)
             report["ok"].append("tile:%s = %s" % (lbl, tile["val"]))
         except Exception as e:  # noqa: BLE001
             mark_stale(meta, "fetch failed %s: %s" % (TODAY, e))
