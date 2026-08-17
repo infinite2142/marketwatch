@@ -4,18 +4,18 @@
     "report_date": "2026-08-17",
     "report_date_long": "Monday 17 August 2026",
     "build_date": "2026-08-10",
-    "refresh_label": "Analysis 17 Aug — full sweep; catch-up for 12–16 Aug",
+    "refresh_label": "Analysis 17 Aug — evening pass; access routes added, sectors reconciled",
     "title": "Market Watch V2.7 — real-data preview",
     "generator": "generator.py (reads this file + template_v27.html)",
     "provenance": {
-      "state_of_play": "Tile values owned by fetch_data.py (several carry stale flags this run). Narrative and chart reads are the desk's 17 Aug sweep. Sparkline SERIES are synthetic-illustrative (seeded PRNG) pending 2b history wiring.",
+      "state_of_play": "Tile values owned by fetch_data.py, which SUCCEEDED this run (last_fetch 14:26Z, no stale flags) after failing on both earlier 17 Aug attempts. Narrative and chart reads are the desk's 17 Aug sweep. Sparkline SERIES are synthetic-illustrative (seeded PRNG) pending 2b history wiring.",
       "crash_risk": "Cluster read refreshed 17 Aug from the week's prints. The 0-100 composite is carried from the 8 Aug weekly (valuations.csv) - the 14 Aug weekly append did not run and is owed. Per-indicator source/cadence/estimate attached.",
       "sectors": {
         "as_of": "2026-08-17",
         "source": "editorial (theme-ledger.md conviction/trajectory)",
         "cadence": "daily",
         "estimate": true,
-        "note": "Ratings, weights and momentum are the desk's ledger-derived judgements, not a market feed."
+        "note": "Ratings, weights and momentum are the desk's ledger-derived judgements, not a market feed. Reconciled 17 Aug so the treemap contains exactly the themes with a live investible basket: 'Electrification / Grid' dropped into 'AI power & electrical infrastructure'; 'Energy' promoted to a theme of its own."
       },
       "drivers": {
         "as_of": "2026-08-17",
@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-17T12:09:34Z"
+    "last_fetch": "2026-08-17T14:26:58Z"
   },
   "windows": {
     "1W": {
@@ -92,26 +92,23 @@
     }
   },
   "state_of_play": {
-    "narrative": "The catalyst week resolved, and it resolved <em>against</em> the desk's framing. July CPI landed benign (+0.1% m/m, 3.4% headline, 2.5% core, 12 Aug) and the US-China truce was extended 90 days to 10 November, so the macro gates opened rather than closed - S&amp;P 500 took a record 7,798.99 mid-week before easing to 7,785.76 Friday (+0.4% on the week), and the Russell 2000 made a fresh record (+3.15%), the clearest breadth broadening in months. But the payer-side of the AI trade <em>passed</em> its test: CoreWeave (rev $2.58bn, +112% y/y; backlog $104bn, +246%) and Nebius (rev $582m, +454%; adj EBITDA +$236m) both converted capex into contracted, largely pre-paid revenue and were rewarded. The live risk has rotated to energy: Brent closed $88.52 on 14 Aug (+~5-6% on the week) as Washington signalled an indefinite naval blockade of Iranian ports and Hormuz stayed shut. Gold at ~$4,414 is recovering, not making records - it remains ~21% below its 28 Jan 2026 all-time high near $5,600, a correction to this desk's own prior anchor.",
+    "narrative": "A quiet US session sitting on top of two loud data points. Wall Street was muted into a heavy retail-earnings week - S&amp;P 500 7,772.07 (-0.18%), the Dow off 0.3% at the open, the Nasdaq fractionally higher - but China's July activity data, released this morning, missed across the board: industrial output +4.5% y/y against 4.8% expected and 5.3% in June, retail sales +0.6% against 1.5% expected, fixed-asset investment -6.7% year-to-date and urban unemployment up to 5.2%. The second is closer to home. The UK 30-year gilt yield rose to 5.77% and the 10-year pushed back above 5% as the oil premium revived inflation fears - the Hormuz transmission this desk logged last week as a <em>forecast</em> is now visible in the gilt tape. Brent held $88.78 with the US blockade of Iranian ports open-ended. The AI trade kept its footing regardless: BIS tightened advanced-computing export licensing on 15 Aug to catch subsidiaries whose ultimate parent sits in Country Group D:5, and Nvidia's $500bn financing platform with six large alternative managers marks AI compute being underwritten like grid and toll-road infrastructure. Gold at $4,469 (+2.03%) is still a recovery, about 20% below its 28 January all-time high near $5,600.",
     "tiles": [
       {
         "lbl": "S&P 500",
         "region": "US",
-        "val": "7,785.76",
-        "chg": "-0.17%",
+        "val": "7,772.07",
+        "chg": "-0.18%",
         "dir": "down",
         "seed": 11,
         "back": "S&P 500 — the 500 largest US stocks; the broad risk barometer. Rising = risk-on.",
         "chartRead": "Record 7,798.99 mid-week, eased to 7,785.76 Fri; third straight weekly gain (+0.4%).",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^GSPC) / Stooq ^spx",
           "cadence": "daily",
           "estimate": false,
-          "note": "Level = Fri 7 Aug cash close (pipeline convention); day-change is last session.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_stooq(^spx): requests not available | fetch_yahoo(^GSPC): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "Level = Fri 7 Aug cash close (pipeline convention); day-change is last session."
         }
       },
       {
@@ -127,17 +124,14 @@
           "as_of": "2026-08-13",
           "source": "FRED (fredgraph.csv / api), free, no key (DGS10)",
           "cadence": "daily",
-          "estimate": false,
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_fred(DGS10): requests not available",
-          "stale_since": "2026-08-17"
+          "estimate": false
         }
       },
       {
         "lbl": "Gold",
         "region": "GL",
-        "val": "$4,460",
-        "chg": "+1.81%",
+        "val": "$4,469",
+        "chg": "+2.03%",
         "dir": "up",
         "seed": 33,
         "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
@@ -146,17 +140,14 @@
           "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (xauusd) / Yahoo GC=F",
           "cadence": "daily",
-          "estimate": false,
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_stooq(xauusd): requests not available | fetch_yahoo(GC=F): requests not available",
-          "stale_since": "2026-08-17"
+          "estimate": false
         }
       },
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$63,675",
-        "chg": "+1.36%",
+        "val": "$63,572",
+        "chg": "+1.20%",
         "dir": "up",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
@@ -165,17 +156,14 @@
           "as_of": "2026-08-17",
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (BTC-USD) / Stooq btcusd",
           "cadence": "daily",
-          "estimate": false,
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_yahoo(BTC-USD): requests not available | fetch_stooq(btcusd): requests not available",
-          "stale_since": "2026-08-17"
+          "estimate": false
         }
       },
       {
         "lbl": "US Dollar (DXY)",
         "region": "FX",
-        "val": "99.47",
-        "chg": "-0.20%",
+        "val": "99.41",
+        "chg": "-0.26%",
         "dir": "down",
         "seed": 55,
         "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
@@ -184,36 +172,30 @@
           "as_of": "2026-08-17",
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f) / Yahoo DX-Y.NYB",
           "cadence": "daily",
-          "estimate": false,
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_stooq(dx.f): requests not available | fetch_yahoo(DX-Y.NYB): requests not available",
-          "stale_since": "2026-08-17"
+          "estimate": false
         }
       },
       {
         "lbl": "VIX",
         "region": "US",
-        "val": "14.63",
-        "chg": "+0.55%",
-        "dir": "up",
+        "val": "14.25",
+        "chg": "-2.60%",
+        "dir": "down",
         "seed": 66,
         "back": "CBOE Volatility Index — 30-day implied vol on S&P options; the 'fear gauge'. Low = calm, high = stress.",
         "chartRead": "~14.85 Friday, near multi-month lows - a low-vol melt-up, not conviction.",
         "meta": {
-          "as_of": "2026-08-13",
+          "as_of": "2026-08-14",
           "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
           "cadence": "daily",
-          "estimate": false,
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_fred(VIXCLS): requests not available | fetch_yahoo(^VIX): requests not available",
-          "stale_since": "2026-08-17"
+          "estimate": false
         }
       },
       {
         "lbl": "Brent",
         "region": "GL",
-        "val": "$88.93",
-        "chg": "+0.46%",
+        "val": "$88.78",
+        "chg": "+0.29%",
         "dir": "up",
         "seed": 77,
         "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
@@ -223,18 +205,15 @@
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (cb.f) / Yahoo BZ=F",
           "cadence": "daily",
           "estimate": false,
-          "note": "Level approximate — not verified this run; oil eased ~5% early week.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_stooq(cb.f): requests not available | fetch_yahoo(BZ=F): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "Level approximate — not verified this run; oil eased ~5% early week."
         }
       },
       {
         "lbl": "STOXX 600",
         "region": "EU",
-        "val": "659",
-        "chg": "+0.16%",
-        "dir": "up",
+        "val": "658",
+        "chg": "-0.05%",
+        "dir": "down",
         "seed": 88,
         "back": "STOXX Europe 600 — the broad European equity benchmark; a read on euro-area risk appetite.",
         "chartRead": "-0.04% on the week; the four-week winning streak ended.",
@@ -243,18 +222,15 @@
           "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^STOXX)",
           "cadence": "daily",
           "estimate": false,
-          "note": "Absolute level not verified this run; weekly change (+1.7%) confirmed.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_yahoo(^STOXX): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "Absolute level not verified this run; weekly change (+1.7%) confirmed."
         }
       },
       {
         "lbl": "FTSE 100",
         "region": "UK",
-        "val": "10,772",
-        "chg": "+0.21%",
-        "dir": "up",
+        "val": "10,738",
+        "chg": "-0.11%",
+        "dir": "down",
         "seed": 99,
         "back": "FTSE 100 — the UK large-cap index, heavy in energy, miners and financials; a global-value proxy.",
         "chartRead": "-0.56% on the week - first weekly decline in five; Hormuz is the UK inflation swing.",
@@ -263,10 +239,7 @@
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (^ftm) / Yahoo ^FTSE",
           "cadence": "daily",
           "estimate": false,
-          "note": "Level not verified this run; weekly change (+0.3%) confirmed.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_stooq(^ftm): requests not available | fetch_yahoo(^FTSE): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "Level not verified this run; weekly change (+0.3%) confirmed."
         }
       },
       {
@@ -283,30 +256,24 @@
           "source": "Stooq CSV (stooq.com/q/l/), free, no key (^nkx) / Yahoo ^N225",
           "cadence": "daily",
           "estimate": false,
-          "note": "Level not verified this run; weekly change (+1.9%) confirmed.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_stooq(^nkx): requests not available | fetch_yahoo(^N225): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "Level not verified this run; weekly change (+1.9%) confirmed."
         }
       },
       {
         "lbl": "MSCI EM",
         "region": "EM",
-        "val": "67",
-        "chg": "-0.10%",
-        "dir": "down",
+        "val": "68",
+        "chg": "+1.52%",
+        "dir": "up",
         "seed": 122,
         "back": "MSCI Emerging Markets — a broad EM-equity gauge; rises as the dollar softens and risk appetite improves.",
         "chartRead": "Korea/Japan tech-led; China activity data soft (July retail sales ~1.5%).",
         "meta": {
-          "as_of": "2026-08-14",
+          "as_of": "2026-08-17",
           "source": "EEM/EMXC ETF proxy via Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (MSCI index itself is licensed)",
           "cadence": "daily",
           "estimate": false,
-          "note": "The index level is proprietary/licensed — use an ETF proxy (EEM). Estimate this run.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_yahoo(EEM): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "The index level is proprietary/licensed — use an ETF proxy (EEM). Estimate this run."
         }
       },
       {
@@ -323,10 +290,7 @@
           "source": "FRED (fredgraph.csv / api), free, no key (DEXUSEU) / Stooq eurusd / Yahoo EURUSD=X",
           "cadence": "daily",
           "estimate": false,
-          "note": "Inferred from DXY move this run; direct feed available in 2b.",
-          "stale": true,
-          "stale_reason": "fetch failed 2026-08-17: fetch_fred(DEXUSEU): requests not available | fetch_yahoo(EURUSD=X): requests not available",
-          "stale_since": "2026-08-17"
+          "note": "Inferred from DXY move this run; direct feed available in 2b."
         }
       }
     ]
@@ -334,7 +298,7 @@
   "crash_risk": {
     "composite": 60,
     "level": "Elevated",
-    "as_of": "2026-08-17 (cluster read; composite carried from 8 Aug)",
+    "as_of": "2026-08-17 (cluster read, evening pass; composite carried from 8 Aug)",
     "cadence": "weekly (14 Aug append MISSED - owed at the next weekly)",
     "composite_meta": {
       "as_of": "2026-08-08",
@@ -343,7 +307,7 @@
       "estimate": true,
       "note": "Source records '4 of 7 signal clusters flashing'; composite is our derived scalar."
     },
-    "read": "Still 4 of 7 clusters flashing, but the composition changed this week. The CPI timing-trigger resolved benignly (+0.1% m/m, 12 Aug) and breadth improved materially - the Russell 2000 made a record (+3.15% on the week), easing the top-heavy objection at the margin. Claims at 209k with a 199k four-week average contradicted the July payroll scare rather than confirming it. What replaced them is an energy/geopolitical channel: Brent $88.52 (14 Aug) on an open-ended US blockade of Iranian ports, which is the one live path from here to a rates-and-inflation re-rating. Valuation and concentration remain the hot cluster. Depth risk ~15-25% on a catalyst; timing un-triggered. The 0-100 composite is the 8 Aug weekly figure - the 14 Aug append did not run and is owed.",
+    "read": "Still 4 of 7 clusters flashing, and this evening's data added a channel rather than removing one. The benign 12 Aug CPI (+0.1% m/m) and the improved breadth of last week (Russell 2000 record, +3.15%) both stand. Claims at 209k with a 199k four-week average continue to contradict the recession read. What is new is a demand-side crack and a rates-side transmission arriving together: China's July activity missed across the board (output +4.5%, retail sales +0.6%, FAI -6.7% YTD) while the UK 30-year gilt rose to 5.77% and the 10-year back above 5% on oil pass-through. The energy/geopolitical channel is therefore no longer purely prospective - it is now priced in at least one G7 curve. Valuation and concentration remain the hot cluster. Depth risk ~15-25% on a catalyst; timing un-triggered. The 0-100 composite is the 8 Aug weekly figure - the 14 Aug append did not run and is owed.",
     "buckets": [
       {
         "nm": "Valuation",
@@ -405,39 +369,33 @@
       },
       {
         "nm": "Credit",
-        "summary": "Calm - HY OAS ~271bp, IG ~85bp; no spread reaction to the oil move.",
+        "summary": "Calm on spreads, but the composition of AI funding is worth watching rather than fearing. Nvidia's $500bn financing platform with six large alternative-asset managers, CoreWeave's $35-39bn capex against $12.4-13.2bn of guided revenue, and Nebius customer prepayments covering 50-60% of associated capex all mean the build is increasingly credit-financed. That is not a stress signal today; it is the mechanism by which one would arrive. Watch for circularity between vendors, customers and financiers.",
         "inds": [
           {
             "nm": "US HY OAS spread",
-            "val": "271 bp",
+            "val": "267 bp",
             "status": "calm",
             "tr": "flat",
             "mean": "High-yield risk premium; tight = complacent credit.",
             "meta": {
-              "as_of": "2026-08-13",
+              "as_of": "2026-08-14",
               "source": "FRED (fredgraph.csv / api), free, no key (BAMLH0A0HYM2)",
               "cadence": "daily",
-              "estimate": false,
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_fred(BAMLH0A0HYM2): requests not available",
-              "stale_since": "2026-08-17"
+              "estimate": false
             }
           },
           {
             "nm": "IG OAS spread",
-            "val": "79 bp",
+            "val": "80 bp",
             "status": "calm",
             "tr": "flat",
             "mean": "Investment-grade spread; low = easy credit conditions.",
             "meta": {
-              "as_of": "2026-08-13",
+              "as_of": "2026-08-14",
               "source": "FRED (fredgraph.csv / api), free, no key (BAMLC0A0CM)",
               "cadence": "daily",
               "estimate": false,
-              "note": "Approx this run; clean FRED daily feed.",
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_fred(BAMLC0A0CM): requests not available",
-              "stale_since": "2026-08-17"
+              "note": "Approx this run; clean FRED daily feed."
             }
           }
         ]
@@ -448,18 +406,15 @@
         "inds": [
           {
             "nm": "VIX",
-            "val": "14.6",
+            "val": "14.2",
             "status": "calm",
             "tr": "up",
             "mean": "30-day implied equity vol; low = calm markets.",
             "meta": {
-              "as_of": "2026-08-13",
+              "as_of": "2026-08-14",
               "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
               "cadence": "daily",
-              "estimate": false,
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_fred(VIXCLS): requests not available | fetch_yahoo(^VIX): requests not available",
-              "stale_since": "2026-08-17"
+              "estimate": false
             }
           },
           {
@@ -551,10 +506,7 @@
               "source": "FRED (fredgraph.csv / api), free, no key (NFCI)",
               "cadence": "weekly",
               "estimate": false,
-              "note": "Approx this run; clean FRED weekly feed.",
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_fred(NFCI): requests not available",
-              "stale_since": "2026-08-17"
+              "note": "Approx this run; clean FRED weekly feed."
             }
           },
           {
@@ -572,25 +524,22 @@
           },
           {
             "nm": "USD (DXY) funding",
-            "val": "99.8",
+            "val": "99.4",
             "status": "calm",
             "tr": "up",
             "mean": "Dollar demand; sharp spikes signal funding stress.",
             "meta": {
-              "as_of": "2026-08-10",
+              "as_of": "2026-08-17",
               "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
               "cadence": "daily",
-              "estimate": false,
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_stooq(dx.f): requests not available",
-              "stale_since": "2026-08-17"
+              "estimate": false
             }
           }
         ]
       },
       {
         "nm": "Macro / recession",
-        "summary": "Mixed - claims 209k / 199k 4-wk avg near 1969 lows cut AGAINST the July -23k payroll scare; soft retail sales and weak sentiment cut the other way.",
+        "summary": "Mixed, and the softness moved location again. US labour is not turning - claims 209k, four-week average 199k, continuing claims down 22k to 1.777m. The consumer is where it shows: July retail sales -0.6% m/m, the first decline in nine months. New this evening: China's July activity missed on every line, which is a demand impulse the US consumer read does not capture. Home Depot (18 Aug), Target (19 Aug) and Walmart (20 Aug) are the near-dated tests.",
         "inds": [
           {
             "nm": "10Y-2Y curve",
@@ -636,22 +585,19 @@
       },
       {
         "nm": "Global / contagion",
-        "summary": "The live cluster - Iran/Hormuz war premium (Brent $88.52) is now the main external channel; EM credit and periphery still calm.",
+        "summary": "The most changed bucket. China's July data (17 Aug) showed output +4.5%, retail sales +0.6% and fixed-asset investment -6.7% year-to-date with unemployment at 5.2% - a broad loss of momentum in the world's second economy, arriving while Hormuz stays shut. The UK is the clearest transmission so far: 30-year gilt 5.77%, 10-year above 5%. Second-order risk is that a weaker China caps the industrial-metals leg of the reshoring trade even as the policy support for it strengthens.",
         "inds": [
           {
             "nm": "EM $-credit spread",
-            "val": "284 bp",
+            "val": "282 bp",
             "status": "calm",
             "tr": "flat",
             "mean": "EM hard-currency sovereign/credit premium; low = risk-on EM.",
             "meta": {
-              "as_of": "2026-08-13",
+              "as_of": "2026-08-14",
               "source": "FRED (fredgraph.csv / api), free, no key (BAMLEMHBHYCRPIOAS / EMBI proxy)",
               "cadence": "daily",
-              "estimate": false,
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_fred(BAMLEMHBHYCRPIOAS): requests not available",
-              "stale_since": "2026-08-17"
+              "estimate": false
             }
           },
           {
@@ -683,18 +629,15 @@
           },
           {
             "nm": "USD (DXY) stress",
-            "val": "99.8",
+            "val": "99.4",
             "status": "calm",
             "tr": "up",
             "mean": "Global dollar strength; sharp spikes tighten worldwide conditions.",
             "meta": {
-              "as_of": "2026-08-10",
+              "as_of": "2026-08-17",
               "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
               "cadence": "daily",
-              "estimate": false,
-              "stale": true,
-              "stale_reason": "fetch failed 2026-08-17: fetch_stooq(dx.f): requests not available",
-              "stale_since": "2026-08-17"
+              "estimate": false
             }
           }
         ]
@@ -703,109 +646,102 @@
   },
   "sectors": [
     {
-      "nm": "AI / Semiconductors",
-      "value": 16,
+      "nm": "AI / semiconductors",
+      "value": 14,
       "mom": "imp",
       "r": "OW",
-      "rationale": "TSMC July revenue +44.7% y/y, HPC 66% of mix; NVDA (26 Aug) the next gate."
+      "rationale": "TSMC July revenue +45% y/y; BIS widened D:5 licensing on 15 Aug. NVDA (26 Aug) the next gate."
     },
     {
-      "nm": "AI Memory / HBM",
+      "nm": "AI power & electrical infrastructure",
+      "value": 13,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Absorbs the old Electrification / Grid tile. Fluence backlog a record $6.4bn; storage is the leg that ships now."
+    },
+    {
+      "nm": "AI memory / HBM / NAND",
       "value": 12,
       "mom": "imp",
       "r": "OW",
-      "rationale": "DRAM spot ~+700% y/y; 2026 HBM capacity pre-booked; tight into 2H26 and beyond."
+      "rationale": "DRAM spot ~+700% y/y; 2026 HBM capacity pre-booked; SK-NVIDIA HBM4 co-development confirmed."
     },
     {
-      "nm": "AI Power & Electrical",
-      "value": 12,
+      "nm": "AI optical interconnect",
+      "value": 11,
       "mom": "imp",
       "r": "OW",
-      "rationale": "Capex destination; Fluence backlog a record $6.4bn with ~$850m of datacentre orders."
+      "rationale": "Lumentum rev $1.01bn (+109%), record 800G, 1.6T ramping - the strongest confirmed print of the week."
     },
     {
-      "nm": "Gold / Precious Metals",
+      "nm": "Gold / precious metals",
+      "value": 10,
+      "mom": "imp",
+      "r": "OW",
+      "rationale": "Tile $4,469 (+2.03%); still ~20% below the 28 Jan ATH near $5,600 - recovery, not record."
+    },
+    {
+      "nm": "Energy premium / oil complex",
       "value": 9,
       "mom": "imp",
-      "r": "OW",
-      "rationale": "~$4,414 and rebuilding; still ~21% below the Jan 2026 ATH - recovery, not record."
+      "r": "N",
+      "rationale": "PROMOTED from an orphan sector tile. Brent $88.78 on an open-ended blockade; now visible in UK gilts."
     },
     {
-      "nm": "AI Optical Interconnect",
-      "value": 9,
+      "nm": "Neoclouds / AI-infra rental",
+      "value": 8,
       "mom": "imp",
       "r": "OW",
-      "rationale": "Lumentum rev $1.01bn (+109%), record 800G, 1.6T ramping - strongest confirmed print of the week."
+      "rationale": "CRWV and NBIS both converted capex into contracted revenue; the payer-fade thesis failed here."
     },
     {
-      "nm": "Neoclouds",
-      "value": 9,
-      "mom": "imp",
-      "r": "OW",
-      "rationale": "CRWV and NBIS both converted capex to contracted revenue; the payer-fade thesis failed here."
-    },
-    {
-      "nm": "Nuclear / Uranium & SMRs",
+      "nm": "Nuclear / uranium & SMRs",
       "value": 7,
       "mom": "imp",
       "r": "OW",
-      "rationale": "Uranium term ~$90/lb, highest since 2008; FOAK cost and HALEU fuel the honest caveats."
+      "rationale": "Term uranium ~$90/lb, spot $86.36; Goldman added 46 GW of SMRs to its model, +17% to long-term demand."
     },
     {
-      "nm": "Robotics & Automation",
-      "value": 5,
+      "nm": "Cybersecurity",
+      "value": 7,
       "mom": "imp",
       "r": "N",
-      "rationale": "REVIVED - Figure 03 past 1,000 units, ~$4.3bn humanoid funding; Waymo cleared for 18 CA counties."
+      "rationale": "CRWD +60% and PANW +80% YTD at record highs; PANW reports 18 Aug into full multiples."
     },
     {
       "nm": "Defence",
       "value": 6,
       "mom": "flat",
       "r": "OW",
-      "rationale": "No fresh UK print in three weeks; a source contradicting the RHM -40% YTD anchor is logged unverified."
+      "rationale": "RHM Q2 sales +69.8%, backlog EUR 80.4bn - but H1 cash flow -EUR 1.6bn, and the Ukraine truce is the live kill-watch."
     },
     {
-      "nm": "Critical Minerals / Rare Earths",
-      "value": 4,
+      "nm": "Robotics & automation",
+      "value": 5,
+      "mom": "imp",
+      "r": "N",
+      "rationale": "Waymo 500k+ weekly rides, 3,500 vehicles, London planned; Tesla Optimus Gen 3 still not shown."
+    },
+    {
+      "nm": "Critical minerals / rare earths",
+      "value": 5,
       "mom": "imp",
       "r": "OW",
-      "rationale": "MP +~8%, USA Rare Earth +9% on Fri 14 Aug; Section 232 minerals track still live."
+      "rationale": "MP processed-REE revenue nearly quadrupled to $94.4m after halting shipments to China."
     },
     {
-      "nm": "Crypto / Digital Assets",
+      "nm": "Space / launch",
+      "value": 4,
+      "mom": "flat",
+      "r": "N",
+      "rationale": "RKLB backlog $2.36bn, but Neutron may now slip into 2027 - the theme's stated kill condition."
+    },
+    {
+      "nm": "Crypto / digital assets",
       "value": 3,
       "mom": "det",
       "r": "N",
       "rationale": "CLARITY Act shelved past its 10 Aug deadline - the theme's stated driver has been removed."
-    },
-    {
-      "nm": "Cybersecurity",
-      "value": 4,
-      "mom": "imp",
-      "r": "N",
-      "rationale": "CRWD and PANW at record highs post-Black Hat; structural spend intact, multiples full."
-    },
-    {
-      "nm": "Space / Launch",
-      "value": 3,
-      "mom": "flat",
-      "r": "N",
-      "rationale": "RKLB demand confirmed ($2.36bn backlog) but Neutron's first flight is still undated."
-    },
-    {
-      "nm": "Electrification / Grid",
-      "value": 3,
-      "mom": "imp",
-      "r": "OW",
-      "rationale": "Interconnect queues multi-year; grid-scale storage now the fastest-shipping leg."
-    },
-    {
-      "nm": "Energy",
-      "value": 5,
-      "mom": "imp",
-      "r": "N",
-      "rationale": "REVERSED - Brent $88.52 on an open-ended US blockade of Iranian ports; the premium is back on."
     }
   ],
   "drivers": [
@@ -848,7 +784,7 @@
       "ev": [
         "CRWV Q2 (11 Aug): rev $2.58bn, backlog $104bn (+246%), FY26 guide raised to $12.4-13.2bn",
         "NBIS Q2 (12 Aug): rev $582m (+454%), adj EBITDA +$236m, four contracts >$1bn each",
-        "Q2 13Fs (14 Aug): institutions net trimmed AI-infra, but 36% of filers were net buyers of CRWV/ANET/AVGO"
+        "Q2 13Fs (14 Aug): institutions net reduced AI-infra exposure, but 36% of filers were net buyers of CRWV/ANET/AVGO"
       ]
     },
     {
@@ -856,9 +792,9 @@
       "nm": "Rate & liquidity regime",
       "dir": "tailwind",
       "traj": "flat",
-      "trajLbl": "Benign - hike risk fading",
+      "trajLbl": "Benign US, but the UK curve cracked",
       "conv": 4,
-      "oneLiner": "July CPI came in benign and Sept-hike odds fell toward ~30%; the regime is a hold, not a cut.",
+      "oneLiner": "US CPI benign and Sept-hike odds near ~30%, but the UK 30-year gilt hit 5.77% on oil pass-through.",
       "drives": [
         [
           "Gold",
@@ -1000,9 +936,9 @@
       "nm": "Supply-chain security / deglobalization",
       "dir": "tailwind",
       "traj": "up",
-      "trajLbl": "Strengthening",
+      "trajLbl": "Tightening further",
       "conv": 4,
-      "oneLiner": "The binding constraints are now specific and named: indium phosphide for optics, HALEU for SMRs, DRAM for everything.",
+      "oneLiner": "BIS extended advanced-computing licensing on 15 Aug to subsidiaries of D:5-parented firms; China's rare-earth blacklist still bites.",
       "drives": [
         [
           "Defence",
@@ -1071,9 +1007,9 @@
       "nm": "International / ex-US rotation",
       "dir": "tailwind",
       "traj": "up",
-      "trajLbl": "Asia-led",
+      "trajLbl": "Asia-led, but China cracked",
       "conv": 4,
-      "oneLiner": "The ex-US rotation is intact but its leadership flipped: Japan and Korea led, Europe stalled.",
+      "oneLiner": "Japan and Korea led last week; China's July activity then missed across the board on 17 Aug.",
       "drives": [
         [
           "Defence",
@@ -1112,9 +1048,9 @@
       "nm": "Geopolitics",
       "dir": "headwind",
       "traj": "up",
-      "trajLbl": "Escalating",
+      "trajLbl": "Escalating - now in the curve",
       "conv": 5,
-      "oneLiner": "Reversed hard: the US signalled an open-ended naval blockade of Iranian ports and Hormuz stayed shut - Brent $88.52.",
+      "oneLiner": "The blockade is open-ended and Brent holds $88.78; the UK 10-year back above 5% is the first hard transmission.",
       "drives": [
         [
           "Defence",
@@ -1188,7 +1124,7 @@
       "conv": 5,
       "first_seen": "2026-07-13",
       "includes": "GPUs & accelerators, CPUs, foundry and EDA — the compute core of AI.",
-      "read": "Anchor intact and broadening; TSMC July +44.7% y/y with HPC at 66% of mix. NVDA on 26 Aug is the gate.",
+      "read": "Demand unquestioned, policy tightening around it. TSMC July revenue +45% y/y; BIS extended advanced-computing licensing on 15 Aug to entities whose ultimate parent sits in Country Group D:5, closing the subsidiary route. NVDA on 26 Aug is the next gate.",
       "now": "~$650bn",
       "proj": "~$1.1tn",
       "hz": "2028 (est.)",
@@ -1237,6 +1173,230 @@
       "tail": [
         "TSMC raised both capex and revenue outlook for the year",
         "AMAT FQ3 record rev $9.12bn, EPS $3.50 (+25% y/y)"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "SMH"
+            ],
+            ", ",
+            [
+              "SOXX"
+            ],
+            ", ",
+            [
+              "SOXQ"
+            ]
+          ],
+          "tradeoff": "Whole-cycle exposure, but the top handful of names dominate the weights - less diversified than it looks.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "NVDA"
+            ],
+            ", ",
+            [
+              "TSM"
+            ],
+            ", ",
+            [
+              "AVGO"
+            ],
+            ", ",
+            [
+              "AMD"
+            ]
+          ],
+          "tradeoff": "The ledger's named leaders; NVDA reports 26 Aug, so near-dated single-print risk is high.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "ASML"
+            ],
+            ", ",
+            [
+              "AMAT"
+            ],
+            ", ",
+            [
+              "LRCX"
+            ],
+            ", ",
+            [
+              "KLAC"
+            ]
+          ],
+          "tradeoff": "Equipment sells into every node whoever wins the design race - but the tape now marks these on gross-margin mix, not orders (AMAT fell ~5% on record results).",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "VanEck Semiconductor UCITS, L&G Semiconductor UCITS, ",
+            [
+              "ASML"
+            ],
+            " (Amsterdam), Polar Capital Technology Trust ",
+            [
+              "PCT"
+            ],
+            ".L"
+          ],
+          "tradeoff": "USD assets in a GBP wrapper - an unhedged share class carries the dollar move on top of the sector move.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "nm": "AI power & electrical infrastructure",
+      "cat": "infra",
+      "x": 50,
+      "y": 74,
+      "size": 520,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 5,
+      "first_seen": "2026-07-24",
+      "includes": "Grid equipment, switchgear, transformers, cooling and backup — plus SMR offtake.",
+      "read": "The capex destination, and the storage leg now ships inside the cycle. Fluence backlog a record $6.4bn on a 45.6 GW / 163.7 GWh pipeline, plus an Excelsior agreement for 2.2 GWh built on Tennessee cells and Utah modules - a US-content cross-link to the reshoring driver.",
+      "now": "~$310bn",
+      "proj": "~$650bn",
+      "hz": "2030 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 34,
+      "sizeUnit": "grid + datacentre electrical spend",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Spend",
+          "~$310bn → ~$650bn"
+        ]
+      ],
+      "price": [
+        [
+          "GEV"
+        ],
+        [
+          ", "
+        ],
+        [
+          "VRT"
+        ],
+        [
+          ", "
+        ],
+        [
+          "ETN"
+        ],
+        [
+          " + "
+        ],
+        [
+          "OKLO"
+        ],
+        [
+          "/"
+        ],
+        [
+          "CCJ"
+        ],
+        [
+          " on SMR offtake"
+        ]
+      ],
+      "flows": [
+        "Infrastructure & utility funds adding electrical names",
+        "Power-theme ETFs gathering assets fast"
+      ],
+      "tail": [
+        "Fluence backlog a record $6.4bn; ~$550m single hyperscaler storage order in July",
+        "Google-Kairos-TVA 50 MW Hermes 2 SMR PPA (signed)"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "GRID"
+            ],
+            ", ",
+            [
+              "PAVE"
+            ],
+            ", ",
+            [
+              "XLU"
+            ]
+          ],
+          "tradeoff": "GRID and PAVE capture the electrical build-out broadly; XLU adds rate-regulated ROE risk alongside the datacentre PPA upside.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "GEV"
+            ],
+            ", ",
+            [
+              "VRT"
+            ],
+            ", ",
+            [
+              "ETN"
+            ],
+            ", ",
+            [
+              "PWR"
+            ],
+            ", ",
+            [
+              "CEG"
+            ]
+          ],
+          "tradeoff": "The ledger's named leaders, already substantially re-rated - entry here is into strength rather than into a discount.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "FLNC"
+            ],
+            ", Siemens Energy ENR.DE, Schneider SU.PA"
+          ],
+          "tradeoff": "Grid-scale storage is the leg that ships inside this cycle rather than in 2030 - though Fluence's record $6.4bn backlog is share-taking, not a sector-wide lift.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "Siemens Energy ENR.DE, Schneider SU.PA, National Grid ",
+            [
+              "NG"
+            ],
+            ".L"
+          ],
+          "tradeoff": "The European electrical majors are the natural non-US route and are EUR-denominated; National Grid gives regulated sterling exposure but little AI-datacentre torque.",
+          "private": false
+        }
       ]
     },
     {
@@ -1294,6 +1454,60 @@
       "tail": [
         "DRAM spot up ~700% y/y; 2026 HBM capacity pre-booked by end-2025",
         "64GB DDR5 RDIMM ~$873 (Q1) to ~$1,586 (Q4 2026), an estimate"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "SMH"
+            ],
+            ", ",
+            [
+              "SOXX"
+            ]
+          ],
+          "tradeoff": "There is no dedicated memory ETF; broad semi funds hold the memory names at small weights, so a 700% DRAM spot move barely shows through.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "MU"
+            ],
+            ", ",
+            [
+              "SNDK"
+            ],
+            ", Samsung Electronics 005930.KS, SK hynix 000660.KS"
+          ],
+          "tradeoff": "The two purest HBM plays are Korean-listed and need international dealing access; the US pair is the practical route for most.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "LRCX"
+            ],
+            ", ",
+            [
+              "AMAT"
+            ],
+            ", Advantest 6857.T"
+          ],
+          "tradeoff": "Memory-equipment makers capture the reallocation of capacity to HBM without having to pick between the three DRAM makers.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "iShares MSCI Korea UCITS, VanEck Semiconductor UCITS"
+          ],
+          "tradeoff": "A Korea ETF is the practical UK route to Samsung and SK hynix, but it dilutes the memory signal with banks and industrials and is unhedged to KRW.",
+          "private": false
+        }
       ]
     },
     {
@@ -1363,465 +1577,58 @@
       "tail": [
         "Record 800G shipments; 1.6T production started, ramping through CY2027",
         "FCC ban still draft; Chinese firms hold >60% of the 800G+ market"
-      ]
-    },
-    {
-      "id": "neoclouds",
-      "nm": "Neoclouds / AI-infra rental",
-      "cat": "infra",
-      "x": 40,
-      "y": 70,
-      "size": 110,
-      "stage": "building",
-      "stageLbl": "Building",
-      "conv": 4,
-      "first_seen": "2026-08-06",
-      "includes": "GPU-rental clouds and AI-infra operators renting compute by the hour.",
-      "read": "The payer layer PASSED its test - both prints converted capex into contracted, largely pre-paid revenue. Financing structure is now the thing to watch, not demand.",
-      "now": "~$18bn",
-      "proj": "~$55bn",
-      "hz": "2028 (est.)",
-      "nowEst": true,
-      "projEst": true,
-      "runway": 32,
-      "sizeUnit": "GPU-rental revenue run-rate",
-      "tt": [
-        [
-          "Maturity",
-          "Building"
-        ],
-        [
-          "Upside left",
-          "High"
-        ],
-        [
-          "Run-rate",
-          "~$18bn → ~$55bn"
-        ]
       ],
-      "price": [
-        [
-          "CRWV"
-        ],
-        [
-          " ~$105 post-print, "
-        ],
-        [
-          "NBIS"
-        ],
-        [
-          " rev +454% y/y, "
-        ],
-        [
-          "IREN"
-        ],
-        [
-          " - both beat and were rewarded"
-        ]
-      ],
-      "flows": [
-        "Private credit funding GPU fleets at scale",
-        "Sovereign & enterprise pre-commitments rising"
-      ],
-      "tail": [
-        "CRWV backlog $104bn (+246% y/y), FY26 guide $12.4-13.2bn, capex $35-39bn",
-        "NBIS: four contracts >$1bn each, 50-60% of associated capex pre-paid"
-      ]
-    },
-    {
-      "id": "power",
-      "nm": "AI power & electrical infrastructure",
-      "cat": "infra",
-      "x": 50,
-      "y": 74,
-      "size": 520,
-      "stage": "building",
-      "stageLbl": "Building",
-      "conv": 5,
-      "first_seen": "2026-07-24",
-      "includes": "Grid equipment, switchgear, transformers, cooling and backup — plus SMR offtake.",
-      "read": "Core overweight and the most durable leg in the book; storage is the part that ships this year rather than in 2030.",
-      "now": "~$310bn",
-      "proj": "~$650bn",
-      "hz": "2030 (est.)",
-      "nowEst": true,
-      "projEst": true,
-      "runway": 34,
-      "sizeUnit": "grid + datacentre electrical spend",
-      "tt": [
-        [
-          "Maturity",
-          "Building"
-        ],
-        [
-          "Upside left",
-          "Very high"
-        ],
-        [
-          "Spend",
-          "~$310bn → ~$650bn"
-        ]
-      ],
-      "price": [
-        [
-          "GEV"
-        ],
-        [
-          ", "
-        ],
-        [
-          "VRT"
-        ],
-        [
-          ", "
-        ],
-        [
-          "ETN"
-        ],
-        [
-          " + "
-        ],
-        [
-          "OKLO"
-        ],
-        [
-          "/"
-        ],
-        [
-          "CCJ"
-        ],
-        [
-          " on SMR offtake"
-        ]
-      ],
-      "flows": [
-        "Infrastructure & utility funds adding electrical names",
-        "Power-theme ETFs gathering assets fast"
-      ],
-      "tail": [
-        "Fluence backlog a record $6.4bn; ~$550m single hyperscaler storage order in July",
-        "Google-Kairos-TVA 50 MW Hermes 2 SMR PPA (signed)"
-      ]
-    },
-    {
-      "id": "robotics",
-      "nm": "Robotics & automation",
-      "cat": "industrial",
-      "x": 29,
-      "y": 66,
-      "size": 180,
-      "stage": "building",
-      "stageLbl": "Building",
-      "conv": 3,
-      "first_seen": "2026-07-24",
-      "includes": "Industrial, warehouse and surgical robotics plus automation enablers.",
-      "read": "REVIVED off a fading track - deployment numbers and regulatory approvals arrived together. Still a starter position; no clean rentable basket.",
-      "now": "~$45bn",
-      "proj": "~$120bn",
-      "hz": "2030 (est.)",
-      "nowEst": true,
-      "projEst": true,
-      "runway": 26,
-      "sizeUnit": "industrial + surgical robotics",
-      "tt": [
-        [
-          "Maturity",
-          "Building"
-        ],
-        [
-          "Upside left",
-          "High"
-        ],
-        [
-          "Market",
-          "~$45bn → ~$120bn"
-        ]
-      ],
-      "price": [
-        [
-          "ISRG"
-        ],
-        [
-          ", "
-        ],
-        [
-          "TER"
-        ],
-        [
-          ", "
-        ],
-        [
-          "ABB"
-        ],
-        [
-          ", "
-        ],
-        [
-          "SYM"
-        ],
-        [
-          " - Waymo cleared for 18 California counties"
-        ]
-      ],
-      "flows": [
-        "Automation baskets attracting fresh allocations",
-        "Humanoid-robotics venture funding surging"
-      ],
-      "tail": [
-        "Figure 03 past 1,000 units; AgiBot 15,000 cumulative; ~$4.3bn humanoid funding in 2026",
-        "Waymo ~500k paid rides/week across ~10 cities, targeting 1m/week"
-      ]
-    },
-    {
-      "id": "nuclear",
-      "nm": "Nuclear / uranium & SMRs",
-      "cat": "industrial",
-      "x": 36,
-      "y": 82,
-      "size": 130,
-      "stage": "building",
-      "stageLbl": "Building",
-      "conv": 4,
-      "first_seen": "2026-08-10",
-      "includes": "Uranium miners, enrichment and small-modular-reactor developers.",
-      "read": "Forecast has become contract, but the honest caveats are now costed: FOAK $80-150/MWh and a HALEU fuel bottleneck into 2027-30.",
-      "now": "~$40bn",
-      "proj": "~$110bn",
-      "hz": "2032 (est.)",
-      "nowEst": true,
-      "projEst": true,
-      "runway": 24,
-      "sizeUnit": "uranium + reactor build value",
-      "tt": [
-        [
-          "Maturity",
-          "Building"
-        ],
-        [
-          "Upside left",
-          "Very high"
-        ],
-        [
-          "Market",
-          "~$40bn → ~$110bn"
-        ]
-      ],
-      "price": [
-        [
-          "CCJ"
-        ],
-        [
-          ", "
-        ],
-        [
-          "LEU"
-        ],
-        [
-          ", "
-        ],
-        [
-          "SMR"
-        ],
-        [
-          ", "
-        ],
-        [
-          "OKLO"
-        ],
-        [
-          " re-rating on datacentre demand"
-        ]
-      ],
-      "flows": [
-        "Dedicated nuclear/uranium ETFs gathering assets",
-        "Utility & tech PPAs underwriting new capacity"
-      ],
-      "tail": [
-        "Uranium term price ~$90/lb - highest since 2008; spot ~$84-86",
-        "~9.8 GW committed to datacentres, ~80% not yet in commercial operation"
-      ]
-    },
-    {
-      "id": "minerals",
-      "nm": "Critical minerals / rare earths",
-      "cat": "resources",
-      "x": 26,
-      "y": 80,
-      "size": 90,
-      "stage": "building",
-      "stageLbl": "Building",
-      "conv": 3,
-      "first_seen": "2026-07-24",
-      "includes": "Rare-earth miners, processors and magnet makers — inputs to EVs, motors, defence.",
-      "read": "Policy-driven and now moving on it: the complex rallied hard on 14 Aug with the Section 232 minerals track still open.",
-      "now": "~$12bn",
-      "proj": "~$40bn",
-      "hz": "2032 (est.)",
-      "nowEst": true,
-      "projEst": true,
-      "runway": 20,
-      "sizeUnit": "ex-China rare-earth + magnet supply",
-      "tt": [
-        [
-          "Maturity",
-          "Building"
-        ],
-        [
-          "Upside left",
-          "Very high"
-        ],
-        [
-          "Market",
-          "~$12bn → ~$40bn"
-        ]
-      ],
-      "price": [
-        [
-          "MP"
-        ],
-        [
-          " +~8% to ~$60 (14 Aug), "
-        ],
-        [
-          "FCX"
-        ],
-        [
-          ", "
-        ],
-        [
-          "CENX"
-        ],
-        [
-          " - USA Rare Earth +9% the same day"
-        ]
-      ],
-      "flows": [
-        "Dedicated critical-minerals / rare-earth ETFs launching",
-        "Government offtake and price-floor support emerging"
-      ],
-      "tail": [
-        "Section 232 critical-minerals proclamation live; no duties imposed yet",
-        "Ten further minerals pulled into the Section 232 net"
-      ]
-    },
-    {
-      "id": "space",
-      "nm": "Space / launch",
-      "cat": "industrial",
-      "x": 20,
-      "y": 82,
-      "size": 70,
-      "stage": "emerging",
-      "stageLbl": "Emerging",
-      "conv": 3,
-      "first_seen": "2026-07-25",
-      "includes": "Commercial launch, satellites and payload operators.",
-      "read": "Demand leg confirmed at both names; the flagship catalyst is not. Neutron's first flight is still undated - watch-list sizing.",
-      "now": "~$15bn",
-      "proj": "~$60bn",
-      "hz": "2032 (est.)",
-      "nowEst": true,
-      "projEst": true,
-      "runway": 18,
-      "sizeUnit": "commercial launch + payload",
-      "tt": [
-        [
-          "Maturity",
-          "Emerging"
-        ],
-        [
-          "Upside left",
-          "Very high"
-        ],
-        [
-          "Market",
-          "~$15bn → ~$60bn"
-        ]
-      ],
-      "price": [
-        [
-          "RKLB"
-        ],
-        [
-          " ~$77.70 (-3% post-print), "
-        ],
-        [
-          "ASTS"
-        ],
-        [
-          " 13 satellites in orbit, beta targeted by year-end"
-        ]
-      ],
-      "flows": [
-        "Early space-theme fund launches gathering assets",
-        "Defence primes expanding space exposure"
-      ],
-      "tail": [
-        "RKLB record backlog $2.36bn (+137% y/y); Q3 guide $250-265m",
-        "ASTS $1.30bn backlog, $2.7bn cash, >60 MNO partners"
-      ]
-    },
-    {
-      "id": "defence",
-      "nm": "Defence",
-      "cat": "industrial",
-      "x": 70,
-      "y": 40,
-      "size": 320,
-      "stage": "late",
-      "stageLbl": "Late-stage",
-      "conv": 4,
-      "first_seen": "2026-07-27",
-      "includes": "Prime contractors and munitions — US and European primes.",
-      "read": "Carried on stale evidence - no fresh UK print in three weeks, and one source contradicting the RHM anchor is logged unverified.",
-      "now": "~$280bn",
-      "proj": "~$400bn",
-      "hz": "2029 (est.)",
-      "nowEst": false,
-      "projEst": true,
-      "runway": 58,
-      "sizeUnit": "global prime-contractor revenue",
-      "tt": [
-        [
-          "Maturity",
-          "Late-stage"
-        ],
-        [
-          "Upside left",
-          "Medium"
-        ],
-        [
-          "Market",
-          "~$280bn → ~$400bn"
-        ]
-      ],
-      "price": [
-        [
-          "BA.L"
-        ],
-        [
-          ", "
-        ],
-        [
-          "RR.L"
-        ],
-        [
-          " firing; "
-        ],
-        [
-          "RHM.DE"
-        ],
-        [
-          " lagging (-40% YTD)"
-        ]
-      ],
-      "flows": [
-        "Defence & European-defence ETFs seeing steady inflows",
-        "UK primes leading on order intake"
-      ],
-      "tail": [
-        "BAE record GBP84bn backlog; RR raised targets (both carried from July)",
-        "New leg: US Navy construction opened to foreign yards with US investment"
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            "No pure optical-interconnect fund exists"
+          ],
+          "tradeoff": "The nearest wrappers are broad AI-infrastructure and networking funds, in which optics sits at a few percent - there is no clean passive basket for this theme.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "COHR"
+            ],
+            ", ",
+            [
+              "LITE"
+            ],
+            ", ",
+            [
+              "ANET"
+            ],
+            ", ",
+            [
+              "CRDO"
+            ],
+            ", ",
+            [
+              "AAOI"
+            ]
+          ],
+          "tradeoff": "The ledger's expression line and the only real way in; valuations are rich (COHR and LITE above 127x trailing) and AAOI is unprofitable.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            "Sumitomo Electric 5802.T, Furukawa Electric 5801.T"
+          ],
+          "tradeoff": "The substrate and fibre layer is thin because Lumentum and Coherent are vertically integrated - and indium phosphide, which every Western alternative needs, is under Chinese export licensing.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "No UCITS optics fund"
+          ],
+          "tradeoff": "UK investors reach this through US lines in a general dealing account; there is no sterling or UCITS route that isolates optics.",
+          "private": false
+        }
       ]
     },
     {
@@ -1885,6 +1692,962 @@
       "tail": [
         "+10.3% off the 14 Jul $4,001 call; Citi $4,500 target stands",
         "Rebuilding from the ~$4,195 June low, not extending a record"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "GLD"
+            ],
+            ", ",
+            [
+              "IAU"
+            ],
+            ", physical ETCs"
+          ],
+          "tradeoff": "Tracks bullion with no operating leverage - the cleanest expression of the real-yield thesis itself, and the one that matches the ledger's actual call.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "GDX"
+            ],
+            ", ",
+            [
+              "NEM"
+            ],
+            ", ",
+            [
+              "AEM"
+            ],
+            ", ",
+            [
+              "B"
+            ]
+          ],
+          "tradeoff": "Miners give leverage to the price but add cost inflation, jurisdiction and execution risk that bullion does not carry.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "FNV"
+            ],
+            ", ",
+            [
+              "WPM"
+            ],
+            ", ",
+            [
+              "RGLD"
+            ]
+          ],
+          "tradeoff": "Royalty and streaming names take the price upside without per-ounce cost inflation, at a persistent valuation premium.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "iShares Physical Gold ",
+            [
+              "SGLN"
+            ],
+            ".L, WisdomTree ",
+            [
+              "PHAU"
+            ],
+            ".L, Royal Mint ",
+            [
+              "RMAU"
+            ],
+            ".L"
+          ],
+          "tradeoff": "These trade in sterling on the LSE and are ISA-eligible, but the underlying is USD gold - sterling strength eats the return even when the metal rises.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "energyprem",
+      "nm": "Energy premium / oil complex",
+      "cat": "realasset",
+      "x": 55,
+      "y": 62,
+      "size": 480,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 5,
+      "first_seen": "2026-08-11",
+      "includes": "Crude and refined products, integrated majors, energy services and tanker tonnage.",
+      "read": "Promoted from the orphan 'Energy' sector tile to a theme of its own. The premium is no longer a headline risk - it is in the UK curve, with the 30-year gilt at 5.77% and the 10-year back above 5% on oil pass-through.",
+      "now": "Brent $88.78",
+      "proj": "path-dependent on Hormuz",
+      "hz": "3-9m",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 45,
+      "sizeUnit": "Brent spot, front-month",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Event-driven"
+        ],
+        [
+          "Driver",
+          "Hormuz closure"
+        ]
+      ],
+      "price": [
+        [
+          "Brent $88.78 (+0.29%), WTI ~$82.40; both +>5% on the week to 14 Aug"
+        ]
+      ],
+      "flows": [
+        "Energy sector ratings reversed UW to N across the desk's own sector table",
+        "Safe-haven bid showing up in gold alongside crude, same driver"
+      ],
+      "tail": [
+        "US naval blockade of Iranian ports described as open-ended; Hormuz shut on Iran's terms",
+        "UK CPI forecast ~3.5% end-2026 if Hormuz reopens in Q3, materially higher if not (forecast)"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "XLE"
+            ],
+            ", ",
+            [
+              "BNO"
+            ],
+            ", ",
+            [
+              "USO"
+            ]
+          ],
+          "tradeoff": "XLE is equity beta to the premium; USO and BNO track futures, so roll cost means they diverge from spot over any long holding period.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "XOM"
+            ],
+            ", ",
+            [
+              "CVX"
+            ],
+            ", Shell ",
+            [
+              "SHEL"
+            ],
+            ".L, TotalEnergies TTE.PA"
+          ],
+          "tradeoff": "Integrated majors capture the crude move with dividend support, but downstream refining margin partly offsets a spike rather than amplifying it.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "FRO"
+            ],
+            " (Frontline), ",
+            [
+              "STNG"
+            ],
+            " (Scorpio Tankers)"
+          ],
+          "tradeoff": "Tanker rates rise on rerouting even when volumes fall, which makes tonnage the purest expression of the blockade specifically rather than of the oil price generally.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "Shell ",
+            [
+              "SHEL"
+            ],
+            ".L, BP ",
+            [
+              "BP"
+            ],
+            ".L, WisdomTree Brent ETC"
+          ],
+          "tradeoff": "Shell and BP are sterling LSE lines and the most direct UK route; a Brent ETC gives the commodity without equity risk but carries the same futures roll.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "neoclouds",
+      "nm": "Neoclouds / AI-infra rental",
+      "cat": "infra",
+      "x": 40,
+      "y": 70,
+      "size": 110,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 4,
+      "first_seen": "2026-08-06",
+      "includes": "GPU-rental clouds and AI-infra operators renting compute by the hour.",
+      "read": "The payer layer PASSED its test - both prints converted capex into contracted, largely pre-paid revenue. Financing structure is now the thing to watch, not demand.",
+      "now": "~$18bn",
+      "proj": "~$55bn",
+      "hz": "2028 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 32,
+      "sizeUnit": "GPU-rental revenue run-rate",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "High"
+        ],
+        [
+          "Run-rate",
+          "~$18bn → ~$55bn"
+        ]
+      ],
+      "price": [
+        [
+          "CRWV"
+        ],
+        [
+          " ~$105 post-print, "
+        ],
+        [
+          "NBIS"
+        ],
+        [
+          " rev +454% y/y, "
+        ],
+        [
+          "IREN"
+        ],
+        [
+          " - both beat and were rewarded"
+        ]
+      ],
+      "flows": [
+        "Private credit funding GPU fleets at scale",
+        "Sovereign & enterprise pre-commitments rising"
+      ],
+      "tail": [
+        "CRWV backlog $104bn (+246% y/y), FY26 guide $12.4-13.2bn, capex $35-39bn",
+        "NBIS: four contracts >$1bn each, 50-60% of associated capex pre-paid"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            "No neocloud ETF"
+          ],
+          "tradeoff": "Too new and too small a cohort for a dedicated fund; broad AI-infrastructure ETFs hold CRWV at low single-digit weights.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "CRWV"
+            ],
+            ", ",
+            [
+              "NBIS"
+            ],
+            ", ",
+            [
+              "IREN"
+            ]
+          ],
+          "tradeoff": "Contracted, prepaid backlog is what re-rated these; they are debt- and prepayment-funded balance sheets, so financing conditions now matter more than demand.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "DLR"
+            ],
+            ", ",
+            [
+              "EQIX"
+            ],
+            ", ",
+            [
+              "BX"
+            ],
+            ", ",
+            [
+              "APO"
+            ]
+          ],
+          "tradeoff": "Owns the shell and the credit rather than the rental margin - lower torque to a neocloud re-rating, and the financiers now sit on both sides of the trade.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct (private)",
+          "vehicles": [
+            "Crusoe, Lambda"
+          ],
+          "tradeoff": "The purest remaining neocloud exposure is pre-IPO - Crusoe and Lambda are private, reachable only via secondaries or venture funds, and not accessible to most readers.",
+          "private": true
+        }
+      ]
+    },
+    {
+      "id": "nuclear",
+      "nm": "Nuclear / uranium & SMRs",
+      "cat": "industrial",
+      "x": 36,
+      "y": 82,
+      "size": 130,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 4,
+      "first_seen": "2026-08-10",
+      "includes": "Uranium miners, enrichment and small-modular-reactor developers.",
+      "read": "Term price doing the work. Uranium spot $86.36/lb end-July with the long-term contract around $90 - the highest since 2008 and well clear of the <$80 invalidation. Goldman added 46 GW of SMR deployment to 2045 into its model, a 17% uplift to long-run demand.",
+      "now": "~$40bn",
+      "proj": "~$110bn",
+      "hz": "2032 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 24,
+      "sizeUnit": "uranium + reactor build value",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Market",
+          "~$40bn → ~$110bn"
+        ]
+      ],
+      "price": [
+        [
+          "CCJ"
+        ],
+        [
+          ", "
+        ],
+        [
+          "LEU"
+        ],
+        [
+          ", "
+        ],
+        [
+          "SMR"
+        ],
+        [
+          ", "
+        ],
+        [
+          "OKLO"
+        ],
+        [
+          " re-rating on datacentre demand"
+        ]
+      ],
+      "flows": [
+        "Dedicated nuclear/uranium ETFs gathering assets",
+        "Utility & tech PPAs underwriting new capacity"
+      ],
+      "tail": [
+        "Uranium term price ~$90/lb - highest since 2008; spot ~$84-86",
+        "~9.8 GW committed to datacentres, ~80% not yet in commercial operation"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "URA"
+            ],
+            ", ",
+            [
+              "URNM"
+            ],
+            ", ",
+            [
+              "NLR"
+            ]
+          ],
+          "tradeoff": "URA and URNM are uranium-miner heavy and NLR leans utility; none of the three is an SMR pure-play.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "CCJ"
+            ],
+            ", ",
+            [
+              "OKLO"
+            ],
+            ", ",
+            [
+              "SMR"
+            ],
+            ", ",
+            [
+              "CEG"
+            ]
+          ],
+          "tradeoff": "Cameco is the producing anchor; Oklo and NuScale are pre-revenue developers whose value sits in 2030-plus offtake, so the two halves behave nothing alike.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            [
+              "LEU"
+            ],
+            " (Centrus), enrichment and fuel-cycle"
+          ],
+          "tradeoff": "HALEU is the binding constraint into 2027-30, which puts the bottleneck in the fuel cycle rather than in reactor design.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "Yellow Cake ",
+            [
+              "YCA"
+            ],
+            ".L, Geiger Counter ",
+            [
+              "GCL"
+            ],
+            ".L, Global X Uranium UCITS"
+          ],
+          "tradeoff": "Yellow Cake holds physical U3O8 on the LSE in sterling - the cleanest UK route to the term price (~$90/lb, highest since 2008) without mining or construction risk.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "cyber",
+      "nm": "Cybersecurity",
+      "cat": "digitalsec",
+      "x": 66,
+      "y": 52,
+      "size": 220,
+      "stage": "confirmed",
+      "stageLbl": "Confirmed",
+      "conv": 4,
+      "first_seen": "2026-07-27",
+      "includes": "Endpoint, network and cloud-security platforms.",
+      "read": "Structural demand, full multiples. CrowdStrike and Palo Alto are up roughly 60% and 80% this year and closed at records after Black Hat as AI-agent threat concern broadened the spend case. Palo Alto reports 18 Aug into those multiples.",
+      "now": "~$190bn",
+      "proj": "~$300bn",
+      "hz": "2028 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 52,
+      "sizeUnit": "security software + services",
+      "tt": [
+        [
+          "Maturity",
+          "Confirmed"
+        ],
+        [
+          "Upside left",
+          "Medium"
+        ],
+        [
+          "Market",
+          "~$190bn → ~$300bn"
+        ]
+      ],
+      "price": [
+        [
+          "PANW"
+        ],
+        [
+          ", "
+        ],
+        [
+          "CRWD"
+        ],
+        [
+          ", "
+        ],
+        [
+          "ZS"
+        ],
+        [
+          " leading platform consolidation"
+        ]
+      ],
+      "flows": [
+        "Software funds overweight security platforms",
+        "Steady inflows into cyber-theme ETFs"
+      ],
+      "tail": [
+        "CRWD FY26 rev $4.81bn (+22%); net-new ARR above $1bn for the first time",
+        "AI-driven threat volume lifting budgets; CRWD ~90x, PANW ~55x, ZS ~35x forward"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "BUG"
+            ],
+            ", ",
+            [
+              "CIBR"
+            ],
+            ", ",
+            [
+              "HACK"
+            ]
+          ],
+          "tradeoff": "Broad coverage of a sector whose two leaders are already up 60% and 80% this year - and the funds are top-heavy in exactly those two.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "CRWD"
+            ],
+            ", ",
+            [
+              "PANW"
+            ],
+            ", ",
+            [
+              "ZS"
+            ],
+            ", ",
+            [
+              "S"
+            ]
+          ],
+          "tradeoff": "Both leaders sit at record multiples with near-dated prints - Palo Alto reports 18 Aug and CrowdStrike in early September.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "L&G Cyber Security UCITS ",
+            [
+              "ISPY"
+            ],
+            ".L, iShares Digital Security UCITS ",
+            [
+              "LOCK"
+            ],
+            ".L"
+          ],
+          "tradeoff": "The UCITS wrappers are the practical UK route and hold the same US leaders; Europe's own listed pure-plays thinned out after Darktrace was taken private in 2024.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "defence",
+      "nm": "Defence",
+      "cat": "industrial",
+      "x": 70,
+      "y": 40,
+      "size": 320,
+      "stage": "late",
+      "stageLbl": "Late-stage",
+      "conv": 4,
+      "first_seen": "2026-07-27",
+      "includes": "Prime contractors and munitions — US and European primes.",
+      "read": "No longer running on stale evidence. Rheinmetall Q2 sales +69.8% to EUR 3.289bn with operating profit +115% and an EUR 80.4bn backlog - but H1 cash flow was -EUR 1.6bn and the shares fell 5.7% on it. The live risk is the theme's own stated kill: a durable Ukraine truce.",
+      "now": "~$280bn",
+      "proj": "~$400bn",
+      "hz": "2029 (est.)",
+      "nowEst": false,
+      "projEst": true,
+      "runway": 58,
+      "sizeUnit": "global prime-contractor revenue",
+      "tt": [
+        [
+          "Maturity",
+          "Late-stage"
+        ],
+        [
+          "Upside left",
+          "Medium"
+        ],
+        [
+          "Market",
+          "~$280bn → ~$400bn"
+        ]
+      ],
+      "price": [
+        [
+          "BA.L"
+        ],
+        [
+          ", "
+        ],
+        [
+          "RR.L"
+        ],
+        [
+          " firing; "
+        ],
+        [
+          "RHM.DE"
+        ],
+        [
+          " lagging (-40% YTD)"
+        ]
+      ],
+      "flows": [
+        "Defence & European-defence ETFs seeing steady inflows",
+        "UK primes leading on order intake"
+      ],
+      "tail": [
+        "BAE record GBP84bn backlog; RR raised targets (both carried from July)",
+        "New leg: US Navy construction opened to foreign yards with US investment"
+      ]
+    },
+    {
+      "id": "robotics",
+      "nm": "Robotics & automation",
+      "cat": "industrial",
+      "x": 29,
+      "y": 66,
+      "size": 180,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 3,
+      "first_seen": "2026-07-24",
+      "includes": "Industrial, warehouse and surgical robotics plus automation enablers.",
+      "read": "Autonomy first, and the gap is widening. Waymo is above 500,000 paid rides a week across 11 cities with 3,500 vehicles and a London launch planned for 2026. Tesla's Optimus Gen 3 still has not been shown - Q2 disclosure was that first-generation lines are only being installed.",
+      "now": "~$45bn",
+      "proj": "~$120bn",
+      "hz": "2030 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 26,
+      "sizeUnit": "industrial + surgical robotics",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "High"
+        ],
+        [
+          "Market",
+          "~$45bn → ~$120bn"
+        ]
+      ],
+      "price": [
+        [
+          "ISRG"
+        ],
+        [
+          ", "
+        ],
+        [
+          "TER"
+        ],
+        [
+          ", "
+        ],
+        [
+          "ABB"
+        ],
+        [
+          ", "
+        ],
+        [
+          "SYM"
+        ],
+        [
+          " - Waymo cleared for 18 California counties"
+        ]
+      ],
+      "flows": [
+        "Automation baskets attracting fresh allocations",
+        "Humanoid-robotics venture funding surging"
+      ],
+      "tail": [
+        "Figure 03 past 1,000 units; AgiBot 15,000 cumulative; ~$4.3bn humanoid funding in 2026",
+        "Waymo ~500k paid rides/week across ~10 cities, targeting 1m/week"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "BOTZ"
+            ],
+            ", ",
+            [
+              "ROBO"
+            ],
+            ", ",
+            [
+              "IRBO"
+            ]
+          ],
+          "tradeoff": "Both leading funds are dominated by legacy factory automation and Japanese industrials - humanoid and robotaxi exposure inside them is close to nil.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "GOOGL"
+            ],
+            " (Waymo), ",
+            [
+              "AMZN"
+            ],
+            " (Zoox)"
+          ],
+          "tradeoff": "Autonomy is the leg with revenue and regulatory approvals, but it arrives inside two megacaps, so the exposure is heavily diluted by everything else they do.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            "Keyence 6861.T, Harmonic Drive 6324.T, ",
+            [
+              "NVDA"
+            ],
+            ", ",
+            [
+              "APTV"
+            ]
+          ],
+          "tradeoff": "Actuator, sensor and compute suppliers sell to whichever platform wins - but humanoid unit volumes are still measured in thousands, so the revenue is not there yet.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct (private)",
+          "vehicles": [
+            "Figure, AgiBot, Physical Intelligence, Skild"
+          ],
+          "tradeoff": "Every humanoid leader is private - roughly $4.3bn went into humanoid startups in 2026 and none of it is reachable on an exchange. This is why the theme reads autonomy-first.",
+          "private": true
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "iShares Automation & Robotics UCITS ",
+            [
+              "RBOT"
+            ],
+            ".L, L&G ROBO Global UCITS"
+          ],
+          "tradeoff": "RBOT is the practical UK wrapper, USD-exposed and carrying the same legacy-automation tilt as its US cousins.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "minerals",
+      "nm": "Critical minerals / rare earths",
+      "cat": "resources",
+      "x": 26,
+      "y": 80,
+      "size": 90,
+      "stage": "building",
+      "stageLbl": "Building",
+      "conv": 3,
+      "first_seen": "2026-07-24",
+      "includes": "Rare-earth miners, processors and magnet makers — inputs to EVs, motors, defence.",
+      "read": "Materially better evidenced than a week ago. MP's processed rare-earth revenue nearly quadrupled to $94.4m after it stopped sending material to China, with $16.5m from the Texas magnet line - conversion, not just a price pop. China blacklisted MP and USA Rare Earth on 22 June, which cuts both ways.",
+      "now": "~$12bn",
+      "proj": "~$40bn",
+      "hz": "2032 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 20,
+      "sizeUnit": "ex-China rare-earth + magnet supply",
+      "tt": [
+        [
+          "Maturity",
+          "Building"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Market",
+          "~$12bn → ~$40bn"
+        ]
+      ],
+      "price": [
+        [
+          "MP"
+        ],
+        [
+          " +~8% to ~$60 (14 Aug), "
+        ],
+        [
+          "FCX"
+        ],
+        [
+          ", "
+        ],
+        [
+          "CENX"
+        ],
+        [
+          " - USA Rare Earth +9% the same day"
+        ]
+      ],
+      "flows": [
+        "Dedicated critical-minerals / rare-earth ETFs launching",
+        "Government offtake and price-floor support emerging"
+      ],
+      "tail": [
+        "Section 232 critical-minerals proclamation live; no duties imposed yet",
+        "Ten further minerals pulled into the Section 232 net"
+      ],
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "REMX"
+            ],
+            ", ",
+            [
+              "XME"
+            ],
+            ", ",
+            [
+              "PICK"
+            ]
+          ],
+          "tradeoff": "REMX still carries meaningful Chinese-listed weight, which is awkward for a theme whose entire driver is decoupling from China.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "MP"
+            ],
+            ", ",
+            [
+              "USAR"
+            ],
+            ", ",
+            [
+              "NB"
+            ],
+            ", Lynas LYC.AX"
+          ],
+          "tradeoff": "MP and USA Rare Earth are both on China's June 2026 export-control blacklist - the policy that supports the thesis is simultaneously an operating constraint.",
+          "private": false
+        },
+        {
+          "route": "Picks and shovels",
+          "vehicles": [
+            "Magnet and separation capacity: MP's Texas line, Neo Performance NEO.TO, Solvay SOLB.BR"
+          ],
+          "tradeoff": "Processing and magnets are where the West is shortest, so this is the real bottleneck - but capacity is small and lumpy, which makes revenue volatile.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "BlackRock World Mining ",
+            [
+              "BRWM"
+            ],
+            ".L, Solvay SOLB.BR"
+          ],
+          "tradeoff": "There is no UCITS rare-earth pure-play; a broad mining trust dilutes the signal heavily, so most UK access is via US and Australian lines directly.",
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": "space",
+      "nm": "Space / launch",
+      "cat": "industrial",
+      "x": 20,
+      "y": 82,
+      "size": 70,
+      "stage": "emerging",
+      "stageLbl": "Emerging",
+      "conv": 3,
+      "first_seen": "2026-07-25",
+      "includes": "Commercial launch, satellites and payload operators.",
+      "read": "Deteriorated on timeline, not on demand. Rocket Lab's Q4 pad delivery still stands but the company stopped short of reaffirming a first flight before year-end, and coverage now openly contemplates a slip into 2027 - which is the theme's stated kill condition.",
+      "now": "~$15bn",
+      "proj": "~$60bn",
+      "hz": "2032 (est.)",
+      "nowEst": true,
+      "projEst": true,
+      "runway": 18,
+      "sizeUnit": "commercial launch + payload",
+      "tt": [
+        [
+          "Maturity",
+          "Emerging"
+        ],
+        [
+          "Upside left",
+          "Very high"
+        ],
+        [
+          "Market",
+          "~$15bn → ~$60bn"
+        ]
+      ],
+      "price": [
+        [
+          "RKLB"
+        ],
+        [
+          " ~$77.70 (-3% post-print), "
+        ],
+        [
+          "ASTS"
+        ],
+        [
+          " 13 satellites in orbit, beta targeted by year-end"
+        ]
+      ],
+      "flows": [
+        "Early space-theme fund launches gathering assets",
+        "Defence primes expanding space exposure"
+      ],
+      "tail": [
+        "RKLB record backlog $2.36bn (+137% y/y); Q3 guide $250-265m",
+        "ASTS $1.30bn backlog, $2.7bn cash, >60 MNO partners"
       ]
     },
     {
@@ -1948,69 +2711,49 @@
       "tail": [
         "CLARITY Act shelved before the August recess; 2026 passage priced ~33-37%",
         "Even on revival, most provisions would not bind until late 2027"
-      ]
-    },
-    {
-      "id": "cyber",
-      "nm": "Cybersecurity",
-      "cat": "digitalsec",
-      "x": 66,
-      "y": 52,
-      "size": 220,
-      "stage": "confirmed",
-      "stageLbl": "Confirmed",
-      "conv": 4,
-      "first_seen": "2026-07-27",
-      "includes": "Endpoint, network and cloud-security platforms.",
-      "read": "Quietly one of the better weeks in the book - CRWD and PANW made record highs after Black Hat. Multiples are full.",
-      "now": "~$190bn",
-      "proj": "~$300bn",
-      "hz": "2028 (est.)",
-      "nowEst": false,
-      "projEst": true,
-      "runway": 52,
-      "sizeUnit": "security software + services",
-      "tt": [
-        [
-          "Maturity",
-          "Confirmed"
-        ],
-        [
-          "Upside left",
-          "Medium"
-        ],
-        [
-          "Market",
-          "~$190bn → ~$300bn"
-        ]
       ],
-      "price": [
-        [
-          "PANW"
-        ],
-        [
-          ", "
-        ],
-        [
-          "CRWD"
-        ],
-        [
-          ", "
-        ],
-        [
-          "ZS"
-        ],
-        [
-          " leading platform consolidation"
-        ]
-      ],
-      "flows": [
-        "Software funds overweight security platforms",
-        "Steady inflows into cyber-theme ETFs"
-      ],
-      "tail": [
-        "CRWD FY26 rev $4.81bn (+22%); net-new ARR above $1bn for the first time",
-        "AI-driven threat volume lifting budgets; CRWD ~90x, PANW ~55x, ZS ~35x forward"
+      "access": [
+        {
+          "route": "Broad / passive",
+          "vehicles": [
+            [
+              "IBIT"
+            ],
+            ", ",
+            [
+              "FBTC"
+            ],
+            ", spot BTC ETFs"
+          ],
+          "tradeoff": "Direct bitcoin beta with no operating-company risk - and the leg the CLARITY Act stall does not touch, since spot access already exists.",
+          "private": false
+        },
+        {
+          "route": "Concentrated / direct",
+          "vehicles": [
+            [
+              "COIN"
+            ],
+            ", ",
+            [
+              "MSTR"
+            ],
+            ", ",
+            [
+              "HOOD"
+            ]
+          ],
+          "tradeoff": "Coinbase carries US market-structure risk directly, which is precisely the driver that has just been removed; MSTR is a leveraged bitcoin proxy rather than an operating business.",
+          "private": false
+        },
+        {
+          "route": "UK / Europe vehicles",
+          "vehicles": [
+            "Crypto ETNs on the LSE (WisdomTree, 21Shares)"
+          ],
+          "tradeoff": "UK retail access to crypto ETNs on recognised exchanges opened in October 2025; these are debt securities, not funds, and the underlying is outside FSCS protection.",
+          "private": false
+        }
       ]
     }
   ],
@@ -2037,6 +2780,10 @@
         [
           "Labour defensives",
           "radar-labourdef"
+        ],
+        [
+          "Private markets",
+          "radar-privmkts"
         ]
       ]
     },
@@ -2088,6 +2835,10 @@
         [
           "AI optics",
           "theme-optics"
+        ],
+        [
+          "Energy premium",
+          "theme-energyprem"
         ],
         [
           "Gold",
@@ -2190,12 +2941,13 @@
         true
       ],
       "what": "General-purpose humanoids rented per task; fleet operators and enablers.",
-      "summ": "Deployment numbers finally arrived, but the leaders are private - there is still no rentable listed basket.",
+      "summ": "Deployment numbers arrived but the listed tell keeps slipping - Tesla has still not shown Optimus Gen 3. The leaders are private, so there is no basket. Autonomy, not humanoids, is where this theme is currently investible.",
       "needs": "A listed, rentable basket distinct from industrial robotics. Tesla's Gen-3 Optimus reveal is the nearest tell.",
       "evidence": [
         "Figure 03 past 1,000 units; AgiBot 15,000 cumulative; Atlas deployments underway",
         "~$4.3bn of humanoid-specific funding within >$8.5bn into robotics startups in 2026",
-        "Optimus Gen 3 production slated for Fremont from late July, still unrevealed as of 10 Aug"
+        "Tesla Optimus Gen 3 still unshown as of mid-Aug; Q2 disclosure was first-gen lines being installed",
+        "Every leader remains private - Figure, AgiBot, Physical Intelligence"
       ],
       "eta": "6-12 months"
     },
@@ -2282,6 +3034,28 @@
         "Most operational provisions would not take effect until late 2027 even on revival"
       ],
       "eta": "2027 at the earliest"
+    },
+    {
+      "id": "radar-privmkts",
+      "nm": "Private markets / retail alt-access",
+      "status": "new",
+      "met": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "what": "Private equity, private credit and real assets routed into 401(k) and retail wrappers.",
+      "summ": "NEW this cycle, and long overdue off the carried list. An August executive order directs regulators to ease private assets into 401(k)s, escalating the March DOL proposal - and the distribution partnerships have already formed.",
+      "needs": "A price leg - the listed alt managers have not yet re-rated on this - and a final DOL rule rather than a proposal.",
+      "evidence": [
+        "August executive order directs regulators to ease private assets into 401(k)s",
+        "DOL rule proposed March 2026 created process-based fiduciary safe harbours",
+        "KKR-Capital Group, and Wellington-Vanguard-Blackstone, targeting target-date funds",
+        "PwC estimates a 5% alts allocation could unlock >$1tn of AUM by 2030 (estimate)"
+      ],
+      "eta": "12-24 months"
     }
   ],
   "faded": {
@@ -2454,9 +3228,89 @@
     "geo": {
       "l": "Geopolitics",
       "c": "orange"
+    },
+    "energyprem": {
+      "l": "Energy premium",
+      "c": "orange"
+    },
+    "privmkts": {
+      "l": "Private markets",
+      "c": "cyan"
     }
   },
   "signals": [
+    {
+      "daysAgo": 0,
+      "sector": "intl",
+      "headline": "China's July activity misses across the board; retail sales +0.6%",
+      "src": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/17/china-economy-sales-investment-july-.html",
+      "summary": [
+        "Industrial output +4.5% y/y vs 4.8% expected and 5.3% in June",
+        "Retail sales +0.6% vs 1.5% expected; fixed-asset investment -6.7% year-to-date",
+        "Urban unemployment up to 5.2% from 5.0%, adding pressure for H2 support"
+      ]
+    },
+    {
+      "daysAgo": 0,
+      "sector": "rates",
+      "headline": "UK 30-year gilt yield hits 5.77% as the oil premium reaches the curve",
+      "src": "Trading Economics",
+      "url": "https://tradingeconomics.com/united-kingdom/30-year-bond-yield",
+      "summary": [
+        "30-year gilt +10bp to 5.77% on 17 August",
+        "10-year back above 5% as the oil surge revived inflation concern",
+        "First hard transmission of the Hormuz premium into a G7 curve - previously forecast only"
+      ]
+    },
+    {
+      "daysAgo": 2,
+      "sector": "semis",
+      "headline": "BIS extends advanced-computing licensing to D:5-parented subsidiaries",
+      "src": "BIS guidance",
+      "url": "https://www.bis.doc.gov/",
+      "summary": [
+        "Guidance issued 15 August 2026",
+        "Licences now required regardless of where the subsidiary itself is located",
+        "Closes the third-country routing gap; tightens the supply-chain-security driver"
+      ]
+    },
+    {
+      "daysAgo": 1,
+      "sector": "minerals",
+      "headline": "MP Materials' processed rare-earth revenue nearly quadruples to $94.4m",
+      "src": "InvestorNews / S&P Global",
+      "url": "https://investornews.com/critical-minerals-rare-earths/critical-minerals-report-08-16-2026-the-critical-minerals-bull-market-is-here-as-china-puts-its-arsenal-back-in-play/",
+      "summary": [
+        "Achieved after halting shipments of material to China for processing",
+        "Texas magnet operations added $16.5m revenue and $7.5m adjusted profit",
+        "China blacklisted MP and USA Rare Earth on 22 June 2026 - support and constraint at once"
+      ]
+    },
+    {
+      "daysAgo": 1,
+      "sector": "defence",
+      "headline": "Rheinmetall Q2 sales +69.8%, backlog EUR 80.4bn, but H1 cash flow -EUR 1.6bn",
+      "src": "Investing.com / stockanalysis",
+      "url": "https://stockanalysis.com/quote/etr/RHM/",
+      "summary": [
+        "Operating profit +115%; shares fell 5.7% post-print on the cash outflow, then +5.5% on 16 Aug",
+        "Backlog EUR 80.4bn, 70% firm orders - up from the EUR 64bn this desk had carried",
+        "Ends three weeks of no fresh European defence evidence"
+      ]
+    },
+    {
+      "daysAgo": 3,
+      "sector": "privmkts",
+      "headline": "Executive order directs regulators to ease private assets into 401(k)s",
+      "src": "Alternative Credit Investor",
+      "url": "https://alternativecreditinvestor.com/2026/08/13/the-14tn-401k-push/",
+      "summary": [
+        "Escalates the March 2026 DOL safe-harbour proposal into a White House directive",
+        "KKR-Capital Group and Wellington-Vanguard-Blackstone targeting target-date funds",
+        "Promoted from the carried list to the radar at 4 of 5"
+      ]
+    },
     {
       "daysAgo": 6,
       "sector": "capex",
@@ -2681,17 +3535,17 @@
           [
             "NVDA",
             "Nvidia",
-            225
+            226
           ],
           [
             "AVGO",
             "Broadcom",
-            393
+            395
           ],
           [
             "AMD",
             "Adv. Micro Devices",
-            514
+            512
           ]
         ]
       },
@@ -2708,17 +3562,17 @@
           [
             "MU",
             "Micron",
-            972
+            1014
           ],
           [
             "SNDK",
             "SanDisk",
-            1641
+            1770
           ],
           [
             "WDC",
             "Western Digital",
-            509
+            543
           ]
         ]
       },
@@ -2735,17 +3589,17 @@
           [
             "COHR",
             "Coherent",
-            326
+            346
           ],
           [
             "LITE",
             "Lumentum",
-            926
+            958
           ],
           [
             "ANET",
             "Arista Networks",
-            199
+            200
           ]
         ]
       },
@@ -2762,17 +3616,17 @@
           [
             "NBIS",
             "Nebius",
-            278
+            269
           ],
           [
             "CRWV",
             "CoreWeave",
-            105
+            104
           ],
           [
             "IREN",
             "Iren",
-            44.06
+            44.77
           ]
         ]
       },
@@ -2789,17 +3643,17 @@
           [
             "GEV",
             "GE Vernova",
-            1063
+            1075
           ],
           [
             "VRT",
             "Vertiv",
-            294
+            297
           ],
           [
             "ETN",
             "Eaton",
-            452
+            454
           ]
         ]
       },
@@ -2816,17 +3670,17 @@
           [
             "CCJ",
             "Cameco",
-            97.74
+            99.17
           ],
           [
             "OKLO",
             "Oklo",
-            44.38
+            43.78
           ],
           [
             "SMR",
             "NuScale Power",
-            9.39
+            9.43
           ]
         ]
       },
@@ -2843,17 +3697,17 @@
           [
             "GRID",
             "ETF: grid infra",
-            188
+            189
           ],
           [
             "CEG",
             "Constellation Energy",
-            282
+            274
           ],
           [
             "ETN",
             "Eaton",
-            452
+            454
           ]
         ]
       },
@@ -2870,17 +3724,17 @@
           [
             "ISRG",
             "Intuitive Surgical",
-            395
+            393
           ],
           [
             "SYM",
             "Symbotic",
-            42.7
+            43.0
           ],
           [
             "TER",
             "Teradyne",
-            419
+            432
           ]
         ]
       },
@@ -2897,17 +3751,17 @@
           [
             "MP",
             "MP Materials",
-            58.74
+            57.39
           ],
           [
             "FCX",
             "Freeport-McMoRan",
-            66.49
+            67.58
           ],
           [
             "CENX",
             "Century Aluminum",
-            46.72
+            46.34
           ]
         ]
       },
@@ -2924,17 +3778,17 @@
           [
             "RKLB",
             "Rocket Lab",
-            80.25
+            83.55
           ],
           [
             "ASTS",
             "AST SpaceMobile",
-            70.98
+            72.86
           ],
           [
             "LMT",
             "Lockheed Martin",
-            609
+            604
           ]
         ]
       },
@@ -2951,27 +3805,27 @@
           [
             "BA.L",
             "BAE Systems",
-            2253
+            2261
           ],
           [
             "RR.L",
             "Rolls-Royce",
-            1570
+            1562
           ],
           [
             "RHM.DE",
             "Rheinmetall",
-            1219
+            1227
           ],
           [
             "LMT",
             "Lockheed Martin",
-            609
+            604
           ],
           [
             "RTX",
             "RTX Corp",
-            223
+            224
           ]
         ]
       },
@@ -2988,17 +3842,17 @@
           [
             "NEM",
             "Newmont",
-            118
+            120
           ],
           [
             "AEM",
             "Agnico Eagle",
-            186
+            190
           ],
           [
             "GLD",
             "SPDR Gold",
-            401
+            406
           ]
         ]
       },
@@ -3015,17 +3869,17 @@
           [
             "COIN",
             "Coinbase",
-            148
+            150
           ],
           [
             "MSTR",
             "MicroStrategy",
-            93.04
+            95.97
           ],
           [
             "IBIT",
             "iShares Bitcoin",
-            35.63
+            36.01
           ]
         ]
       },
@@ -3042,17 +3896,17 @@
           [
             "PANW",
             "Palo Alto Networks",
-            384
+            375
           ],
           [
             "CRWD",
             "CrowdStrike",
-            217
+            214
           ],
           [
             "ZS",
             "Zscaler",
-            184
+            185
           ]
         ]
       }
@@ -3061,7 +3915,7 @@
       {
         "tk": "PLTR",
         "name": "Palantir",
-        "price": 174,
+        "price": 175,
         "theme": "capex-light monetizer",
         "stage": "Confirmed"
       },
@@ -3075,7 +3929,7 @@
       {
         "tk": "ASML",
         "name": "ASML",
-        "price": 1844,
+        "price": 1869,
         "theme": "Semi equipment",
         "stage": "Confirmed"
       },
@@ -3089,14 +3943,14 @@
       {
         "tk": "DELL",
         "name": "Dell Technologies",
-        "price": 491,
+        "price": 472,
         "theme": "AI servers",
         "stage": "Building"
       },
       {
         "tk": "CEG",
         "name": "Constellation Energy",
-        "price": 282,
+        "price": 274,
         "theme": "Nuclear / power",
         "stage": "Building"
       }
