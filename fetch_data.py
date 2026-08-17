@@ -245,8 +245,8 @@ CRASH_FEEDS = {
     "VIX":               {"chain": [(fetch_fred, "VIXCLS"), (fetch_yahoo, "^VIX")], "scale": 1.0},
     "Chicago Fed NFCI":  {"chain": [(fetch_fred, "NFCI")],         "scale": 1.0},
     "EM $-credit spread":{"chain": [(fetch_fred, "BAMLEMHBHYCRPIOAS")], "scale": 100.0},
-    "USD (DXY) funding": {"chain": [(fetch_stooq, "dx.f")],        "scale": 1.0},
-    "USD (DXY) stress":  {"chain": [(fetch_stooq, "dx.f")],        "scale": 1.0},
+    "USD (DXY) funding": {"chain": [(fetch_stooq, "dx.f"), (fetch_yahoo, "DX-Y.NYB")], "scale": 1.0},
+    "USD (DXY) stress":  {"chain": [(fetch_stooq, "dx.f"), (fetch_yahoo, "DX-Y.NYB")], "scale": 1.0},
 }
 
 

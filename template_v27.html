@@ -501,6 +501,38 @@
   .hstat-k{margin-top:3px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3)}
   @media(max-width:720px){.hero{padding:16px;gap:16px}.hero-main h2{font-size:17px}
     .hero-stats{width:100%}.hstat{flex:1 1 40%;min-width:0}}
+
+  /* hero visuals */
+  .hero-vis{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .hgauge{text-align:center;flex:none}
+  .hgauge svg{width:124px;height:74px;display:block}
+  .hg-cap{margin-top:2px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3)}
+  .hg-cap b{font-weight:600;letter-spacing:.3px}
+  .hlife{flex:1 1 240px;min-width:200px}
+  .hl-head{display:flex;justify-content:space-between;align-items:baseline;
+    font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3);margin-bottom:7px}
+  .hl-head b{font-family:var(--mono);font-size:11px;color:var(--txt-2);font-weight:600}
+  .hl-bar{display:flex;gap:2px;height:10px;border-radius:5px;overflow:hidden;background:var(--panel-2)}
+  .hl-seg{display:block;min-width:4px}
+  .hl-key{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:10.5px;color:var(--txt-3)}
+  .hl-key i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:middle}
+  .hl-key b{color:var(--txt-2);font-family:var(--mono);font-weight:600}
+  @media(max-width:720px){.hero-vis{width:100%}.hgauge svg{width:104px;height:62px}}
+
+  /* how to get exposure — access routes inside a theme card */
+  .access{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+  .access .ah{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--txt-2);
+    font-weight:600;margin-bottom:10px}
+  .access .ah span{margin-left:8px;text-transform:none;letter-spacing:.2px;font-weight:400;
+    font-size:10.5px;color:var(--txt-3)}
+  .agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;align-items:start}
+  .aroute{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
+    background:var(--panel-2)}
+  .aroute .art{font-size:11.5px;font-weight:600;color:var(--accent);margin-bottom:5px}
+  .aroute .arv{font-size:12px;color:var(--txt);line-height:1.5;margin-bottom:5px}
+  .aroute .aro{font-size:11px;color:var(--txt-3);line-height:1.45}
+  .aroute.private{border-color:rgba(229,180,90,.4)}
+  .aroute.private .art{color:var(--gold)}
 </style>
 </head>
 <body>
@@ -555,15 +587,20 @@
          convictions and stages are the desk's own judgement; each one carries its evidence and date.</p>
       <div class="heronote">Long-only research aid. Not financial advice.</div>
     </div>
-    <div class="hero-stats">
-      <div class="hstat"><div class="hstat-v risk" id="hero-crash">&mdash;</div>
-        <div class="hstat-s" id="hero-crash-lvl">&nbsp;</div><div class="hstat-k">Crash risk</div></div>
-      <div class="hstat"><div class="hstat-v" id="hero-themes">&mdash;</div>
-        <div class="hstat-s">&nbsp;</div><div class="hstat-k">Investible</div></div>
-      <div class="hstat"><div class="hstat-v" id="hero-radar">&mdash;</div>
-        <div class="hstat-s">&nbsp;</div><div class="hstat-k">On radar</div></div>
-      <div class="hstat"><div class="hstat-v" id="hero-signals">&mdash;</div>
-        <div class="hstat-s">&nbsp;</div><div class="hstat-k">Signals</div></div>
+    <div class="hero-vis">
+      <div class="hgauge">
+        <svg viewBox="0 0 124 74" aria-label="Crash risk gauge">
+          <path d="M 12 62 A 50 50 0 0 1 112 62" fill="none" stroke="#212c42" stroke-width="9" stroke-linecap="round"/>
+          <path id="hg-arc" d="" fill="none" stroke="var(--gold)" stroke-width="9" stroke-linecap="round"/>
+          <text id="hg-val" x="62" y="56" text-anchor="middle" font-size="26" font-weight="700" fill="#e7ecf5" font-family="var(--mono)">&mdash;</text>
+        </svg>
+        <div class="hg-cap">Crash risk <b id="hg-lvl"></b></div>
+      </div>
+      <div class="hlife">
+        <div class="hl-head"><span>Theme lifecycle</span><b id="hl-total"></b></div>
+        <div class="hl-bar" id="hl-bar"></div>
+        <div class="hl-key" id="hl-key"></div>
+      </div>
     </div>
   </section>
 
@@ -1504,6 +1541,16 @@ function tickerLine(items){return items.map(it=>{if(Array.isArray(it)){const v=i
   themes.forEach(t=>{
     const dots=[0,1,2,3,4].map(i=>`<i class="${i<t.conv?'on':''}"></i>`).join("");
     const priceHtml=tickerLine(t.price);const flowsHtml=t.flows.map(f=>`<li>${f}</li>`).join("");const tailHtml=t.tail.map(f=>`<li>${f}</li>`).join("");
+    const accessHtml=(t.access&&t.access.length)?`
+      <div class="access">
+        <div class="ah">How to get exposure <span>access routes, not recommendations</span></div>
+        <div class="agrid">${t.access.map(a=>`
+          <div class="aroute${a.private?" private":""}">
+            <div class="art">${a.route}</div>
+            <div class="arv">${a.vehicles?tickerLine(a.vehicles):""}</div>
+            <div class="aro">${a.tradeoff||""}</div>
+          </div>`).join("")}</div>
+      </div>`:"";
     const nowEst=t.nowEst?' <span class="est">est.</span>':"";const projEst=t.projEst?' <span class="est">est.</span>':"";const col=cat[t.cat].c;
     const card=document.createElement("div");card.className="theme";card.id="theme-"+t.id;
     card.innerHTML=`
@@ -1529,6 +1576,7 @@ function tickerLine(items){return items.map(it=>{if(Array.isArray(it)){const v=i
           <div class="ebucket"><div class="eh flows"><i></i>Capital flows</div><ul>${flowsHtml}</ul></div>
           <div class="ebucket"><div class="eh tail"><i></i>Tailwinds</div><ul>${tailHtml}</ul></div>
         </div>
+              ${accessHtml}
       </div></div>`;
     card.querySelector(".thead").addEventListener("click",()=>toggleBox(card,".tbody"));
     el.appendChild(card);
@@ -1733,14 +1781,43 @@ spy();
 </script>
 
 <script>
-/* hero counters — read from the data literals already injected above */
+/* hero visuals — built from the data literals injected above */
 (function(){
-  var set=function(id,v,sub){var e=document.getElementById(id);if(e&&v!=null)e.innerHTML=v;
-    if(sub!=null){var t=document.getElementById(id+'-lvl');if(t)t.textContent=sub;}};
-  try{ if(typeof crash!=='undefined'&&crash) set('hero-crash',crash.composite,crash.level||''); }catch(e){}
-  try{ if(typeof themes!=='undefined'&&themes.length) set('hero-themes',themes.length); }catch(e){}
-  try{ if(typeof radar!=='undefined'&&radar.length) set('hero-radar',radar.length); }catch(e){}
-  try{ if(typeof signals!=='undefined'&&signals.length) set('hero-signals',signals.length); }catch(e){}
+  var STAGE_COL={Radar:"#6c7d9c",Emerging:"#5b8dff",Building:"#8b6cff",Confirmed:"#26d17f",
+                 Fading:"#e5b45a","Faded / retired":"#ff5d6c"};
+  /* crash gauge: 180deg sweep, colour banded to the same thresholds as the section */
+  try{
+    if(typeof crash!=="undefined" && crash && crash.composite!=null){
+      var f=Math.max(0,Math.min(1,crash.composite/100)), cx=62, cy=62, r=50,
+          a=Math.PI*(1-f), x=cx+r*Math.cos(a), y=cy-r*Math.sin(a),
+          col=crash.composite>=70?"#ff5d6c":(crash.composite>=40?"#e5b45a":"#26d17f"),
+          arc=document.getElementById("hg-arc");
+      if(f>0.001){arc.setAttribute("d","M "+(cx-r)+" "+cy+" A "+r+" "+r+" 0 0 1 "+x+" "+y);}
+      arc.setAttribute("stroke",col);
+      document.getElementById("hg-val").textContent=crash.composite;
+      document.getElementById("hg-val").setAttribute("fill",col);
+      document.getElementById("hg-lvl").textContent=crash.level||"";
+      document.getElementById("hg-lvl").style.color=col;
+    }
+  }catch(e){}
+  /* lifecycle: one stacked bar, width proportional to how many themes sit at each stage */
+  try{
+    if(typeof spine!=="undefined" && spine && spine.length){
+      var tot=spine.reduce(function(a,g){return a+(g.items?g.items.length:0)},0);
+      var bar=document.getElementById("hl-bar"), key=document.getElementById("hl-key");
+      document.getElementById("hl-total").textContent=tot+" tracked";
+      spine.forEach(function(g){
+        var n=g.items?g.items.length:0; if(!n) return;
+        var c=STAGE_COL[g.stage]||"#8394b0";
+        var seg=document.createElement("span");
+        seg.className="hl-seg"; seg.style.flex=n; seg.style.background=c;
+        seg.title=g.stage+": "+n; bar.appendChild(seg);
+        var k=document.createElement("span");
+        k.innerHTML='<i style="background:'+c+'"></i>'+g.stage+' <b>'+n+'</b>';
+        key.appendChild(k);
+      });
+    }
+  }catch(e){}
 })();
 </script>
 </body>
