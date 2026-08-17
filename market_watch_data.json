@@ -52,7 +52,7 @@
         "stock performance windows (compute)"
       ]
     },
-    "last_fetch": "2026-08-17T16:44:05Z"
+    "last_fetch": "2026-08-17T20:32:15Z"
   },
   "windows": {
     "1W": {
@@ -97,8 +97,8 @@
       {
         "lbl": "S&P 500",
         "region": "US",
-        "val": "7,770.95",
-        "chg": "-0.19%",
+        "val": "7,745.06",
+        "chg": "-0.52%",
         "dir": "down",
         "seed": 11,
         "back": "S&P 500 — the 500 largest US stocks; the broad risk barometer. Rising = risk-on.",
@@ -371,34 +371,33 @@
           7748.5,
           7798.990234,
           7785.759766,
-          7770.950195
+          7745.060059
         ],
         "chgw": {
-          "1W": "+0.23%",
-          "1M": "+3.15%",
-          "3M": "+4.39%",
-          "6M": "+13.56%",
-          "1Y": "+20.50%"
+          "1W": "-0.10%",
+          "1M": "+2.80%",
+          "3M": "+4.04%",
+          "6M": "+13.18%",
+          "1Y": "+20.09%"
         }
       },
       {
         "lbl": "US 10Y",
         "region": "US",
-        "val": "4.63%",
-        "chg": "-5 bp",
-        "dir": "down",
+        "val": "4.68%",
+        "chg": "+5 bp",
+        "dir": "up",
         "seed": 22,
         "back": "US 10-year Treasury yield — the risk-free anchor for global assets; higher yields pressure long-duration equities.",
         "chartRead": "~4.68% (14 Aug); 2Y ~4.16% Mon as Sept-hike odds slipped toward ~30%.",
         "meta": {
-          "as_of": "2026-08-13",
+          "as_of": "2026-08-14",
           "source": "FRED (fredgraph.csv / api), free, no key (DGS10)",
           "cadence": "daily",
           "estimate": false,
           "hist_points": 260
         },
         "hist": [
-          4.37,
           4.23,
           4.22,
           4.22,
@@ -657,21 +656,22 @@
           4.72,
           4.7,
           4.68,
-          4.63
+          4.63,
+          4.68
         ],
         "chgw": {
-          "1W": "-6 bp",
-          "1M": "+5 bp",
-          "3M": "+21 bp",
-          "6M": "+59 bp",
+          "1W": "+3 bp",
+          "1M": "+13 bp",
+          "3M": "+22 bp",
+          "6M": "+63 bp",
           "1Y": "+39 bp"
         }
       },
       {
         "lbl": "Gold",
         "region": "GL",
-        "val": "$4,481",
-        "chg": "+2.30%",
+        "val": "$4,474",
+        "chg": "+2.14%",
         "dir": "up",
         "seed": 33,
         "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
@@ -943,21 +943,21 @@
           4408.899902,
           4363.600098,
           4380.399902,
-          4481.0
+          4474.200195
         ],
         "chgw": {
-          "1W": "+2.73%",
-          "1M": "+12.43%",
-          "3M": "-4.61%",
-          "6M": "-8.23%",
-          "1Y": "+34.50%"
+          "1W": "+2.58%",
+          "1M": "+12.26%",
+          "3M": "-4.76%",
+          "6M": "-8.37%",
+          "1Y": "+34.29%"
         }
       },
       {
         "lbl": "Bitcoin",
         "region": "GL",
-        "val": "$64,048",
-        "chg": "+1.96%",
+        "val": "$64,343",
+        "chg": "+2.43%",
         "dir": "up",
         "seed": 44,
         "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
@@ -1229,21 +1229,21 @@
           62975.59375,
           63024.320312,
           62818.652344,
-          64047.628906
+          64343.398438
         ],
         "chgw": {
-          "1W": "+1.02%",
-          "1M": "-1.98%",
-          "3M": "-0.58%",
-          "6M": "-13.66%",
-          "1Y": "-30.40%"
+          "1W": "+1.48%",
+          "1M": "-1.53%",
+          "3M": "-0.12%",
+          "6M": "-13.26%",
+          "1Y": "-30.08%"
         }
       },
       {
         "lbl": "US Dollar (DXY)",
         "region": "FX",
-        "val": "99.49",
-        "chg": "-0.18%",
+        "val": "99.58",
+        "chg": "-0.09%",
         "dir": "down",
         "seed": 55,
         "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
@@ -1515,14 +1515,14 @@
           100.010002,
           99.959999,
           99.669998,
-          99.490997
+          99.584999
         ],
         "chgw": {
-          "1W": "-0.32%",
-          "1M": "-1.23%",
-          "3M": "+1.03%",
-          "6M": "+2.40%",
-          "1Y": "+1.35%"
+          "1W": "-0.23%",
+          "1M": "-1.14%",
+          "3M": "+1.12%",
+          "6M": "+2.50%",
+          "1Y": "+1.44%"
         }
       },
       {
@@ -1814,8 +1814,8 @@
       {
         "lbl": "Brent",
         "region": "GL",
-        "val": "$89.00",
-        "chg": "+0.54%",
+        "val": "$90.85",
+        "chg": "+2.63%",
         "dir": "up",
         "seed": 77,
         "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
@@ -2088,14 +2088,14 @@
           88.980003,
           87.07,
           88.519997,
-          89.0
+          90.849998
         ],
         "chgw": {
-          "1W": "+1.46%",
-          "1M": "+5.66%",
-          "3M": "-15.74%",
-          "6M": "+32.01%",
-          "1Y": "+33.63%"
+          "1W": "+3.57%",
+          "1M": "+7.86%",
+          "3M": "-13.99%",
+          "6M": "+34.75%",
+          "1Y": "+36.41%"
         }
       },
       {
@@ -2962,8 +2962,8 @@
       {
         "lbl": "MSCI EM",
         "region": "EM",
-        "val": "68",
-        "chg": "+1.67%",
+        "val": "67",
+        "chg": "+1.07%",
         "dir": "up",
         "seed": 122,
         "back": "MSCI Emerging Markets — a broad EM-equity gauge; rises as the dollar softens and risk appetite improves.",
@@ -3236,14 +3236,14 @@
           66.459999,
           66.68,
           66.610001,
-          67.720001
+          67.32
         ],
         "chgw": {
-          "1W": "+3.91%",
-          "1M": "+5.50%",
-          "3M": "+0.76%",
-          "6M": "+11.25%",
-          "1Y": "+34.82%"
+          "1W": "+3.30%",
+          "1M": "+4.88%",
+          "3M": "+0.16%",
+          "6M": "+10.60%",
+          "1Y": "+34.02%"
         }
       },
       {
@@ -3764,7 +3764,7 @@
           },
           {
             "nm": "USD (DXY) funding",
-            "val": "99.5",
+            "val": "99.6",
             "status": "calm",
             "tr": "up",
             "mean": "Dollar demand; sharp spikes signal funding stress.",
@@ -3869,7 +3869,7 @@
           },
           {
             "nm": "USD (DXY) stress",
-            "val": "99.5",
+            "val": "99.6",
             "status": "calm",
             "tr": "up",
             "mean": "Global dollar strength; sharp spikes tighten worldwide conditions.",
@@ -6775,17 +6775,17 @@
           [
             "NVDA",
             "Nvidia",
-            227
+            225
           ],
           [
             "AVGO",
             "Broadcom",
-            398
+            392
           ],
           [
             "AMD",
             "Adv. Micro Devices",
-            511
+            506
           ]
         ]
       },
@@ -6802,17 +6802,17 @@
           [
             "MU",
             "Micron",
-            1029
+            1012
           ],
           [
             "SNDK",
             "SanDisk",
-            1793
+            1787
           ],
           [
             "WDC",
             "Western Digital",
-            533
+            536
           ]
         ]
       },
@@ -6829,17 +6829,17 @@
           [
             "COHR",
             "Coherent",
-            360
+            351
           ],
           [
             "LITE",
             "Lumentum",
-            988
+            969
           ],
           [
             "ANET",
             "Arista Networks",
-            200
+            202
           ]
         ]
       },
@@ -6856,17 +6856,17 @@
           [
             "NBIS",
             "Nebius",
-            281
+            269
           ],
           [
             "CRWV",
             "CoreWeave",
-            108
+            106
           ],
           [
             "IREN",
             "Iren",
-            46.53
+            44.9
           ]
         ]
       },
@@ -6883,17 +6883,17 @@
           [
             "GEV",
             "GE Vernova",
-            1095
+            1079
           ],
           [
             "VRT",
             "Vertiv",
-            299
+            292
           ],
           [
             "ETN",
             "Eaton",
-            456
+            455
           ]
         ]
       },
@@ -6910,17 +6910,17 @@
           [
             "CCJ",
             "Cameco",
-            99.59
+            98.58
           ],
           [
             "OKLO",
             "Oklo",
-            44.28
+            43.88
           ],
           [
             "SMR",
             "NuScale Power",
-            9.35
+            9.19
           ]
         ]
       },
@@ -6937,17 +6937,17 @@
           [
             "GRID",
             "ETF: grid infra",
-            190
+            189
           ],
           [
             "CEG",
             "Constellation Energy",
-            276
+            278
           ],
           [
             "ETN",
             "Eaton",
-            456
+            455
           ]
         ]
       },
@@ -6964,17 +6964,17 @@
           [
             "ISRG",
             "Intuitive Surgical",
-            391
+            390
           ],
           [
             "SYM",
             "Symbotic",
-            42.81
+            42.35
           ],
           [
             "TER",
             "Teradyne",
-            435
+            443
           ]
         ]
       },
@@ -6991,17 +6991,17 @@
           [
             "MP",
             "MP Materials",
-            58.13
+            58.51
           ],
           [
             "FCX",
             "Freeport-McMoRan",
-            68.62
+            68.38
           ],
           [
             "CENX",
             "Century Aluminum",
-            47.29
+            47.12
           ]
         ]
       },
@@ -7018,17 +7018,17 @@
           [
             "RKLB",
             "Rocket Lab",
-            83.63
+            82.08
           ],
           [
             "ASTS",
             "AST SpaceMobile",
-            72.13
+            71.14
           ],
           [
             "LMT",
             "Lockheed Martin",
-            600
+            594
           ]
         ]
       },
@@ -7060,12 +7060,12 @@
           [
             "LMT",
             "Lockheed Martin",
-            600
+            594
           ],
           [
             "RTX",
             "RTX Corp",
-            224
+            222
           ]
         ]
       },
@@ -7082,17 +7082,17 @@
           [
             "NEM",
             "Newmont",
-            121
+            120
           ],
           [
             "AEM",
             "Agnico Eagle",
-            191
+            189
           ],
           [
             "GLD",
             "SPDR Gold",
-            406
+            405
           ]
         ]
       },
@@ -7114,12 +7114,12 @@
           [
             "MSTR",
             "MicroStrategy",
-            97.62
+            97.68
           ],
           [
             "IBIT",
             "iShares Bitcoin",
-            36.28
+            36.42
           ]
         ]
       },
@@ -7136,7 +7136,7 @@
           [
             "PANW",
             "Palo Alto Networks",
-            374
+            376
           ],
           [
             "CRWD",
@@ -7146,7 +7146,7 @@
           [
             "ZS",
             "Zscaler",
-            185
+            184
           ]
         ]
       }
@@ -7155,14 +7155,14 @@
       {
         "tk": "PLTR",
         "name": "Palantir",
-        "price": 174,
+        "price": 173,
         "theme": "capex-light monetizer",
         "stage": "Confirmed"
       },
       {
         "tk": "ARM",
         "name": "Arm Holdings",
-        "price": 280,
+        "price": 271,
         "theme": "Semiconductor IP",
         "stage": "Confirmed"
       },
@@ -7176,21 +7176,21 @@
       {
         "tk": "FSLR",
         "name": "First Solar",
-        "price": 220,
+        "price": 218,
         "theme": "Reshoring / solar",
         "stage": "Building"
       },
       {
         "tk": "DELL",
         "name": "Dell Technologies",
-        "price": 479,
+        "price": 480,
         "theme": "AI servers",
         "stage": "Building"
       },
       {
         "tk": "CEG",
         "name": "Constellation Energy",
-        "price": 276,
+        "price": 278,
         "theme": "Nuclear / power",
         "stage": "Building"
       }
