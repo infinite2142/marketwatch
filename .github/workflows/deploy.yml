@@ -71,6 +71,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compare analysis date with today
+        id: check
         run: |
           python3 - <<'EOF'
           import datetime, json, os, sys
@@ -86,9 +87,61 @@ jobs:
           if summary:
               with open(summary, "a") as f:
                   f.write("### Analysis freshness\n\n%s\n" % line)
+          out = os.environ.get("GITHUB_OUTPUT")
+          if out:
+              with open(out, "a") as f:
+                  f.write("report=%s\ngap=%d\n" % (report, gap))
           if gap >= 3:
               print("::error::%s The daily update on the mini has not landed for %d days." % (line, gap))
               sys.exit(1)
           if gap >= 1:
               print("::warning::%s" % line)
           EOF
+
+  # Independent heartbeat. The mini notifies its own runs, but a notification
+  # from the mini cannot tell you the mini is dead -- silence and "no news yet"
+  # look identical on a phone. This fires from GitHub's cron instead, so a day
+  # with no mini run still produces a message. Runs on the schedule only; a
+  # heartbeat on every laptop push would be noise. No-ops without the secret.
+  heartbeat:
+    needs: staleness
+    if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Push heartbeat to ntfy
+        env:
+          TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set -u
+          if [ -z "${TOPIC:-}" ]; then
+            echo "NTFY_TOPIC secret not set -- heartbeat skipped"; exit 0
+          fi
+          python3 - > hb.txt <<'EOF'
+          import datetime, json
+          d = json.load(open("market_watch_data.json"))
+          report = d["meta"].get("report_date") or "missing"
+          try:
+              gap = (datetime.date.today() - datetime.date.fromisoformat(report)).days
+          except ValueError:
+              gap = 99
+          print(report, gap)
+          EOF
+          read REPORT GAP < hb.txt
+          if [ "$GAP" -le 0 ]; then
+            TITLE="Market Watch: analysis current"; TAG="heartbeat"; PRIO="low"
+          elif [ "$GAP" -eq 1 ]; then
+            TITLE="Market Watch: analysis 1 day behind"; TAG="warning"; PRIO="default"
+          else
+            TITLE="Market Watch: analysis $GAP days behind"; TAG="rotating_light"; PRIO="high"
+          fi
+          curl -fsS --max-time 15 \
+            -H "Title: $TITLE" -H "Tags: $TAG" -H "Priority: $PRIO" \
+            --data-binary @- "https://ntfy.sh/$TOPIC" >/dev/null <<MSG
+          Checked from GitHub, independent of the mini.
+          analysis dated $REPORT
+          https://infinite2142.github.io/MarketWatch/
+          MSG
+          echo "heartbeat sent: $TITLE ($REPORT, ${GAP}d)"
