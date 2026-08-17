@@ -8,11 +8,15 @@ only the numeric value/as_of fields it has a clean free feed for; narrative text
 editorial estimates and any metric without a clean feed are left untouched.
 
 Sources (all free, no API key):
-  * FRED CSV       fredgraph.csv?id=<SERIES>   -- DGS10, VIXCLS, BAMLH0A0HYM2,
-                   BAMLC0A0CM, T10Y2Y, NFCI, SAHMREALTIME, ICSA, DEXUSEU,
-                   BAMLEMHBHYCRPIOAS
-  * Stooq CSV      stooq.com/q/d/l/?s=<sym>&i=d -- index/price history
-  * Yahoo chart    query1.finance.yahoo.com/v8/finance/chart/<sym> -- fallback
+  * Yahoo chart    query1.finance.yahoo.com/v8/finance/chart/<sym> -- primary for
+                   every price, index and FX series; same-day, and the only source
+                   that carries FTSE, STOXX, DXY, gold and individual equities
+  * FRED CSV       fredgraph.csv?id=<SERIES>   -- the credit/macro series that have
+                   no market feed (BAMLH0A0HYM2, BAMLC0A0CM, T10Y2Y, NFCI,
+                   SAHMREALTIME, ICSA, BAMLEMHBHYCRPIOAS), plus the independent
+                   second source for S&P, 10Y, VIX, Brent, Nikkei and EUR/USD
+  * CoinGecko      api.coingecko.com/api/v3/simple/price -- Bitcoin fallback
+  * Frankfurter    api.frankfurter.app/latest -- ECB reference rates, EUR/USD fallback
 
 Metrics covered (18 cleanly-sourceable, per Phase 2a report):
   Tiles: S&P 500, US 10Y, Gold, Bitcoin, DXY, VIX, Brent, FTSE 100, Nikkei 225,
@@ -26,7 +30,7 @@ Robust by design: each fetch is isolated in try/except. If a fetch fails, the
 PRIOR value is kept and the field is marked stale (meta.stale = true, with a note)
 rather than crashing the run. A single bad feed never blocks the rest.
 
-NOTE: this script cannot be exercised in the Cowork sandbox -- FRED/Stooq/Yahoo
+NOTE: this script cannot be exercised in the Cowork sandbox -- the market feeds
 are blocked there by the egress allowlist (verified in the Phase 2a spike). It
 runs on the Mac mini, invoked by marketwatch-core/daily-update.sh ahead of the
 analysis step. .github/workflows/deploy.yml no longer runs it: the workflow does
@@ -120,30 +124,43 @@ HIST_KEEP = 260
 _SERIES = {}
 
 
-def fetch_stooq(symbol):
-    """Stooq daily history CSV: Date,Open,High,Low,Close,Volume."""
-    url = "https://stooq.com/q/d/l/?s=%s&i=d" % symbol
-    text = _get(url)
-    rows = list(csv.reader(io.StringIO(text)))
-    if not rows or rows[0][0].lower() != "date":
-        raise RuntimeError("Stooq %s: unexpected payload" % symbol)
-    clean = []
-    for row in rows[1:]:
-        if len(row) < 5:
-            continue
-        try:
-            clean.append((row[0], float(row[4])))
-        except (ValueError, IndexError):
-            continue
-    if not clean:
-        raise RuntimeError("Stooq %s returned no closes" % symbol)
-    latest_date, latest = clean[-1]
-    prev = clean[-2][1] if len(clean) >= 2 else None
-    return latest, prev, latest_date
+# Stooq was removed on 2026-08-17. It now answers /q/d/l/ with a JavaScript
+# proof-of-work bot check (796 bytes of HTML, HTTP 200) instead of CSV, on both
+# stooq.com and stooq.pl -- curl gets the same page, so this is not a client
+# problem. It had been the FIRST link in the chain for six tiles, both DXY
+# crash indicators and every equity ticker, so every one of those was paying a
+# wasted request and silently running on its fallback. Solving the challenge is
+# not the answer: it is an anti-bot gate whose parameters rotate, so a solver
+# would break often and quietly. Yahoo is the primary now, with FRED as the
+# independent second source wherever a series exists.
+
+
+def fetch_coingecko(coin):
+    """CoinGecko simple/price. Keyless, independent of Yahoo. Spot + 24h change
+    only -- no history, so it yields no sparkline series and is a fallback."""
+    url = ("https://api.coingecko.com/api/v3/simple/price"
+           "?ids=%s&vs_currencies=usd&include_24hr_change=true" % coin)
+    data = json.loads(_get(url))
+    if coin not in data or "usd" not in data[coin]:
+        raise RuntimeError("CoinGecko %s: unexpected payload" % coin)
+    latest = float(data[coin]["usd"])
+    chg = data[coin].get("usd_24h_change")
+    prev = latest / (1.0 + float(chg) / 100.0) if chg not in (None, "") else None
+    return latest, prev, TODAY
+
+
+def fetch_frankfurter(pair):
+    """Frankfurter (ECB reference rates). Keyless. `pair` is like 'EUR/USD'."""
+    base, quote = pair.split("/")
+    data = json.loads(_get("https://api.frankfurter.app/latest?from=%s&to=%s" % (base, quote)))
+    rate = (data.get("rates") or {}).get(quote)
+    if rate is None:
+        raise RuntimeError("Frankfurter %s: no rate in payload" % pair)
+    return float(rate), None, data.get("date") or TODAY
 
 
 def fetch_yahoo(symbol):
-    """Yahoo chart JSON, two years of daily bars. Fallback for symbols Stooq lacks."""
+    """Yahoo chart JSON, two years of daily bars. The primary feed for prices."""
     url = ("https://query1.finance.yahoo.com/v8/finance/chart/%s"
            "?range=2y&interval=1d" % symbol)
     text = _get(url)
@@ -242,19 +259,26 @@ def dir_from(delta):
 # Metric -> feed maps
 # --------------------------------------------------------------------------- #
 # Tiles are matched by their `lbl`. Each entry is a chain of (fetcher, arg).
+# Ordering rule: a same-day market feed first, an independent source second.
+# FRED is authoritative but publishes on a lag (1-3 business days, and DEXUSEU
+# was ten days behind on 2026-08-17), so where it used to lead it was pinning
+# tiles to last week's number on an otherwise successful run. It is the right
+# fallback for exactly that reason: a three-day-old real value beats a stale flag.
 TILE_FEEDS = {
-    "S&P 500":        [(fetch_stooq, "^spx"),  (fetch_yahoo, "^GSPC")],
-    "US 10Y":         [(fetch_fred, "DGS10")],
-    "Gold":           [(fetch_stooq, "xauusd"), (fetch_yahoo, "GC=F")],
-    "Bitcoin":        [(fetch_yahoo, "BTC-USD"), (fetch_stooq, "btcusd")],
-    "US Dollar (DXY)":[(fetch_stooq, "dx.f"),  (fetch_yahoo, "DX-Y.NYB")],
-    "VIX":            [(fetch_fred, "VIXCLS"), (fetch_yahoo, "^VIX")],
-    "Brent":          [(fetch_stooq, "cb.f"),  (fetch_yahoo, "BZ=F")],
+    "S&P 500":        [(fetch_yahoo, "^GSPC"),    (fetch_fred, "SP500")],
+    "US 10Y":         [(fetch_yahoo, "^TNX"),     (fetch_fred, "DGS10")],
+    "Gold":           [(fetch_yahoo, "GC=F")],    # no keyless second source found
+    "Bitcoin":        [(fetch_yahoo, "BTC-USD"),  (fetch_coingecko, "bitcoin")],
+    "US Dollar (DXY)":[(fetch_yahoo, "DX-Y.NYB")],  # ICE DXY; FRED's DTWEXBGS is a
+                                                    # different index, not a fallback
+    "VIX":            [(fetch_yahoo, "^VIX"),     (fetch_fred, "VIXCLS")],
+    "Brent":          [(fetch_yahoo, "BZ=F"),     (fetch_fred, "DCOILBRENTEU")],
     "STOXX 600":      [(fetch_yahoo, "^STOXX")],
-    "FTSE 100":       [(fetch_stooq, "^ftm"),  (fetch_yahoo, "^FTSE")],
-    "Nikkei 225":     [(fetch_stooq, "^nkx"),  (fetch_yahoo, "^N225")],
-    "MSCI EM":        [(fetch_yahoo, "EEM")],   # ETF proxy for the index
-    "EUR/USD":        [(fetch_fred, "DEXUSEU"), (fetch_yahoo, "EURUSD=X")],
+    "FTSE 100":       [(fetch_yahoo, "^FTSE")],   # FRED carries no FTSE series
+    "Nikkei 225":     [(fetch_yahoo, "^N225"),    (fetch_fred, "NIKKEI225")],
+    "MSCI EM":        [(fetch_yahoo, "EEM")],     # ETF proxy for the index
+    "EUR/USD":        [(fetch_yahoo, "EURUSD=X"), (fetch_frankfurter, "EUR/USD"),
+                       (fetch_fred, "DEXUSEU")],
 }
 
 # Crash-risk indicators matched by `nm`. Only numeric, clean-feed metrics here.
@@ -263,24 +287,19 @@ TILE_FEEDS = {
 CRASH_FEEDS = {
     "US HY OAS spread":  {"chain": [(fetch_fred, "BAMLH0A0HYM2")], "scale": 100.0},
     "IG OAS spread":     {"chain": [(fetch_fred, "BAMLC0A0CM")],   "scale": 100.0},
-    "VIX":               {"chain": [(fetch_fred, "VIXCLS"), (fetch_yahoo, "^VIX")], "scale": 1.0},
+    "VIX":               {"chain": [(fetch_yahoo, "^VIX"), (fetch_fred, "VIXCLS")], "scale": 1.0},
     "Chicago Fed NFCI":  {"chain": [(fetch_fred, "NFCI")],         "scale": 1.0},
     "EM $-credit spread":{"chain": [(fetch_fred, "BAMLEMHBHYCRPIOAS")], "scale": 100.0},
-    "USD (DXY) funding": {"chain": [(fetch_stooq, "dx.f"), (fetch_yahoo, "DX-Y.NYB")], "scale": 1.0},
-    "USD (DXY) stress":  {"chain": [(fetch_stooq, "dx.f"), (fetch_yahoo, "DX-Y.NYB")], "scale": 1.0},
+    "USD (DXY) funding": {"chain": [(fetch_yahoo, "DX-Y.NYB")], "scale": 1.0},
+    "USD (DXY) stress":  {"chain": [(fetch_yahoo, "DX-Y.NYB")], "scale": 1.0},
 }
 
 
-def stooq_symbols_for(ticker):
-    """Map an equity ticker to a Stooq symbol (+ Yahoo fallback symbol)."""
-    t = ticker.strip()
-    if "." in t:  # foreign listing, e.g. BA.L, RR.L, RHM.DE
-        exch = t.rsplit(".", 1)[1].upper()
-        root = t.rsplit(".", 1)[0].lower()
-        smap = {"L": "uk", "DE": "de", "PA": "fr", "MI": "it", "AS": "nl", "SW": "ch"}
-        stooq = "%s.%s" % (root, smap.get(exch, exch.lower()))
-        return [(fetch_stooq, stooq), (fetch_yahoo, t)]
-    return [(fetch_stooq, "%s.us" % t.lower()), (fetch_yahoo, t)]
+def feeds_for_ticker(ticker):
+    """Feed chain for an equity ticker. Yahoo takes the ticker as written --
+    including foreign suffixes like BA.L, RR.L, RHM.DE, 7011.T -- so no symbol
+    translation is needed now that Stooq is gone."""
+    return [(fetch_yahoo, ticker.strip())]
 
 
 # --------------------------------------------------------------------------- #
@@ -368,7 +387,7 @@ def update_stocks(data, report):
         key = ticker.upper()
         if key in cache:
             return cache[key]
-        latest, _, _ = fetch_chain(*stooq_symbols_for(ticker))
+        latest, _, _ = fetch_chain(*feeds_for_ticker(ticker))
         cache[key] = latest
         return latest
 
