@@ -122,10 +122,15 @@ These bind the page's content, not just the daily task:
   weight. "Late-stage / fading" means the opportunity is largely priced, not that anything was
   sold. `access` routes are ways a reader *could* get exposure — no sizing, no entry levels.
 - **Every numeric claim carries a dated source.** Estimates and forecasts are flagged as such.
-- **A lone source contradicting an established anchor is logged, not adopted — and the rejection
-  carries a dated re-check obligation.** A rejection that is never revisited hardens into an
-  assumption. See the gold `~$5,600` case in `memory.md`: the refusal was right, never scheduling
-  the re-check was not.
+- **When two figures for the same thing disagree, prefer whichever has corroboration — and attach
+  a dated re-check either way.** A multi-point fetched series whose `chg` and `chgw` reconcile
+  against its own `hist` is strong evidence; a single search result is not; a `meta.note`
+  disclaimer is not evidence at all, because `fetch_data.py` signals a bad fetch with `stale` and
+  never with `note`. Date-align before calling anything a gap. Never silently overwrite a fetched
+  value; never assume a single sourced quote outranks one. Two reference cases in `memory.md`,
+  failing in opposite directions: gold `~$5,600` (the lone source was right and was wrongly
+  rejected — the refusal was right, never scheduling the re-check was not) and Brent `$91.25`
+  (the lone source was wrong and was wrongly preferred over a coherent 260-point series).
 - **"No result" from a sweep is a statement about the sweep, not the world.** The retirement rule
   keys off *observed* absence of evidence, so a false silence can retire a live theme. Re-verify a
   quiet domain independently before carrying the silence forward.
