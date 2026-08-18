@@ -104,8 +104,14 @@ fetch-owned tile data. See the 2026-08-17 note in `memory.md`.
 Locally on the always-on Mac mini via launchd (`com.marketwatch.daily.plist` →
 `daily-update.sh`), because a cloud-scheduled session has no device bridge and cannot push or read
 the private repo. The wrapper syncs both repos, runs `fetch_data.py`, invokes
-`claude -p "$(cat daily-prompt.md)" --add-dir ~/marketwatch-core`, validates, renders, then commits
-and pushes both repos.
+`claude -p "$(cat daily-prompt.md)" --add-dir ~/marketwatch-core`, validates, renders, commits
+and pushes both repos, then copies the report, ledger and memory into Drive.
+
+Every step is timestamped in the log with its elapsed seconds, the analysis carries a 90-minute
+hard timeout, and a run over 45 minutes notifies as SLOW even when it is otherwise clean — a
+5h38m run on 2026-08-18 was invisible until it finished. The analysis runs with
+`--output-format stream-json` piped through `stream-log.py`, so the log shows each tool call as
+it happens rather than nothing until the end.
 
 ## Editorial guardrails
 
