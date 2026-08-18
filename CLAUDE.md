@@ -37,6 +37,22 @@ involving the mini at all. An algo change (`fetch_data.py`, `generator.py`, `dai
 `daily-task.md`) takes effect on the mini's next run — as does a change to `daily-update.sh`
 itself, which hashes itself before the pull and re-execs if the pull replaced it.
 
+## Daily and weekly
+
+`daily-update.sh` picks its mode before the analysis step. **Saturday runs the weekly**
+(`weekly-prompt.md` → `reports/YYYY-MM-DD-weekly.md`), everything else runs the daily
+(`daily-prompt.md` → `reports/YYYY-MM-DD.md`). Same pipeline either way — the page refreshes and
+publishes on both.
+
+The weekly is the run that **formally scores every open flag 7+ days old**, **re-ranks the radar**,
+**appends `crash_risk.composite`** and does the **13F / key-investor sweep**. No daily does any of
+those. It gets its own, larger limits (2h timeout, 75m SLOW) so it does not trip the daily's alarms
+every Saturday.
+
+**A missed weekly catches itself up**: weekly mode is also selected on the first run more than 7
+days after the newest `reports/*-weekly.md`. The 15 Aug weekly was missed and nothing noticed until
+a human read the ledger eleven days later.
+
 `fetch_data.py` and `generator.py` use only the standard library, so they do not care which machine
 or which `python3` runs them. Keep it that way — a third-party import is what broke the fetch over
 12-17 Aug 2026.
@@ -50,6 +66,9 @@ or which `python3` runs them. Keep it that way — a third-party import is what 
 | `generator.py` | template + JSON → `index.html`. The only thing that writes `index.html`. |
 | `fetch_data.py` | Pulls numeric metrics from FRED CSV + Stooq/Yahoo into the JSON. |
 | `.github/workflows/deploy.yml` | Renders and deploys on push; runs a staleness check on a schedule. |
+
+The prompts and the wrapper live in `../marketwatch-core`: `daily-prompt.md`, `weekly-prompt.md`,
+`daily-update.sh`, and `stream-log.py` (turns the analysis's stream-json into a live progress log).
 
 `index.html` is **gitignored**. It is rendered in CI and published straight from the Pages
 artifact. Never commit it — tracking it causes push conflicts.
