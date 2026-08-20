@@ -1,38 +1,38 @@
 {
  "meta": {
   "schema_version": "2a.1",
-  "report_date": "2026-08-19",
-  "report_date_long": "Wednesday 19 August 2026",
+  "report_date": "2026-08-20",
+  "report_date_long": "Thursday 20 August 2026",
   "build_date": "2026-08-10",
-  "refresh_label": "Analysis 19 Aug - full sweep; AI complex de-rates, KOSPI sidecar, UK CPI 2.9%",
+  "refresh_label": "Analysis 20 Aug - full sweep; Treasury doubles long-end buybacks, BTC tops $69k, SK hynix KRW40tn cancellation, Section 338 PAUSED, IEEPA coverage gap closed",
   "title": "Market Watch V2.7 — real-data preview",
   "generator": "generator.py (reads this file + template_v27.html)",
   "provenance": {
-   "state_of_play": "Tile values owned by fetch_data.py, which succeeded this run (last_fetch 2026-08-19T06:00:24Z, no stale flags) with 260-point history and window changes. THE S&P 500 meta.note IS NOW WITHDRAWN AS STALE PROSE, on the same test that reversed the Brent note: the tile's 7,691.76 sits at the end of an internally consistent series (record 7,798.99 on 13 Aug, then 7,785.76, 7,745.06, 7,691.76), its -0.69% reconciles against the prior close, and its 17 Aug point of 7,745.06 matches the independently sourced 7,747 to 0.03%. The level is current, not a lagged 7 Aug cash close. Narrative and chartRead are the desk's 19 Aug sweep.",
-   "crash_risk": "Cluster read refreshed 19 Aug. THE 0-100 COMPOSITE WAS RECOMPUTED THIS RUN, not carried: composite_meta.as_of had stood at 8 Aug for eleven days, past the 7-day age trigger the daily now owns. It moves 60 to 67 on the seven bucket assessments written the same run. It remains a judgement scalar over those buckets, not yet a formula over the 22 indicators - that remains the stated backlog item. Per-indicator source/cadence/estimate attached.",
+   "state_of_play": "Tile values owned by fetch_data.py, which succeeded this run (last_fetch 2026-08-20T06:00:17Z, no stale flags) with 260-point history and window changes. Every tile was reconciled field-by-field this run: each stated chg matches its own hist series to the second decimal (S&P +0.21%, BTC +7.27%, Gold +1.10%, Brent +0.32%, VIX -6.00%), so the series are internally consistent and are the anchor wherever a lone quote disagrees. ONE HONEST NOTE ON GOLD: yesterday's page carried $4,390.30 for 19 Aug; today's completed series has 19 Aug at $4,489.40 and 20 Aug at $4,538.60. That is not a correction of a source - it is the 06:00Z fetch snapshot of a 24-hour market being superseded by the settled session, and it is recorded rather than smoothed. Narrative and chartRead are the desk's 20 Aug sweep.",
+   "crash_risk": "Cluster read refreshed 20 Aug. THE 0-100 COMPOSITE IS CARRIED UNCHANGED AT 67, NOT RECOMPUTED, AND THAT IS THE RULE WORKING RATHER THAN A LAPSE: composite_meta.as_of is 2026-08-19, one day old, well inside the 7-day age trigger the daily owns. Stated plainly because it matters for how the number should be read - the seven bucket assessments below moved DOWN today (volatility, funding and global/contagion all improved on the Treasury buyback), so the carried 67 now reads stale-high against its own inputs. Next recompute falls due 2026-08-26. It remains a judgement scalar over the seven buckets, not yet a formula over the 22 indicators - that remains the stated backlog item. Per-indicator source/cadence/estimate attached.",
    "sectors": {
-    "as_of": "2026-08-19",
+    "as_of": "2026-08-20",
     "source": "editorial (theme-ledger.md conviction/trajectory)",
     "cadence": "daily",
     "estimate": true,
-    "note": "Ratings, weights and momentum are the desk's ledger-derived judgements, not a market feed. Reconciliation re-asserted programmatically on 19 Aug: 14 sectors <-> 14 themes, identical names, both ordered by conviction, sector value follows conv."
+    "note": "Ratings, weights and momentum are the desk's ledger-derived judgements, not a market feed. Reconciliation re-asserted programmatically on 20 Aug: 14 sectors <-> 14 themes, identical names, both ordered by conviction, sector value follows conv. Three conviction changes this run (neoclouds 4->3, crypto 2->3, order re-sorted)."
    },
    "drivers": {
-    "as_of": "2026-08-19",
+    "as_of": "2026-08-20",
     "source": "editorial (theme-ledger.md driving factors)",
     "cadence": "daily",
     "estimate": true,
-    "note": "Direction/trajectory/conviction are ledger judgements; evidence lines are dated facts."
+    "note": "Direction/trajectory/conviction are ledger judgements; evidence lines are dated facts. Reshoring-by-tariff cut 5 -> 3 this run on the IEEPA coverage gap - see the driver's own summary."
    },
    "themes": {
-    "as_of": "2026-08-19",
+    "as_of": "2026-08-20",
     "source": "editorial (theme-ledger.md); bubble x/y/size and runway are desk estimates",
     "cadence": "daily",
     "estimate": true,
-    "note": "Market-size figures are order-of-magnitude estimates (est. flagged on the card). Access routes are ways a reader could get exposure - not recommendations, no sizing, no entry levels."
+    "note": "Market-size figures are order-of-magnitude estimates (est. flagged on the card). Access routes are ways a reader could get exposure - not recommendations, no sizing, no entry levels. Three 'no such fund exists' route claims were found FALSE this run and corrected (DRAM, LYTE, NCLD all trade)."
    },
    "signals": {
-    "as_of": "2026-08-19",
+    "as_of": "2026-08-20",
     "source": "theme-ledger.md / latest daily .md (cited article URLs where available)",
     "cadence": "daily",
     "estimate": false,
@@ -52,7 +52,7 @@
     "stock performance windows (compute)"
    ]
   },
-  "last_fetch": "2026-08-19T06:00:24Z"
+  "last_fetch": "2026-08-20T06:00:17Z"
  },
  "windows": {
   "1W": {
@@ -92,19 +92,19 @@
   }
  },
  "state_of_play": {
-  "narrative": "The AI trade cracked and Asia took the blow. A <em>Wall Street Journal</em> analysis on 18 August put nine large technology companies' off-balance-sheet AI commitments at roughly $3tn - about five times the ~$600bn of capex they reported over the trailing twelve months - split between ~$0.9-1.2tn of unstarted data-centre leases and ~$1.5-1.9tn of purchase commitments, with Alphabet at $811bn and Meta at ~$420bn, near three times its reported debt. The same day brought OpenAI's Q2: revenue $6.7bn, up 18% sequentially, with losses widening, against Anthropic roughly doubling to $11.6bn - the first quarter the frontier-lab league table has changed hands. Bigger obligations against softer revenue at one of the two buyers is the master factor's own stated invalidation, and the tape read it that way: the Philadelphia semiconductor index -5.4%, Micron -5%, SanDisk -6%, Western Digital -7%, Nasdaq -1.3%, S&amp;P 500 -0.69% to 7,691.76, a third straight loss off the 13 August record. Asia amplified it overnight - the KOSPI -5.55% to 6,488.24 with a sell-side sidecar triggered, SK hynix -9%, Samsung -7%, and the Nikkei -3.23% to 65,285 with the 10-year JGB at its highest since 1996 on September BoJ-hike speculation. That forces a correction here: yesterday's \"Korea is carrying the rotation\" rested on an intraday +2.2% print, and the KOSPI closed that session <em>down</em> 1.55%. It is now ~31% below its June record. UK July CPI printed 2.9% against 2.6% in June, a four-month high and the first G7 consumer print carrying the Hormuz premium. Brent $91.70, gold $4,390, VIX 15.84.",
+  "narrative": "The long end blinked, and everything that had been selling turned. The US Treasury said on 19 August that it will at least double its liquidity-support buyback operations for longer-dated coupons - from a $2bn cap to at least $4bn an operation, across the 10-20 and 20-30 year sectors, running from 9 September into early November. It is a plumbing measure, not new spending, but it arrived two days after the 30-year hit 5.31%, its highest since 2007, and the tape treated it as the authorities noticing. The 10-year fell 5bp to 4.65% after testing near 4.75%; the S&amp;P 500 rose 0.21% to 7,707.98; the VIX fell 6% to 14.89; and <em>bitcoin rose 7.27% to $69,381</em>, above $69,000 for the first time since June, with about $1.44bn of shorts liquidated. Gold rose 1.10% to $4,539, EUR/USD 0.86% to 1.168, and Asia bounced - Nikkei +1.38%, MSCI EM +1.18%. Underneath it, two company facts did more for the book's theses than the macro did. <em>SK hynix's board approved a KRW 40tn (~$28.6bn) repurchase and full cancellation of its own shares</em> - the largest treasury cancellation ever by a listed Korean company, about 3.3% of shares outstanding, buying from 20 August - and raised its shareholder-return target to over half of 2025-27 free cash flow. A company answering a 9% one-day fall with a record cancellation and two new fabs is not behaving like a cycle top; memory rebounded, SK hynix +6%, SanDisk +5%, Micron +3%. And <em>Nebius launched a $4.5bn convertible bond offering</em>, $2.75bn due 2030 and $1.75bn due 2034, falling as much as 13.7% on it - the neocloud financing leg tested in the primary market, in public, four days after the long end peaked. Three things this page said yesterday were wrong and are corrected here. <em>The 50% Section 338 duties on Canada did not take effect</em> - Trump paused them for three days, to 22 August, less than two hours before the deadline, on a deal Carney says still needs work. <em>The Nasdaq-100 inclusion of CoreWeave, Nebius and Astera Labs is a June event</em>, effective 22 June, not this month's flows evidence. And <em>Fincantieri's $30m landing-ship award is dated 15 April</em>, four months old and predating the shipbuilding memorandum it was credited to. Larger than all three: this book had never recorded that <em>the Supreme Court struck down the IEEPA tariffs 6-3 on 20 February</em>, terminating them on 24 February and taking the weighted average applied US tariff rate from 14.9% to 8.2%. Target's Q2 the same day booked $994m of tariff refunds and doubled its profit on them. The reshoring-by-tariff driver is cut from 5 to 3. Brent $91.91, gold $4,539, VIX 14.89.",
   "tiles": [
    {
     "lbl": "S&P 500",
     "region": "US",
-    "val": "7,691.76",
-    "chg": "-0.69%",
-    "dir": "down",
+    "val": "7,707.98",
+    "chg": "+0.21%",
+    "dir": "up",
     "seed": 11,
     "back": "S&P 500 — the 500 largest US stocks; the broad risk barometer. Rising = risk-on.",
-    "chartRead": "7,691.76 on 18 Aug (-0.69%), a third straight loss off the 13 Aug record 7,798.99. The lagged-cash-close note is withdrawn as stale prose.",
+    "chartRead": "7,707.98 on 19 Aug (+0.21%), recovering after three straight losses off the 13 Aug record of 7,798.99. The bounce came on the Treasury's long-end buyback expansion, not on earnings news.",
     "meta": {
-     "as_of": "2026-08-18",
+     "as_of": "2026-08-19",
      "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^GSPC) / Stooq ^spx",
      "cadence": "daily",
      "estimate": false,
@@ -112,7 +112,6 @@
      "hist_points": 260
     },
     "hist": [
-     6345.060059,
      6340.0,
      6389.450195,
      6373.450195,
@@ -371,34 +370,34 @@
      7798.990234,
      7785.759766,
      7745.060059,
-     7691.759766
+     7691.759766,
+     7707.97998
     ],
     "chgw": {
-     "1W": "-0.47%",
-     "1M": "+3.14%",
-     "3M": "+2.54%",
-     "6M": "+11.78%",
-     "1Y": "+19.97%"
+     "1W": "-0.52%",
+     "1M": "+3.56%",
+     "3M": "+4.04%",
+     "6M": "+12.33%",
+     "1Y": "+20.52%"
     }
    },
    {
     "lbl": "US 10Y",
     "region": "US",
-    "val": "4.71%",
-    "chg": "-2 bp",
+    "val": "4.65%",
+    "chg": "-5 bp",
     "dir": "down",
     "seed": 22,
     "back": "US 10-year Treasury yield — the risk-free anchor for global assets; higher yields pressure long-duration equities.",
-    "chartRead": "4.71%, but the long end is the story: US 30Y 5.31% and the 10-year JGB at its highest since 1996.",
+    "chartRead": "4.65% on 19 Aug, down 5bp after testing near 4.75%, on the Treasury's decision to at least double buybacks of 10-30 year paper from 9 September.",
     "meta": {
-     "as_of": "2026-08-18",
+     "as_of": "2026-08-19",
      "source": "FRED (fredgraph.csv / api), free, no key (DGS10)",
      "cadence": "daily",
      "estimate": false,
      "hist_points": 260
     },
     "hist": [
-     4.22,
      4.244,
      4.285,
      4.273,
@@ -657,34 +656,34 @@
      4.641,
      4.696,
      4.724,
-     4.706
+     4.706,
+     4.653
     ],
     "chgw": {
-     "1W": "+2 bp",
-     "1M": "+16 bp",
-     "3M": "+24 bp",
-     "6M": "+63 bp",
-     "1Y": "+40 bp"
+     "1W": "-3 bp",
+     "1M": "+5 bp",
+     "3M": "+6 bp",
+     "6M": "+58 bp",
+     "1Y": "+36 bp"
     }
    },
    {
     "lbl": "Gold",
     "region": "GL",
-    "val": "$4,390",
-    "chg": "+0.56%",
+    "val": "$4,539",
+    "chg": "+1.10%",
     "dir": "up",
     "seed": 33,
     "back": "Spot gold ($/oz) — a real-asset and reserve hedge; rises on falling real rates, a weaker dollar and central-bank buying.",
-    "chartRead": "$4,390 (19 Aug, +0.56%) on the risk-off bid. It FELL on 18 Aug as yields rose - yesterday's \"second advance\" was an intraday print.",
+    "chartRead": "$4,538.60 on 20 Aug (+1.10%), +4.0% on the week. Note: the completed 19 Aug session was $4,489.40, not the $4,390.30 this page carried from a 06:00Z snapshot. Still ~19% below the 28 Jan record.",
     "meta": {
-     "as_of": "2026-08-19",
+     "as_of": "2026-08-20",
      "source": "Stooq CSV (stooq.com/q/l/), free, no key (xauusd) / Yahoo GC=F",
      "cadence": "daily",
      "estimate": false,
      "hist_points": 260
     },
     "hist": [
-     3400.300049,
      3439.100098,
      3353.100098,
      3348.899902,
@@ -943,34 +942,34 @@
      4380.399902,
      4417.799805,
      4366.0,
-     4390.299805
+     4489.399902,
+     4538.600098
     ],
     "chgw": {
-     "1W": "-0.42%",
-     "1M": "+9.48%",
-     "3M": "-3.63%",
-     "6M": "-11.77%",
-     "1Y": "+31.31%"
+     "1W": "+4.01%",
+     "1M": "+11.48%",
+     "3M": "-0.31%",
+     "6M": "-10.29%",
+     "1Y": "+36.01%"
     }
    },
    {
     "lbl": "Bitcoin",
     "region": "GL",
-    "val": "$64,186",
-    "chg": "-0.50%",
-    "dir": "down",
+    "val": "$69,381",
+    "chg": "+7.27%",
+    "dir": "up",
     "seed": 44,
     "back": "Bitcoin ($) — the liquidity- and risk-sensitive digital asset; a high-beta gauge of speculative appetite.",
-    "chartRead": "~$64.2k and range-bound. Polymarket now prices CLARITY passage in 2026 at ~25%, down from ~33-37%.",
+    "chartRead": "$69,381 on 20 Aug (+7.27%), above $69,000 for the first time since June on ~$1.44bn of short liquidations, Treasury buybacks and a presidential push on market-structure law.",
     "meta": {
-     "as_of": "2026-08-19",
+     "as_of": "2026-08-20",
      "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (BTC-USD) / Stooq btcusd",
      "cadence": "daily",
      "estimate": false,
      "hist_points": 260
     },
     "hist": [
-     91350.203125,
      93527.804688,
      92141.625,
      89387.757812,
@@ -1229,38 +1228,34 @@
      63024.320312,
      62818.652344,
      64506.253906,
-     64186.339844
+     64680.710938,
+     69381.328125
     ],
     "chgw": {
-     "1W": "+1.24%",
-     "1M": "+0.72%",
-     "3M": "-2.32%",
-     "6M": "-14.20%",
-     "1Y": "-30.62%"
+     "1W": "+10.17%",
+     "1M": "+8.63%",
+     "3M": "+4.66%",
+     "6M": "-7.68%",
+     "1Y": "-23.14%"
     }
    },
    {
     "lbl": "US Dollar (DXY)",
     "region": "FX",
-    "val": "99.53",
-    "chg": "-0.11%",
-    "dir": "down",
+    "val": "98.88",
+    "chg": "+0.05%",
+    "dir": "up",
     "seed": 55,
     "back": "US Dollar Index — the dollar vs a basket of major currencies; a stronger dollar tightens global conditions.",
-    "chartRead": "99.53 and lower on a broad risk-off day - a term-premium story, not a funding squeeze.",
+    "chartRead": "98.88 on 20 Aug (+0.05%) - flat while risk assets rallied hard, which keeps the long-end move a term-premium story rather than a funding one.",
     "meta": {
-     "as_of": "2026-08-19",
+     "as_of": "2026-08-20",
      "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f) / Yahoo DX-Y.NYB",
      "cadence": "daily",
      "estimate": false,
      "hist_points": 260
     },
     "hist": [
-     98.690002,
-     98.779999,
-     98.779999,
-     98.18,
-     98.400002,
      98.18,
      98.519997,
      98.099998,
@@ -1498,12 +1493,15 @@
      100.730003,
      100.75,
      100.989998,
+     101.18,
+     101.139999,
      101.43,
      101.470001,
      101.510002,
      101.379997,
      100.800003,
      100.010002,
+     99.800003,
      99.959999,
      99.889999,
      99.690002,
@@ -1515,34 +1513,35 @@
      99.959999,
      99.669998,
      99.639999,
-     99.531998
+     99.650002,
+     98.830002,
+     98.877998
     ],
     "chgw": {
-     "1W": "-0.29%",
-     "1M": "-1.39%",
-     "3M": "+1.63%",
-     "6M": "+2.68%",
-     "1Y": "+1.30%"
+     "1W": "-1.08%",
+     "1M": "-2.28%",
+     "3M": "-0.09%",
+     "6M": "+1.10%",
+     "1Y": "+0.26%"
     }
    },
    {
     "lbl": "VIX",
     "region": "US",
-    "val": "15.84",
-    "chg": "+4.28%",
-    "dir": "up",
+    "val": "14.89",
+    "chg": "-6.00%",
+    "dir": "down",
     "seed": 66,
     "back": "CBOE Volatility Index — 30-day implied vol on S&P options; the 'fear gauge'. Low = calm, high = stress.",
-    "chartRead": "15.84, up ~11% across two sessions. Equity vol has started to price what the bond market already was.",
+    "chartRead": "14.89 on 19 Aug (-6.00%), giving back the whole two-session rise to 15.84 once the Treasury acted on the long end.",
     "meta": {
-     "as_of": "2026-08-18",
+     "as_of": "2026-08-19",
      "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
      "cadence": "daily",
      "estimate": false,
      "hist_points": 260
     },
     "hist": [
-     16.57,
      15.15,
      16.25,
      14.73,
@@ -1801,27 +1800,28 @@
      14.63,
      14.25,
      15.19,
-     15.84
+     15.84,
+     14.89
     ],
     "chgw": {
-     "1W": "+3.66%",
-     "1M": "-15.61%",
-     "3M": "-14.05%",
-     "6M": "-21.70%",
-     "1Y": "+0.96%"
+     "1W": "+2.34%",
+     "1M": "-20.16%",
+     "3M": "-16.44%",
+     "6M": "-22.00%",
+     "1Y": "-10.30%"
     }
    },
    {
     "lbl": "Brent",
     "region": "GL",
-    "val": "$91.70",
-    "chg": "+0.75%",
+    "val": "$91.91",
+    "chg": "+0.32%",
     "dir": "up",
     "seed": 77,
     "back": "Brent crude ($/bbl) — the global oil benchmark; a read on growth and inflation.",
-    "chartRead": "$91.70 (19 Aug, +0.75%), extending the run off the lapsed 60-day deadline. Series consistent through $90.87 (17 Aug) and $91.02 (18 Aug).",
+    "chartRead": "$91.91 on 20 Aug (+0.32%), a fourth consecutive gain and +5.6% on the week, with eight vessel attacks reported in Hormuz this month and no US-Iran talks under way.",
     "meta": {
-     "as_of": "2026-08-19",
+     "as_of": "2026-08-20",
      "source": "Stooq CSV (stooq.com/q/l/), free, no key (cb.f) / Yahoo BZ=F",
      "cadence": "daily",
      "estimate": false,
@@ -1829,7 +1829,6 @@
      "hist_points": 260
     },
     "hist": [
-     66.43,
      66.589996,
      66.629997,
      66.120003,
@@ -2088,27 +2087,28 @@
      88.519997,
      90.870003,
      91.019997,
-     91.699997
+     91.620003,
+     91.910004
     ],
     "chgw": {
-     "1W": "+3.06%",
-     "1M": "+2.78%",
-     "3M": "-16.07%",
-     "6M": "+27.97%",
-     "1Y": "+37.19%"
+     "1W": "+5.56%",
+     "1M": "+0.99%",
+     "3M": "-18.01%",
+     "6M": "+28.08%",
+     "1Y": "+35.82%"
     }
    },
    {
     "lbl": "STOXX 600",
     "region": "EU",
-    "val": "652",
-    "chg": "-0.69%",
+    "val": "651",
+    "chg": "-0.11%",
     "dir": "down",
     "seed": 88,
     "back": "STOXX Europe 600 — the broad European equity benchmark; a read on euro-area risk appetite.",
-    "chartRead": "652 (-0.69%); Europe followed the US tech tape down rather than the Asian break.",
+    "chartRead": "651 on 19 Aug (-0.11%), lagging the US bounce; European equities ended the week slightly lower on Middle East and energy uncertainty.",
     "meta": {
-     "as_of": "2026-08-18",
+     "as_of": "2026-08-19",
      "source": "Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (^STOXX)",
      "cadence": "daily",
      "estimate": false,
@@ -2116,7 +2116,6 @@
      "hist_points": 260
     },
     "hist": [
-     541.400024,
      541.070007,
      546.049988,
      547.080017,
@@ -2375,27 +2374,28 @@
      659.23999,
      657.859985,
      656.409973,
-     651.900024
+     651.900024,
+     651.159973
     ],
     "chgw": {
-     "1W": "-1.30%",
-     "1M": "+1.62%",
-     "3M": "+6.84%",
-     "6M": "+4.93%",
-     "1Y": "+17.67%"
+     "1W": "-1.26%",
+     "1M": "+1.81%",
+     "3M": "+6.51%",
+     "6M": "+3.57%",
+     "1Y": "+16.74%"
     }
    },
    {
     "lbl": "FTSE 100",
     "region": "UK",
-    "val": "10,728",
-    "chg": "+0.07%",
+    "val": "10,743",
+    "chg": "+0.14%",
     "dir": "up",
     "seed": 99,
     "back": "FTSE 100 — the UK large-cap index, heavy in energy, miners and financials; a global-value proxy.",
-    "chartRead": "10,728 (+0.07%), steady into a UK July CPI print that came in at 2.9%, a four-month high.",
+    "chartRead": "10,743 on 19 Aug (+0.14%). UK July CPI at 2.9% was in line with expectations with core unchanged at 2.6%, and gilts rallied - 30Y to 5.80%, 10Y to ~5.05%.",
     "meta": {
-     "as_of": "2026-08-18",
+     "as_of": "2026-08-19",
      "source": "Stooq CSV (stooq.com/q/l/), free, no key (^ftm) / Yahoo ^FTSE",
      "cadence": "daily",
      "estimate": false,
@@ -2403,7 +2403,6 @@
      "hist_points": 260
     },
     "hist": [
-     9095.700195,
      9129.700195,
      9147.799805,
      9165.200195,
@@ -2662,27 +2661,28 @@
      10772.700195,
      10750.099609,
      10720.299805,
-     10728.0
+     10728.0,
+     10743.400391
     ],
     "chgw": {
-     "1W": "-1.07%",
-     "1M": "+1.20%",
-     "3M": "+3.92%",
-     "6M": "+0.39%",
-     "1Y": "+15.24%"
+     "1W": "-0.83%",
+     "1M": "+2.08%",
+     "3M": "+4.00%",
+     "6M": "+1.10%",
+     "1Y": "+15.26%"
     }
    },
    {
     "lbl": "Nikkei 225",
     "region": "JP",
-    "val": "65,285",
-    "chg": "-3.23%",
-    "dir": "down",
+    "val": "66,225",
+    "chg": "+1.38%",
+    "dir": "up",
     "seed": 111,
     "back": "Nikkei 225 — Japan's headline equity index; sensitive to the yen and global tech demand.",
-    "chartRead": "-3.23% to 65,285 on 19 Aug; Kioxia -10%, SoftBank -6% as the AI supply chain sold off.",
+    "chartRead": "66,225 on 20 Aug (+1.38%), retracing part of the 3.23% break. Still -3.1% on the week, with the 10-year JGB at its highest since 1996.",
     "meta": {
-     "as_of": "2026-08-19",
+     "as_of": "2026-08-20",
      "source": "Stooq CSV (stooq.com/q/l/), free, no key (^nkx) / Yahoo ^N225",
      "cadence": "daily",
      "estimate": false,
@@ -2690,7 +2690,6 @@
      "hist_points": 260
     },
     "hist": [
-     41456.230469,
      40998.269531,
      40674.550781,
      40654.699219,
@@ -2949,27 +2948,28 @@
      68713.796875,
      69220.25,
      67460.726562,
-     65284.910156
+     65326.421875,
+     66225.203125
     ],
     "chgw": {
-     "1W": "-3.32%",
-     "1M": "-2.32%",
-     "3M": "+7.35%",
-     "6M": "+14.65%",
-     "1Y": "+59.00%"
+     "1W": "-3.05%",
+     "1M": "+3.25%",
+     "3M": "+9.37%",
+     "6M": "+16.58%",
+     "1Y": "+58.36%"
     }
    },
    {
     "lbl": "MSCI EM",
     "region": "EM",
-    "val": "67",
-    "chg": "+1.07%",
+    "val": "66",
+    "chg": "+1.18%",
     "dir": "up",
     "seed": 122,
     "back": "MSCI Emerging Markets — a broad EM-equity gauge; rises as the dollar softens and risk appetite improves.",
-    "chartRead": "Korea broke: KOSPI -5.55% to 6,488, a sidecar triggered, ~31% below its June record.",
+    "chartRead": "66.1 on 19 Aug (+1.18%), a partial retrace. Korea is unrepaired: the KOSPI closed 6,488.24 after a sidecar trigger and sits ~31% below its June record.",
     "meta": {
-     "as_of": "2026-08-18",
+     "as_of": "2026-08-19",
      "source": "EEM/EMXC ETF proxy via Yahoo Finance chart JSON (query1.finance.yahoo.com), free, no key (MSCI index itself is licensed)",
      "cadence": "daily",
      "estimate": false,
@@ -2977,9 +2977,6 @@
      "hist_points": 260
     },
     "hist": [
-     48.700001,
-     48.84,
-     49.07,
      49.48,
      49.439999,
      49.299999,
@@ -3219,6 +3216,7 @@
      63.290001,
      63.560001,
      65.339996,
+     64.989998,
      64.599998,
      63.330002,
      63.619999,
@@ -3236,27 +3234,29 @@
      66.459999,
      66.68,
      66.610001,
-     67.32
+     67.32,
+     65.339996,
+     66.110001
     ],
     "chgw": {
-     "1W": "+3.30%",
-     "1M": "+2.67%",
-     "3M": "+2.28%",
-     "6M": "+10.14%",
-     "1Y": "+34.80%"
+     "1W": "-0.53%",
+     "1M": "+4.01%",
+     "3M": "+1.60%",
+     "6M": "+8.31%",
+     "1Y": "+32.88%"
     }
    },
    {
     "lbl": "EUR/USD",
     "region": "FX",
-    "val": "1.159",
-    "chg": "+0.08%",
+    "val": "1.168",
+    "chg": "+0.86%",
     "dir": "up",
     "seed": 133,
     "back": "Euro vs US dollar — the world's main currency pair; up = a weaker dollar and easier global conditions.",
-    "chartRead": "1.159, rangebound; the dollar is not the variable in this move.",
+    "chartRead": "1.168 on 20 Aug (+0.86%) as the Treasury buyback announcement pulled US yields down and softened the dollar.",
     "meta": {
-     "as_of": "2026-08-19",
+     "as_of": "2026-08-20",
      "source": "FRED (fredgraph.csv / api), free, no key (DEXUSEU) / Stooq eurusd / Yahoo EURUSD=X",
      "cadence": "daily",
      "estimate": false,
@@ -3264,7 +3264,6 @@
      "hist_points": 260
     },
     "hist": [
-     1.166834,
      1.164253,
      1.165175,
      1.161305,
@@ -3523,14 +3522,15 @@
      1.153536,
      1.157394,
      1.158279,
-     1.159152
+     1.157943,
+     1.167951
     ],
     "chgw": {
-     "1W": "+0.41%",
-     "1M": "+1.43%",
-     "3M": "-0.13%",
-     "6M": "-1.56%",
-     "1Y": "-0.86%"
+     "1W": "+1.30%",
+     "1M": "+2.29%",
+     "3M": "+0.47%",
+     "6M": "-1.15%",
+     "1Y": "-0.31%"
     }
    }
   ]
@@ -3538,7 +3538,7 @@
  "crash_risk": {
   "composite": 67,
   "level": "Elevated",
-  "as_of": "2026-08-19 (cluster read; composite RECOMPUTED this run, not carried)",
+  "as_of": "2026-08-20 (cluster read refreshed; composite CARRIED unchanged at 67 - one day old, inside the 7-day trigger)",
   "cadence": "recomputed on the daily when >7d stale",
   "composite_meta": {
    "as_of": "2026-08-19",
@@ -3547,11 +3547,11 @@
    "estimate": true,
    "note": "Recomputed 19 Aug from the seven buckets below after standing at the 8 Aug figure for eleven days. 60 -> 67. Still a judgement, not a formula over the 22 indicators - that remains the stated backlog item."
   },
-  "read": "Recomputed today rather than carried - it had been stranded on the 8 August figure for eleven days, past the 7-day age trigger the daily now owns. It moves 60 to 67. Three buckets moved it. Global/contagion went from watch to stress: the KOSPI fell 5.55% to 6,488.24 on 19 August with a sell-side sidecar triggered and now sits ~31% below the 9,385.59 record it set in June, the Nikkei fell 3.23% with the 10-year JGB at its highest since 1996 on September BoJ-hike speculation, and China has still answered its July activity miss with nothing. Breadth turned from improving to leadership-breaking, because what sold was the leadership itself - the Philadelphia semiconductor index -5.4%, memory -5% to -7%. And volatility stopped being conspicuously calm, the VIX up ~11% across two sessions to 15.84. Valuation is unchanged-hot into a rising discount rate. Against all of that, the two channels that turn a correction into a crash are still not armed: HY OAS 270bp and IG 81bp are calm, NFCI is loose at -0.55, SOFR-OIS is ~10bp, and the dollar FELL on a broad risk-off session rather than squeezing. US labour is still not turning. That is why 67 and not higher. The item with no home in these seven buckets is the one that moved the tape: the WSJ's ~$3tn of off-balance-sheet AI commitments is leverage that no spread currently prices, and this desk has no way to score it today. Depth risk ~15-25% on a catalyst; timing un-triggered.",
+  "read": "Carried, not recomputed, and said out loud: composite_meta.as_of is 19 August, one day old and well inside the 7-day age trigger, so the rule is to hold 67 and state it. That matters more than usual today, because the buckets underneath it moved DOWN and the carried number now reads stale-high against its own inputs. What changed: the US Treasury said on 19 August it will at least double liquidity-support buybacks of longer-dated coupons, from a $2bn cap to at least $4bn an operation across the 10-20 and 20-30 year sectors, running 9 September into early November. The 10-year fell 5bp to 4.65% after testing near 4.75%; the VIX fell 6% to 14.89, giving back the whole two-session rise; UK 30-year gilts eased to 5.80% and the 10-year to about 5.05%. Funding was already the bucket holding this down and it got easier, not harder. Global/contagion partially retraced - the Nikkei rose 1.38% and MSCI EM 1.18% - though the Korean drawdown itself is unrepaired and China has now gone a fifteenth month without moving its loan prime rates. Breadth is the bucket that did not mend: the leadership that sold on 18 August bounced on a buyback and a bond announcement, not on demand news, and top-10 concentration is unchanged. Valuation is unchanged-hot, and slightly hotter in multiple terms as the index rose. Two items still have no home in these seven buckets and both are leverage no spread prices: the WSJ's ~$3tn of off-balance-sheet AI commitments, and - new this run - a single AI-infrastructure borrower raising $4.5bn of converts in one morning and falling 13.7% while doing it. Depth risk ~15-25% on a catalyst; timing un-triggered. Next scheduled recompute 2026-08-26, or sooner if a bucket breaks.",
   "buckets": [
    {
     "nm": "Valuation",
-    "summary": "Hot and unchanged, but the discount-rate mechanism is now visible rather than abstract. CAPE ~41.8 (~97th percentile since 1881), Buffett indicator ~217%, forward P/E ~20.6, excess CAPE yield ~1.4%. The S&P 500 set a record 7,798.99 on 13 August and has fallen three sessions since to 7,691.76 - about 1.4% off the high, so this is a de-rating in the leadership rather than in the index multiple. A 30-year at 5.31% works against that multiple every day it stays there.",
+    "summary": "Hot, and marginally hotter. CAPE ~41.8 (~97th percentile since 1881), Buffett indicator ~217%, forward P/E ~20.6, excess CAPE yield ~1.4%. The S&P 500 recovered 0.21% to 7,707.98 on 19 August, about 1.2% below the 13 August record of 7,798.99, so the three-session de-rate has begun to reverse without any change in earnings. The discount-rate mechanism eased rather than disappeared: the 10-year fell 5bp to 4.65% on the Treasury's buyback expansion, but the 30-year's 5.31% print of 17 August is two days old and the buybacks do not start until 9 September.",
     "inds": [
      {
       "nm": "Shiller CAPE",
@@ -3609,16 +3609,16 @@
    },
    {
     "nm": "Credit",
-    "summary": "Calm on price and newly questioned on disclosure - and the second half is this run's new information. Spreads have not moved (HY OAS 270bp, IG 81bp). But a Wall Street Journal analysis on 18 August puts nine large technology companies' off-balance-sheet AI commitments at roughly $3tn, around five times their reported trailing-twelve-month capex, split between ~$0.9-1.2tn of unstarted data-centre leases and ~$1.5-1.9tn of purchase commitments - Alphabet $811bn, Meta ~$420bn against roughly a third of that in reported debt. This is NOT spread stress and must not be read as one. It is evidence that the AI build's obligation stack is larger than the balance sheets show, arriving in the same week the long end repriced the cost of carrying it. CoreWeave's $35-39bn capex against $12.4-13.2bn of guided revenue and Nebius's 50-60% prepayment cover sit inside that picture.",
+    "summary": "Calm on price, and now with a live test running through it. Spreads have not moved (HY OAS 270bp, IG 81bp) and the WSJ's 18 August finding stands - roughly $3tn of off-balance-sheet AI commitments across nine large technology companies, about five times their reported trailing-twelve-month capex, split ~$0.9-1.2tn of unstarted data-centre leases and ~$1.5-1.9tn of purchase commitments. What is new is that one of those balance sheets went to the market and priced: Nebius launched a $4.5bn convertible offering on 19 August - $2.75bn due 2030, $1.75bn due 2034, with $375m and $300m upsize options - alongside exchanges of its 2.00% 2029s and 3.00% 2031s into Class A shares. The offering got done; the equity fell as much as 13.7% on it. Read it precisely: AI-infrastructure credit is open, and it is being paid for in dilution rather than in spread. That is not stress, and it is not free either.",
     "inds": [
      {
       "nm": "US HY OAS spread",
-      "val": "270 bp",
+      "val": "275 bp",
       "status": "calm",
       "tr": "flat",
       "mean": "High-yield risk premium; tight = complacent credit.",
       "meta": {
-       "as_of": "2026-08-17",
+       "as_of": "2026-08-18",
        "source": "FRED (fredgraph.csv / api), free, no key (BAMLH0A0HYM2)",
        "cadence": "daily",
        "estimate": false
@@ -3626,12 +3626,12 @@
      },
      {
       "nm": "IG OAS spread",
-      "val": "81 bp",
+      "val": "82 bp",
       "status": "calm",
       "tr": "flat",
       "mean": "Investment-grade spread; low = easy credit conditions.",
       "meta": {
-       "as_of": "2026-08-17",
+       "as_of": "2026-08-18",
        "source": "FRED (fredgraph.csv / api), free, no key (BAMLC0A0CM)",
        "cadence": "daily",
        "estimate": false,
@@ -3642,16 +3642,16 @@
    },
    {
     "nm": "Volatility",
-    "summary": "No longer conspicuously calm. The VIX is 15.84, up about 11% across two sessions from ~14.25, after weeks at multi-month lows while the 30-year Treasury made a 19-year high. Absolute levels remain low and contango is intact, so this is vol responding rather than vol stressed - but the gap between what the equity option market and the bond market were pricing has begun to close, and it closed in the bond market's direction.",
+    "summary": "Gave back the whole move. The VIX fell 6.00% to 14.89, erasing the two-session rise to 15.84, on the Treasury's buyback expansion and a bond rally. Contango is intact and the MOVE index is unrefreshed since 7 August, which is now a fortnight stale on the one bucket where the bond market is the point - flagged rather than carried as current. The equity option market has gone back to pricing calm; it did so because the authorities acted on the long end, not because the long end resolved.",
     "inds": [
      {
       "nm": "VIX",
-      "val": "15.8",
+      "val": "14.9",
       "status": "calm",
       "tr": "up",
       "mean": "30-day implied equity vol; low = calm markets.",
       "meta": {
-       "as_of": "2026-08-18",
+       "as_of": "2026-08-19",
        "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
        "cadence": "daily",
        "estimate": false
@@ -3688,7 +3688,7 @@
    },
    {
     "nm": "Breadth",
-    "summary": "Deteriorated, and how it deteriorated is the point: the leadership sold. The Philadelphia semiconductor index fell 5.4% on 18 August with memory the epicentre (Micron -5%, SanDisk -6%, Western Digital -7%), and the damage repeated in Asia overnight (SK hynix -9%, Samsung -7%, Kioxia -10%). Top-10 concentration remains the stress reading, and a concentrated index whose concentration is what falls is the fragile case, not the broadening one. The Russell 2000 record that carried the improving read is now five sessions old and was not re-confirmed this run - flagged rather than carried as current.",
+    "summary": "The bucket that did not mend, and the reason to be careful about today's bounce. The leadership that sold on 18 August - Philadelphia semiconductor index -5.4%, memory the epicentre - recovered on 19 August on a buyback authorisation (SK hynix +6%, SanDisk +5%, Micron +3%) and a Treasury announcement, not on any change to demand. Top-10 concentration remains the stress reading and is unchanged. The Russell 2000 record that once carried the improving read is now six sessions old and has still not been re-confirmed. A concentrated index whose concentration falls and then rebounds on financing news is not a broadening tape.",
     "inds": [
      {
       "nm": "% S&P > 200-DMA",
@@ -3733,16 +3733,16 @@
    },
    {
     "nm": "Funding & liquidity",
-    "summary": "Ample, and this is the bucket doing most of the work holding the composite down. NFCI loose at -0.55, SOFR-OIS around 10bp, and the dollar fell 0.11% to 99.53 on a broad risk-off session rather than squeezing higher - the clearest single sign that the long-end move is still a term-premium and inflation story rather than a funding one. Nothing in the front end has changed.",
+    "summary": "Ample, and this run it got actively easier - which is the single largest reason the day turned. The Treasury will at least double liquidity-support buybacks of longer-dated nominal coupons, from a $2bn cap to at least $4bn per operation, targeting the 10-20 and 20-30 year sectors where dealer demand had thinned, running 9 September to early November. It repurchases off-the-run paper to reduce dislocation; it does not finance new spending. NFCI loose at -0.55, SOFR-OIS around 10bp, and the dollar essentially unchanged at 98.88 while risk assets rallied hard. Nothing in the front end has changed, and the back end now has a stated official bid behind it.",
     "inds": [
      {
       "nm": "Chicago Fed NFCI",
-      "val": "-0.55",
+      "val": "-0.56",
       "status": "calm",
       "tr": "flat",
       "mean": "Financial conditions; negative = loose / easy.",
       "meta": {
-       "as_of": "2026-08-07",
+       "as_of": "2026-08-14",
        "source": "FRED (fredgraph.csv / api), free, no key (NFCI)",
        "cadence": "weekly",
        "estimate": false,
@@ -3764,12 +3764,12 @@
      },
      {
       "nm": "USD (DXY) funding",
-      "val": "99.5",
+      "val": "98.9",
       "status": "calm",
       "tr": "up",
       "mean": "Dollar demand; sharp spikes signal funding stress.",
       "meta": {
-       "as_of": "2026-08-19",
+       "as_of": "2026-08-20",
        "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
        "cadence": "daily",
        "estimate": false
@@ -3779,7 +3779,7 @@
    },
    {
     "nm": "Macro / recession",
-    "summary": "Mixed, with the inflation side now printing. UK July CPI came in at 2.9% against 2.6% in June - a four-month high, and the first G7 consumer-price print to carry the Hormuz premium, arriving after both G7 long ends had already moved. US labour is still not turning: claims 209k on an unchanged 199k four-week average, continuing claims down 22k to 1.777m. The consumer is holding rather than breaking - Home Depot beat on both lines on 18 August and reaffirmed full-year guidance, its CFO describing 'frozen housing market conditions' and a customer who is a 'healthy cohort' but is not starting big projects. Japan's Q2 GDP at 1.1% annualised remains the weak spot.",
+    "summary": "Mixed, and less inflationary than yesterday's reading of it. UK July CPI at 2.9% against 2.6% in June was a four-month high and does carry the Hormuz pass-through - but it came in line with market expectations, core was unchanged at 2.6%, and traders responded by trimming bets on a UK rate rise before year-end while the BoE's chief economist said growth supports holding steady. The energy premium is showing up in headline only, which is what an energy premium is supposed to do. US labour is still not turning: claims 209k on an unchanged 199k four-week average, continuing claims down 22k to 1.777m. The consumer is holding and the evidence firmed: Target's comparable sales rose 3.8% on 3.6% higher traffic and it raised full-year guidance, after Home Depot beat and reaffirmed on 18 August. Japan's Q2 GDP at 1.1% annualised remains the weak spot.",
     "inds": [
      {
       "nm": "10Y-2Y curve",
@@ -3825,16 +3825,16 @@
    },
    {
     "nm": "Global / contagion",
-    "summary": "The most deteriorated bucket, and the reason the composite moved. The KOSPI fell 5.55% to 6,488.24 on 19 August, triggering a sell-side sidecar, and now sits roughly 31% below the 9,385.59 record it set in June - a drawdown this desk had not recorded, and one that reframes Korea as the most damaged major market rather than the one carrying the ex-US rotation. The Nikkei fell 3.23% to 65,285 with the 10-year JGB at its highest since 1996 on speculation of a September BoJ hike, so Asian equities and Asian rates are now moving together. China has still answered its July activity miss with no policy at all: loan prime rates are unchanged at 3.00% and 3.50% for a 14th consecutive month, with the August fixing due 20 August. EM credit at 285bp and the BTP-Bund at ~100bp remain calm, which is what holds this at stress rather than higher.",
+    "summary": "Partially retraced, not repaired. The Nikkei rose 1.38% to 66,225 and MSCI EM 1.18% as the bond rally reached Asia, but the KOSPI's 5.55% fall to 6,488.24 on 19 August is unreversed and Korea still sits roughly 31% below the 9,385.59 record it set in June. China has now left loan prime rates at 3.00% and 3.50% for a fifteenth consecutive month - the August fixing landed on 20 August and changed nothing - which is a third consecutive observed absence of policy against a July activity miss. EM credit at 285bp and the BTP-Bund at ~100bp are calm. The dollar did not squeeze on the way down and has not slipped on the way back up, which is the same evidence pointing the same way: this is a term-premium story, not a funding one.",
     "inds": [
      {
       "nm": "EM $-credit spread",
-      "val": "285 bp",
+      "val": "288 bp",
       "status": "calm",
       "tr": "flat",
       "mean": "EM hard-currency sovereign/credit premium; low = risk-on EM.",
       "meta": {
-       "as_of": "2026-08-17",
+       "as_of": "2026-08-18",
        "source": "FRED (fredgraph.csv / api), free, no key (BAMLEMHBHYCRPIOAS / EMBI proxy)",
        "cadence": "daily",
        "estimate": false
@@ -3869,12 +3869,12 @@
      },
      {
       "nm": "USD (DXY) stress",
-      "val": "99.5",
+      "val": "98.9",
       "status": "calm",
       "tr": "up",
       "mean": "Global dollar strength; sharp spikes tighten worldwide conditions.",
       "meta": {
-       "as_of": "2026-08-19",
+       "as_of": "2026-08-20",
        "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
        "cadence": "daily",
        "estimate": false
@@ -3888,100 +3888,100 @@
   {
    "nm": "AI / semiconductors",
    "value": 14,
-   "mom": "det",
+   "mom": "flat",
    "r": "OW",
-   "rationale": "The WSJ put nine big-tech firms' off-balance-sheet AI commitments at ~$3tn on 18 Aug and the SOX fell 5.4%. NVDA reports 26 Aug - the demand leg's largest test."
-  },
-  {
-   "nm": "AI power & electrical infrastructure",
-   "value": 13,
-   "mom": "imp",
-   "r": "OW",
-   "rationale": "Storage still ships now: Fluence/LEAG started a 400 MWh German project 14 Aug; MSAs with two hyperscalers, datacentre pipeline +30% since Q1."
+   "rationale": "Bounced with the tape, not on demand news. New and dated 19 Aug: the US is reviewing Chinese firms' REMOTE access to GB300 compute via a Thai data centre - controls cover chips, not access. NVDA reports 26 Aug."
   },
   {
    "nm": "AI memory / HBM / NAND",
-   "value": 12,
-   "mom": "det",
+   "value": 13,
+   "mom": "imp",
    "r": "OW",
-   "rationale": "Fundamentals intact, price leg broke: contract DRAM still forecast +13-18% q/q, but Micron -5%, SanDisk -6%, SK hynix -9%, Samsung -7% on rates and positioning."
+   "rationale": "The strongest single confirmation of the run. SK hynix's board approved a KRW 40tn (~$28.6bn) buyback and FULL cancellation on 19 Aug - the largest ever by a listed Korean company - and the complex rebounded."
   },
   {
-   "nm": "AI optical interconnect",
-   "value": 11,
+   "nm": "AI power & electrical infrastructure",
+   "value": 12,
    "mom": "flat",
    "r": "OW",
-   "rationale": "Second observed quiet cycle on a strong base - the 11-12 Aug Lumentum print stands unchallenged and the FCC ban is unchanged since 5 Aug: drafted, not published."
+   "rationale": "No dated 19-20 Aug catalyst; recorded as an observed quiet window on a live base. The 14 Aug Fluence/LEAG 400 MWh German start and the two hyperscaler MSAs stand unchallenged."
   },
   {
    "nm": "Gold / precious metals",
-   "value": 10,
+   "value": 11,
    "mom": "imp",
    "r": "OW",
-   "rationale": "$4,390 on 19 Aug (+0.56%) on the risk-off bid. Correction: gold FELL on 18 Aug as yields rose; ~9% higher across August; still ~21% below the 28 Jan ATH."
+   "rationale": "$4,539 on 20 Aug (+1.10%), +4.0% on the week and +11.5% on the month, bid on the Treasury buyback and a softer dollar. Still ~19% below the 28 Jan all-time high - a recovery, not a record run."
   },
   {
    "nm": "Energy premium / oil complex",
-   "value": 9,
+   "value": 10,
    "mom": "imp",
    "r": "N",
-   "rationale": "Brent $91.70 and UK July CPI at 2.9% - the pass-through has reached a G7 consumer print, not just the curves. Trump says he will declare Hormuz US territory 'pretty soon'."
+   "rationale": "Brent $91.91, a fourth straight session higher. New and it cuts against this desk's own counterweight: eight attacks on vessels transiting Hormuz this month, including UAE- and Saudi-linked ships."
   },
   {
-   "nm": "Neoclouds / AI-infra rental",
-   "value": 8,
-   "mom": "flat",
+   "nm": "AI optical interconnect",
+   "value": 9,
+   "mom": "imp",
    "r": "OW",
-   "rationale": "Flows improved - CRWV and NBIS added to the Nasdaq-100 and a dedicated neocloud ETF launched - but the WSJ obligation finding aims straight at the financing leg."
+   "rationale": "The silence broke on a flows signal, not a print: Roundhill listed LYTE on 6 Aug, the first dedicated photonics/optics ETF, on $72m of first-day volume - LITE 15.4%, COHR 15.2%."
   },
   {
    "nm": "Nuclear / uranium & SMRs",
-   "value": 7,
-   "mom": "imp",
+   "value": 8,
+   "mom": "flat",
    "r": "OW",
-   "rationale": "Uranium spot ~$86.5/lb (7 Aug) with term ~$90 - the sub-$80 kill is not close. Haiyang 3 hot tests 18 Aug; Blue Energy/GE Vernova gas-plus-nuclear advanced 17 Aug."
+   "rationale": "Quiet window, healthy base. Spot ~$86.36/lb at end-July per Cameco with term contracts around $90 - the highest since 2008 and nowhere near the sub-$80 kill condition."
   },
   {
    "nm": "Cybersecurity",
-   "value": 7,
-   "mom": "imp",
+   "value": 8,
+   "mom": "flat",
    "r": "N",
-   "rationale": "Threat side live and dated: CISA added an actively exploited Ray RCE flaw to KEV on 17 Aug, plus N-able N-central after customer compromises. CRWD reports 26 Aug, PANW 1 Sept."
+   "rationale": "Live and dated: CISA published advisory AA26-231A on 19 Aug, after adding three actively exploited flaws on 11 Aug incl. a Windows bug used by DPRK actors against defence job applicants. CRWD 26 Aug."
   },
   {
    "nm": "Defence",
-   "value": 6,
+   "value": 7,
    "mom": "flat",
    "r": "OW",
-   "rationale": "Split confirmed rather than broken: BAE upgraded 2026 guidance, while RHM cut sales guidance to EUR 13.7-14.2bn after Berlin scrapped the EUR 12.8bn F126 frigate programme."
+   "rationale": "Quiet window on a live base; the BAE upgrade and the Rheinmetall guidance cut both stand. Additive: RHM H1 revenue +39% to EUR 5.5bn, Q2 +70% to EUR 3.29bn, hiring ~10,000 a year."
+  },
+  {
+   "nm": "Neoclouds / AI-infra rental",
+   "value": 6,
+   "mom": "det",
+   "r": "N",
+   "rationale": "CUT 4->3. The Nasdaq-100 'flows' evidence turned out to be dated 22 June, not August, and Nebius raised $4.5bn of converts on 19 Aug and fell 13.7% on it. Real flows leg: the NCLD ETF, 6 Aug."
   },
   {
    "nm": "Robotics & automation",
    "value": 5,
    "mom": "flat",
    "r": "N",
-   "rationale": "No fresh dated catalyst in the 18-19 Aug window; the 18 Aug evidence stands - Waymo past 220m rider-only miles against a June NHTSA recall of 3,871 driving systems."
+   "rationale": "Third consecutive run in which the humanoid claims surfaced are aggregator-sourced and rejected. One aggregator says Figure passed 10,000 deployments; another says Optimus builds are in the low hundreds."
   },
   {
    "nm": "Critical minerals / rare earths",
    "value": 5,
    "mom": "flat",
    "r": "OW",
-   "rationale": "Two-way: DOE put $100m into a critical-minerals workforce on 7 Aug, while China plans to lift output at the world's largest rare-earth deposit by 50%."
+   "rationale": "Second consecutive observed quiet cycle. The 16 Aug MP processed-revenue print ($94.4m) and China's June export-control blacklist of MP and USA Rare Earth remain the live facts."
   },
   {
    "nm": "Space / launch",
    "value": 4,
    "mom": "flat",
    "r": "N",
-   "rationale": "Unchanged and still on the kill's edge: RKLB backlog $2.36bn, Neutron's first flight unreaffirmed, coverage openly contemplating 2027. 13Fs show SpaceX bought by all nine disclosing holders."
+   "rationale": "Flows leg found, kill risk raised. RKLB has been in the Nasdaq-100 since 22 June - a fact absent from this book - while Bloomberg reported on 10 Aug that Rocket Lab is cautioning on 2027 Neutron risk."
   },
   {
    "nm": "Crypto / digital assets",
-   "value": 3,
-   "mom": "det",
+   "value": 4,
+   "mom": "imp",
    "r": "N",
-   "rationale": "Deteriorating on odds, not on the date: the 15 Sept procedural vote stands, but Polymarket now prices 2026 passage at ~25%, down from ~33-37%."
+   "rationale": "RAISED 2->3. BTC +7.27% to $69,381, above $69,000 for the first time since June on ~$1.44bn of short liquidations, Treasury buybacks and a presidential push for market-structure legislation."
   }
  ],
  "drivers": [
@@ -3993,7 +3993,7 @@
    "traj": "flat",
    "trajLbl": "Revised again - the obligation stack is bigger than disclosed",
    "conv": 4,
-   "oneLiner": "Capex is still converting to revenue, but the WSJ has put ~$3tn of off-balance-sheet AI commitments behind it - and one of the two frontier buyers slowed.",
+   "oneLiner": "Capex is still converting, the ~$3tn obligation stack is unchallenged, and this run the financing leg was tested in public: Nebius raised $4.5bn of converts and fell 13.7% on it.",
    "drives": [
     [
      "Semis",
@@ -4017,9 +4017,10 @@
     ]
    ],
    "summary": [
-    "The repricing of the AI tape around who PAYS for capex vs who RECEIVES it - the master factor, revised 17 Aug and pressured 19 Aug.",
-    "The conversion leg is unchanged and still good: CRWV rev $2.58bn/+112% on a $104bn backlog, NBIS $582m/+454% with 50-60% customer prepayments.",
-    "What changed: a WSJ analysis on 18 Aug puts nine big-tech firms' off-balance-sheet AI commitments at ~$3tn, ~5x their reported trailing capex - and OpenAI's Q2 grew just 18% q/q with losses widening while Anthropic roughly doubled. Bigger obligations, one softer buyer. Trajectory cut from up to flat; NVDA on 26 Aug is the test."
+    "The repricing of the AI tape around who PAYS for capex vs who RECEIVES it - the master factor, revised 17 Aug, pressured 19 Aug and tested 20 Aug.",
+    "The conversion leg is unchanged and still good: CRWV revenue $2.58bn (+112%) with a $104bn backlog, NBIS $582m (+454%) with prepayments covering 50-60% of associated capex.",
+    "NEW: the market let a neocloud finance itself and charged it in equity. Nebius launched $4.5bn of convertibles on 19 August - $2.75bn 2030s, $1.75bn 2034s - plus exchanges of its 2029s and 2031s into shares, and the stock fell as much as 13.7%. AI-infrastructure credit is open; it is not cheap.",
+    "The recipients answered better than the payers: SK hynix met a 9% fall with a KRW 40tn cancellation. NVDA's Q2 on 26 August is still the demand leg's largest test."
    ],
    "ev": [
     "WSJ (18 Aug): ~$3tn off-balance-sheet AI commitments across nine large tech firms; ~$0.9-1.2tn unstarted leases, ~$1.5-1.9tn purchase commitments; Alphabet $811bn, Meta ~$420bn",
@@ -4032,10 +4033,10 @@
    "id": "rates",
    "nm": "Rate & liquidity regime",
    "dir": "headwind",
-   "traj": "up",
-   "trajLbl": "Hawkish committee, 2007-high US long end, 1996-high JGB",
+   "traj": "flat",
+   "trajLbl": "The authorities stepped in at the long end",
    "conv": 5,
-   "oneLiner": "The long end is now a three-continent story: US 30Y 5.31%, UK 30Y ~5.77%, and the 10-year JGB at its highest since 1996.",
+   "oneLiner": "The Treasury will at least double long-dated buybacks from 9 September; the 10-year fell to 4.65% and UK 30-year gilts to 5.80%.",
    "drives": [
     [
      "Gold",
@@ -4056,14 +4057,15 @@
    ],
    "summary": [
     "The path of policy rates and system liquidity - and the reaction function behind it.",
-    "Chair Kevin Warsh's July meeting held 3.50-3.75% for a fifth time, 9-3, with Hammack, Kashkari and Logan dissenting FOR A HIKE - the most hawkish dissent since 2016. September is live.",
-    "New this run: UK July CPI printed 2.9% against 2.6% in June, and the 10-year JGB reached a 1996 high on September BoJ-hike speculation. Three G7 long ends are now repricing together."
+    "NEW AND THE DAY'S PIVOT: on 19 August the Treasury said it will at least double liquidity-support buybacks of longer-dated coupons, from a $2bn cap to at least $4bn an operation, across the 10-20 and 20-30 year sectors, running 9 September to early November. It buys off-the-run paper to cure dislocation; it does not fund new spending.",
+    "Chair Kevin Warsh's July meeting held 3.50-3.75% for a fifth time, 9-3, with Hammack, Kashkari and Logan dissenting FOR A HIKE - the most hawkish dissent since 2016. September is still the book's largest macro binary.",
+    "UK qualified: July CPI at 2.9% was a four-month high but came in LINE with expectations with core unchanged at 2.6%, traders trimmed 2026 hike bets, and the BoE's Huw Pill said growth supports holding steady."
    ],
    "ev": [
-    "UK July CPI 2.9% y/y (ONS, released 19 Aug), up from 2.6% in June - a four-month high",
-    "US 30Y Treasury 5.31% on 17 Aug, highest since 2007; 10Y ~4.71%",
-    "10-year JGB at its highest since 1996 on speculation of a September BoJ hike",
-    "July FOMC held 9-3 with three dissents in favour of a hike (29 July)"
+    "US Treasury (19 Aug): long-dated buyback operations at least doubled to $4bn minimum, 9 Sept - early Nov",
+    "US 10Y 4.65% (-5bp) after testing near 4.75%; 30Y had hit 5.31% on 17 Aug, highest since 2007",
+    "UK 30Y gilt 5.80%, 10Y ~5.05% on 19 Aug; UK July CPI 2.9% headline, core unchanged 2.6%",
+    "10-year JGB at its highest since 1996 on September BoJ-hike speculation"
    ]
   },
   {
@@ -4142,10 +4144,10 @@
    "id": "reshore",
    "nm": "Reshoring-by-tariff",
    "dir": "tailwind",
-   "traj": "up",
-   "trajLbl": "Live - Section 338 duties now in force",
-   "conv": 5,
-   "oneLiner": "The first modern use of Section 338 took effect at 00:01 ET on 19 August: 50% on ~$20bn of Canadian goods, with no USMCA exemption.",
+   "traj": "down",
+   "trajLbl": "CUT 5 -> 3: the tariff wall is half what this book assumed",
+   "conv": 3,
+   "oneLiner": "The Supreme Court struck down the IEEPA tariffs on 20 February; the average applied US tariff rate is 8.2%, not 14.9%, and Section 338 was paused on 19 August.",
    "drives": [
     [
      "Rare earths",
@@ -4165,14 +4167,17 @@
     ]
    ],
    "summary": [
-    "Tariff- and content-rule-driven reshoring of supply chains.",
-    "Confirmed and widening in instrument, not just in rate: Section 338 is now in force, and Commerce has proposed Section 232 duties on 14 further steel/aluminium/copper derivatives.",
-    "Canada's response is the near-term variable: PM Carney has not retaliated and says Canada is open to talks, while Ontario's Ford pushes for a matching response."
+    "Tariff- and content-rule-driven reshoring of supply chains - re-based this run on a coverage gap of this desk's own.",
+    "THE GAP: this book had never recorded that the Supreme Court held 6-3 on 20 February 2026 (Roberts) that IEEPA does not authorise tariffs. All IEEPA tariffs terminated at 00:00 ET on 24 February; Section 122 also fell, expiring 24 July. The weighted average applied US tariff rate went from 14.9% to 8.2%.",
+    "AND IT IS REFUNDING: ~$128.68bn of refunds had been accepted for processing by 31 July with 17.69m entries liquidated. Target's Q2 on 19 August booked $994m pretax and $752m net ($1.65/sh) of tariff refunds and doubled its profit on them.",
+    "WHAT SURVIVES, AND IT IS NOT NOTHING: Section 232 is fully intact and expanding - 50% steel and aluminium (25% UK), 25% copper, plus pharmaceuticals - and Section 301 is intact, with a new two-tiered regime covering 60 economies effective 24 July. Section 338 is the newest instrument, and it was paused within two hours of taking effect."
    ],
    "ev": [
-    "Section 338 50% duties on Canadian motor vehicles, alcoholic beverages and dairy effective 00:01 ET 19 Aug; ~$20bn of annual imports; no USMCA exemption",
-    "US-China tariff truce extended 90 days to 10 Nov by an 11 Aug executive order",
-    "Section 232 remains two-tier (50% wholly / 25% derivative) with a 15% transitional rate for grid equipment to 31 Dec 2027"
+    "SCOTUS 6-3 (20 Feb 2026, Roberts): IEEPA does not authorise tariffs; all IEEPA duties terminated 00:00 ET 24 Feb",
+    "Weighted average applied US tariff rate 14.9% -> 8.2% after Section 122 expired 24 July",
+    "~$128.68bn of refunds accepted for processing as of 31 July; Target booked $752m of them in Q2",
+    "Section 338 50% duties on ~$20bn of Canadian goods PAUSED 19 Aug for three days, to 22 Aug, on a deal Carney says still needs work",
+    "Section 232 (50% steel/alu, 25% UK, 25% copper) and Section 301 (60 economies from 24 July) remain fully in force"
    ]
   },
   {
@@ -4221,7 +4226,7 @@
    "traj": "flat",
    "trajLbl": "Not confirmed",
    "conv": 2,
-   "oneLiner": "Claims still contradict the turn, and the consumer is holding: Home Depot beat and reaffirmed guidance on 18 August.",
+   "oneLiner": "Claims still contradict the turn and the consumer firmed again: Target's comps rose 3.8% on higher traffic and it raised full-year guidance.",
    "drives": [
     [
      "Gold",
@@ -4238,8 +4243,9 @@
    ],
    "summary": [
     "A softening US labour market that would rotate leadership toward quality/duration defensives.",
-    "NOT confirmed: the 13 Aug claims data cut against the July -23k payroll, which now reads closer to an outlier.",
-    "Home Depot's CFO describes a 'healthy cohort' of customers in 'frozen housing market conditions' - weak housing, not a weak consumer. The duration leg is still fighting a 30Y at 5.31%. Next real test is the early-September payroll."
+    "NOT confirmed, and now non-confirmed twice in two sessions: Home Depot beat and reaffirmed on 18 August, and Target beat and RAISED guidance on 19 August, with comparable traffic up 3.6%.",
+    "Read the Target beat carefully: $1.65 of its EPS was a tariff refund, not trading. The underlying comp is still positive, but the headline overstates the consumer.",
+    "The duration leg's fight eased slightly - the 10-year fell 5bp on the Treasury buyback - which helps the trade without confirming the thesis. Early-September payroll is the last real test."
    ],
    "ev": [
     "Initial claims 209k (week to 8 Aug) against a 199k four-week average; continuing claims -22k to 1.777m",
@@ -4251,10 +4257,10 @@
    "id": "intl",
    "nm": "International / ex-US rotation",
    "dir": "tailwind",
-   "traj": "down",
-   "trajLbl": "CORRECTED - Korea broke, it was not carrying the rotation",
+   "traj": "flat",
+   "trajLbl": "Bounced with the bond rally; Korea unrepaired, China silent for a 15th month",
    "conv": 3,
-   "oneLiner": "The KOSPI fell 5.55% to 6,488 with a sidecar triggered and is ~31% below its June record - the opposite of what this desk wrote yesterday.",
+   "oneLiner": "Nikkei +1.38% and MSCI EM +1.18% on the Treasury buyback, but the KOSPI's 5.55% fall is unreversed and Korea is ~31% below its June record.",
    "drives": [
     [
      "Defence",
@@ -4279,8 +4285,9 @@
    ],
    "summary": [
     "Capital rotating toward ex-US markets on the valuation gap and the tech cycle.",
-    "CORRECTION: yesterday's 'Korea is carrying the Asia leg' rested on an intraday +2.2% print of 7,131.40. The KOSPI CLOSED that session down 1.55% at 6,869.83, then fell 5.55% to 6,488.24 on 19 Aug. It is ~31% below the 9,385.59 record it set in June.",
-    "All four Asian legs are now qualified: Korea broken, Japan down 3.23% with a 1996-high JGB, China without a policy answer, and EM carried by neither. Europe is the leg still standing. Conviction cut 4 to 3."
+    "Asia retraced part of the break rather than repairing it - the bounce came from a US bond announcement, which is the opposite of an independent ex-US bid.",
+    "China left loan prime rates at 3.00% and 3.50% for a FIFTEENTH consecutive month at the 20 August fixing - a third consecutive observed absence of policy against the July activity miss. The ammunition is still available and still unspent.",
+    "Yesterday's correction stands: the KOSPI closed 19 August at 6,488.24 after a sidecar trigger, and Korea remains the most damaged major market, not the one carrying the rotation."
    ],
    "ev": [
     "KOSPI -5.55% to 6,488.24 on 19 Aug; sell-side sidecar triggered; SK hynix -9%, Samsung -7%",
@@ -4296,7 +4303,7 @@
    "traj": "up",
    "trajLbl": "Escalating - and now printing in a G7 CPI",
    "conv": 5,
-   "oneLiner": "Brent $91.70 with the deal window shut, and the premium has now shown up in UK July CPI at 2.9% - no longer only in the curves.",
+   "oneLiner": "Brent $91.91 on a fourth straight gain, and the shipping counterweight weakened: eight vessel attacks in Hormuz this month, some UAE- and Saudi-linked.",
    "drives": [
     [
      "Defence",
@@ -4321,8 +4328,9 @@
    ],
    "summary": [
     "Cross-cutting geopolitical risk - conflict, trade policy, resource nationalism.",
-    "The negotiated route lapsed on 17 Aug and has not reopened; Trump says he intends to inflict more economic pain on Iran and will declare Hormuz US territory 'pretty soon'. Iran and Oman still talk; the US is not in those talks.",
-    "The honest counterweight: Gulf producers are maintaining substantial shipments despite the blockade, which is what has kept this a premium rather than a shock."
+    "Trump says there are no ongoing negotiations with Tehran and the naval blockade stands; Iran now sets conditions before the strait reopens. The 17 August 60-day deadline lapsed and has not reopened.",
+    "THE COUNTERWEIGHT WEAKENED, AND IT WAS THIS DESK'S OWN: yesterday's read leaned on Gulf producers maintaining shipments. Eight attacks on vessels transiting Hormuz have been reported this month, including ships linked to the UAE and Saudi Arabia.",
+    "Trade policy moved the other way: the Section 338 duties on Canada were paused on 19 August rather than taking effect."
    ],
    "ev": [
     "Brent $91.70 (19 Aug, fetched close, +0.75%); series consistent through $90.87 (17 Aug) and $91.02 (18 Aug)",
@@ -4371,7 +4379,7 @@
    "conv": 5,
    "first_seen": "2026-07-13",
    "includes": "GPUs & accelerators, CPUs, foundry and EDA — the compute core of AI.",
-   "read": "The demand leg is unchallenged and the financing leg took its first real hit. A Wall Street Journal analysis on 18 August put nine large technology companies' off-balance-sheet AI commitments at roughly $3tn - about five times their reported trailing-twelve-month capex - and the complex sold hard on it: the Philadelphia semiconductor index -5.4%, more than $680bn of market value, with foundries hit too (UMC -7%, Tower -10%, GlobalFoundries -7%). Nothing in that report changes an order book; it changes what the market believes the order book is financed by. NVDA on 26 August is the only thing that settles it.",
+   "read": "Bounced with the tape rather than on anything of its own. The complex recovered on 19 August after the Treasury's buyback expansion, with no change to the demand picture and the WSJ's ~$3tn off-balance-sheet finding of 18 August still unanswered. What IS new and dated to 19 August is a widening of the control regime's own definition: Chinese firms have been reaching GB300 compute through a data centre in Thailand, a White House official named Moonshot AI as having done so after its July model release, and a US agency is now reviewing offshore ACCESS rather than only physical shipment. The current rules control chips, not the renting of them - that is the loophole, and closing it would reach the neocloud layer as much as the chip layer. NVDA on 26 August still settles the demand question.",
    "now": "~$650bn",
    "proj": "~$1.1tn",
    "hz": "2028 (est.)",
@@ -4395,7 +4403,7 @@
    ],
    "price": [
     [
-     "Philadelphia semiconductor index -5.4% on 18 Aug; NVDA -2%, AMD -3%"
+     "Philadelphia semiconductor index -5.4% on 18 Aug; recovered with the tape on 19 Aug as the S&P rose 0.21%"
     ]
    ],
    "flows": [
@@ -4404,7 +4412,7 @@
    ],
    "tail": [
     "WSJ (18 Aug): ~$3tn of off-balance-sheet AI commitments across nine large tech firms, ~5x reported trailing capex",
-    "BIS extended advanced-computing licensing to D:5-parented subsidiaries on 15 Aug; NVDA reports 26 Aug"
+    "US reviewing Chinese firms' offshore ACCESS to GB300 compute (19 Aug); BIS extended D:5 licensing to subsidiaries 15 Aug; NVDA reports 26 Aug"
    ],
    "access": [
     {
@@ -4488,6 +4496,112 @@
    ]
   },
   {
+   "id": "memory",
+   "nm": "AI memory / HBM / NAND",
+   "cat": "compute",
+   "x": 58,
+   "y": 60,
+   "size": 240,
+   "stage": "confirmed",
+   "stageLbl": "Confirmed",
+   "conv": 5,
+   "first_seen": "2026-08-02",
+   "includes": "HBM, DRAM and NAND — the memory wall around AI compute.",
+   "read": "The answer to 'cycle or shortage' arrived from the industry rather than the tape, and it is the most substantive evidence this entry has produced. On 19 August SK hynix's board approved a KRW 40tn (about $28.6bn) repurchase and FULL cancellation of its own shares - the largest treasury cancellation ever initiated by a listed South Korean company, roughly 24.07m shares or about 3.3% of the 730,492,365 outstanding, buying from 20 August over about three months - and raised its shareholder-return target to over half of cumulative 2025-27 free cash flow. The complex rebounded the same session: SK hynix +6%, SanDisk +5% to $1,703, Micron +3% to $967.93, the Roundhill Memory ETF +4%. The supply leg is untouched - TrendForce still sees conventional DRAM contract prices +13-18% q/q and NAND +10-15%, Samsung's 2026 HBM capacity is sold out, HBM4 runs $31-32/GB against HBM3E's $17-18/GB. The stated invalidation is an ASP rollover and ASPs are still forecast up. A management team meeting a 9% fall with a record cancellation is making a statement about the cycle's length; take it as evidence, not as proof.",
+   "now": "~$180bn",
+   "proj": "~$320bn",
+   "hz": "2028 (est.)",
+   "nowEst": false,
+   "projEst": true,
+   "runway": 48,
+   "sizeUnit": "combined memory market",
+   "tt": [
+    [
+     "Maturity",
+     "Confirmed"
+    ],
+    [
+     "Upside left",
+     "Medium-high"
+    ],
+    [
+     "Market",
+     "~$180bn → ~$320bn"
+    ]
+   ],
+   "price": [
+    [
+     "SK hynix +6%, SNDK +5% to $1,703, MU +3% to $967.93 (19 Aug), after -9%/-6%/-5% the session before"
+    ]
+   ],
+   "flows": [
+    "SK hynix cancelling ~3.3% of shares outstanding and lifting returns to >50% of 2025-27 FCF is the flows signal, and it comes from the issuer",
+    "The Roundhill Memory ETF (DRAM), the first dedicated memory fund, rose 4% on 19 Aug - a vehicle this book had not recorded"
+   ],
+   "tail": [
+    "SK hynix board (19 Aug): KRW 40tn buyback-and-cancellation, largest ever by a listed Korean company; buying starts 20 Aug",
+    "TrendForce (13 Aug): DRAM contract prices +13-18% q/q, NAND +10-15% (forecast); Samsung's 2026 HBM capacity sold out"
+   ],
+   "access": [
+    {
+     "route": "Broad / passive",
+     "vehicles": [
+      [
+       "DRAM"
+      ],
+      ", ",
+      [
+       "SMH"
+      ],
+      ", ",
+      [
+       "SOXX"
+      ]
+     ],
+     "tradeoff": "CORRECTED: a dedicated memory ETF does exist - Roundhill's DRAM, listed April 2026, the first of its kind. It is concentrated by design (Micron ~26%, the Big Three ~75%, 25% single-name cap), which is the opposite of the dilution problem broad semi funds have here.",
+     "private": false
+    },
+    {
+     "route": "Concentrated / direct",
+     "vehicles": [
+      [
+       "MU"
+      ],
+      ", ",
+      [
+       "SNDK"
+      ],
+      ", Samsung Electronics 005930.KS, SK hynix 000660.KS"
+     ],
+     "tradeoff": "The two purest HBM plays are Korean-listed and need international dealing access; SK hynix is also the one now cancelling 3.3% of its own shares, so the capital-return leg sits offshore too.",
+     "private": false
+    },
+    {
+     "route": "Picks and shovels",
+     "vehicles": [
+      [
+       "LRCX"
+      ],
+      ", ",
+      [
+       "AMAT"
+      ],
+      ", Advantest 6857.T"
+     ],
+     "tradeoff": "Memory-equipment makers capture the reallocation of capacity to HBM without having to pick between the three DRAM makers.",
+     "private": false
+    },
+    {
+     "route": "UK / Europe vehicles",
+     "vehicles": [
+      "iShares MSCI Korea UCITS, VanEck Semiconductor UCITS"
+     ],
+     "tradeoff": "A Korea ETF is the practical UK route to Samsung and SK hynix, but it dilutes the memory signal with banks and industrials and is unhedged to KRW.",
+     "private": false
+    }
+   ]
+  },
+  {
    "id": "power",
    "nm": "AI power & electrical infrastructure",
    "cat": "infra",
@@ -4499,7 +4613,7 @@
    "conv": 5,
    "first_seen": "2026-07-24",
    "includes": "Grid equipment, switchgear, transformers, cooling and backup — plus SMR offtake.",
-   "read": "The capex destination, and the storage leg is now shipping in Europe too. Fluence and LEAG began construction of the 400 MWh Heinersbrueck GridBattery in Germany on 14 August; Fluence has signed master supply agreements with two hyperscale datacentres and its datacentre pipeline is up 30% since Q1 at around 12 GWh contracted. Base Power raised $1bn on 3 August for a US-manufactured battery platform. The 2030 SMR leg is intact behind it, but this is the part that delivers inside the cycle.",
+   "read": "Swept and quiet in this window, which is recorded as an observation rather than inferred from not looking. No dated 19-20 August catalyst was found for AI power or electrical infrastructure. The live base is unchanged and recent: Fluence and LEAG began construction of a second German grid battery on 14 August at 400 MWh, with master supply agreements signed with two hyperscalers and a data-centre pipeline up about 30% since Q1. The demand mechanism is untouched by the week's financing scare - a signed PPA does not reprice with the 30-year. First empty cycle; two more and this domain earns a fading flag on the register's own rule.",
    "now": "~$310bn",
    "proj": "~$650bn",
    "hz": "2030 (est.)",
@@ -4632,229 +4746,6 @@
    ]
   },
   {
-   "id": "memory",
-   "nm": "AI memory / HBM / NAND",
-   "cat": "compute",
-   "x": 58,
-   "y": 60,
-   "size": 240,
-   "stage": "confirmed",
-   "stageLbl": "Confirmed",
-   "conv": 5,
-   "first_seen": "2026-08-02",
-   "includes": "HBM, DRAM and NAND — the memory wall around AI compute.",
-   "read": "Fundamentals intact, price leg broken - and the distinction is the whole entry. The supply evidence is six days old and unchallenged: TrendForce sees conventional DRAM contract prices +13-18% q/q and NAND +10-15%, Samsung's 2026 HBM capacity is sold out, HBM4 runs $31-32/GB against HBM3E's $17-18/GB. What broke was the tape: Micron -5%, SanDisk -6%, Western Digital -7% on 18 August, then SK hynix -9%, Samsung -7% and Kioxia -10% overnight. Coverage attributes it to rising yields and positioning in the most crowded corner of AI hardware, not to company news - SanDisk was up 44% on the week and 653% YTD into it. This entry's stated invalidation is a DRAM/HBM ASP sequential rollover, and ASPs are still rising. Held at high conviction with the price leg flagged, not smoothed. A 2 July piece on 'memory supply-glut fears' surfaced in this sweep and was NOT adopted - it is seven weeks old.",
-   "now": "~$180bn",
-   "proj": "~$320bn",
-   "hz": "2028 (est.)",
-   "nowEst": false,
-   "projEst": true,
-   "runway": 48,
-   "sizeUnit": "combined memory market",
-   "tt": [
-    [
-     "Maturity",
-     "Confirmed"
-    ],
-    [
-     "Upside left",
-     "Medium-high"
-    ],
-    [
-     "Market",
-     "~$180bn → ~$320bn"
-    ]
-   ],
-   "price": [
-    [
-     "MU -5%, SNDK -6%, WDC -7% (18 Aug); SK hynix -9%, Samsung -7%, Kioxia -10% (19 Aug)"
-    ]
-   ],
-   "flows": [
-    "Korean memory complex led the KOSPI's 5.55% fall and its sidecar trigger",
-    "Contract prices, not spot, are the leg that matters for recipients' earnings - and they are still forecast up"
-   ],
-   "tail": [
-    "TrendForce (13 Aug): conventional DRAM contract prices +13-18% q/q, NAND +10-15% (forecast)",
-    "Samsung's 2026 HBM capacity sold out; SK hynix at 50-55% HBM share; HBM4 $31-32/GB vs HBM3E $17-18/GB"
-   ],
-   "access": [
-    {
-     "route": "Broad / passive",
-     "vehicles": [
-      [
-       "SMH"
-      ],
-      ", ",
-      [
-       "SOXX"
-      ]
-     ],
-     "tradeoff": "There is no dedicated memory ETF; broad semi funds hold the memory names at small weights, so a 700% DRAM spot move barely shows through.",
-     "private": false
-    },
-    {
-     "route": "Concentrated / direct",
-     "vehicles": [
-      [
-       "MU"
-      ],
-      ", ",
-      [
-       "SNDK"
-      ],
-      ", Samsung Electronics 005930.KS, SK hynix 000660.KS"
-     ],
-     "tradeoff": "The two purest HBM plays are Korean-listed and need international dealing access; the US pair is the practical route for most.",
-     "private": false
-    },
-    {
-     "route": "Picks and shovels",
-     "vehicles": [
-      [
-       "LRCX"
-      ],
-      ", ",
-      [
-       "AMAT"
-      ],
-      ", Advantest 6857.T"
-     ],
-     "tradeoff": "Memory-equipment makers capture the reallocation of capacity to HBM without having to pick between the three DRAM makers.",
-     "private": false
-    },
-    {
-     "route": "UK / Europe vehicles",
-     "vehicles": [
-      "iShares MSCI Korea UCITS, VanEck Semiconductor UCITS"
-     ],
-     "tradeoff": "A Korea ETF is the practical UK route to Samsung and SK hynix, but it dilutes the memory signal with banks and industrials and is unhedged to KRW.",
-     "private": false
-    }
-   ]
-  },
-  {
-   "id": "optics",
-   "nm": "AI optical interconnect",
-   "cat": "infra",
-   "x": 34,
-   "y": 80,
-   "size": 95,
-   "stage": "confirmed",
-   "stageLbl": "Confirmed",
-   "conv": 5,
-   "first_seen": "2026-08-05",
-   "includes": "Transceivers, optical DSPs, co-packaged optics and fibre — the data-movement layer.",
-   "read": "Second observed quiet cycle on a strong base, recorded as observation rather than deterioration. The promotion to confirmed rests on Lumentum's 11-12 August print - revenue $1.01bn (+109% y/y), EPS $3.23, non-GAAP gross margin through 50%, record 800G shipments and 1.6T in production - and nothing has challenged it. The FCC policy leg is unchanged since 5 August: still drafted, not published, targeted for 2026. The two-way risk is unchanged too - the indium phosphide every Western alternative depends on sits under Chinese export licensing. The retirement clock does not start on two quiet cycles; it is being counted openly so that it cannot start silently.",
-   "now": "~$26bn",
-   "proj": "~$60bn",
-   "hz": "2028 (est.)",
-   "nowEst": false,
-   "projEst": true,
-   "runway": 30,
-   "sizeUnit": "optical-transceiver TAM",
-   "tt": [
-    [
-     "Maturity",
-     "Building"
-    ],
-    [
-     "Upside left",
-     "Very high"
-    ],
-    [
-     "TAM",
-     "~$26bn → ~$60bn"
-    ]
-   ],
-   "price": [
-    [
-     "LITE"
-    ],
-    [
-     " rev $1.01bn +109%, GM >50%, "
-    ],
-    [
-     "COHR"
-    ],
-    [
-     ", "
-    ],
-    [
-     "ANET"
-    ],
-    [
-     ", "
-    ],
-    [
-     "AAOI"
-    ],
-    [
-     " - 1.6T ramp begins"
-    ]
-   ],
-   "flows": [
-    "Optics allocations rising in Q2 13F filings",
-    "Dedicated networking sleeves in AI funds"
-   ],
-   "tail": [
-    "Lumentum FQ4 (11-12 Aug): rev $1.01bn +109% y/y, record 800G, 1.6T ramping to intensify from FQ1",
-    "FCC ban on Chinese transceivers still drafted, not published; Chinese firms hold >60% of the 800G+ segment"
-   ],
-   "access": [
-    {
-     "route": "Broad / passive",
-     "vehicles": [
-      "No pure optical-interconnect fund exists"
-     ],
-     "tradeoff": "The nearest wrappers are broad AI-infrastructure and networking funds, in which optics sits at a few percent - there is no clean passive basket for this theme.",
-     "private": false
-    },
-    {
-     "route": "Concentrated / direct",
-     "vehicles": [
-      [
-       "COHR"
-      ],
-      ", ",
-      [
-       "LITE"
-      ],
-      ", ",
-      [
-       "ANET"
-      ],
-      ", ",
-      [
-       "CRDO"
-      ],
-      ", ",
-      [
-       "AAOI"
-      ]
-     ],
-     "tradeoff": "The ledger's expression line and the only real way in; valuations are rich (COHR and LITE above 127x trailing) and AAOI is unprofitable.",
-     "private": false
-    },
-    {
-     "route": "Picks and shovels",
-     "vehicles": [
-      "Sumitomo Electric 5802.T, Furukawa Electric 5801.T"
-     ],
-     "tradeoff": "The substrate and fibre layer is thin because Lumentum and Coherent are vertically integrated - and indium phosphide, which every Western alternative needs, is under Chinese export licensing.",
-     "private": false
-    },
-    {
-     "route": "UK / Europe vehicles",
-     "vehicles": [
-      "No UCITS optics fund"
-     ],
-     "tradeoff": "UK investors reach this through US lines in a general dealing account; there is no sterling or UCITS route that isolates optics.",
-     "private": false
-    }
-   ]
-  },
-  {
    "id": "gold",
    "nm": "Gold / precious metals",
    "cat": "realasset",
@@ -4866,7 +4757,7 @@
    "conv": 5,
    "first_seen": "2026-07-17",
    "includes": "Bullion, ETFs and senior/junior miners.",
-   "read": "Up on the risk-off, and a correction to yesterday's entry. Gold is $4,390 on 19 August (+0.56%), bid as Asian equities broke. But it did NOT make a second consecutive advance on 18 August as this desk wrote - it FELL about 0.4% as Treasury yields rose, and the $4,429 figure carried yesterday was an intraday print, not the session. The fetched close series had it right. Against the 14 July $4,001 call the flag is +9.7%. The tension is unresolved and sharper than it was: gold is being bought partly on fading Fed-hike expectations while the July FOMC dissented 3-for-a-hike and the 30-year sits at a 19-year high. Still ~21% below the 28 January peak near $5,600 - a recovery, not a record run.",
+   "read": "A recovery that keeps extending, and the level is now the highest of the move. Gold rose 1.10% to $4,538.60 on 20 August, up 4.0% on the week and 11.5% on the month, bid on the Treasury's long-end buyback expansion, a softer real-yield path and a dollar that went nowhere while risk assets rallied. One honest note on this book's own number: yesterday's page carried $4,390.30 for 19 August; the completed series has that session at $4,489.40. That is a 06:00Z snapshot of a 24-hour market being superseded by the settled session, not a source being corrected - recorded rather than smoothed. The framing set on 17 August still governs: this is roughly 19% below the ~$5,589-5,602 all-time high of 28 January 2026, so it is a recovery from a 25% drawdown, not a record run.",
    "now": "~$4,390/oz",
    "proj": "~$4,500/oz",
    "hz": "2027 (est.)",
@@ -4890,7 +4781,7 @@
    ],
    "price": [
     [
-     "$4,390 (19 Aug, fetched close, +0.56%); ~9% higher across August; fell ~0.4% on 18 Aug as yields rose"
+     "Gold $4,538.60 (20 Aug, +1.10%), +4.01% on the week and +11.48% on the month; ~19% below the 28 Jan record"
     ]
    ],
    "flows": [
@@ -4991,7 +4882,7 @@
    "conv": 5,
    "first_seen": "2026-08-11",
    "includes": "Crude and refined products, integrated majors, energy services and tanker tonnage.",
-   "read": "The premium has reached a consumer price index. UK July CPI printed 2.9% against 2.6% in June - a four-month high and the first G7 consumer print to carry the Hormuz pass-through, arriving after both G7 long ends had already moved. Brent is $91.70 (19 August, +0.75%), extending a run that now spans the lapsed 60-day deadline; Trump says he intends to inflict more economic pain on Iran and will declare Hormuz US territory 'pretty soon'. Iran and Oman are still talking, without Washington. The honest counterweight, recorded rather than buried: Gulf producers are maintaining substantial shipments from the Persian Gulf, which is why this remains a premium and not a supply shock - and it is the most likely route by which the entry is eventually wrong.",
+   "read": "Confirmed, and this run the honest counterweight weakened rather than the thesis strengthening. Brent is $91.91, a fourth consecutive session higher, with Trump saying there are no ongoing negotiations with Tehran and the naval blockade still in force while Iran sets conditions for reopening. The counterweight this desk logged on 19 August - that Gulf producers are maintaining substantial shipments, which is why this is a premium and not a shock - is now weaker on its own evidence: eight attacks on vessels transiting Hormuz have been reported this month, including ships linked to the UAE and Saudi Arabia. Against that, the consumer print was milder than yesterday's read implied: UK July CPI at 2.9% was a four-month high but came in line with expectations, core was unchanged at 2.6%, and traders trimmed rate-rise bets on it. The transmission is real and it is running through headline inflation exactly as an energy premium should - which is a weaker claim than the one this page made yesterday.",
    "now": "Brent $91.70",
    "proj": "path-dependent on Hormuz",
    "hz": "3-9m",
@@ -5015,7 +4906,7 @@
    ],
    "price": [
     [
-     "Brent $91.70 (19 Aug, fetched close, +0.75%); series consistent through $88.52 (14 Aug), $90.87 (17 Aug), $91.02 (18 Aug)"
+     "Brent $91.91 (20 Aug, +0.32%), a fourth straight gain; +5.6% on the week"
     ]
    ],
    "flows": [
@@ -5023,8 +4914,8 @@
     "The pass-through is now visible in a print, not only in the gilt and Treasury curves"
    ],
    "tail": [
-    "UK July CPI 2.9% (ONS, 19 Aug), up from 2.6% - a four-month high",
-    "IEA forecasts the widest global oil supply deficit in five years; Gulf shipments so far maintained"
+    "Eight attacks on vessels transiting Hormuz reported this month, including UAE- and Saudi-linked ships",
+    "UK July CPI 2.9% headline (four-month high) but IN LINE with expectations, core unchanged at 2.6%; UK hike bets trimmed"
    ],
    "access": [
     {
@@ -5098,25 +4989,25 @@
    ]
   },
   {
-   "id": "neoclouds",
-   "nm": "Neoclouds / AI-infra rental",
+   "id": "optics",
+   "nm": "AI optical interconnect",
    "cat": "infra",
-   "x": 40,
-   "y": 70,
-   "size": 110,
-   "stage": "building",
-   "stageLbl": "Building",
-   "conv": 4,
-   "first_seen": "2026-08-06",
-   "includes": "GPU-rental clouds and AI-infra operators renting compute by the hour.",
-   "read": "Flows arrived and the financing question sharpened in the same week. CoreWeave, Nebius and Astera Labs have been added to the Nasdaq-100 and a dedicated neocloud ETF has launched - the first hard capital-flows evidence this theme has produced, after the Q2 prints (CRWV +19%, NBIS +34% across the post-print stretch). Against that, the WSJ's ~$3tn of off-balance-sheet AI commitments aims directly at the leg this entry rests on: capex financed against contracted cash flows. CRWV is guiding $35-39bn of capex on $12.4-13.2bn of revenue; NBIS covers 50-60% of associated capex with prepayments and carries the rest into a 5.31% long bond. Confirmed on conversion, unresolved on financing.",
-   "now": "~$18bn",
-   "proj": "~$55bn",
+   "x": 34,
+   "y": 80,
+   "size": 95,
+   "stage": "confirmed",
+   "stageLbl": "Confirmed",
+   "conv": 5,
+   "first_seen": "2026-08-05",
+   "includes": "Transceivers, optical DSPs, co-packaged optics and fibre — the data-movement layer.",
+   "read": "The silence broke, and it broke on a flows signal rather than a print - which is the signal this entry was missing. Roundhill listed the Photonics & Optics ETF (LYTE) on 6 August, the first dedicated fund for the segment, on about $72m of first-day volume: 12 positions, a 0.65% expense ratio, at least 80% of assets in companies deriving half or more of revenue from transceivers, laser sources, silicon photonics, optical interconnect or photonic wafer materials. Top weights are Lumentum 15.4%, Coherent 15.2%, NewLink 14.6%, ZTE 14.2% and Tianfu 7.9%. This closes item 2 of the 5-signal check for the first time. It also corrects this page's own access panel, which said no pure optical-interconnect fund existed - it has existed for a fortnight. The fundamental base is unchanged: Lumentum's 11-12 August print, revenue $1.01bn (+109% y/y), EPS $3.23, gross margin through 50%, record 800G and 1.6T ramping. Note the ETF's own composition is the entry's two-way risk in miniature - a quarter of it is Chinese-listed, in a theme whose policy leg is an FCC ban on Chinese transceivers.",
+   "now": "~$26bn",
+   "proj": "~$60bn",
    "hz": "2028 (est.)",
-   "nowEst": true,
+   "nowEst": false,
    "projEst": true,
-   "runway": 32,
-   "sizeUnit": "GPU-rental revenue run-rate",
+   "runway": 30,
+   "sizeUnit": "optical-transceiver TAM",
    "tt": [
     [
      "Maturity",
@@ -5124,112 +5015,102 @@
     ],
     [
      "Upside left",
-     "High"
+     "Very high"
     ],
     [
-     "Run-rate",
-     "~$18bn → ~$55bn"
+     "TAM",
+     "~$26bn → ~$60bn"
     ]
    ],
    "price": [
     [
-     "CRWV"
+     "LITE"
     ],
     [
-     " ~$105 post-print, "
+     " rev $1.01bn +109%, GM >50%, "
     ],
     [
-     "NBIS"
+     "COHR"
     ],
     [
-     " rev +454% y/y, "
+     ", "
     ],
     [
-     "IREN"
+     "ANET"
     ],
     [
-     " - both beat and were rewarded"
+     ", "
+    ],
+    [
+     "AAOI"
+    ],
+    [
+     " - 1.6T ramp begins"
     ]
    ],
    "flows": [
-    "CRWV, NBIS and Astera Labs added to the Nasdaq-100; a dedicated neocloud ETF launched (both dates not yet pinned - see traces)",
-    "Q2 13Fs: CoreWeave gained momentum among institutional buyers; 36% of filers were net buyers of CRWV, ANET and AVGO"
+    "Roundhill LYTE listed 6 Aug - the first dedicated photonics/optics ETF, ~$72m first-day volume, 12 holdings, 0.65% fee",
+    "Optics allocations rising in Q2 13F filings"
    ],
    "tail": [
-    "NBIS customer prepayments cover 50-60% of associated capex; CRWV backlog $104bn (+246% y/y)",
-    "WSJ (18 Aug) ~$3tn off-balance-sheet AI commitments is the sharpest form yet of the circular-financing invalidation"
+    "LYTE (6 Aug): first dedicated optics ETF; LITE 15.4%, COHR 15.2%, NewLink 14.6%, ZTE 14.2%, Tianfu 7.9%",
+    "Lumentum FQ4 (11-12 Aug): rev $1.01bn +109% y/y, record 800G, 1.6T ramping; FCC ban still drafted, not published"
    ],
    "access": [
     {
      "route": "Broad / passive",
      "vehicles": [
-      "No neocloud ETF"
+      [
+       "LYTE"
+      ]
      ],
-     "tradeoff": "Too new and too small a cohort for a dedicated fund; broad AI-infrastructure ETFs hold CRWV at low single-digit weights.",
+     "tradeoff": "CORRECTED: this said no pure optics fund existed. Roundhill's LYTE listed 6 August - 12 holdings, 0.65% fee. It is a concentrated bet, and about a quarter of it is Chinese-listed (ZTE 14.2%, Tianfu 7.9%) in a theme whose policy leg is an FCC ban on Chinese transceivers.",
      "private": false
     },
     {
      "route": "Concentrated / direct",
      "vehicles": [
       [
-       "CRWV"
+       "COHR"
       ],
       ", ",
       [
-       "NBIS"
+       "LITE"
       ],
       ", ",
       [
-       "IREN"
+       "ANET"
+      ],
+      ", ",
+      [
+       "CRDO"
+      ],
+      ", ",
+      [
+       "AAOI"
       ]
      ],
-     "tradeoff": "Contracted, prepaid backlog is what re-rated these; they are debt- and prepayment-funded balance sheets, so financing conditions now matter more than demand.",
+     "tradeoff": "The ledger's expression line and the only real way in; valuations are rich (COHR and LITE above 127x trailing) and AAOI is unprofitable.",
      "private": false
     },
     {
      "route": "Picks and shovels",
      "vehicles": [
-      [
-       "DLR"
-      ],
-      ", ",
-      [
-       "EQIX"
-      ],
-      ", ",
-      [
-       "BX"
-      ],
-      ", ",
-      [
-       "APO"
-      ]
+      "Sumitomo Electric 5802.T, Furukawa Electric 5801.T"
      ],
-     "tradeoff": "Owns the shell and the credit rather than the rental margin - lower torque to a neocloud re-rating, and the financiers now sit on both sides of the trade.",
+     "tradeoff": "The substrate and fibre layer is thin because Lumentum and Coherent are vertically integrated - and indium phosphide, which every Western alternative needs, is under Chinese export licensing.",
      "private": false
-    },
-    {
-     "route": "Concentrated / direct (private)",
-     "vehicles": [
-      "Crusoe, Lambda"
-     ],
-     "tradeoff": "The purest remaining neocloud exposure is pre-IPO - Crusoe and Lambda are private, reachable only via secondaries or venture funds, and not accessible to most readers.",
-     "private": true
     },
     {
      "route": "UK / Europe vehicles",
      "vehicles": [
-      "Nebius ",
+      "No UCITS optics fund; ",
       [
-       "NBIS"
+       "LYTE"
       ],
-      " (Amsterdam-headquartered, Nasdaq-listed), ",
-      [
-       "IREN"
-      ],
-      " (Australian-founded)"
+      " is US-listed"
      ],
-     "tradeoff": "There is no sterling line and no UCITS ETF targeting neoclouds specifically, so a UK investor reaches this theme only through a US-share dealing account and carries the dollar. Nebius is the European-domiciled name in the group, but its listing and reporting currency are both American.",
+     "tradeoff": "Still no sterling or UCITS route that isolates optics - the new US ETF does not change that, so UK investors reach this through US lines in a general dealing account and carry the dollar unhedged.",
      "private": false
     }
    ]
@@ -5246,7 +5127,7 @@
    "conv": 4,
    "first_seen": "2026-08-10",
    "includes": "Uranium miners, enrichment and small-modular-reactor developers.",
-   "read": "Steady and unbothered by the equity tape. Uranium spot was ~$86.5/lb on 7 August with the term contract around $90/lb, the highest since 2008 - the stated kill of a term break below $80 is not close. Fresh dated build evidence this week rather than forecasts: hot tests completed at Haiyang 3 on 18 August, India opened public consultation on SHANTI Bill rules on 17 August, and Blue Energy and GE Vernova advanced their gas-plus-nuclear collaboration on 17 August. Goldman's addition of SMRs to its uranium model (46 GW by 2045, ~62m lb of extra demand) remains the closest thing this domain has to a sell-side initiation cluster.",
+   "read": "Swept and quiet in this window on a healthy base, recorded rather than inferred. No dated 19-20 August catalyst surfaced. The pricing base is the point: uranium spot was about $86.36/lb at end-July on Cameco's own reporting with futures around $86.60 and long-term contracts near $90/lb - the highest since 2008. The entry's kill condition is a term break below $80 and it is not close. First empty cycle for this domain; the register's rule gives it two more before a fading flag.",
    "now": "~$40bn",
    "proj": "~$110bn",
    "hz": "2032 (est.)",
@@ -5384,7 +5265,7 @@
    "conv": 4,
    "first_seen": "2026-07-27",
    "includes": "Endpoint, network and cloud-security platforms.",
-   "read": "Live, and the threat side is still doing the arguing. CISA added an actively exploited Ray code-injection flaw (CVE-2025-62593) to the Known Exploited Vulnerabilities catalog on 17 August, and separately added an N-able N-central flaw after confirmed customer compromises, with Langflow and Tomcat flaws also flagged as actively exploited. The standing August items hold: a CISA/FBI/NSA joint advisory on Gunra ransomware, DeadLock past 80 victims, an actively exploited Cisco ASA/FTD VPN flaw. Calendar settled from company IR: CrowdStrike reports 26 August after the close, Palo Alto 1 September.",
+   "read": "Live, dated, and with one small negative the book had not recorded. CISA published cybersecurity advisory AA26-231A on 19 August, having on 11 August added three actively exploited flaws to the KEV catalog - CVE-2026-20349 in Cisco Secure Firewall ASA/FTD, CVE-2026-68820 in Windows and CVE-2026-72898 in Metabase - with CISA and Microsoft confirming the Windows bug is being used by North Korean actors against people applying for defence and aerospace jobs. The 17 August additions (Ray-Project code injection, N-able N-central) stand. The negative: Zscaler was REMOVED from the Nasdaq-100 in the 22 June rebalance, a mechanical outflow this page never logged while it was crediting the same rebalance to the neoclouds. CrowdStrike reports 26 August after the close, Palo Alto on 1 September.",
    "now": "~$190bn",
    "proj": "~$300bn",
    "hz": "2028 (est.)",
@@ -5505,7 +5386,7 @@
    "conv": 4,
    "first_seen": "2026-07-27",
    "includes": "Prime contractors and munitions — US and European primes.",
-   "read": "The entry's own split - UK primes improving, the EU laggard unwinding - got confirmed from both ends this run, which is a better outcome than a single arrow would have shown. BAE upgraded its 2026 guidance on strong first-half results with record order backlog growth. Rheinmetall CUT 2026 sales guidance to EUR 13.7-14.2bn from EUR 14.0-14.5bn after Berlin scrapped the EUR 12.8bn F126 frigate programme - EUR 2.3bn already spent - and pivoted to eight smaller MEKO A-200 frigates from ThyssenKrupp; RHM has suspended plans to hire 1,000 naval staff while holding its EUR 5bn 2030 naval revenue target. A lost domestic competition is not a budget cut, and the Ukraine kill-watch stays receded. Cash conversion (H1 FCF -EUR 1.6bn) remains the real weak leg. Correction: the '+40-45% 2026 sales growth' figure this book carried from a single source is rejected - company guidance implies 15-25%.",
+   "read": "Swept and quiet in this window on a base that is live and split, and the split is unchanged. BAE's 2026 guidance upgrade on record backlog growth stands; Rheinmetall's cut to EUR 13.7-14.2bn after Berlin scrapped the EUR 12.8bn F126 frigate programme stands. Additive detail found this run and consistent with both: Rheinmetall's H1 revenue rose 39% to EUR 5.5bn with Q2 sales up almost 70% to EUR 3.29bn, and it is hiring about 10,000 people a year - a company losing a domestic competition while its production ramps, which is exactly the 'lost competition, not a budget cut' reading this entry already carries. The rejected '+40-45% growth' figure stays rejected; guidance implies 15-25%.",
    "now": "~$280bn",
    "proj": "~$400bn",
    "hz": "2029 (est.)",
@@ -5623,6 +5504,143 @@
    ]
   },
   {
+   "id": "neoclouds",
+   "nm": "Neoclouds / AI-infra rental",
+   "cat": "infra",
+   "x": 40,
+   "y": 70,
+   "size": 110,
+   "stage": "building",
+   "stageLbl": "Building",
+   "conv": 3,
+   "first_seen": "2026-08-06",
+   "includes": "GPU-rental clouds and AI-infra operators renting compute by the hour.",
+   "read": "Cut from conviction 4 to 3, and the reason is partly this page's own error. Yesterday this entry credited 'CoreWeave, Nebius and Astera Labs added to the Nasdaq-100' as its first hard flows evidence. That inclusion was announced on 11 June and took effect before the open on 22 June - a two-month-old event presented as this month's confirmation. Rocket Lab and Teradyne joined in the same rebalance and Zscaler left it. The genuine flows fact is different and smaller: Roundhill listed NCLD, the first dedicated neocloud ETF, on 6 August - about 20 holdings, 0.65% fee, actively managed. Against that, the financing leg was tested in public on 19 August. Nebius launched a $4.5bn convertible offering - $2.75bn due 2030 and $1.75bn due 2034, with $375m and $300m upsize options - alongside exchanges of its 2.00% 2029s and 3.00% 2031s into Class A shares, and the stock fell as much as 13.7% while CoreWeave fell 4%; both rebounded. Read it precisely: the capital is available and it is being paid for in dilution rather than in spread. The conversion leg is untouched - CRWV's $104bn backlog and NBIS's 50-60% prepayment cover are unchanged.",
+   "now": "~$18bn",
+   "proj": "~$55bn",
+   "hz": "2028 (est.)",
+   "nowEst": true,
+   "projEst": true,
+   "runway": 32,
+   "sizeUnit": "GPU-rental revenue run-rate",
+   "tt": [
+    [
+     "Maturity",
+     "Building"
+    ],
+    [
+     "Upside left",
+     "High"
+    ],
+    [
+     "Run-rate",
+     "~$18bn → ~$55bn"
+    ]
+   ],
+   "price": [
+    [
+     "NBIS"
+    ],
+    [
+     " -13.7% intraday on the $4.5bn convert, "
+    ],
+    [
+     "CRWV"
+    ],
+    [
+     " -4%, both rebounding (19 Aug)"
+    ]
+   ],
+   "flows": [
+    "Roundhill NCLD listed 6 Aug - the first dedicated neocloud ETF, ~20 holdings, 0.65% fee, actively managed",
+    "CORRECTED: the Nasdaq-100 inclusion of CRWV, NBIS and ALAB was effective 22 June, not August - it is not this month's evidence"
+   ],
+   "tail": [
+    "Nebius (19 Aug): $4.5bn convertible offering, $2.75bn 2030s + $1.75bn 2034s, plus exchanges of 2029s/2031s into Class A shares",
+    "NBIS prepayments cover 50-60% of associated capex; CRWV backlog $104bn (+246% y/y) - the conversion leg is unaffected"
+   ],
+   "access": [
+    {
+     "route": "Broad / passive",
+     "vehicles": [
+      [
+       "NCLD"
+      ]
+     ],
+     "tradeoff": "CORRECTED: this said no neocloud ETF existed. Roundhill's NCLD listed 6 August - about 20 holdings, 0.65% fee, actively managed. A young fund over a young cohort: concentration and single-name financing risk pass straight through it.",
+     "private": false
+    },
+    {
+     "route": "Concentrated / direct",
+     "vehicles": [
+      [
+       "CRWV"
+      ],
+      ", ",
+      [
+       "NBIS"
+      ],
+      ", ",
+      [
+       "IREN"
+      ]
+     ],
+     "tradeoff": "Contracted, prepaid backlog is what re-rated these, and 19 August showed the other side: Nebius raised $4.5bn of converts and fell 13.7% doing it, so dilution is now a visible cost of the growth.",
+     "private": false
+    },
+    {
+     "route": "Picks and shovels",
+     "vehicles": [
+      [
+       "DLR"
+      ],
+      ", ",
+      [
+       "EQIX"
+      ],
+      ", ",
+      [
+       "BX"
+      ],
+      ", ",
+      [
+       "APO"
+      ]
+     ],
+     "tradeoff": "Owns the shell and the credit rather than the rental margin - lower torque to a neocloud re-rating, and the financiers now sit on both sides of the trade.",
+     "private": false
+    },
+    {
+     "route": "Concentrated / direct (private)",
+     "vehicles": [
+      "Crusoe, Lambda"
+     ],
+     "tradeoff": "The purest remaining neocloud exposure is pre-IPO - Crusoe and Lambda are private, reachable only via secondaries or venture funds, and not accessible to most readers.",
+     "private": true
+    },
+    {
+     "route": "UK / Europe vehicles",
+     "vehicles": [
+      "Nebius ",
+      [
+       "NBIS"
+      ],
+      " (Amsterdam-headquartered, Nasdaq-listed), ",
+      [
+       "IREN"
+      ],
+      " (Australian-founded), ",
+      [
+       "NCLD"
+      ],
+      " (US-listed)"
+     ],
+     "tradeoff": "No sterling line and no UCITS wrapper for this cohort; the new US ETF is reachable only through a US-share dealing account, so the currency exposure comes with it.",
+     "private": false
+    }
+   ]
+  },
+  {
    "id": "robotics",
    "nm": "Robotics & automation",
    "cat": "industrial",
@@ -5634,7 +5652,7 @@
    "conv": 3,
    "first_seen": "2026-07-24",
    "includes": "Industrial, warehouse and surgical robotics plus automation enablers.",
-   "read": "No fresh dated catalyst in the 18-19 August window, and that is recorded as an observation rather than a deterioration - the 18 August evidence is one day old and stands: Waymo past 500,000 paid trips a week and 220m rider-only miles across 11 cities, permitted or testing in 26 of the top 30 US metros, with 12 more cities planned in 2026 including London, against the first regulatory scar - an NHTSA-recorded June recall of 3,871 fifth-generation automated-driving systems. On humanoids, secondary sources put Figure past 10,000 warehouse deployments and Tesla's Optimus Gen 3 in low-volume Fremont production; both are aggregator claims and are logged, NOT adopted. Read unchanged: autonomy first, humanoids second, and the humanoid leg stays un-investible because every leader is private.",
+   "read": "A third consecutive run in which every humanoid claim this sweep surfaced came from the aggregator class that produced the 18 August false break of silence, and none is adopted. The claims recur unchanged - Figure past 10,000 warehouse deployments, Optimus Gen 3 in low-volume Fremont production - and this run the aggregator set contradicts itself, with one of the same sources stating that Optimus production at Fremont had not started as of mid-July and that credible reporting puts cumulative builds in the low hundreds. An internally inconsistent source set is weaker evidence than a single one, not stronger. The dated base stands: Waymo past 220m rider-only miles against the June NHTSA recall of 3,871 driving systems. The entry needs a primary company disclosure, and has needed one for three runs.",
    "now": "~$45bn",
    "proj": "~$120bn",
    "hz": "2030 (est.)",
@@ -5773,7 +5791,7 @@
    "conv": 3,
    "first_seen": "2026-07-24",
    "includes": "Rare-earth miners, processors and magnet makers — inputs to EVs, motors, defence.",
-   "read": "Two-way and unresolved, which is an improvement on being read one way. On the Western side, the DOE announced a $100m initiative on 7 August to build a domestic critical-minerals workforce, and the 7 August mining roundtable targeted scandium, graphite, boron, tantalum and niobium - materials with faster paths to production than the heavy rare earths. On China's side, and this is the leg this book has under-weighted: China plans to raise mine output at the world's largest rare-earth deposit by 50%, having added MP Materials and USA Rare Earth to its export-control blacklist on 22 June. A 50% supply increase is a direct answer to a scarcity thesis. MP's processed-REE revenue nearly quadrupling to $94.4m stands, and the G7's June cap on single-source imports below 60% by 2030 is the structural leg.",
+   "read": "Second consecutive observed quiet cycle - no dated 19-20 August catalyst, verified with a second search before recording it. The live facts are unchanged and two-way: MP Materials' processed rare-earth revenue nearly quadrupled to $94.4m in the 16 August print, the DOE put $100m into a critical-minerals workforce on 7 August, and against that China plans to lift output at the world's largest rare-earth deposit by 50% while keeping MP and USA Rare Earth on the June 2026 export-control blacklist. The Section 232 leg that underpins the domestic metals case is undisturbed by this run's tariff findings - 50% steel and aluminium and 25% copper survived the Supreme Court's IEEPA ruling intact. One more empty cycle triggers a fading flag on the register's rule.",
    "now": "~$12bn",
    "proj": "~$40bn",
    "hz": "2032 (est.)",
@@ -5895,7 +5913,7 @@
    "conv": 3,
    "first_seen": "2026-07-25",
    "includes": "Commercial launch, satellites and payload operators.",
-   "read": "Unchanged and still sitting on its stated kill. Rocket Lab targets Q4 2026 Neutron pad delivery and has still not reaffirmed a first flight before year-end, with coverage continuing to contemplate a 2027 slip. One new and genuinely positive flows datapoint from the Q2 13Fs filed 14 August: all nine institutions disclosing a SpaceX position added to or increased it. Demand is confirmed at both listed names (RKLB backlog $2.36bn, ASTS $1.30bn); the catalyst is not de-risked. Stays emerging with no access routes, deliberately - naming routes for an undated catalyst would be inventing a basket.",
+   "read": "A flows leg found and a kill risk raised in the same run. The flows fact is one this book should already have had: Rocket Lab has been a Nasdaq-100 constituent since 22 June 2026, added in the same rebalance this page mis-dated to August for the neoclouds - mechanical index demand for a name the entry lists, absent from the entry for two months. Demand also firmed: Rocket Lab booked a dedicated Neutron mission for Kepler Communications on 10 August, its first, from LC-3 at Wallops no earlier than 2028, on a manifest that already carries US Space Force and National Security Space Launch work plus seven undisclosed commercial customers. The kill moved the wrong way at the same time. Bloomberg reported on 10 August that Rocket Lab is cautioning on fresh risks that could push Neutron's debut into 2027, and that the 2026 window is narrowing, with Stage 1 tank production aligned to a Q4 2026 pad delivery. The stated invalidation is a slip into 2027; the company is now the one raising it. Held at emerging and at conviction 3 - the two moves cancel.",
    "now": "~$15bn",
    "proj": "~$60bn",
    "hz": "2032 (est.)",
@@ -5932,12 +5950,12 @@
     ]
    ],
    "flows": [
-    "Q2 13Fs (filed 14 Aug): all nine institutions disclosing a SpaceX position added to or increased it",
-    "Defence primes expanding space exposure"
+    "RKLB has been in the Nasdaq-100 since 22 June 2026 - a mechanical flows fact this book had not recorded",
+    "Q2 13Fs (filed 14 Aug): all nine institutions disclosing a SpaceX position added to or increased it"
    ],
    "tail": [
-    "RKLB record backlog $2.36bn (+137% y/y); Q3 guide $250-265m",
-    "ASTS $1.30bn backlog, $2.7bn cash, >60 MNO partners"
+    "Rocket Lab booked its first dedicated Neutron mission (Kepler, 10 Aug), NET 2028 from LC-3 Wallops; USSF/NSSL work on the manifest",
+    "Bloomberg (10 Aug): Rocket Lab cautions of fresh risks that could push Neutron into 2027; the 2026 window is narrowing"
    ]
   },
   {
@@ -5949,10 +5967,10 @@
    "size": 250,
    "stage": "confirmed",
    "stageLbl": "Confirmed",
-   "conv": 2,
+   "conv": 3,
    "first_seen": "2026-08-04",
    "includes": "Bitcoin/ether proxies, exchanges and spot ETFs; stablecoin rails.",
-   "read": "The date holds and the odds fell. The Senate's procedural vote on the CLARITY Act is still set for 15 September, with cloture filed on the motion to proceed - so yesterday's correction stands and the 'slips to 2027' claim remains withdrawn. What is new is the market's read of it: Polymarket now prices the bill being signed into law in 2026 at about 25%, down from the ~33-37% recorded a week ago. The unresolved items are unchanged - government ethics, illicit-finance provisions, and stablecoin yield, with banks objecting that rewards on stablecoin balances would siphon deposits. Fading, on a dated test.",
+   "read": "Raised from conviction 2 to 3 on a price leg and a political leg moving together, having been cut to 2 a day earlier on falling odds alone. Bitcoin rose 7.27% to $69,381, above $69,000 for the first time since June, with roughly $1.44bn of short positions liquidated; ether jumped alongside it. The drivers named in coverage are not crypto-native, which is the interesting part: the Treasury's decision to at least double long-dated bond buybacks, the resulting bond rally and softer dollar, an SEC crypto proposal, and Trump publicly calling on Congress to advance market-structure legislation. That last one bears directly on the leg that was cut: the CLARITY Act's Senate procedural vote is still set for 15 September with cloture filed, and the ~25% Polymarket odds recorded a day ago were priced before the president's push. The odds are not re-pinned in this sweep and are not claimed to have moved - the upgrade rests on the price leg and the political leg, with the legislative odds carried as unre-verified.",
    "now": "~$2.3tn",
    "proj": "~$4tn",
    "hz": "2027 (est.)",
@@ -5976,31 +5994,16 @@
    ],
    "price": [
     [
-     "COIN"
-    ],
-    [
-     ", "
-    ],
-    [
-     "MSTR"
-    ],
-    [
-     " ~low-90s (approx), "
-    ],
-    [
-     "IBIT"
-    ],
-    [
-     " - BTC ~$63.3k and soft"
+     "BTC $69,381 (20 Aug, +7.27%), above $69k for the first time since June; ~$1.44bn of shorts liquidated"
     ]
    ],
    "flows": [
-    "Spot-ETF flows steadier after the surge",
-    "Corporate treasuries still adding on dips"
+    "~$1.44bn of short liquidations on 19 Aug; ether and the majors rallied with it",
+    "Drivers cited are macro, not crypto-native: Treasury buybacks, a softer dollar, an SEC proposal and a presidential push on market-structure law"
    ],
    "tail": [
-    "Senate procedural vote on CLARITY set for 15 Sept; cloture filed on the motion to proceed",
-    "Polymarket prices 2026 enactment at ~25%, down from ~33-37%; banking objection centres on stablecoin yield"
+    "Senate procedural vote on the CLARITY Act still set for 15 Sept, cloture filed; Trump publicly urging Congress to advance it",
+    "Polymarket's ~25% 2026-enactment odds date to 19 Aug and were NOT re-pinned in this sweep - carried, not claimed as current"
    ],
    "access": [
     {
@@ -6015,7 +6018,7 @@
       ],
       ", spot BTC ETFs"
      ],
-     "tradeoff": "Direct bitcoin beta with no operating-company risk - and the leg the CLARITY Act stall does not touch, since spot access already exists.",
+     "tradeoff": "Direct bitcoin beta with no operating-company risk. It is the leg that captured the 7.27% move on 20 August in full, and the leg a stalled CLARITY Act does not touch, since spot access already exists.",
      "private": false
     },
     {
@@ -6034,6 +6037,21 @@
       ]
      ],
      "tradeoff": "Coinbase carries US market-structure risk directly, and that risk now has a date on it - the Senate floor vote is set for 15 September; MSTR is a leveraged bitcoin proxy rather than an operating business.",
+     "private": false
+    },
+    {
+     "route": "Picks and shovels",
+     "vehicles": [
+      [
+       "CME"
+      ],
+      ", ",
+      [
+       "CB"
+      ],
+      ", exchange and custody infrastructure"
+     ],
+     "tradeoff": "Fee-and-volume exposure to activity rather than to the coin price - it participated in the 19 August squeeze without carrying the drawdown risk of the asset, and it is the leg least dependent on the CLARITY Act passing.",
      "private": false
     },
     {
@@ -6210,14 +6228,16 @@
     true
    ],
    "what": "Gate-based and annealing hardware, error correction and quantum-cloud access.",
-   "summ": "A coverage gap of this desk's own closes here, and it changes the basket rather than the score. Quantinuum (QNT) has been listed on Nasdaq since 4 June 2026, having raised $1.68bn at $60 a share - the largest quantum pure-play by capital raised, and it was absent from this entry's expression line entirely. Price persistence still fails: IONQ and RGTI each fell ~5% on 18 August on rising yields, after ~-39% and ~-30% over the trailing month.",
-   "needs": "Fund/ETF flows into the cluster and price persistence. Quantinuum's IPO is capital formation, not a flows confirmation - it closed FLAT on debut, which is the opposite of a demand signal. Score held at 4 of 5.",
+   "summ": "The basket was found incomplete for a SECOND consecutive run, and that pattern is now the finding. Yesterday this entry added Quantinuum (QNT), listed since 4 June and missing for eleven weeks. This run's sweep surfaced that IQM has also listed and reported Q2 alongside D-Wave, Infleqtion, IonQ, Rigetti and Quantinuum - another constituent this book did not have. The fundamentals leg keeps improving: Rigetti disclosed a letter of intent with the US Department of Commerce for up to $100m, DARPA selected IonQ for next-generation atomic clocks on 6 August, IonQ and EPB committed $15m to a Tennessee quantum communications centre on 4 August, and Quantinuum signed a workforce MoU with the Singapore Institute of Technology on 15 August. Price persistence still fails and no fresh price leg was pinned in this window. Score held at 4 of 5.",
+   "needs": "Fund/ETF flows into the cluster and price persistence. Also, and this is the desk's job rather than the market's: a basket that is re-verified on the same cadence as the news. Two runs, two missing constituents.",
    "evidence": [
     "Quantinuum (QNT) IPO'd on Nasdaq 4 June 2026: $1.68bn raised at $60/share, ~$12.7bn valuation at filing, closed flat on debut",
     "Quantinuum 2025 revenue $30.9m (from $23m) with a $192.6m net loss; Honeywell and Cambridge Quantum retain ~82%",
     "IonQ Q2 rev $80.05m (+287% y/y); FY guide raised to $280-290m from $260-270m",
     "Rigetti expanded its HPE / Pittsburgh Supercomputing Center collaboration; a 108-qubit system is destined for India's C-DAC",
-    "Persistence still failing: IONQ and RGTI each -5% on 18 Aug on rising yields"
+    "Rigetti: letter of intent with the US Department of Commerce for up to $100m, disclosed with Q2 results",
+    "DARPA selected IonQ for next-generation atomic clocks (6 Aug); IonQ/EPB $15m Tennessee quantum centre (4 Aug)",
+    "IQM has also IPO'd and reported Q2 - a second basket constituent found missing in two runs"
    ],
    "eta": "6-18 months"
   },
@@ -6233,7 +6253,7 @@
     true
    ],
    "what": "General-purpose humanoids rented per task; fleet operators and enablers.",
-   "summ": "No high-quality dated catalyst this run. Secondary sources put Figure past 10,000 warehouse deployments and Tesla's Optimus Gen 3 in low-volume Fremont production for internal use - both are aggregator claims of exactly the class that produced a false break of silence on 18 August, and both are logged rather than adopted.",
+   "summ": "No high-quality dated catalyst for a third consecutive run, and this time the aggregator set contradicts itself. The same claims recur - Figure past 10,000 warehouse deployments, Optimus Gen 3 in low-volume Fremont production - while one source in the same class states that Fremont production had not started as of mid-July and that credible reporting puts cumulative Optimus builds in the low hundreds. Nothing is adopted. An internally inconsistent source set is weaker evidence, not stronger.",
    "needs": "A listed, rentable basket distinct from industrial robotics, and a primary-source Optimus Gen-3 disclosure rather than aggregator reporting.",
    "evidence": [
     "Figure 03 past 1,000 units; AgiBot 15,000 cumulative; Atlas deployments underway",
@@ -6250,18 +6270,19 @@
    "met": [
     true,
     false,
-    true,
+    false,
     true,
     true
    ],
    "what": "Korean and US yards rebuilding American naval and commercial shipbuilding capacity under new access rules.",
-   "summ": "An award appeared, and it went to the European name rather than the Korean one. Fincantieri has won a $30m US Navy contract for early work on Medium Landing Ship vessels, a programme that could eventually cover 35 ships. Small, and its date is not pinned - but 'an actual award' was one of the two things this entry said it needed.",
-   "needs": "Flows confirmation, and a larger award than $30m of early-stage work. The 14 August memo's limits still bind: only the first two vessels may be built abroad, across three vessel classes, with technology transfer attached.",
+   "summ": "CORRECTION, AND IT REMOVES THIS ENTRY'S ONLY AWARD. Yesterday this entry recorded that 'an award appeared' - Fincantieri's $30m US Navy Medium Landing Ship contract - with its date unpinned. The date is 15 April 2026. It is a four-month-old award for materials procurement and engineering on the first four LSM hulls, and it PREDATES the 14 August national-security memorandum entirely, so it is not evidence the memorandum produced anything. The entry is back to where it was: a policy change with no award behind it yet.",
+   "needs": "An award dated AFTER the 14 August memorandum, and flows confirmation. The memorandum's limits still bind: only the first two vessels may be built abroad, across three vessel classes, with technology transfer attached.",
    "evidence": [
-    "Fincantieri won a $30m US Navy contract for early work on Medium Landing Ships (programme potentially 35 ships) - date not yet pinned",
-    "Hanwha Ocean +5.6% and Fincantieri +3.2% on the 14 Aug national-security memorandum",
+    "CORRECTED: Fincantieri's $30m LSM contract is dated 15 April 2026 - four months old, and before the 14 Aug memorandum",
+    "The LSM programme could eventually cover up to 35 ships; the Navy issued its RFP in February 2026",
+    "Hanwha Ocean +5.6% and Fincantieri +3.2% on the 14 Aug national-security memorandum - the price leg is intact",
     "Hanwha acquired Philly Shipyard in 2024 and has pledged $5bn to expand it",
-    "5-signal unchanged at 4 of 5: price ✓✓, flows ✗, catalyst ✓, distinct ✓, runway ✓"
+    "5-signal now 3 of 5: price yes, tailwind yes, distinct yes; flows no, and the post-memo award leg is empty again"
    ],
    "eta": "12-24 months"
   },
@@ -6298,7 +6319,7 @@
     false
    ],
    "what": "Long-duration Treasuries (TLT), quality/low-vol (QUAL, USMV) if the labour turn confirms.",
-   "summ": "STALLED. The 13 Aug claims print contradicted the turn outright; the July -23k payroll now reads closer to an outlier.",
+   "summ": "STALLED, and non-confirmed for a second consecutive session. The 13 August claims print contradicted the turn; Home Depot beat and reaffirmed on 18 August; Target beat and RAISED full-year guidance on 19 August with comparable traffic up 3.6%. Read the Target print carefully though - $1.65 of its EPS was a tariff refund, not trading, so the headline overstates the consumer. The duration leg's fight eased marginally: the 10-year fell 5bp to 4.65% as the Treasury doubled long-end buybacks. That helps the trade without confirming the thesis.",
    "needs": "A second soft payroll (early September) AND rising continuing claims. Neither is present.",
    "evidence": [
     "Initial claims 209k against ~202k expected; four-week average unchanged at 199k",
@@ -6320,8 +6341,8 @@
     false
    ],
    "what": "On-chain settlement rails, issuers and merchant / FX plumbing.",
-   "summ": "Date holds, odds fall. The 15 September procedural vote is still scheduled with cloture filed, but Polymarket now prices CLARITY being signed into law in 2026 at ~25%, down from the ~33-37% recorded a week ago. Banks are objecting specifically that stablecoin rewards would siphon deposits from conventional lenders.",
-   "needs": "Passage of the 15 September vote with the stablecoin-yield provision softened, or evidence the rails scale without a US market-structure statute.",
+   "summ": "The odds leg was cut yesterday and the political leg improved today, so this is held rather than moved. The 15 September Senate procedural vote is still scheduled with cloture filed. New on 19-20 August: Trump publicly called on Congress to advance crypto market-structure legislation, and coverage cites an SEC crypto proposal among the drivers of the bitcoin move. The ~25% Polymarket enactment odds recorded yesterday were priced BEFORE that push and were not re-pinned in this sweep, so they are carried rather than claimed as current - and no improvement is claimed on their behalf. The 12 and 13 August regulatory hits to Kalshi and Polymarket are unchanged.",
+   "needs": "Passage of the 15 September vote with the stablecoin-yield provision softened, or evidence the rails scale without a US market-structure statute. Re-pin the enactment odds after the presidential push.",
    "evidence": [
     "Senate procedural vote on the CLARITY Act scheduled for 15 Sept 2026; Thune filed cloture on the motion to proceed",
     "Polymarket prices 2026 enactment at ~25%, down from ~33-37%",
@@ -6341,13 +6362,15 @@
     true
    ],
    "what": "Private equity, private credit and real assets routed into 401(k) and retail wrappers.",
-   "summ": "Unchanged, and the absence is the finding. This entry needs a FINAL DOL rule rather than the ~30 March 2026 proposal, and this run's sweep found none. The founding-catalyst correction of 18 August stands: the 401(k) alternatives executive order is dated 7 August 2025, not 2026.",
-   "needs": "A final DOL rule rather than a proposal, and a price leg dated to something recent - the existing one is five months old.",
+   "summ": "Unchanged in score and slightly better specified. This entry needs a FINAL DOL rule rather than the 30 March 2026 proposal, and there is still none. What this sweep did pin: the proposal's comment period closed on 1 June 2026, and a final rule is described as possible by end-2026 - so the rule is genuinely pending rather than speculative, which is a real if small improvement. New and unresolved: a Supreme Court review is reported as poised to clarify fiduciary standards for alternatives in 401(k) plans, which could cut either way and is opened as a trace. Still no fresh price leg; the BX/Carlyle/Apollo move remains the one from 30 March, now five months old. Held at 4 of 5.",
+   "needs": "A final DOL rule rather than a proposal, and a price leg dated to something recent. The pending Supreme Court fiduciary review is now a second binary sitting in front of it.",
    "evidence": [
     "Executive order easing private assets into 401(k)s was signed 7 August 2025 - a year old, not this month's catalyst",
     "DOL proposed rules on 30 March 2026 creating process-based fiduciary safe harbours; Blackstone and Carlyle rose on the day (secondary aggregation, not a pinned close)",
     "Distribution rails are built: KKR with Capital Group, and Wellington with Vanguard and Blackstone, targeting target-date funds",
-    "PwC estimates a 5% alts allocation could unlock >$1tn of AUM by 2030 (estimate); the pool cited in trade coverage is the $14tn 401(k) market"
+    "PwC estimates a 5% alts allocation could unlock >$1tn of AUM by 2030 (estimate); the pool cited in trade coverage is the $14tn 401(k) market",
+    "DOL proposal comment period closed 1 June 2026; a final rule is described as possible by end-2026",
+    "A Supreme Court review is reported as poised to clarify fiduciary standards for alternatives in 401(k) plans - opened as a trace, not adopted as a catalyst"
    ],
    "eta": "12-24 months"
   }
@@ -6436,10 +6459,10 @@
     "id": "faded-edgeai",
     "nm": "Edge / on-device AI",
     "ran": "tracked from 17 Jul 2026",
-    "peak": "fading flag fired 18 Aug 2026",
-    "why": "Four consecutive observed quiet cycles, each independently re-verified rather than carried. No August-dated product, design win or policy event with a named listed beneficiary; everything found is commentary on a maturing market. The flag nearly failed to fire for the wrong reason - an aggregator dated Qualcomm's Snapdragon Wear Elite to August 2026 when Qualcomm's own release dates it to March 2026 at MWC.",
+    "peak": "fading flag fired 18 Aug, confirmed 19 and 20 Aug",
+    "why": "FIFTH consecutive observed quiet cycle, each one independently re-verified rather than carried. Nothing dated August: the named hardware is still Snapdragon X2 Elite at 80 TOPS and Qualcomm's Snapdragon Wear Elite remains a March 2026 MWC part. The flag nearly failed to fire for the wrong reason on 18 August - an aggregator dated the Wear Elite to August, and Qualcomm's own release did not.",
     "call": "mixed",
-    "callTxt": "Silence observed and verified four times, not inferred once. A false BREAK of silence is as available as a false silence.",
+    "callTxt": "Silence observed and verified five times, not inferred once. A false BREAK of silence is as available as a false silence.",
     "revived": false,
     "reviveIf": "A dated August-or-later product launch, design win or policy event with a named listed beneficiary."
    },
@@ -6447,10 +6470,10 @@
     "id": "faded-agtech",
     "nm": "Agtech & food systems",
     "ran": "tracked from 17 Aug 2026",
-    "peak": "fading flag fires 19 Aug 2026",
-    "why": "Third consecutive observed quiet cycle, re-verified independently this run rather than carried from the last. No discrete dated August catalyst. The structural picture is flat rather than falling - AgFunder puts 2026 agrifoodtech funding at $16.2bn with deal count down 12%, capital rotating upstream to farm-gate innovation.",
+    "peak": "fading flag fired 19 Aug, confirmed 20 Aug",
+    "why": "FOURTH consecutive observed quiet cycle, re-verified independently again this run. No discrete dated August catalyst either time. One correction to this book's own characterisation: it recorded AgZen's $10m March round as the freshest specific raise. Halter's $220m Series E at a $2bn valuation, also March 2026, was the year's largest agtech round. That does not change the fading status - both are five months old - but the domain is thinner in news than it is in capital, and this book had that backwards.",
     "call": "mixed",
-    "callTxt": "Never promoted past the quiet register. Fading on observed absence of evidence, with the absence checked three times.",
+    "callTxt": "Never promoted past the quiet register. Fading on observed absence of evidence, with the absence checked four times.",
     "revived": false,
     "reviveIf": "A dated funding round, policy action or listed-company result large enough to name a basket around."
    }
@@ -6557,6 +6580,162 @@
  "signals": [
   {
    "daysAgo": 1,
+   "sector": "rates",
+   "headline": "Treasury at least doubles long-dated bond buybacks; 10-year falls to 4.65%",
+   "src": "CNBC / Treasury",
+   "url": "https://www.cnbc.com/2026/08/19/treasury-announces-upscaled-buyback-operation-for-longer-term-debt-sending-yields-lower.html",
+   "summary": [
+    "Announced 19 August: the cap on liquidity-support buybacks of longer-dated coupons rises from $2bn to at least $4bn per operation",
+    "Targets the 10-20 and 20-30 year sectors where dealer demand had thinned; operations run 9 September to early November",
+    "It repurchases off-the-run paper to cure dislocation - it does not finance new spending"
+   ],
+   "assessment": "The day's pivot. Two days after the 30-year hit a 19-year high, the authorities acted on the long end, and every risk asset on this page turned with it."
+  },
+  {
+   "daysAgo": 1,
+   "sector": "reshore",
+   "headline": "CORRECTION: the 50% Section 338 duties on Canada were PAUSED, not imposed",
+   "src": "CBC / Al Jazeera / Axios",
+   "url": "https://www.cbc.ca/news/politics/new-trump-tariffs-deadline-9.7311125",
+   "summary": [
+    "Trump paused the duties for three days, to 22 August, less than two hours before the 00:01 ET deadline",
+    "Carney confirmed the suspension and said substantial progress had been made but important work remains",
+    "This page said on 19 August that the duties were in force. They were not."
+   ],
+   "assessment": "A dated claim built on a proclamation's effective date and never taken back to the record on the day it mattered."
+  },
+  {
+   "daysAgo": 181,
+   "sector": "reshore",
+   "headline": "COVERAGE GAP: the Supreme Court struck down the IEEPA tariffs 6-3 on 20 February",
+   "src": "SCOTUSblog / Congress.gov CRS / Tax Foundation",
+   "url": "https://www.scotusblog.com/2026/02/supreme-court-strikes-down-tariffs/",
+   "summary": [
+    "Roberts, 6-3: IEEPA's power to 'regulate importation' does not include the power to impose tariffs, which is a branch of the taxing power reserved to Congress",
+    "All IEEPA tariffs terminated at 00:00 ET on 24 February; Section 122 also fell, expiring 24 July",
+    "The weighted average applied US tariff rate went from 14.9% to 8.2%; ~$128.68bn of refunds had been accepted for processing by 31 July"
+   ],
+   "assessment": "This book had never recorded it, while carrying reshoring-by-tariff at conviction 5. Section 232 and Section 301 survive intact; the driver is cut to 3."
+  },
+  {
+   "daysAgo": 1,
+   "sector": "memory",
+   "headline": "SK hynix approves a KRW 40tn (~$28.6bn) buyback and full share cancellation",
+   "src": "SK hynix Newsroom / PR Newswire",
+   "url": "https://news.skhynix.com/en/share-buyback-and-retirement/",
+   "summary": [
+    "Board resolution 19 August: the largest treasury cancellation ever initiated by a listed South Korean company",
+    "~24.07m shares, about 3.3% of the 730,492,365 outstanding; buying starts 20 August and runs about three months",
+    "Shareholder-return target raised to over half of cumulative 2025-27 free cash flow, pulling forward a November 2024 programme"
+   ],
+   "assessment": "The strongest evidence yet for 'shortage, not cycle'. A management team answering a 9% fall with a record cancellation is making a claim about the cycle's length."
+  },
+  {
+   "daysAgo": 0,
+   "sector": "crypto",
+   "headline": "Bitcoin tops $69,000 for the first time since June; ~$1.44bn of shorts liquidated",
+   "src": "CoinDesk / The Block / Fortune",
+   "url": "https://www.coindesk.com/markets/2026/08/20/ether-jumps-18-to-usd2-250-as-bitcoin-tops-usd69-000-in-broad-crypto-rally",
+   "summary": [
+    "BTC $69,381 on the 20 August fetch (+7.27%), after roughly $1.44bn of short positions were liquidated",
+    "Drivers cited are macro rather than crypto-native: the Treasury buyback expansion, a bond rally and a softer dollar",
+    "Trump publicly urged Congress to advance crypto market-structure legislation; an SEC crypto proposal is also cited"
+   ],
+   "assessment": "Raises the crypto theme 2 to 3, and puts the MSTR exit flag's stated invalidation (BTC above $70k) within 0.9%."
+  },
+  {
+   "daysAgo": 1,
+   "sector": "neoclouds",
+   "headline": "Nebius launches a $4.5bn convertible bond offering and falls 13.7%",
+   "src": "Bloomberg / SEC Form 6-K",
+   "url": "https://www.bloomberg.com/news/articles/2026-08-19/ai-cloud-firm-nebius-offers-4-5-billion-of-convertible-bonds",
+   "summary": [
+    "Announced 19 August: $2.75bn due 2030 and $1.75bn due 2034, with $375m and $300m upsize options",
+    "Alongside it, exchanges of a portion of its 2.00% 2029s and 3.00% 2031s into Class A shares",
+    "Proceeds fund data-centre construction, GPU procurement and the AI cloud platform; CoreWeave fell 4% in sympathy, both rebounded"
+   ],
+   "assessment": "The neocloud entry's stated invalidation tested in the primary market. The capital is available and it is being paid for in dilution rather than in spread."
+  },
+  {
+   "daysAgo": 1,
+   "sector": "labour",
+   "headline": "Target's profit doubles on $752m of tariff refunds; full-year guidance raised",
+   "src": "Target / CNBC",
+   "url": "https://corporate.target.com/press/release/2026/08/target-corporation-reports-second-quarter-earnings",
+   "summary": [
+    "Q2 included $994m of pretax tariff-refund benefit, $752m net and $1.65 of EPS, following the Supreme Court's IEEPA ruling",
+    "Net sales +5.3%, comparable sales +3.8% on 3.6% higher comparable traffic; digital comps +8.7%",
+    "GAAP and adjusted EPS guidance raised to $9.90-$10.90 from $7.50-$8.50"
+   ],
+   "assessment": "The consumer is holding for a second session running - but $1.65 of the EPS is a tariff refund, not trading, and the headline overstates it."
+  },
+  {
+   "daysAgo": 14,
+   "sector": "optics",
+   "headline": "Roundhill lists the first-ever Photonics & Optics ETF (LYTE) and Neocloud ETF (NCLD)",
+   "src": "PR Newswire / Roundhill",
+   "url": "https://www.prnewswire.com/news-releases/roundhill-investments-launches-first-ever-neocloud-etf-ncld-and-photonics--optics-etf-lyte-302844978.html",
+   "summary": [
+    "Both listed 6 August 2026 at a 0.65% gross expense ratio",
+    "LYTE: 12 holdings on ~$72m of first-day volume - Lumentum 15.4%, Coherent 15.2%, NewLink 14.6%, ZTE 14.2%, Tianfu 7.9%",
+    "NCLD: ~20 holdings, actively managed, targeting GPU-as-a-service and AI data centres"
+   ],
+   "assessment": "Closes signal 2 of the 5-signal check for optics for the first time - and corrects this page's own claim that neither fund existed."
+  },
+  {
+   "daysAgo": 59,
+   "sector": "neoclouds",
+   "headline": "CORRECTION: the Nasdaq-100 added CRWV, NBIS and Astera Labs in JUNE, not August",
+   "src": "Nasdaq IR / Sherwood / Yahoo Finance",
+   "url": "https://ir.nasdaq.com/news-releases/news-release-details/nasdaq-100-indexr-june-2026-quarterly-changes",
+   "summary": [
+    "Announced 11 June, effective before the open on Monday 22 June 2026",
+    "Rocket Lab and Teradyne joined in the same rebalance; Charter, Cognizant, Insmed, Verisk and Zscaler were removed",
+    "This page credited the inclusion on 19 August as the neocloud theme's first hard flows evidence"
+   ],
+   "assessment": "A two-month-old event presented as this month's confirmation. It also hands the space theme a flows fact and the cyber theme a small outflow, neither of which this book had."
+  },
+  {
+   "daysAgo": 0,
+   "sector": "intl",
+   "headline": "China leaves loan prime rates unchanged for a 15th consecutive month",
+   "src": "Reuters via WKZO / Trading Economics",
+   "url": "https://wkzo.com/2026/08/19/china-leaves-loan-rates-steady-for-15th-consecutive-month-in-august/",
+   "summary": [
+    "The 20 August fixing left the one-year at 3.00% and the five-year-plus at 3.50%",
+    "The seven-day reverse repo has also been on hold for 15 months since its May 2025 cut, so the pricing basis did not move",
+    "Third consecutive observed absence of policy against the July activity miss"
+   ],
+   "assessment": "The ammunition remains available and unspent. For a policy-driven economy, a third straight non-response is itself the signal."
+  },
+  {
+   "daysAgo": 1,
+   "sector": "semis",
+   "headline": "US reviews Chinese firms' offshore ACCESS to Nvidia chips after a Thai data-centre route",
+   "src": "CNBC / Bloomberg",
+   "url": "https://www.cnbc.com/2026/08/19/china-ai-nvidia-chips-us-export-controls.html",
+   "summary": [
+    "Chinese firms have reached GB300 compute through data centres in Southeast Asia despite the shipment ban",
+    "A White House official named Moonshot AI as having used a facility in Thailand, days after its July model release",
+    "The current regime controls physical chips but not remote access; a key agency is now reviewing that gap"
+   ],
+   "assessment": "Extends the 15 August BIS D:5 action from ownership to access. Closing it would reach the rental layer as much as the chip layer."
+  },
+  {
+   "daysAgo": 127,
+   "sector": "defence",
+   "headline": "CORRECTION: Fincantieri's $30m landing-ship award is dated 15 April, not August",
+   "src": "USNI News / Fincantieri",
+   "url": "https://www.fincantieri.com/en/newsroom/press-releases/2026/fincantieri-secures-first-us-navy-contract-for-lsm-program",
+   "summary": [
+    "Awarded 15 April 2026 for materials procurement and engineering on the first four Medium Landing Ship hulls",
+    "It follows a February 2026 Navy RFP for a programme that could reach 35 ships",
+    "It predates the 14 August national-security memorandum entirely"
+   ],
+   "assessment": "The shipbuilding radar entry's only award turns out not to be evidence the memorandum produced anything. Score cut to 3 of 5."
+  },
+  {
+   "daysAgo": 2,
    "sector": "capex",
    "headline": "WSJ: nine big-tech firms carry ~$3tn of off-balance-sheet AI commitments",
    "src": "Wall Street Journal (via TipRanks / Asharq Al-Awsat / CryptoBriefing)",
@@ -6569,7 +6748,7 @@
    "assessment": "The sharpest form yet of the master factor's own invalidation. Not spread stress - a disclosure finding, arriving as the long end reprices the cost of carrying it."
   },
   {
-   "daysAgo": 1,
+   "daysAgo": 2,
    "sector": "capex",
    "headline": "OpenAI Q2 revenue $6.7bn (+18% q/q) with widening losses; Anthropic roughly doubles to $11.6bn",
    "src": "WSJ via SiliconANGLE / Investing.com",
@@ -6582,7 +6761,7 @@
    "assessment": "Demand concentration, not demand collapse - but one of the two buyers underwriting the capex slowed, which is what the hardware tape reacted to."
   },
   {
-   "daysAgo": 0,
+   "daysAgo": 1,
    "sector": "intl",
    "headline": "KOSPI falls 5.55% to 6,488 and triggers a sidecar; Nikkei -3.23%",
    "src": "Trading Economics / TradingKey / AP",
@@ -6595,7 +6774,7 @@
    "assessment": "CORRECTION to this desk's 18 Aug read. 'Korea is carrying the rotation' rested on an intraday +2.2% print; the KOSPI closed that session down 1.55%."
   },
   {
-   "daysAgo": 0,
+   "daysAgo": 1,
    "sector": "rates",
    "headline": "UK July CPI 2.9%, a four-month high",
    "src": "ONS",
@@ -6608,7 +6787,7 @@
    "assessment": "Converts the energy-premium entry's forecast leg into a print. BoE held Bank Rate at 3.75% on 30 July."
   },
   {
-   "daysAgo": 0,
+   "daysAgo": 1,
    "sector": "reshore",
    "headline": "50% Section 338 duties on Canadian goods are now in force",
    "src": "White & Case / USTR / GHY International",
@@ -6621,7 +6800,7 @@
    "assessment": "The tariff architecture widening in instrument rather than in rate. Canada's response is the near-term variable."
   },
   {
-   "daysAgo": 1,
+   "daysAgo": 2,
    "sector": "memory",
    "headline": "Memory and semis sell off hard: SOX -5.4%, Micron -5%, Western Digital -7%",
    "src": "24/7 Wall St. / Reuters",
@@ -6634,7 +6813,7 @@
    "assessment": "A rate and positioning reset in the most crowded corner of AI hardware. The stated invalidation is an ASP rollover, and contract ASPs are still forecast up."
   },
   {
-   "daysAgo": 4,
+   "daysAgo": 5,
    "sector": "defence",
    "headline": "Rheinmetall cuts 2026 sales guidance after Berlin scraps the F126 frigate programme",
    "src": "Reuters via Baird Maritime / Euronext",
@@ -6647,7 +6826,7 @@
    "assessment": "Confirms the entry's UK-primes-vs-EU-laggard split rather than breaking it. A lost domestic competition is not a budget cut."
   },
   {
-   "daysAgo": 76,
+   "daysAgo": 77,
    "sector": "semis",
    "headline": "Quantinuum listed on Nasdaq in June, raising $1.68bn - a basket member this book had missed",
    "src": "CNBC / The Quantum Insider",
@@ -6660,7 +6839,7 @@
    "assessment": "A coverage gap of this desk's own, closed. It widens the basket but does not confirm flows - a flat debut is not a demand signal, so the score stays 4 of 5."
   },
   {
-   "daysAgo": 1,
+   "daysAgo": 2,
    "sector": "labour",
    "headline": "Home Depot beats and reaffirms guidance in 'frozen housing market conditions'",
    "src": "CNBC",
@@ -6673,7 +6852,7 @@
    "assessment": "Weak housing, not a weak consumer. It cuts against the labour-turn entry rather than for it. Target reports 19 Aug, Walmart 20 Aug."
   },
   {
-   "daysAgo": 0,
+   "daysAgo": 1,
    "sector": "intl",
    "headline": "China's loan prime rates unchanged for a 14th month; still no answer to the July miss",
    "src": "People's Daily / Trading Economics",
@@ -6686,7 +6865,7 @@
    "assessment": "An observed absence of policy, which for a policy-driven economy is itself the signal. Second consecutive cycle."
   },
   {
-   "daysAgo": 7,
+   "daysAgo": 8,
    "sector": "crypto",
    "headline": "Prediction markets take two regulatory hits: Kalshi restrained in Washington, Polymarket debanked",
    "src": "RotoWire legal timeline / CNBC",
@@ -6699,7 +6878,7 @@
    "assessment": "The regulatory risk this desk logged as a caveat on 18 Aug has converted into a court order and a banking-access problem. The leg is weaker, not stronger."
   },
   {
-   "daysAgo": 5,
+   "daysAgo": 6,
    "sector": "capex",
    "headline": "Q2 13Fs: SpaceX and Alphabet bought, NVIDIA and Broadcom sold",
    "src": "Hedgeweek / KuCoin",
@@ -6712,7 +6891,7 @@
    "assessment": "Divided, and rotating rather than adding. The 17 Aug put-book trace re-enters here as new evidence after being formally retired on 18 Aug."
   },
   {
-   "daysAgo": 2,
+   "daysAgo": 3,
    "sector": "geo",
    "headline": "US-Iran 60-day deadline expires with no deal and no extension",
    "src": "CNN / The National",
@@ -6725,7 +6904,7 @@
    "assessment": "The negotiated route has lapsed rather than stalled. This is the energy-premium theme's driver hardening, not easing."
   },
   {
-   "daysAgo": 2,
+   "daysAgo": 3,
    "sector": "rates",
    "headline": "US 30-year Treasury yield reaches 5.31%, the highest since 2007",
    "src": "CNBC",
@@ -6738,20 +6917,7 @@
    "assessment": "CORRECTION to yesterday's read. The oil premium is in the US curve too, which raises the discount rate under every AI-capex model."
   },
   {
-   "daysAgo": 21,
-   "sector": "rates",
-   "headline": "July FOMC held 9-3 with three dissents in favour of a HIKE",
-   "src": "US News / CNBC",
-   "url": "https://www.usnews.com/news/national-news/articles/2026-07-29/fed-holds-rates-steady-but-3-members-favored-a-rate-hike",
-   "summary": [
-    "Rates held at 3.50-3.75% for a fifth consecutive meeting under Chair Kevin Warsh",
-    "Hammack, Kashkari and Logan dissented for a quarter-point hike - the most hawkish dissent since 2016",
-    "At his June debut Warsh stripped the easing bias, with 9 of 18 participants projecting a 2026 hike"
-   ],
-   "assessment": "The book had the regime as a benign hold. It is a hawkish hold, which changes what a sustained oil premium does."
-  },
-  {
-   "daysAgo": 2,
+   "daysAgo": 3,
    "sector": "intl",
    "headline": "China's July activity misses across the board; still no policy answer",
    "src": "CNBC",
@@ -6764,7 +6930,7 @@
    "assessment": "The easing ammunition exists and is unspent. Absence of a response is itself the finding this run."
   },
   {
-   "daysAgo": 6,
+   "daysAgo": 7,
    "sector": "memory",
    "headline": "TrendForce sees conventional DRAM contract prices +13-18% q/q, NAND +10-15%",
    "src": "TrendForce",
@@ -6777,7 +6943,7 @@
    "assessment": "Third independent supply-side confirmation in a fortnight. The shortage-not-cycle framing keeps getting better evidenced."
   },
   {
-   "daysAgo": 5,
+   "daysAgo": 6,
    "sector": "power",
    "headline": "Fluence starts construction on a 400 MWh German grid battery and signs two hyperscaler MSAs",
    "src": "Fuel Cells Works / DCD",
@@ -6790,7 +6956,7 @@
    "assessment": "Storage is the AI-power leg that delivers inside this cycle, and it is now shipping in Europe as well as the US."
   },
   {
-   "daysAgo": 5,
+   "daysAgo": 6,
    "sector": "defence",
    "headline": "US opens Navy shipbuilding to foreign yards; Hanwha Ocean +5.6%, Fincantieri also higher",
    "src": "Korea Times / gCaptain",
@@ -6803,7 +6969,7 @@
    "assessment": "A second listed price response widens the basket beyond Korea. Still 4 of 5 - flows are the missing criterion."
   },
   {
-   "daysAgo": 4,
+   "daysAgo": 5,
    "sector": "crypto",
    "headline": "CORRECTED: the CLARITY Act has a Senate floor vote scheduled for 15 September",
    "src": "CoinDesk / Latham",
@@ -6816,7 +6982,7 @@
    "assessment": "Yesterday this desk wrote that passage was likely slipping to 2027. That was over-read - the delay is real but dated."
   },
   {
-   "daysAgo": 2,
+   "daysAgo": 3,
    "sector": "privmkts",
    "headline": "CORRECTED: the 401(k) private-assets executive order dates to August 2025, not this month",
    "src": "Cleary Gottlieb / Groom Law",
@@ -6829,7 +6995,7 @@
    "assessment": "An entry promoted yesterday on a year-old catalyst. Held at 4 of 5 and re-dated rather than quietly fixed."
   },
   {
-   "daysAgo": 2,
+   "daysAgo": 3,
    "sector": "crypto",
    "headline": "MSTR pinned from a quoted close at $93.95 after four failed attempts",
    "src": "stockanalysis.com",
@@ -6842,7 +7008,7 @@
    "assessment": "The 'wire a price feed or close the flag' dilemma is resolved: a direct price search works. The flag stays open."
   },
   {
-   "daysAgo": 8,
+   "daysAgo": 9,
    "sector": "capex",
    "headline": "CoreWeave Q2: revenue $2.58bn (+112%), backlog $104bn (+246%)",
    "src": "CNBC",
@@ -6855,7 +7021,7 @@
    "assessment": "The master factor's biggest test, and the payer passed. With the 30Y at 5.31% the financing leg is now the open question."
   },
   {
-   "daysAgo": 7,
+   "daysAgo": 8,
    "sector": "neoclouds",
    "headline": "Nebius Q2: revenue $582m (+454%), adjusted EBITDA positive $236m",
    "src": "Nebius",
@@ -6868,20 +7034,7 @@
    "assessment": "Pre-paid, contracted capacity funded by customers rather than by debt alone. Shares rose ~34% post-print."
   },
   {
-   "daysAgo": 7,
-   "sector": "rates",
-   "headline": "July CPI benign: +0.1% m/m, 3.4% headline, 2.5% core",
-   "src": "CNBC",
-   "url": "https://www.cnbc.com/2026/08/12/cpi-inflation-report-july-2026.html",
-   "summary": [
-    "Every reading in line with consensus; headline eased from 3.5% and core from 2.6%",
-    "No energy pass-through visible yet in the US data",
-    "UK July CPI lands 19 August and is expected at a four-month high"
-   ],
-   "assessment": "The US print is the reason a hawkish FOMC still held. The UK print tomorrow is where the oil premium shows up first."
-  },
-  {
-   "daysAgo": 7,
+   "daysAgo": 8,
    "sector": "optics",
    "headline": "Lumentum revenue $1.01bn (+109%) on record 800G, with 1.6T ramping",
    "src": "Investing.com",
@@ -6895,19 +7048,6 @@
   },
   {
    "daysAgo": 4,
-   "sector": "semis",
-   "headline": "BIS extends advanced-computing licensing to D:5-parented subsidiaries",
-   "src": "BIS guidance",
-   "url": "https://www.bis.doc.gov/",
-   "summary": [
-    "Guidance issued 15 August 2026",
-    "Licences now required regardless of where the subsidiary itself is located",
-    "Closes the third-country routing gap"
-   ],
-   "assessment": "Feeds supply-chain security directly and is a second-order tailwind to US-content optics and domestic capacity."
-  },
-  {
-   "daysAgo": 3,
    "sector": "defence",
    "headline": "Rheinmetall Q2 sales +69.8%, backlog EUR 80.4bn, but H1 cash flow -EUR 1.6bn",
    "src": "Investing.com / stockanalysis",
@@ -6920,7 +7060,7 @@
    "assessment": "Strong orders sold on cash quality. The political driver improved; the cash-conversion question did not."
   },
   {
-   "daysAgo": 3,
+   "daysAgo": 4,
    "sector": "minerals",
    "headline": "MP Materials' processed rare-earth revenue nearly quadruples to $94.4m",
    "src": "InvestorNews / S&P Global",
@@ -6931,19 +7071,6 @@
     "Structural leg: the G7 agreed on 17 June to cap single-source rare-earth imports below 60% by 2030"
    ],
    "assessment": "Conversion, not just a price pop. But August itself produced no fresh print - the domain is quiet on a strong base."
-  },
-  {
-   "daysAgo": 6,
-   "sector": "labour",
-   "headline": "Jobless claims 209k with the four-week average unchanged at 199k",
-   "src": "Bloomberg",
-   "url": "https://www.bloomberg.com/news/articles/2026-08-13/us-jobless-applications-edged-up-to-209-000-last-week",
-   "summary": [
-    "Initial claims rose 9,000 in the week to 8 August against a 202,000 median forecast",
-    "Continuing claims fell 22,000 to 1.777m; insured unemployment rate steady at 1.2%",
-    "The entry named rising continuing claims as its confirmation and got the opposite"
-   ],
-   "assessment": "The labour-turn thesis stays stalled. The duration leg now fights a 30-year yield at 5.31% as well."
   }
  ],
  "stocks": {
@@ -6961,17 +7088,17 @@
      [
       "NVDA",
       "Nvidia",
-      220
+      218
      ],
      [
       "AVGO",
       "Broadcom",
-      392
+      362
      ],
      [
       "AMD",
       "Adv. Micro Devices",
-      484
+      466
      ]
     ]
    },
@@ -6988,17 +7115,17 @@
      [
       "MU",
       "Micron",
-      941
+      937
      ],
      [
       "SNDK",
       "SanDisk",
-      1626
+      1569
      ],
      [
       "WDC",
       "Western Digital",
-      496
+      462
      ]
     ]
    },
@@ -7015,17 +7142,17 @@
      [
       "COHR",
       "Coherent",
-      351
+      287
      ],
      [
       "LITE",
       "Lumentum",
-      873
+      828
      ],
      [
       "ANET",
       "Arista Networks",
-      202
+      186
      ]
     ]
    },
@@ -7042,17 +7169,17 @@
      [
       "NBIS",
       "Nebius",
-      269
+      224
      ],
      [
       "CRWV",
       "CoreWeave",
-      93.17
+      90.87
      ],
      [
       "IREN",
       "Iren",
-      42.0
+      42.84
      ]
     ]
    },
@@ -7069,17 +7196,17 @@
      [
       "GEV",
       "GE Vernova",
-      1005
+      987
      ],
      [
       "VRT",
       "Vertiv",
-      273
+      261
      ],
      [
       "ETN",
       "Eaton",
-      431
+      425
      ]
     ]
    },
@@ -7096,17 +7223,17 @@
      [
       "CCJ",
       "Cameco",
-      98.58
+      97.98
      ],
      [
       "OKLO",
       "Oklo",
-      41.36
+      42.94
      ],
      [
       "SMR",
       "NuScale Power",
-      8.64
+      9.29
      ]
     ]
    },
@@ -7123,17 +7250,17 @@
      [
       "GRID",
       "ETF: grid infra",
-      184
+      183
      ],
      [
       "CEG",
       "Constellation Energy",
-      278
+      274
      ],
      [
       "ETN",
       "Eaton",
-      431
+      425
      ]
     ]
    },
@@ -7150,17 +7277,17 @@
      [
       "ISRG",
       "Intuitive Surgical",
-      391
+      398
      ],
      [
       "SYM",
       "Symbotic",
-      40.46
+      42.02
      ],
      [
       "TER",
       "Teradyne",
-      404
+      380
      ]
     ]
    },
@@ -7177,17 +7304,17 @@
      [
       "MP",
       "MP Materials",
-      56.67
+      56.68
      ],
      [
       "FCX",
       "Freeport-McMoRan",
-      66.32
+      69.09
      ],
      [
       "CENX",
       "Century Aluminum",
-      45.66
+      43.58
      ]
     ]
    },
@@ -7204,17 +7331,17 @@
      [
       "RKLB",
       "Rocket Lab",
-      79.16
+      75.84
      ],
      [
       "ASTS",
       "AST SpaceMobile",
-      67.07
+      66.43
      ],
      [
       "LMT",
       "Lockheed Martin",
-      607
+      589
      ]
     ]
    },
@@ -7231,12 +7358,12 @@
      [
       "BA.L",
       "BAE Systems",
-      2236
+      2225
      ],
      [
       "RR.L",
       "Rolls-Royce",
-      1564
+      1538
      ],
      [
       "RHM.DE",
@@ -7246,12 +7373,12 @@
      [
       "LMT",
       "Lockheed Martin",
-      607
+      589
      ],
      [
       "RTX",
       "RTX Corp",
-      222
+      220
      ]
     ]
    },
@@ -7268,17 +7395,17 @@
      [
       "NEM",
       "Newmont",
-      116
+      125
      ],
      [
       "AEM",
       "Agnico Eagle",
-      187
+      208
      ],
      [
       "GLD",
       "SPDR Gold",
-      399
+      414
      ]
     ]
    },
@@ -7295,17 +7422,17 @@
      [
       "COIN",
       "Coinbase",
-      146
+      160
      ],
      [
       "MSTR",
       "MicroStrategy",
-      92.52
+      104
      ],
      [
       "IBIT",
       "iShares Bitcoin",
-      36.6
+      38.78
      ]
     ]
    },
@@ -7322,17 +7449,17 @@
      [
       "PANW",
       "Palo Alto Networks",
-      376
+      360
      ],
      [
       "CRWD",
       "CrowdStrike",
-      213
+      202
      ],
      [
       "ZS",
       "Zscaler",
-      184
+      185
      ]
     ]
    }
@@ -7341,42 +7468,42 @@
    {
     "tk": "PLTR",
     "name": "Palantir",
-    "price": 173,
+    "price": 175,
     "theme": "capex-light monetizer",
     "stage": "Confirmed"
    },
    {
     "tk": "ARM",
     "name": "Arm Holdings",
-    "price": 253,
+    "price": 249,
     "theme": "Semiconductor IP",
     "stage": "Confirmed"
    },
    {
     "tk": "ASML",
     "name": "ASML",
-    "price": 1803,
+    "price": 1752,
     "theme": "Semi equipment",
     "stage": "Confirmed"
    },
    {
     "tk": "FSLR",
     "name": "First Solar",
-    "price": 218,
+    "price": 222,
     "theme": "Reshoring / solar",
     "stage": "Building"
    },
    {
     "tk": "DELL",
     "name": "Dell Technologies",
-    "price": 469,
+    "price": 438,
     "theme": "AI servers",
     "stage": "Building"
    },
    {
     "tk": "CEG",
     "name": "Constellation Energy",
-    "price": 278,
+    "price": 274,
     "theme": "Nuclear / power",
     "stage": "Building"
    }
