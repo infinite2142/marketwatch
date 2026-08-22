@@ -177,7 +177,10 @@ DESK = re.compile(r'\b(this (card|entry|book|page|desk|week)|yesterday this|why 
                   r'the discipline|logged|scored|sweep(s|ing)?|stated precisely|observed quiet|'
                   r'quiet cycle|the silence broke|silence|first observed|two cycles|'
                   r'live base|withdrawn|re-?scored|not adopted|this run|'
-                  r'this desk|the desk|for two runs|previous run)\b', re.I)
+                  r'this desk|the desk|for two runs|previous run|the daily|age trigger|'
+                  r'invalidation|the ledger|conviction cut|trajectory cut)\b'
+                  r"|\b[a-z]+_[a-z_]+\b"                    # composite_meta.as_of, last_fetch
+                  r"|\bthe (rule|register|book)\b", re.I)
 
 SECICON = {"rates":"activity","capex":"layers","power":"zap","memory":"cpu","semis":"cpu",
            "optics":"sparkles","gold":"coins","crypto":"coins","minerals":"layers",
@@ -205,6 +208,15 @@ def _cap(t):
     cut = t[:CAP]
     i = max(cut.rfind(". "), cut.rfind("; "))
     return cut[:i + 1] if i > CAP * 0.45 else cut.rsplit(" ", 1)[0] + "…"
+
+def desk_share(txt):
+    """Fraction of a passage that is desk commentary. Used to decide whether a whole
+    paragraph belongs in the audit, instead of exiling it for one trigger word."""
+    parts = [p for p in re.split(r'(?<=[.!?])\s+', txt or "") if p.strip()]
+    if not parts:
+        return 0.0
+    bad = sum(1 for p in parts if BAD.search(p) or DESK.search(p))
+    return bad / len(parts)
 
 def reader_prose(txt):
     """Split a prose field into what the reader gets and the desk commentary it
@@ -349,11 +361,21 @@ def build_v28(data):
 
     drivers = []
     for x in data.get("drivers", []):
-        # oneLiner is specced as a weekly snapshot (daily-task.md). Until the daily
-        # writes it that way, fall back to trajLbl, which is the nearest state field.
+        # oneLiner is specced as a weekly snapshot (daily-task.md). Today's data still
+        # has a dated news item there, so take it only when it reads like a state: no
+        # specific date, no source citation. Otherwise fall back to trajLbl, which is
+        # the field that currently holds state, and to the traj enum as a last resort.
         one = (x.get("oneLiner") or "").strip()
-        snap = one if (one and not BAD.search(one) and len(one) <= 180) \
-            else clean_traj(x.get("trajLbl"), x.get("traj"))
+        dated = re.search(r"\b\d{1,2}\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)"
+                          r"|\b(19|20)\d{2}\b|\b(said|says|reported|announced|letter|filing)\b",
+                          one, re.I)
+        lbl = clean_traj(x.get("trajLbl"), x.get("traj"))
+        if one and not BAD.search(one) and not dated and len(one) <= 180:
+            snap = one
+        elif len(lbl) > 18:
+            snap = lbl
+        else:
+            snap = lbl
         rest = [p for p in [_rp(p) for p in (x.get("summary") or [])[1:]]
                 if p and not BAD.search(p)]
         drivers.append(dict(
@@ -416,17 +438,42 @@ def build_v28(data):
     crash = dict(
         v=cr.get("composite"), lvl=cr.get("level", ""),
         read=_rp(cr.get("read", "")),
+        deskvoice=round(desk_share(cr.get("read", "")), 2),
         buckets=[dict(nm=b["nm"], summary=_rp(b.get("summary", "")),
                       inds=[dict(nm=i["nm"], val=i["val"], status=i["status"],
                                  tr=i.get("tr", "flat"), mean=i.get("mean", ""))
                             for i in (b.get("inds") or [])])
                  for b in (cr.get("buckets") or [])])
 
+    # The narrative is ~5-6k characters of continuous prose with a capitalised lead
+    # clause opening each paragraph. Those clauses are already section headings, so the
+    # panel renders it as sections rather than one wall of text, and the paragraphs that
+    # are about this desk rather than about the world go to the audit disclosure.
+    # The narrative is ~5-6k characters with a capitalised lead clause opening each
+    # paragraph. Those clauses are already section headings, so the panel renders it as
+    # sections rather than one wall of text. A paragraph moves to the audit only when
+    # MOST of it is desk commentary — otherwise its desk sentences are dropped and the
+    # rest is kept, because these paragraphs carry the run's actual findings.
     nar = data.get("state_of_play", {}).get("narrative", "")
-    nar_read, nar_audit = reader_prose(nar) if nar else ("", [])
-    full = " ".join(p for p in re.split(r'(?<=[.!?])\s+', nar)
-                    if not BAD.search(p) and not DESK.search(p)) or nar
-    state = dict(lead=nar_read, full=full, audit=nar_audit[:12])
+    paras = [p.strip() for p in re.split(r'\n+', nar) if p.strip()]
+    sections, nar_audit = [], []
+    for p in paras:
+        if desk_share(p) >= 0.5:
+            nar_audit.append(p)
+            continue
+        m = re.match(r"([A-Z][A-Z0-9 ,'’/&()\u2014-]{10,150}?)\s*(?=[.:\u2014]\s|$)", p)
+        head, body = ("", p)
+        if m and m.group(1).upper() == m.group(1):
+            head, body = m.group(1).strip(" ,"), p[m.end():].lstrip(" .:\u2014")
+        body = " ".join(x for x in re.split(r'(?<=[.!?])\s+', body)
+                        if not (BAD.search(x) or DESK.search(x))).strip() or body
+        if head and (BAD.search(head) or DESK.search(head)):
+            head = ""                              # a desk-voice heading is still desk voice
+        if head:
+            head = head[0] + head[1:].lower()
+        sections.append({"h": head, "b": body})
+    lead = _cap(sections[0]["b"]) if sections else _rp(nar)
+    state = dict(lead=lead, sections=sections, audit=nar_audit[:8])
 
     meta = data.get("meta", {})
     return {

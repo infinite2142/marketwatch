@@ -8,8 +8,14 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .brand h1{font-size:15.5px;margin:0;letter-spacing:-.2px}
 .brand .s{font-size:10.5px;color:#71717a}
 .chip{font-size:11px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:5px 12px;white-space:nowrap}
-.sec{margin-bottom:22px}
-.sechead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:11px}
+.hero{margin:26px 0 42px;padding-bottom:30px;border-bottom:1px solid #27272a}
+.hero h2{font-size:29px;line-height:1.22;margin:0 0 14px;font-weight:600;letter-spacing:-.5px;max-width:22ch}
+.hero h2 em{font-style:normal;background:linear-gradient(95deg,#60a5fa,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{margin:0;font-size:13.5px;line-height:1.68;color:#a1a1aa;max-width:74ch}
+.hero .disc{margin-top:11px;font-size:11.5px;color:#52525b}
+.sec{margin-bottom:40px}
+.sechead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:15px}
 .sechead .lhs{display:flex;align-items:center;gap:8px;min-width:0}
 .sechead .lhs .rule{flex:1;height:1px;background:#27272a}
 .sechead>.rule{height:1px;background:#27272a}
@@ -22,8 +28,8 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .seg button{background:none;display:inline-flex;align-items:center;gap:5px;border:0;color:#a1a1aa;font:inherit;font-size:11.5px;font-weight:500;padding:4px 11px;border-radius:6px;cursor:pointer;transition:.15s}
 .seg button:hover{color:#f4f4f5}
 .seg button.on{background:#f4f4f5;color:#09090b;font-weight:600}
-.card{background:#18181b;border:1px solid #27272a;border-radius:14px;padding:14px 16px}
-.cond{display:grid;grid-template-columns:minmax(230px,.8fr) 3fr;gap:13px}
+.card{background:#18181b;border:1px solid #27272a;border-radius:14px;padding:19px 21px}
+.cond{display:grid;grid-template-columns:minmax(230px,.8fr) 3fr;gap:16px}
 .gauge-card{cursor:pointer;transition:.15s}
 .gauge-card:hover{border-color:#3f3f46}
 .gauge-card{background:linear-gradient(150deg,#1f1f23,#18181b);border:1px solid #27272a;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column}
@@ -32,7 +38,7 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .glvl{font-size:19px;font-weight:600;line-height:1.15}
 .gsub{font-size:10px;text-transform:uppercase;letter-spacing:1.1px;color:#71717a;margin-bottom:3px}
 .gread{font-size:11px;color:#a1a1aa;line-height:1.45;margin-top:9px;border-top:1px solid #27272a;padding-top:9px}
-.tiles{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;gap:9px}
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;gap:11px}
 .tile{cursor:pointer}.tile:hover{border-color:#3f3f46;background:#18181b}
 .tile{background:#131316;border:1px solid #27272a;border-radius:10px;padding:9px 10px;min-width:0}
 .t-l{font-size:10px;color:#71717a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -49,7 +55,7 @@ svg.view{width:100%;height:auto;display:block;overflow:visible}
 .hint{font-size:11px;color:#71717a;font-style:italic;margin:8px 0 0}
 .cols{display:block}
 ul.lst{list-style:none;margin:0;padding:0}
-ul.lst li{display:flex;gap:9px;align-items:baseline;padding:7px 0;border-bottom:1px solid #232326;font-size:12.5px;cursor:pointer}
+ul.lst li{display:flex;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid #232326;font-size:12.5px;cursor:pointer}
 ul.lst li:last-child{border-bottom:0}
 ul.lst li:hover{background:#131316}
 .ci{color:#71717a;display:flex;align-items:center}
@@ -123,7 +129,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
        padding:7px 10px;border-radius:8px;margin-bottom:12px}
 .vrow{display:flex;gap:9px;align-items:baseline;padding:8px 0;border-bottom:1px solid #232326;font-size:12px}
 .vhd{color:#a1a1aa;line-height:1.45}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
 .gt{text-align:left;background:#131316;border:1px solid #27272a;border-radius:10px;padding:10px 11px;cursor:pointer;
     position:relative;overflow:hidden;transition:.15s;min-width:0}
 .gt:hover{border-color:#3f3f46;background:#18181b}
@@ -146,9 +152,23 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .hd.ph{color:#71717a;font-style:italic}
 .trj{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#a1a1aa;background:#232326;
      border-radius:999px;padding:2px 9px;white-space:nowrap;flex:0 0 auto}
+.sopp{margin-bottom:16px}
 .sop{font-size:13px;color:#d4d4d8;line-height:1.68;margin:0}
 .mvnote{font-size:10.5px;color:#71717a;font-style:italic}
-.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.dlist{display:flex;flex-direction:column}
+.drow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;
+  border-bottom:1px solid #232326;padding:11px 10px 11px 12px;cursor:pointer;font:inherit;color:inherit;
+  position:relative;transition:.12s}
+.drow:last-child{border-bottom:0}
+.drow:hover{background:#131316}
+.drow::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:2px;background:#52525b}
+.drow.tailwind::before{background:#10b981}.drow.headwind::before{background:#f43f5e}
+.drow.rotational::before{background:#60a5fa}
+.drow .dnm{font-size:13px;font-weight:600;color:#f4f4f5;flex:0 0 232px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drow .dsnap{font-size:12.5px;color:#a1a1aa;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drow .dots{flex:0 0 auto}
+@media (max-width:900px){.drow{flex-wrap:wrap}.drow .dnm{flex:1 0 auto}.drow .dsnap{flex:1 0 100%;white-space:normal}}
+.dgrid-unused{
 .dcard{text-align:left;background:#18181b;border:1px solid #27272a;border-radius:12px;padding:13px 14px;
   cursor:pointer;position:relative;overflow:hidden;transition:.15s;font:inherit;color:inherit}
 .dcard:hover{border-color:#3f3f46;background:#1f1f23}
@@ -195,8 +215,18 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
   <div class="top">
     <div class="brand"><div class="logo" id="ilogo"></div>
       <div><h1>Market Watch <span style="color:#a78bfa">V2.8</span></h1>
-      <div class="s">markets, drivers and the themes forming underneath</div></div></div>
+      <div class="s">Daily research terminal</div></div></div>
     <span class="chip" id="chip"></span>
+  </div>
+
+  <div class="hero">
+    <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
+    <p>A daily read on markets, macro drivers and crash risk, alongside a running register of
+       investible themes tracked from first sighting on the radar through to played-out.
+       Ratings, convictions and stages are the desk's own judgement; each carries its evidence
+       and date.</p>
+    <p class="disc">Long-only research aid. Not financial advice. No holdings, no positions,
+       no sizing &mdash; conviction is the strength of the case.</p>
   </div>
 
   <div class="sec">
@@ -242,7 +272,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
   <div class="sec"><div class="sechead"><div class="lhs"><span id="i3"></span><h2>What changed</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
     <div class="card"><ul class="lst" id="sigs"></ul></div></div>
   <div class="sec"><div class="sechead"><div class="lhs"><span id="i4"></span><h2>Drivers</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
-    <div class="dgrid" id="drivs"></div>
+    <div class="card"><div class="dlist" id="drivs"></div></div>
     <p class="mvnote" style="margin:10px 0 0">Macro forces behind the book &middot; a weekly state, not a daily headline &middot; click any for evidence</p></div>
 
   <p class="guard">Research, not a portfolio. Nothing here is a holding, a position or a size &mdash;
@@ -513,14 +543,14 @@ function drawDrivers(){
 
 /* ---------- view 3: radar ---------- */
 function drawRadar(){
-  svg.innerHTML="";const H=420;
+  svg.innerHTML="";const H=470;
   const rs=MARKS.filter(m=>m.k==="radar").sort((a,b)=>a.met-b.met||a.nm.localeCompare(b.nm));
   const cw=(W-40)/rs.length;
   rs.forEach((m,i)=>{
     const x=20+cw*(i+.5),c=RC[m.status]||"#71717a",g=el("g",{class:"mk"});
-    el("rect",{x:x-cw/2+5,y:24,width:cw-10,height:H-78,rx:10,fill:c,opacity:.05,stroke:c,"stroke-opacity":.18},g);
+    el("rect",{x:x-cw/2+5,y:24,width:cw-10,height:H-84,rx:10,fill:c,opacity:.05,stroke:c,"stroke-opacity":.18},g);
     for(let k=0;k<5;k++){
-      const met=m.crit[k][1],yy=170+(4-k)*22;
+      const met=m.crit[k][1],yy=222+(4-k)*23;
       el("rect",{x:x-26,y:yy,width:52,height:14,rx:7,fill:met?c:"#232326",opacity:met?.85:1,
                  stroke:met?c:"#27272a","stroke-width":1},g);
       el("text",{x,y:yy+10,"text-anchor":"middle","font-size":7.5,
@@ -529,21 +559,21 @@ function drawRadar(){
     el("text",{x,y:52,"text-anchor":"middle","font-size":21,"font-weight":700,fill:c},g).textContent=m.met+"/5";
     el("text",{x,y:66,"text-anchor":"middle","font-size":9,fill:c,"letter-spacing":.6},g).textContent=m.status.toUpperCase();
     {const fo=document.createElementNS(NS,"foreignObject");
-     fo.setAttribute("x",x-11);fo.setAttribute("y",78);fo.setAttribute("width",22);fo.setAttribute("height",22);
-     fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" style="color:${c};width:22px;height:22px;`+
+     fo.setAttribute("x",x-30);fo.setAttribute("y",80);fo.setAttribute("width",60);fo.setAttribute("height",60);
+     fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" style="color:${c};width:60px;height:60px;opacity:.9;`+
        `display:flex;align-items:center;justify-content:center">${icon(m.icon)}</div>`;
-     fo.querySelector("svg").setAttribute("stroke-width","1.7"); g.appendChild(fo);}
+     fo.querySelector("svg").setAttribute("stroke-width","1.15"); g.appendChild(fo);}
     if(m.mv){const bc={new:"#93c5fd",up:"#6ee7b7",down:"#fda4af",retired:"#d4d4d8"}[m.mv.tag];
       el("rect",{x:x-30,y:H-32,width:60,height:14,rx:7,fill:bc,opacity:.16},g);
       el("text",{x,y:H-22,"text-anchor":"middle","font-size":8,"font-weight":700,fill:bc,"letter-spacing":.5},g)
         .textContent=m.mv.txt.split(" ")[0].toUpperCase();}
     const words=m.nm.split(" ");let line="",ln=0;
-    words.forEach(w=>{ if((line+" "+w).trim().length>15){ 
-        el("text",{x,y:116+ln*13,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
+    words.forEach(w=>{ if((line+" "+w).trim().length>16){ 
+        el("text",{x,y:170+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
       else line=(line+" "+w).trim(); });
-    el("text",{x,y:116+ln*13,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
+    el("text",{x,y:170+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
     /* cap at 4 lines: below that the text collides with the criteria pips */
-    const MAXL=3, NY=290, needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
+    const MAXL=3, NY=352, needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
     let nl="",nn=0;
     for(const w of needs.split(" ")){
       if((nl+" "+w).trim().length>22){
@@ -681,17 +711,15 @@ document.getElementById("sigs").insertAdjacentHTML("afterend",
 
 document.getElementById("drivs").innerHTML=DRIVERS.map((d,i)=>{
   const dots=[0,1,2,3,4].map(k=>`<i class="${k<d.conv?"on":""}"></i>`).join("");
-  const chips=d.drives.slice(0,5).map(x=>`<span class="bchip">${x}</span>`).join("")+
-    (d.drives.length>5?`<span class="bchip more">+${d.drives.length-5}</span>`:"");
-  return `<button class="dcard ${d.dir}" data-i="${i}">
-    <div class="dtop"><span class="dic">${icon(d.icon)}</span>
-      <span class="dnm">${d.nm}</span>
-      <span class="dir ${d.dir}">${d.dirLbl}</span></div>
-    <div class="dsnap"><span class="ar ${d.traj}">${d.arrow}</span>${d.snap}</div>
-    <div class="dfoot"><span class="conv"><span class="dots">${dots}</span></span>
-      <span class="bchips">${chips}</span></div></button>`;}).join("");
+  return `<button class="drow ${d.dir}" data-i="${i}">
+    <span class="dic">${icon(d.icon)}</span>
+    <span class="dnm">${d.nm}</span>
+    <span class="dir ${d.dir}">${d.dirLbl}</span>
+    <span class="ar ${d.traj}">${d.arrow}</span>
+    <span class="dsnap">${d.snap}</span>
+    <span class="dots">${dots}</span></button>`;}).join("");
 document.getElementById("drivs").addEventListener("click",e=>{
-  const b=e.target.closest(".dcard");if(b)openPanel(DRIVERS[+b.dataset.i]);});
+  const b=e.target.closest(".drow");if(b)openPanel(DRIVERS[+b.dataset.i]);});
 
 
 document.getElementById("i1").innerHTML=icon("compass");
@@ -745,7 +773,10 @@ document.getElementById("i6").innerHTML=icon("compass");
 document.getElementById("sop").textContent=STATE.lead||"";
 document.getElementById("sopmore").addEventListener("click",()=>openPanel({
   nm:"State of play",sub:META.reportLong||META.report||"",k:null,audit:STATE.audit||[],
-  logHTML:`<div class="ptext" style="line-height:1.7">${(STATE.full||"").replace(/\n/g,"<br><br>")}</div>`}));
+  logHTML:(STATE.sections||[]).map(x=>
+    (x.h?`<div class="plabel">${x.h}</div>`:"")+`<div class="ptext sopp">${x.b}</div>`).join("")}));
+document.getElementById("sopmore").textContent=
+  `Read the full state of play · ${(STATE.sections||[]).length} sections →`;
 {const n=MARKS.filter(m=>m.mv).length;
  document.getElementById("mvwin").textContent=
    n?`Movement badges compare against ${META.mvwin} — ${n} of ${MARKS.length} moved or are new since.`
