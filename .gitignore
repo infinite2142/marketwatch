@@ -25,3 +25,6 @@ venv/
 # Generated page — rebuilt by generator.py on every run and published
 # straight from the Pages artifact. Tracking it causes push conflicts.
 index.html
+
+# design mockups for the V2.8 restructure -- throwaway, never shipped
+prototype/

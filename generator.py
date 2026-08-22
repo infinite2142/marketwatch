@@ -114,6 +114,55 @@ def derive_sector_reads(data):
               % ", ".join(orphans), file=sys.stderr)
     return data
 
+STAGE_ORDER = ["Radar", "Emerging", "Building", "Confirmed", "Fading", "Faded / Retired"]
+THEME_STAGE = {"emerging": "Emerging", "building": "Building",
+               "confirmed": "Confirmed", "late": "Fading"}
+
+def _chip(nm, cap=20):
+    """Short chip label: drop a parenthetical or em-dash tail, then trim on a word
+    boundary. Only used for entries the old hand-written spine never labelled."""
+    for cut in (" \u2014 ", " \u2013 ", " ("):
+        if cut in nm:
+            nm = nm.split(cut)[0]
+    nm = nm.strip()
+    if len(nm) <= cap:
+        return nm
+    out = nm[:cap].rsplit(" ", 1)[0]
+    return (out or nm[:cap]) + "\u2026"
+
+def derive_spine(data):
+    """Build the lifecycle spine from radar + investible_themes + faded rather than
+    reading the stored `spine` array. Same reasoning as derive_sector_reads: a second
+    hand-maintained copy of a theme's stage will drift from the record beneath it, and
+    on 2026-08-22 three had — stablecoin infra was a 2/5 radar card AND 'Fading',
+    crypto was `stage: confirmed` AND 'Fading', and 7 of 10 faded entries were missing
+    entirely. Placement is derived; only the short chip label stays editorial, reused
+    from the stored spine where an id still matches."""
+    labels = {}
+    for col in data.get("spine", []):
+        for it in col.get("items", []):
+            if isinstance(it, list) and len(it) > 1 and it[1]:
+                labels[it[1]] = it[0]
+
+    buckets = {s: [] for s in STAGE_ORDER}
+    for r in data.get("radar", []):
+        buckets["Radar"].append([labels.get(r["id"], _chip(r["nm"])), r["id"]])
+    for t in data.get("investible_themes", []):
+        tid = "theme-" + t["id"]
+        stage = THEME_STAGE.get((t.get("stage") or "").lower())
+        if stage is None:
+            print("WARN: theme %s has unmapped stage %r — placed in Building"
+                  % (t["id"], t.get("stage")), file=sys.stderr)
+            stage = "Building"
+        buckets[stage].append([labels.get(tid, _chip(t["nm"])), tid])
+    for bucket in ("retired", "dormant"):
+        for f in data.get("faded", {}).get(bucket, []):
+            buckets["Faded / Retired"].append([labels.get(f["id"], _chip(f["nm"])), f["id"]])
+
+    data["spine"] = [{"stage": s, "items": buckets[s]} for s in STAGE_ORDER]
+    return data
+
+
 def main():
     with open(DATA_PATH, encoding="utf-8") as f:
         data = json.load(f)
@@ -121,6 +170,7 @@ def main():
         html = f.read()
 
     data = derive_sector_reads(data)
+    data = derive_spine(data)
     meta = data["meta"]
     build_date  = datetime.date.today().isoformat()   # stamp fresh each run
     report_date = meta.get("report_date", build_date)
