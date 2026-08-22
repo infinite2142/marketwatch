@@ -1,7 +1,7 @@
 # MarketWatch
 
 A single-page market dashboard that rebuilds from data each day and publishes to GitHub Pages
-at https://infinite2142.github.io/MarketWatch/
+at https://infinite2142.github.io/marketwatch/
 
 ## Two repos, one system
 
