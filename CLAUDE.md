@@ -62,9 +62,10 @@ or which `python3` runs them. Keep it that way — a third-party import is what 
 
 | File | Role |
 |---|---|
-| `template_v27.html` | The locked V2.7 design — CSS, SVG, client-side render engine. Hand-edited only. |
+| `template_v28.html` | The V2.8 design — CSS, SVG, client-side render engine. Hand-edited only. |
+| `template_v27.html` | The previous V2.7 design. Kept for reference; nothing reads it. |
 | `market_watch_data.json` | The data model, one key per section. Single source of truth for page content. |
-| `generator.py` | template + JSON → `index.html`. The only thing that writes `index.html`. |
+| `generator.py` | template + JSON → `index.html`. The only thing that writes `index.html`. It also builds the V2.8 view model: one dataset shaped once, so the lifecycle chart, the themes grid and the detail panel cannot disagree. |
 | `fetch_data.py` | Pulls numeric metrics from FRED CSV + Stooq/Yahoo into the JSON. |
 | `.github/workflows/deploy.yml` | Renders and deploys on push; runs a staleness check on a schedule. |
 
