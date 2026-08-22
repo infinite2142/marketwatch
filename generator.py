@@ -331,6 +331,9 @@ def build_v28(data):
             sub="%s · conviction %s/5 · %s, momentum %s"
                 % (t.get("stageLbl", stage), t.get("conv", 3), tim.lower(), MOMLBL.get(mom, mom)),
             note="%s → %s  (%s)" % (t.get("now", ""), t.get("proj", ""), t.get("hz", "")),
+            runway=t.get("runway"), now=t.get("now", ""), proj=t.get("proj", ""),
+            hz=t.get("hz", ""), sizeUnit=t.get("sizeUnit", ""),
+            nowEst=bool(t.get("nowEst")), projEst=bool(t.get("projEst")),
             body=[["Includes", t.get("includes", "")], ["Read", _rp(t.get("read", ""))]],
             audit=(t.get("audit") or _au(t.get("read", ""))), access=acc,
             bullets=[e for e in (t.get("flows", []) + t.get("tail", []))
