@@ -28,6 +28,13 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
   background:rgba(9,9,11,.92);backdrop-filter:blur(10px);border-bottom:1px solid #27272a;
   margin:0 -24px;padding:9px 24px}
 .pnav::-webkit-scrollbar{display:none}
+.pbrand{display:flex;align-items:center;gap:8px;padding-right:14px;margin-right:6px;
+  border-right:1px solid #27272a;flex:0 0 auto}
+.pblogo{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#60a5fa,#a78bfa);
+  display:flex;align-items:center;justify-content:center;color:#09090b}
+.pblogo svg{width:12px;height:12px}
+.pbname{font-size:12.5px;font-weight:600;color:#f4f4f5;white-space:nowrap}
+@media (max-width:720px){.pbname{display:none}.pbrand{padding-right:10px;margin-right:4px}}
 .pnav a{color:#71717a;font-size:11.5px;font-weight:500;text-decoration:none;padding:6px 12px;
   border-radius:8px;white-space:nowrap;transition:.12s}
 .pnav a:hover{color:#f4f4f5;background:#18181b}
@@ -269,7 +276,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
     <span class="chip" id="chip"></span>
   </div>
 
-  <nav class="pnav" id="pnav"></nav>
+  <nav class="pnav" id="pnav"><span class="pbrand" id="pbrand"></span></nav>
 
   <div class="hero">
     <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
@@ -674,16 +681,16 @@ function drawRadar(){
   /* Lay out from the space available rather than assuming one row: the radar has
      gone from 7 entries to 11 in a single run, and a fixed row squeezed each card
      to ~100px, which is where the text started overlapping. */
-  const PAD=20, MINW=168;
+  const PAD=20, MINW=150, H=476;          // same box as Lifecycle and Drivers
   const perRow=Math.max(1,Math.min(rs.length,Math.floor((W-PAD*2)/MINW)));
   const rows=Math.ceil(rs.length/perRow);
   const cw=(W-PAD*2)/perRow;
   const cardW=cw-12;
-  const TOP=34, CARD_H=384, GAP=20;
-  const H=TOP+rows*(CARD_H+GAP)+16;
+  const TOP=30, GAP=14, BOT=12;
+  const CARD_H=(H-TOP-BOT-GAP*(rows-1))/rows;
   svg.setAttribute("viewBox","0 0 "+W+" "+H);
 
-  const fs=Math.max(10.5,Math.min(13.5,cardW/13));      // title scales with the card
+  const fs=Math.max(9.5,Math.min(12.5,cardW/13));      // title scales with the card
   const chars=Math.max(9,Math.floor(cardW/(fs*0.55)));  // wrap on measured width
   const wrap=(txt,max,cap)=>{
     const out=[];let line="";
@@ -699,50 +706,55 @@ function drawRadar(){
   rs.forEach((m,i)=>{
     const col=i%perRow, row=Math.floor(i/perRow);
     const x=PAD+cw*(col+0.5), y0=TOP+row*(CARD_H+GAP);
+    const tight=CARD_H<300;   // drops to the essentials when the box is shared by rows
     const c=RC[m.status]||"#71717a", g=el("g",{class:"mk"});
     el("rect",{x:x-cardW/2,y:y0,width:cardW,height:CARD_H,rx:12,
       fill:c,opacity:.05,stroke:c,"stroke-opacity":.2},g);
 
-    el("text",{x,y:y0+38,"text-anchor":"middle","font-size":23,"font-weight":700,fill:c},g)
-      .textContent=m.met+"/5";
-    el("text",{x,y:y0+55,"text-anchor":"middle","font-size":9.5,fill:c,"letter-spacing":.7},g)
-      .textContent=m.status.toUpperCase();
+    const SZ=Math.min(tight?24:40,cardW*(tight?0.20:0.30));
+    el("text",{x,y:y0+(tight?34:38),"text-anchor":"middle","font-size":tight?18:23,
+      "font-weight":700,fill:c},g).textContent=m.met+"/5";
+    el("text",{x,y:y0+(tight?46:55),"text-anchor":"middle","font-size":tight?8.5:9,fill:c,
+      "letter-spacing":.7},g).textContent=m.status.toUpperCase();
 
-    {const SZ=Math.min(40,cardW*0.30), k=SZ/24;
-     const ig=el("g",{transform:`translate(${(x-SZ/2).toFixed(1)} ${y0+70}) scale(${k.toFixed(4)})`,
+    {const k=SZ/24, iy=y0+(tight?52:70);
+     const ig=el("g",{transform:`translate(${(x-SZ/2).toFixed(1)} ${iy}) scale(${k.toFixed(4)})`,
        fill:"none",stroke:c,"stroke-width":1.5,"stroke-linecap":"round","stroke-linejoin":"round",
        opacity:.92},g);
      ig.innerHTML=ICONS[m.icon]||ICONS.sparkles;}
 
-    const nameY=y0+82+Math.min(40,cardW*0.30)+16;
-    wrap(m.nm,chars,3).forEach((ln,j)=>
+    const nameY=y0+(tight?52:82)+SZ+(tight?15:16);
+    wrap(m.nm,chars,tight?2:3).forEach((ln,j)=>
       el("text",{x,y:nameY+j*(fs+2),"text-anchor":"middle","font-size":fs,"font-weight":600,
         fill:"#f4f4f5"},g).textContent=ln);
 
-    const pipY=y0+CARD_H-194;
+    const pipStep=tight?14:23, pipH=tight?12:15;
+    const pipY=tight?(y0+CARD_H-8-pipStep*5):(y0+CARD_H-194);
     for(let k2=0;k2<5;k2++){
-      const met=m.crit[k2][1], yy=pipY+(4-k2)*23;
-      el("rect",{x:x-27,y:yy,width:54,height:15,rx:7.5,fill:met?c:"#232326",opacity:met?.85:1,
-        stroke:met?c:"#27272a","stroke-width":1},g);
-      el("text",{x,y:yy+10.6,"text-anchor":"middle","font-size":8,
+      const met=m.crit[k2][1], yy=pipY+(4-k2)*pipStep;
+      el("rect",{x:x-27,y:yy,width:54,height:pipH,rx:pipH/2,fill:met?c:"#232326",
+        opacity:met?.85:1,stroke:met?c:"#27272a","stroke-width":1},g);
+      el("text",{x,y:yy+pipH-3.6,"text-anchor":"middle","font-size":tight?7:8,
         fill:met?"#09090b":"#52525b","font-weight":met?700:400},g).textContent=m.crit[k2][0];
     }
 
     /* "what it needs" sits under the pips with real line breaks, clipped by line
        count rather than by running into whatever is below it */
-    const needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
-    const nLines=wrap(needs,Math.max(14,Math.floor(cardW/5.4)),3);
-    nLines.forEach((ln,j)=>
-      el("text",{x,y:y0+CARD_H-46+j*12,"text-anchor":"middle","font-size":9,fill:"#71717a"},g)
-        .textContent=(j===nLines.length-1 && nLines.length===3)?ln+"…":ln);
-
-    el("text",{x,y:y0+CARD_H+13,"text-anchor":"middle","font-size":9.5,fill:"#a1a1aa"},g)
-      .textContent=m.note||"";
+    if(!tight){
+      const needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
+      const nLines=wrap(needs,Math.max(14,Math.floor(cardW/5.4)),3);
+      nLines.forEach((ln,j)=>
+        el("text",{x,y:y0+CARD_H-46+j*12,"text-anchor":"middle","font-size":9,fill:"#71717a"},g)
+          .textContent=(j===nLines.length-1 && nLines.length===3)?ln+"…":ln);
+      el("text",{x,y:y0+CARD_H+13,"text-anchor":"middle","font-size":9.5,fill:"#a1a1aa"},g)
+        .textContent=m.note||"";
+    }
     if(m.mv){
       const bc={new:"#93c5fd",up:"#6ee7b7",down:"#fda4af",retired:"#d4d4d8"}[m.mv.tag];
-      el("rect",{x:x-30,y:y0+8,width:60,height:15,rx:7.5,fill:bc,opacity:.16},g);
-      el("text",{x,y:y0+18.8,"text-anchor":"middle","font-size":8,"font-weight":700,fill:bc,
-        "letter-spacing":.5},g).textContent=m.mv.txt.split(" ")[0].toUpperCase();
+      const by=tight?y0+4:y0+8, bh=tight?12:15;
+      el("rect",{x:x-30,y:by,width:60,height:bh,rx:bh/2,fill:bc,opacity:.16},g);
+      el("text",{x,y:by+bh-3.4,"text-anchor":"middle","font-size":tight?7:8,"font-weight":700,
+        fill:bc,"letter-spacing":.5},g).textContent=m.mv.txt.split(" ")[0].toUpperCase();
     }
     hover(g,m);
   });
@@ -985,7 +997,10 @@ document.getElementById("i6").innerHTML=icon("compass");
     const id="s-"+h.textContent.trim().toLowerCase().replace(/[^a-z]+/g,"-");
     sec.id=id; return {id,label:h.textContent.trim()};
   }).filter(Boolean);
-  nav.innerHTML=secs.map(x=>`<a href="#${x.id}">${x.label}</a>`).join("");
+  nav.insertAdjacentHTML("beforeend",
+    secs.map(x=>`<a href="#${x.id}">${x.label}</a>`).join(""));
+  document.getElementById("pbrand").innerHTML=
+    `<span class="pblogo">${icon("target")}</span><span class="pbname">Market Watch</span>`;
   const links=[...nav.querySelectorAll("a")];
   nav.addEventListener("click",e=>{
     const a=e.target.closest("a"); if(!a) return;
