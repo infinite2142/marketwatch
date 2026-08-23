@@ -24,6 +24,16 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .hl-item{display:block;width:100%;text-align:left;background:#131316;border:1px solid #27272a;
   border-radius:9px;padding:11px 13px;margin-bottom:7px;color:#e4e4e7;font:inherit;font-size:13px;cursor:pointer}
 .hl-item:active{background:#1f1f23}
+.mrad{display:flex;align-items:center;gap:12px}
+.mscore{font-size:19px;font-weight:700;flex:0 0 auto;min-width:44px}
+.mscore span{font-size:10px;color:#52525b}
+.mnm{flex:1;font-size:13px;color:#f4f4f5;text-align:left}
+.mst{font-size:9.5px;text-transform:uppercase;letter-spacing:.7px;flex:0 0 auto}
+.mdrv{cursor:pointer}
+.mdrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.mdnm{flex:1;min-width:120px;font-size:13px;font-weight:600;color:#f4f4f5;text-align:left}
+.mdchips{display:none;gap:5px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid #232326}
+.mdrv.open .mdchips{display:flex}
 .pnav{position:sticky;top:0;z-index:30;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
   background:rgba(9,9,11,.92);backdrop-filter:blur(10px);border-bottom:1px solid #27272a;
   margin:0 -24px;padding:9px 24px}
@@ -39,7 +49,9 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
   border-radius:8px;white-space:nowrap;transition:.12s}
 .pnav a:hover{color:#f4f4f5;background:#18181b}
 .pnav a.on{color:#f4f4f5;background:#1f1f23}
-@media (max-width:720px){.pnav{margin:0 -14px;padding:8px 14px}}
+@media (max-width:720px){
+  .pnav{margin:0 -14px;padding:8px 14px}
+}
 .hero{position:relative;margin:30px 0 64px}
 .herog{position:absolute;right:-6px;top:-34px;width:340px;height:300px;pointer-events:none}
 @media (max-width:1000px){.herog{display:none}}
@@ -171,7 +183,8 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .sizeline .szar{color:#52525b}
 .sizeline .szhz{color:#71717a;font-size:11px}
 .sizeline .szu{flex:1 0 100%;color:#52525b;font-size:10.5px}
-.plabel{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:#71717a;margin:16px 0 5px}
+.plabel{font-size:10.5px;text-transform:uppercase;letter-spacing:1.3px;font-weight:700;
+  color:#93c5fd;margin:22px 0 7px}
 .plabel:first-child{margin-top:0}
 .ptext{font-size:12.5px;color:#d4d4d8;line-height:1.6}
 .pnote{font-size:11.5px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:9px;padding:9px 11px;font-family:"SF Mono",ui-monospace,Menlo,monospace}
@@ -233,8 +246,16 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .drow .dsnap{font-size:12.5px;color:#a1a1aa;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drow .dots{justify-self:end}
 @media (max-width:1000px){
-  .drow{grid-template-columns:22px 1fr 108px 22px 46px}
-  .drow .dsnap{grid-column:2 / -1;white-space:normal}
+  .drow{grid-template-columns:22px 1fr auto auto auto;row-gap:8px}
+  .drow .dnm{grid-row:1;grid-column:2}
+  .drow .dir{grid-row:1;grid-column:3}
+  .drow .arc{grid-row:1;grid-column:4}
+  .drow .dots{grid-row:1;grid-column:5;justify-self:end}
+  .drow .dsnap{grid-row:2;grid-column:1 / -1;white-space:normal}
+}
+@media (max-width:560px){
+  .drow .dir{font-size:8px;padding:3px 6px}
+  .drow .dnm{font-size:12px}
 }
 .dir{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
   padding:3px 9px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
@@ -267,6 +288,17 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
   ul.lst li b{min-width:0;flex:1 0 100%}
 }
 .guard{font-size:10.5px;color:#52525b;border-top:1px solid #232326;margin-top:26px;padding-top:12px;line-height:1.6}
+
+/* Mobile section headers: the control goes hard right. Declared last because the
+   desktop rule that centres it has the same specificity and would otherwise win. */
+@media (max-width:720px){
+  .sechead{grid-template-columns:auto 1fr;gap:10px}
+  .sechead .lhs .rule,.sechead>.rule{display:none}
+  .sechead .seg{grid-column:2;justify-self:end}
+  .top{flex-wrap:wrap;gap:8px}
+  .brand h1{font-size:14px}
+  .chip{font-size:10.5px;padding:4px 10px}
+}
 </style></head><body>
 <div class="wrap">
   <div class="top">
@@ -458,17 +490,17 @@ function openPanel(o){
             <span class="dots" title="conviction ${o.conv}/5">${dots(o.conv)}</span>`;
     }else if(o.k==="theme"){
       const m=MOM[o.mom]||MOM.flat;
-      bits=`<span class="pstage" style="--pc:${PC}">${o.st}</span>
-            <span class="ptim">${o.timing||""}</span>
-            <span class="arc ${m[0]}" title="momentum ${m[1]}">${{up:"↗",flat:"→",down:"↘"}[m[0]]}</span>
-            <span class="dots" title="conviction ${o.conv}/5">${dots(o.conv)}</span>`;
+      bits=`<span class="pstage" style="--pc:${PC}" title="Lifecycle stage: where this theme sits from Radar through to Faded">${o.st}</span>
+            <span class="ptim" title="Timing read, derived from stage, runway and momentum">${o.timing||""}</span>
+            <span class="arc ${m[0]}" title="Momentum: ${m[1]}">${{up:"↗",flat:"→",down:"↘"}[m[0]]}</span>
+            <span class="dots" title="Conviction ${o.conv} of 5 — strength of the case, not a position size">${dots(o.conv)}</span>`;
     }else if(o.k==="radar"){
-      bits=`<span class="pstage" style="--pc:${PC}">${o.met}/5 criteria</span>
-            <span class="ptim">${o.status}</span>
-            <span class="dots" title="${o.met} of 5 met">${dots(o.met)}</span>`;
+      bits=`<span class="pstage" style="--pc:${PC}" title="Promotion criteria met — 3 of 5 promotes to investible">${o.met}/5 criteria</span>
+            <span class="ptim" title="Whether the case is climbing, stalled or fading">${o.status}</span>
+            <span class="dots" title="${o.met} of the 5 promotion criteria met">${dots(o.met)}</span>`;
     }else if(o.k==="faded"){
-      bits=`<span class="pstage" style="--pc:${PC}">call ${o.call||"—"}</span>
-            <span class="ptim">${o.revived?"revived":"retired"}</span>`;
+      bits=`<span class="pstage" style="--pc:${PC}" title="How the call scored when the theme rolled over">call ${o.call||"—"}</span>
+            <span class="ptim" title="${o.revived?"Conditions for a revival have been met":"Played out, held for the record"}">${o.revived?"revived":"retired"}</span>`;
     }else{
       bits=`<span class="ptim">${(o.sub||"").split("  ")[0]}</span>`;
     }
@@ -483,14 +515,15 @@ function openPanel(o){
   if(o.logHTML) h+=o.logHTML;
   (o.body||[]).forEach(([l,t])=>{ if(t) h+=`<div class="plabel">${l}</div><div class="ptext">${t}</div>`; });
   if(o.crit){ h+=`<div class="plabel">Criteria met</div><div class="crit">`+
-    o.crit.map(([l,m])=>`<span class="cpip ${m?'met':''}"><i></i>${l}</span>`).join("")+`</div>`; }
+    o.crit.map(([l,m])=>`<span class="cpip ${m?'met':''}" title="${l}: ${m?"met":"not yet met"}">${"<i></i>"}${l}</span>`).join("")+`</div>`; }
   if(o.drives&&o.drives.length) h+=`<div class="plabel">Themes it drives</div><div class="crit">`+
     o.drives.map(d=>`<span class="cpip met"><i></i>${d}</span>`).join("")+`</div>`;
   if(o.k==="theme"&&typeof o.runway==="number"){
     const done=Math.max(0,Math.min(100,o.runway));
     h+=`<div class="plabel">How much of the run is left</div>
       <div class="runway">
-        <div class="rbar"><span class="done" style="width:${done}%"></span>
+        <div class="rbar" title="${done}% of the estimated run has happened, ${100-done}% remains">
+          <span class="done" style="width:${done}%"></span>
           <span class="rmark" style="left:50%"></span></div>
         <div class="rmeta"><span class="done-t">${done}% run</span>
           <span class="go-t">${100-done}% to go</span></div>
@@ -524,6 +557,26 @@ function closePanel(){document.getElementById("panel").classList.remove("on");do
 document.getElementById("px").onclick=closePanel;
 document.getElementById("scrim").onclick=closePanel;
 addEventListener("keydown",e=>{if(e.key==="Escape")closePanel();});
+/* swipe right to dismiss: the close button is a small target on a phone */
+(function(){
+  const p=document.getElementById("panel");
+  let x0=null,y0=null,dx=0;
+  p.addEventListener("touchstart",e=>{
+    const t=e.changedTouches[0];x0=t.clientX;y0=t.clientY;dx=0;
+    p.style.transition="none";},{passive:true});
+  p.addEventListener("touchmove",e=>{
+    if(x0===null)return;
+    const t=e.changedTouches[0];
+    const ax=t.clientX-x0, ay=t.clientY-y0;
+    if(Math.abs(ay)>Math.abs(ax)){x0=null;p.style.transition="";p.style.transform="";return;}
+    dx=Math.max(0,ax);
+    p.style.transform="translateX("+dx+"px)";},{passive:true});
+  p.addEventListener("touchend",()=>{
+    if(x0===null)return;
+    p.style.transition="";p.style.transform="";
+    if(dx>90) closePanel();
+    x0=null;dx=0;},{passive:true});
+})();
 
 function hover(g,o){
   g.addEventListener("mousemove",e=>{
@@ -656,10 +709,16 @@ function drawDrivers(){
     el("text",{x:LX-34,y:y-2,"text-anchor":"end","font-size":12.5,"font-weight":500,fill:"#f4f4f5"},g).textContent=short(d.nm,30);
     el("text",{x:LX-34,y:y+11,"text-anchor":"end","font-size":10,fill:"#71717a"},g)
       .textContent="conviction "+d.conv+"/5 · drives "+d.drives.length;
-    g.addEventListener("mouseenter",()=>svg.querySelectorAll(".lnk").forEach(l=>
-      l.setAttribute("opacity",l.dataset.d===d.id?.75:.05)));
-    g.addEventListener("mouseleave",()=>svg.querySelectorAll(".lnk").forEach(l=>l.setAttribute("opacity",.16)));
-    hover(g,d);
+    /* isolate on hover, and on tap where there is no hover. Deliberately no panel:
+       the Drivers section below is where a driver's detail lives. */
+    const iso=()=>svg.querySelectorAll(".lnk").forEach(l=>
+      l.setAttribute("opacity",l.dataset.d===d.id?.8:.04));
+    const rst=()=>svg.querySelectorAll(".lnk").forEach(l=>l.setAttribute("opacity",.16));
+    g.addEventListener("mouseenter",iso);
+    g.addEventListener("mouseleave",rst);
+    g.addEventListener("click",e=>{e.stopPropagation();
+      if(g.dataset.on==="1"){g.dataset.on="";rst();}else{
+        svg.querySelectorAll("g[data-on]").forEach(o=>o.dataset.on="");g.dataset.on="1";iso();}});
   });
   targets.forEach(t=>{
     const y=tpos[t],n=DRIVERS.filter(d=>d.drives.includes(t)).length,g=el("g",{class:"mk"});
@@ -798,6 +857,39 @@ function drawLifeBar(){
   });
   show("Radar");
 }
+function drawList(rows){
+  svg.style.display="none";
+  let box=document.getElementById("lifebar");
+  if(!box){box=document.createElement("div");box.id="lifebar";svg.parentNode.insertBefore(box,svg);}
+  box.innerHTML=rows;
+  box.addEventListener("click",e=>{
+    const it=e.target.closest(".hl-item[data-id]");
+    if(it){const m=MARKS.find(x=>x.id===it.dataset.id);if(m)openPanel(m);return;}
+    const dv=e.target.closest(".mdrv");
+    if(dv) dv.classList.toggle("open");
+  });
+}
+function drawRadarNarrow(){
+  const rs=MARKS.filter(m=>m.k==="radar").sort((a,b)=>b.met-a.met||a.nm.localeCompare(b.nm));
+  drawList(`<div class="hl-st">PRE-INVESTIBLE · ${rs.length} · HIGHEST SCORE FIRST</div>`+
+    rs.map(m=>{const c=RC[m.status]||"#71717a";
+      return `<button class="hl-item mrad" data-id="${m.id}">
+        <span class="mscore" style="color:${c}">${m.met}<span>/5</span></span>
+        <span class="mnm">${m.nm}</span>
+        <span class="mst" style="color:${c}">${m.status}</span></button>`;}).join(""));
+}
+function drawDriversNarrow(){
+  drawList(`<div class="hl-st">MACRO DRIVERS · ${DRIVERS.length} · TAP FOR THE THEMES EACH MOVES</div>`+
+    DRIVERS.map(d=>{
+      const dots=[0,1,2,3,4].map(k=>`<i class="${k<d.conv?"on":""}"></i>`).join("");
+      return `<div class="hl-item mdrv">
+        <div class="mdrow"><span class="mdnm">${d.nm}</span>
+          <span class="dir ${d.dir}">${d.dirLbl}</span>
+          <span class="arc ${d.traj}">${d.arrow}</span>
+          <span class="dots" title="conviction ${d.conv}/5">${dots}</span></div>
+        <div class="mdchips">${d.drives.map(x=>`<span class="bchip">${x}</span>`).join("")}</div>
+      </div>`;}).join(""));
+}
 function render(){
   const bar=document.getElementById("lifebar"); if(bar) bar.remove();
   svg.style.display="";
@@ -809,7 +901,14 @@ function render(){
   if(view==="life"){ if(isNarrow()){drawLifeBar();document.getElementById("legend").innerHTML="";
       document.getElementById("hint").textContent="Tap a stage for the themes behind it, then a theme for the detail.";}
     else {cur=layout(focus);drawLife(cur);} }
-  else if(view==="driv")drawDrivers(); else drawRadar();
+  else if(view==="driv"){ if(isNarrow()){drawDriversNarrow();
+      document.getElementById("legend").innerHTML="";
+      document.getElementById("hint").textContent="Tap a driver to see the themes it moves.";}
+    else drawDrivers(); }
+  else { if(isNarrow()){drawRadarNarrow();
+      document.getElementById("legend").innerHTML="";
+      document.getElementById("hint").textContent="Tap any for evidence and what it needs to graduate.";}
+    else drawRadar(); }
 }
 let rzT;addEventListener("resize",()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(view==="life")render();},180);});
 document.getElementById("seg").addEventListener("click",e=>{

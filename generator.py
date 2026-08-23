@@ -517,21 +517,19 @@ def build_v28(data):
 
     drivers = []
     for x in data.get("drivers", []):
-        # oneLiner is specced as a weekly snapshot (daily-task.md). Today's data still
-        # has a dated news item there, so take it only when it reads like a state: no
-        # specific date, no source citation. Otherwise fall back to trajLbl, which is
-        # the field that currently holds state, and to the traj enum as a last resort.
+        # oneLiner is specced as a weekly snapshot (daily-task.md) and the daily now
+        # writes one. An earlier guard here rejected any snapshot citing a date, which
+        # was right when the field held news headlines and wrong now: "counter-tariffs
+        # dated 8 September" is a state, not a headline, and rejecting it fell through
+        # a contaminated trajLbl to the bare enum "Up".
         one = (x.get("oneLiner") or "").strip()
-        dated = re.search(r"\b\d{1,2}\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)"
-                          r"|\b(19|20)\d{2}\b|\b(said|says|reported|announced|letter|filing)\b",
-                          one, re.I)
         lbl = clean_traj(x.get("trajLbl"), x.get("traj"))
-        if one and not BAD.search(one) and not dated and len(one) <= 180:
+        if one and not BAD.search(one):
             snap = one
         elif len(lbl) > 18:
             snap = lbl
         else:
-            snap = lbl
+            snap = ""          # better empty than a trajectory enum the arrow already shows
         rest = [p for p in [_rp(p) for p in (x.get("summary") or [])[1:]]
                 if p and not BAD.search(p)]
         drivers.append(dict(
