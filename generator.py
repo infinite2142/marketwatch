@@ -167,6 +167,10 @@ DIRLBL  = {"tailwind": "Tailwind", "headwind": "Headwind", "rotational": "Rotati
 ARROW   = {"up": "↗", "flat": "→", "down": "↘"}
 MOMLBL  = {"imp": "improving", "flat": "flat", "det": "deteriorating"}
 LOOKBACK = "HEAD~30"
+# V1 tracked single-name exit flags (MSTR, MU, SPCX) alongside themes. The book is
+# themes now, so they are dropped from the page. The ledger keeps their history —
+# the MSTR flag being scored wrong on 21 Aug is a logged correction and stays there.
+STOCK_FLAG = re.compile(r'\(id \d+\)|exit flag|catalyst watch', re.I)
 WINDOW   = 7
 CAP      = 420
 
@@ -330,7 +334,7 @@ def build_v28(data):
             mv=movement("theme-" + t["id"], stage),
             sub="%s · conviction %s/5 · %s, momentum %s"
                 % (t.get("stageLbl", stage), t.get("conv", 3), tim.lower(), MOMLBL.get(mom, mom)),
-            note="%s → %s  (%s)" % (t.get("now", ""), t.get("proj", ""), t.get("hz", "")),
+            note="",   # the runway size line already shows now -> proj; see the panel
             runway=t.get("runway"), now=t.get("now", ""), proj=t.get("proj", ""),
             hz=t.get("hz", ""), sizeUnit=t.get("sizeUnit", ""),
             nowEst=bool(t.get("nowEst")), projEst=bool(t.get("projEst")),
@@ -339,8 +343,12 @@ def build_v28(data):
             bullets=[e for e in (t.get("flows", []) + t.get("tail", []))
                      if not BAD.search(e)][:4], crit=None))
 
+    dropped_flags = 0
     for bucket, items in (data.get("faded") or {}).items():
         for f in items:
+            if STOCK_FLAG.search(f.get("nm", "")):
+                dropped_flags += 1
+                continue
             marks.append(dict(
                 id=f["id"], nm=f["nm"], k="faded", st="Faded / Retired",
                 y=CALLY.get(f.get("call"), 40), call=f.get("call", ""),
@@ -352,6 +360,10 @@ def build_v28(data):
                       ["Revival condition", _rp(f.get("reviveIf", ""))]],
                 audit=(f.get("audit") or _au(f.get("why", "")) + _au(f.get("callTxt", ""))),
                 bullets=[], crit=None))
+
+    if dropped_flags:
+        print("note: %d single-name exit flag(s) hidden from the page (themes only); "
+              "their history stays in the ledger" % dropped_flags, file=sys.stderr)
 
     def clean_traj(lbl, raw):
         t = (lbl or "").strip()
@@ -387,8 +399,9 @@ def build_v28(data):
             arrow=ARROW.get(x.get("traj", "flat"), "→"), snap=snap,
             icon=_pick(DRVICON, x["id"], "activity"), master=bool(x.get("master")),
             defn=(x.get("summary") or [""])[0], drives=[d[0] for d in x.get("drives", [])],
-            body=[["Where it stands", snap],
-                  ["What this driver is", (x.get("summary") or [""])[0]]],
+            # the panel's graphical row already carries `snap`; repeating it as a
+            # labelled paragraph is the same duplication as the old "At a glance"
+            body=[["What this driver is", (x.get("summary") or [""])[0]]],
             detail=rest[:3],
             audit=(x.get("audit") or [p for p in (x.get("summary") or [])[1:] if BAD.search(p)]),
             bullets=[e for e in x.get("ev", []) if not BAD.search(e)][:4],

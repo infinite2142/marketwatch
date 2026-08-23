@@ -1,14 +1,14 @@
 <!doctype html><html><head><meta charset="utf-8"><title>Market Watch V2.8</title><style>
 *{box-sizing:border-box}
 body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
-.wrap{max-width:1280px;margin:0 auto;padding:18px 24px 60px}
+.wrap{max-width:1280px;margin:0 auto;padding:18px 24px 90px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:13px;border-bottom:1px solid #27272a;margin-bottom:20px}
 .brand{display:flex;align-items:center;gap:11px}
 .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#60a5fa,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:15px}
 .brand h1{font-size:15.5px;margin:0;letter-spacing:-.2px}
 .brand .s{font-size:10.5px;color:#71717a}
 .chip{font-size:11px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:5px 12px;white-space:nowrap}
-.hero{position:relative;margin:26px 0 46px}
+.hero{position:relative;margin:30px 0 64px}
 .herog{position:absolute;right:-6px;top:-34px;width:340px;height:300px;pointer-events:none}
 @media (max-width:1000px){.herog{display:none}}
 .hero h2{font-size:29px;line-height:1.22;margin:0 0 14px;font-weight:600;letter-spacing:-.5px;max-width:22ch}
@@ -16,8 +16,8 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero p{margin:0;font-size:13.5px;line-height:1.68;color:#a1a1aa;max-width:74ch}
 .hero .disc{margin-top:11px;font-size:11.5px;color:#52525b}
-.sec{margin-bottom:40px}
-.sechead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:15px}
+.sec{margin-bottom:60px}
+.sechead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:18px}
 .sechead .lhs{display:flex;align-items:center;gap:8px;min-width:0}
 .sechead .lhs .rule{flex:1;height:1px;background:#27272a}
 .sechead>.rule{height:1px;background:#27272a}
@@ -30,7 +30,7 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .seg button{background:none;display:inline-flex;align-items:center;gap:5px;border:0;color:#a1a1aa;font:inherit;font-size:11.5px;font-weight:500;padding:4px 11px;border-radius:6px;cursor:pointer;transition:.15s}
 .seg button:hover{color:#f4f4f5}
 .seg button.on{background:#f4f4f5;color:#09090b;font-weight:600}
-.card{background:#18181b;border:1px solid #27272a;border-radius:14px;padding:19px 21px}
+.card{background:#18181b;border:1px solid #27272a;border-radius:14px;padding:24px 26px}
 .cond{display:grid;grid-template-columns:minmax(230px,.8fr) 3fr;gap:16px}
 .gauge-card{cursor:pointer;transition:.15s}
 .gauge-card:hover{border-color:#3f3f46}
@@ -87,6 +87,10 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .phead svg{width:26px;height:26px;color:var(--pc);flex:0 0 26px}
 .pbig{font-size:23px;font-weight:700;color:var(--pc);line-height:1}
 .psm{font-size:11.5px;color:#a1a1aa;margin-top:3px}
+.pdrv{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:11px;padding:12px 14px;
+  background:#131316;border:1px solid #27272a;border-radius:11px}
+.pdrv-s{flex:1;min-width:140px;font-size:12.5px;color:#d4d4d8;line-height:1.5}
+.pdrv .dots{margin-left:auto}
 .pchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .pchip{font-size:10.5px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:4px 10px}
 .pchip b{color:#f4f4f5}
@@ -174,7 +178,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .mvnote{font-size:10.5px;color:#71717a;font-style:italic}
 .dlist{display:flex;flex-direction:column}
 /* one row per driver, laid out as a table so the eye can run down each column */
-.drow{display:grid;grid-template-columns:22px 236px 104px 20px 1fr 46px;align-items:center;gap:14px;
+.drow{display:grid;grid-template-columns:22px 236px 108px 22px 1fr 46px;align-items:center;gap:14px;
   width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #232326;
   padding:12px 6px;cursor:pointer;font:inherit;color:inherit;transition:.12s}
 .drow:last-child{border-bottom:0}
@@ -183,39 +187,28 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .drow .dic.tailwind{color:#10b981}.drow .dic.headwind{color:#f43f5e}.drow .dic.rotational{color:#60a5fa}
 .drow .dnm{font-size:13px;font-weight:600;color:#f4f4f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drow .dir{justify-self:start}
-.drow .ar{font-size:14px;font-weight:700;text-align:center}
+.drow .arc{justify-self:center}
 .drow .dsnap{font-size:12.5px;color:#a1a1aa;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drow .dots{justify-self:end}
 @media (max-width:1000px){
-  .drow{grid-template-columns:22px 1fr 104px 20px 46px}
+  .drow{grid-template-columns:22px 1fr 108px 22px 46px}
   .drow .dsnap{grid-column:2 / -1;white-space:normal}
 }
-.dgrid-unused{
-.dcard{text-align:left;background:#18181b;border:1px solid #27272a;border-radius:12px;padding:13px 14px;
-  cursor:pointer;position:relative;overflow:hidden;transition:.15s;font:inherit;color:inherit}
-.dcard:hover{border-color:#3f3f46;background:#1f1f23}
-.dcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#52525b}
-.dcard.tailwind::before{background:#10b981}.dcard.headwind::before{background:#f43f5e}
-.dcard.rotational::before{background:#60a5fa}
-.dtop{display:flex;align-items:center;gap:8px;margin-bottom:9px;padding-left:4px}
-.dic{color:#71717a;display:flex}.dic svg{width:15px;height:15px}
-.dnm{font-size:13px;font-weight:600;color:#f4f4f5;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dir{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap}
-.dir.tailwind{background:#064e3b;color:#6ee7b7}.dir.headwind{background:#4c1d24;color:#fda4af}
-.dir.rotational{background:#1e3a5f;color:#93c5fd}
-.dsnap{font-size:12.5px;color:#d4d4d8;line-height:1.5;padding-left:4px;min-height:56px;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.dsnap .ar{font-weight:700;margin-right:6px;font-size:13px}
-.ar.up{color:#10b981}.ar.flat{color:#a1a1aa}.ar.down{color:#f43f5e}
-.dfoot{display:flex;align-items:center;gap:10px;margin-top:11px;padding-top:10px;border-top:1px solid #232326;padding-left:4px;flex-wrap:wrap}
-.dots{display:inline-flex;gap:3px}
-.dots i{width:6px;height:6px;border-radius:50%;background:#3f3f46;display:block}
+.dir{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.dir.tailwind{background:rgba(16,185,129,.13);color:#6ee7b7;border-color:rgba(16,185,129,.45)}
+.dir.headwind{background:rgba(244,63,94,.13);color:#fda4af;border-color:rgba(244,63,94,.45)}
+.dir.rotational{background:rgba(96,165,250,.13);color:#93c5fd;border-color:rgba(96,165,250,.45)}
+.arc{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;
+  border-radius:7px;font-size:13px;font-weight:700;line-height:1;border:1px solid transparent}
+.arc.up{background:rgba(16,185,129,.13);color:#10b981;border-color:rgba(16,185,129,.45)}
+.arc.down{background:rgba(244,63,94,.13);color:#f43f5e;border-color:rgba(244,63,94,.45)}
+.arc.flat{background:rgba(161,161,170,.10);color:#a1a1aa;border-color:rgba(161,161,170,.36)}
+.dots{display:inline-flex;gap:3px;align-items:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:#3f3f46;display:block}
 .dots i.on{background:#a1a1aa}
-.bchips{display:flex;gap:4px;flex-wrap:wrap;flex:1}
 .bchip{font-size:9.5px;color:#a1a1aa;background:#232326;border-radius:5px;padding:2px 6px;white-space:nowrap}
 .bchip.more{color:#71717a}
-@media (max-width:1080px){.dgrid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:720px){.dgrid{grid-template-columns:1fr}}
 .crit{display:flex;flex-wrap:wrap;gap:6px}
 .cpip{display:flex;align-items:center;gap:5px;font-size:10.5px;color:#71717a;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:3px 9px}
 .cpip i{width:6px;height:6px;border-radius:50%;background:#3f3f46;display:block}
@@ -415,8 +408,16 @@ function openPanel(o){
     const chips=[];
     if(o.k==="theme"){chips.push(["stage",o.st]);if(o.mom)chips.push(["momentum",{imp:"improving",flat:"flat",det:"rolling over"}[o.mom]]);}
     if(o.k==="radar")chips.push(["status",o.status]);
-    if(o.k==="driver"){chips.push(["direction",o.dirLbl]);if(o.snap)chips.push(["trajectory",o.arrow+" "+o.snap]);}
+    if(o.k==="driver"){}
     if(chips.length) h+=`<div class="pchips">`+chips.map(([a,b])=>`<span class="pchip">${a} <b>${b}</b></span>`).join("")+`</div>`;
+    if(o.k==="driver"){
+      const dots=[0,1,2,3,4].map(k=>`<i class="${k<o.conv?"on":""}"></i>`).join("");
+      h+=`<div class="pdrv">
+        <span class="dir ${o.dir}">${o.dirLbl}</span>
+        <span class="arc ${o.traj}">${o.arrow}</span>
+        <span class="pdrv-s">${o.snap||""}</span>
+        <span class="dots" title="conviction ${o.conv}/5">${dots}</span></div>`;
+    }
   }
   if(o.mv){const c={new:"#60a5fa",up:"#10b981",down:"#f43f5e",retired:"#a1a1aa"}[o.mv.tag];
     h+=`<div class="pmove" style="background:color-mix(in srgb,${c} 15%,#18181b);color:${c}">
@@ -591,11 +592,10 @@ function drawDrivers(){
     el("rect",{x:14,y:y-13,width:LX-14,height:26,fill:"transparent"},g);
     const dc={tailwind:"#10b981",headwind:"#f43f5e",rotational:"#60a5fa"}[d.dir]||"#60a5fa";
     el("circle",{cx:LX,cy:y,r:5+d.conv*1.3,fill:dc,opacity:.25,stroke:dc,"stroke-width":1.4},g);
-    const fo=document.createElementNS(NS,"foreignObject");
-    fo.setAttribute("x",LX-7);fo.setAttribute("y",y-7);fo.setAttribute("width",14);fo.setAttribute("height",14);
-    fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" style="color:${dc};width:14px;height:14px;`+
-      `display:flex;align-items:center;justify-content:center">${icon(d.icon)}</div>`;
-    g.appendChild(fo);
+    {const SZ=13, k=SZ/24;
+     const ig=el("g",{transform:`translate(${(LX-SZ/2).toFixed(1)} ${(y-SZ/2).toFixed(1)}) scale(${k.toFixed(4)})`,
+       fill:"none",stroke:dc,"stroke-width":1.9,"stroke-linecap":"round","stroke-linejoin":"round"},g);
+     ig.innerHTML=ICONS[d.icon]||ICONS.activity;}
     el("text",{x:LX-34,y:y-1,"text-anchor":"end","font-size":11,fill:"#f4f4f5"},g).textContent=short(d.nm,28);
     el("text",{x:LX-34,y:y+10,"text-anchor":"end","font-size":9,fill:"#71717a"},g)
       .textContent="conviction "+d.conv+"/5 · drives "+d.drives.length;
@@ -625,7 +625,7 @@ function drawRadar(){
     const x=20+cw*(i+.5),c=RC[m.status]||"#71717a",g=el("g",{class:"mk"});
     el("rect",{x:x-cw/2+5,y:24,width:cw-10,height:H-84,rx:10,fill:c,opacity:.05,stroke:c,"stroke-opacity":.18},g);
     for(let k=0;k<5;k++){
-      const met=m.crit[k][1],yy=222+(4-k)*23;
+      const met=m.crit[k][1],yy=206+(4-k)*23;
       el("rect",{x:x-26,y:yy,width:52,height:14,rx:7,fill:met?c:"#232326",opacity:met?.85:1,
                  stroke:met?c:"#27272a","stroke-width":1},g);
       el("text",{x,y:yy+10,"text-anchor":"middle","font-size":7.5,
@@ -647,11 +647,11 @@ function drawRadar(){
         .textContent=m.mv.txt.split(" ")[0].toUpperCase();}
     const words=m.nm.split(" ");let line="",ln=0;
     words.forEach(w=>{ if((line+" "+w).trim().length>16){ 
-        el("text",{x,y:170+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
+        el("text",{x,y:148+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
       else line=(line+" "+w).trim(); });
-    el("text",{x,y:170+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
+    el("text",{x,y:148+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
     /* cap at 4 lines: below that the text collides with the criteria pips */
-    const MAXL=3, NY=352, needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
+    const MAXL=3, NY=332, needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
     let nl="",nn=0;
     for(const w of needs.split(" ")){
       if((nl+" "+w).trim().length>22){
@@ -793,7 +793,7 @@ document.getElementById("drivs").innerHTML=DRIVERS.map((d,i)=>{
     <span class="dic ${d.dir}">${icon(d.icon)}</span>
     <span class="dnm">${d.nm}</span>
     <span class="dir ${d.dir}">${d.dirLbl}</span>
-    <span class="ar ${d.traj}">${d.arrow}</span>
+    <span class="arc ${d.traj}">${d.arrow}</span>
     <span class="dsnap">${d.snap}</span>
     <span class="dots" title="conviction ${d.conv}/5">${dots}</span></button>`;}).join("");
 document.getElementById("drivs").addEventListener("click",e=>{
