@@ -13,12 +13,25 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 #lifebar{padding:4px 2px 2px}
 .hl-head{display:flex;justify-content:space-between;font-size:11.5px;color:#71717a;margin-bottom:9px}
 .hl-head b{color:#a1a1aa}
-.hl-bar{display:flex;height:14px;border-radius:999px;overflow:hidden;gap:2px}
-.hl-seg{display:block;cursor:pointer}
+.hl-bar{display:flex;height:20px;border-radius:999px;overflow:hidden;gap:2px}
+
 .hl-key{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#71717a;margin-top:11px}
 .hl-key span{cursor:pointer}
 .hl-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
 .hl-key b{color:#f4f4f5}
+.hl-seg{display:flex;align-items:center;justify-content:center;cursor:pointer}
+.hl-seg b{font-size:9.5px;font-weight:700;color:rgba(9,9,11,.72)}
+.hl-pop{display:none;margin-top:16px;border:1px solid #3f3f46;border-radius:12px;
+  background:#131316;padding:13px 14px}
+.hl-pop.on{display:block}
+.hl-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;
+  border:0;border-bottom:1px solid #232326;padding:10px 2px;color:inherit;font:inherit;cursor:pointer}
+.hl-row:last-child{border-bottom:0}
+.hl-nm{flex:1;font-size:12.5px;color:#e4e4e7}
+.hl-row .arc{width:19px;height:19px;font-size:11px;flex:0 0 19px}
+.mdots{display:inline-flex;gap:2.5px;flex:0 0 auto}
+.mdots i{width:5px;height:5px;border-radius:50%;background:#3f3f46;display:block}
+.mdots i.on{background:#a1a1aa}
 .hl-list{margin-top:16px;border-top:1px solid #232326;padding-top:14px}
 .hl-st{font-size:10px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700;margin-bottom:9px}
 .hl-item{display:block;width:100%;text-align:left;background:#131316;border:1px solid #27272a;
@@ -405,7 +418,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 
   <p class="guard">Research, not a portfolio. Nothing here is a holding, a position or a size &mdash;
   conviction is the strength of the case, and &ldquo;fading&rdquo; means largely priced, not sold.
-  Mockup rendered from the live data model; detail panel content is real.</p>
+  Every figure carries a dated source; estimates are marked as such.</p>
 </div>
 <div id="tip"></div>
 <div class="scrim" id="scrim"></div>
@@ -832,30 +845,50 @@ const HINTS={
   radar:""};
 const isNarrow=()=>matchMedia("(max-width: 720px)").matches;
 function drawLifeBar(){
-  /* The bubble chart needs width the phone does not have. This is V2.7's bar:
-     proportional mass per stage, tap a segment for the names behind it. */
+  /* V2.7's bar: proportional mass per stage, with the count in the segment where
+     it is being compared, and the names behind a tap rather than listed below —
+     the list duplicated All themes further down the page. */
   svg.style.display="none";
   let box=document.getElementById("lifebar");
   if(!box){box=document.createElement("div");box.id="lifebar";svg.parentNode.insertBefore(box,svg);}
   const tot=MARKS.length;
+  const ARROW={up:"\u2197",flat:"\u2192",down:"\u2198"};
+  const trendOf=m=>{
+    if(m.k==="theme") return {imp:"up",flat:"flat",det:"down"}[m.mom]||"flat";
+    if(m.k==="radar") return {climbing:"up",stalled:"flat",fading:"down"}[m.status]||"flat";
+    return m.revived?"up":"flat";
+  };
+  const dotsOf=m=>{
+    const n=m.k==="theme"?m.conv:(m.k==="radar"?m.met:0);
+    if(!n) return "";
+    return `<span class="mdots">`+[0,1,2,3,4].map(k=>`<i class="${k<n?"on":""}"></i>`).join("")+`</span>`;
+  };
+  const stages=STAGES.filter(x=>CNT[x]);
   box.innerHTML=`<div class="hl-head"><span>Theme lifecycle</span><b>${tot} tracked</b></div>
-    <div class="hl-bar">`+STAGES.filter(s=>CNT[s]).map(s=>
-      `<span class="hl-seg" data-s="${s}" style="flex:${CNT[s]};background:${COL[s]}"></span>`).join("")+
-    `</div><div class="hl-key">`+STAGES.filter(s=>CNT[s]).map(s=>
-      `<span data-s="${s}"><i style="background:${COL[s]}"></i>${s==="Faded / Retired"?"Faded":s} <b>${CNT[s]}</b></span>`).join("")+
-    `</div><div class="hl-list" id="hl-list"></div>`;
+    <div class="hl-bar">`+stages.map(x=>
+      `<span class="hl-seg" data-s="${x}" style="flex:${CNT[x]};background:${COL[x]}"
+             title="${x}: ${CNT[x]}"><b>${CNT[x]}</b></span>`).join("")+
+    `</div><div class="hl-key">`+stages.map(x=>
+      `<span data-s="${x}"><i style="background:${COL[x]}"></i>${x==="Faded / Retired"?"Faded":x}</span>`).join("")+
+    `</div><div class="hl-pop" id="hl-pop"></div>`;
+  const pop=box.querySelector("#hl-pop");
   const show=st=>{
-    document.getElementById("hl-list").innerHTML=
-      `<div class="hl-st" style="color:${COL[st]}">${st} · ${CNT[st]}</div>`+
-      MARKS.filter(m=>m.st===st).map(m=>
-        `<button class="hl-item" data-id="${m.id}">${m.nm}</button>`).join("");
+    if(pop.dataset.open===st){pop.dataset.open="";pop.classList.remove("on");return;}
+    pop.dataset.open=st;
+    pop.innerHTML=`<div class="hl-st" style="color:${COL[st]}">${st} · ${CNT[st]}</div>`+
+      MARKS.filter(m=>m.st===st).map(m=>{
+        const t=trendOf(m);
+        return `<button class="hl-row" data-id="${m.id}">
+          <span class="hl-nm">${m.nm}</span>
+          <span class="arc ${t}" title="Trend: ${{up:"improving",flat:"flat",down:"rolling over"}[t]}">${ARROW[t]}</span>
+          ${dotsOf(m)}</button>`;}).join("");
+    pop.classList.add("on");
   };
   box.addEventListener("click",e=>{
     const seg=e.target.closest("[data-s]"); if(seg){show(seg.dataset.s);return;}
-    const it=e.target.closest(".hl-item");
-    if(it) openPanel(MARKS.find(m=>m.id===it.dataset.id));
+    const row=e.target.closest(".hl-row");
+    if(row){const m=MARKS.find(x=>x.id===row.dataset.id); if(m) openPanel(m);}
   });
-  show("Radar");
 }
 function drawList(rows){
   svg.style.display="none";
@@ -897,9 +930,22 @@ function render(){
   document.getElementById("hint").textContent = view==="radar"
     ? `${MARKS.filter(m=>m.k==="radar").length} pre-investible themes, lowest score first. Click any for evidence and what it needs to graduate.`
     : HINTS[view];
+  /* On a phone the radar and drivers views were reduced to lists, which is what
+     the sections below already are. Keep the lifecycle, which the bar makes into
+     something a list cannot be, and restore the other two on a wider screen. */
+  const narrow=isNarrow();
+  document.querySelectorAll('#seg button').forEach(b=>{
+    const hide=narrow && b.dataset.v!=="life";
+    b.style.display=hide?"none":"";
+  });
+  document.getElementById("seg").style.display=narrow?"none":"";
+  if(narrow && view!=="life"){
+    view="life";
+    document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle("on",b.dataset.v==="life"));
+  }
   if(view!=="radar") svg.setAttribute("viewBox","0 0 1180 476");
   if(view==="life"){ if(isNarrow()){drawLifeBar();document.getElementById("legend").innerHTML="";
-      document.getElementById("hint").textContent="Tap a stage for the themes behind it, then a theme for the detail.";}
+      document.getElementById("hint").textContent="Tap a stage for the themes behind it, then a theme for its detail.";}
     else {cur=layout(focus);drawLife(cur);} }
   else if(view==="driv"){ if(isNarrow()){drawDriversNarrow();
       document.getElementById("legend").innerHTML="";
