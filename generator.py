@@ -317,6 +317,37 @@ def _prior_stages(rev):
             o[f["id"]] = "Faded / Retired"
     return o
 
+def _json_mtime():
+    try:
+        return datetime.datetime.fromtimestamp(
+            os.path.getmtime(DATA_PATH), datetime.timezone.utc).strftime("%H:%M")
+    except Exception:
+        return ""
+
+AREAS = ["Markets and risk appetite", "Policy and rates", "Trade and industrial policy",
+         "Energy and commodities", "AI and the compute build", "Geopolitics and security",
+         "What to watch"]
+_AREA_HINTS = [
+    ("What to watch",            r"\bwatch|ahead|next week|due |scheduled|calendar|reports on\b"),
+    ("Policy and rates",         r"\bfed\b|fomc|rate|yield|inflation|cpi|claims|payroll|central bank|policy path"),
+    ("Trade and industrial policy", r"tariff|section 23|section 33|duties|reshor|trade deal|export control|subsid"),
+    ("Energy and commodities",   r"\bbrent|crude|oil\b|gas\b|gold|silver|copper|uranium|power price|commodit"),
+    ("AI and the compute build", r"\bai\b|semiconduct|gpu|datacen|memory|hbm|optic|neocloud|capex|nvidia"),
+    ("Geopolitics and security", r"sanction|conflict|geopolit|military|defence|defense|strait|missile|security"),
+    ("Markets and risk appetite",r"s&p|nasdaq|equit|index|vix|risk-on|risk-off|breadth|rally|selloff|bitcoin"),
+]
+
+def _classify(text):
+    """Bucket a paragraph into one of the fixed areas by keyword weight. Ties and
+    misses fall to Markets, which is the broadest and least wrong default."""
+    t = (text or "").lower()
+    best, score = "Markets and risk appetite", 0
+    for area, pat in _AREA_HINTS:
+        n = len(re.findall(pat, t))
+        if n > score:
+            best, score = area, n
+    return best
+
 def build_v28(data):
     """Everything template_v28.html renders, shaped once."""
     prior = _prior_stages(LOOKBACK)
@@ -512,7 +543,16 @@ def build_v28(data):
               "counts, not summaries (see daily-task.md)", file=sys.stderr)
 
     cr = data.get("crash_risk", {})
+    cm = cr.get("composite_meta") or {}
+    method = ("A blended 0-100 judgement over the seven buckets below, each scored from its own "
+              "indicators. It flags fragility, not a crash date. "
+              "Recomputed when the last computation is more than 7 days old — age-triggered, so a "
+              "missed run cannot strand it.")
     crash = dict(
+        method=method,
+        asOf=cm.get("as_of", cr.get("as_of", "")),
+        cadence=cm.get("cadence") or cr.get("cadence", ""),
+        estimate=bool(cm.get("estimate", True)),
         v=cr.get("composite"), lvl=cr.get("level", ""),
         read=_rp(cr.get("read", "")),
         deskvoice=round(desk_share(cr.get("read", "")), 2),
@@ -531,25 +571,32 @@ def build_v28(data):
     # sections rather than one wall of text. A paragraph moves to the audit only when
     # MOST of it is desk commentary — otherwise its desk sentences are dropped and the
     # rest is kept, because these paragraphs carry the run's actual findings.
+    # State of play is bucketed into a FIXED set of areas rather than whatever
+    # paragraphs the narrative happened to have, so the sidebar has the same shape
+    # every day and a reader learns where to look. Each is trimmed hard: the full
+    # narrative runs 5-6k characters and almost nobody reads that on a dashboard.
     nar = data.get("state_of_play", {}).get("narrative", "")
-    paras = [p.strip() for p in re.split(r'\n+', nar) if p.strip()]
+    written = data.get("state_of_play", {}).get("sections")
     sections, nar_audit = [], []
-    for p in paras:
-        if desk_share(p) >= 0.5:
-            nar_audit.append(p)
-            continue
-        m = re.match(r"([A-Z][A-Z0-9 ,'’/&()\u2014-]{10,150}?)\s*(?=[.:\u2014]\s|$)", p)
-        head, body = ("", p)
-        if m and m.group(1).upper() == m.group(1):
-            head, body = m.group(1).strip(" ,"), p[m.end():].lstrip(" .:\u2014")
-        body = " ".join(x for x in re.split(r'(?<=[.!?])\s+', body)
-                        if not (BAD.search(x) or DESK.search(x))).strip() or body
-        if head and (BAD.search(head) or DESK.search(head)):
-            head = ""                              # a desk-voice heading is still desk voice
-        if head:
-            head = head[0] + head[1:].lower()
-        sections.append({"h": head, "b": body})
-    lead = _cap(sections[0]["b"]) if sections else _rp(nar)
+    if written:
+        for w in written:
+            sections.append({"h": w.get("area", ""), "b": _cap_words(_rp(w.get("line", "")), 300)})
+    else:
+        paras = [p.strip() for p in re.split(r'\n+', nar) if p.strip()]
+        for p in paras:
+            if desk_share(p) >= 0.5:
+                nar_audit.append(p)
+                continue
+            body = " ".join(x for x in re.split(r'(?<=[.!?])\s+', p)
+                            if not (BAD.search(x) or DESK.search(x))).strip() or p
+            area = _classify(body)
+            sections.append({"h": area, "b": _cap_words(_desnout(body), 300)})
+        merged = {}
+        for sec in sections:                      # one entry per area, in fixed order
+            merged.setdefault(sec["h"], []).append(sec["b"])
+        sections = [{"h": a, "b": _cap_words(" ".join(merged[a]), 300)}
+                    for a in AREAS if a in merged]
+    lead = _cap_words(sections[0]["b"], 260) if sections else _rp(nar)
     state = dict(lead=lead, sections=sections, audit=nar_audit[:8])
 
     meta = data.get("meta", {})
@@ -562,7 +609,11 @@ def build_v28(data):
                         drvcats=drv_cats, total=len(sigs)),
         "CRASH": crash, "WINDOWS": data.get("windows", {}), "STATE": state,
         "META": dict(build=(meta.get("last_fetch") or "")[:10],
+                     buildTime=(meta.get("last_fetch") or "")[11:16],
                      report=meta.get("report_date", ""),
+                     # the daily has no report_time field yet (specced); until it does,
+                     # the data file's own mtime is when the analysis last wrote it
+                     reportTime=meta.get("report_time") or _json_mtime(),
                      reportLong=meta.get("report_date_long", ""),
                      mvwin="30 days ago"),
     }

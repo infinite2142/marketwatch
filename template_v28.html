@@ -1,4 +1,5 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Market Watch V2.8</title><style>
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Market Watch V2.8</title><style>
 *{box-sizing:border-box}
 body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
 .wrap{max-width:1280px;margin:0 auto;padding:18px 24px 90px}
@@ -7,7 +8,31 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#60a5fa,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:15px}
 .brand h1{font-size:15.5px;margin:0;letter-spacing:-.2px}
 .brand .s{font-size:10.5px;color:#71717a}
+.chip .tm{color:#52525b;font-variant-numeric:tabular-nums}
 .chip{font-size:11px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:5px 12px;white-space:nowrap}
+#lifebar{padding:4px 2px 2px}
+.hl-head{display:flex;justify-content:space-between;font-size:11.5px;color:#71717a;margin-bottom:9px}
+.hl-head b{color:#a1a1aa}
+.hl-bar{display:flex;height:14px;border-radius:999px;overflow:hidden;gap:2px}
+.hl-seg{display:block;cursor:pointer}
+.hl-key{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#71717a;margin-top:11px}
+.hl-key span{cursor:pointer}
+.hl-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.hl-key b{color:#f4f4f5}
+.hl-list{margin-top:16px;border-top:1px solid #232326;padding-top:14px}
+.hl-st{font-size:10px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700;margin-bottom:9px}
+.hl-item{display:block;width:100%;text-align:left;background:#131316;border:1px solid #27272a;
+  border-radius:9px;padding:11px 13px;margin-bottom:7px;color:#e4e4e7;font:inherit;font-size:13px;cursor:pointer}
+.hl-item:active{background:#1f1f23}
+.pnav{position:sticky;top:0;z-index:30;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  background:rgba(9,9,11,.92);backdrop-filter:blur(10px);border-bottom:1px solid #27272a;
+  margin:0 -24px;padding:9px 24px}
+.pnav::-webkit-scrollbar{display:none}
+.pnav a{color:#71717a;font-size:11.5px;font-weight:500;text-decoration:none;padding:6px 12px;
+  border-radius:8px;white-space:nowrap;transition:.12s}
+.pnav a:hover{color:#f4f4f5;background:#18181b}
+.pnav a.on{color:#f4f4f5;background:#1f1f23}
+@media (max-width:720px){.pnav{margin:0 -14px;padding:8px 14px}}
 .hero{position:relative;margin:30px 0 64px}
 .herog{position:absolute;right:-6px;top:-34px;width:340px;height:300px;pointer-events:none}
 @media (max-width:1000px){.herog{display:none}}
@@ -87,12 +112,14 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .phead svg{width:26px;height:26px;color:var(--pc);flex:0 0 26px}
 .pbig{font-size:23px;font-weight:700;color:var(--pc);line-height:1}
 .psm{font-size:11.5px;color:#a1a1aa;margin-top:3px}
-.pdrv{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:11px;padding:12px 14px;
-  background:#131316;border:1px solid #27272a;border-radius:11px}
-.pdrv-s{flex:1;min-width:140px;font-size:12.5px;color:#d4d4d8;line-height:1.5}
-.pdrv .dots{margin-left:auto}
+.phead.drv{gap:12px;flex-wrap:wrap}
+.phead.drv .dots{margin-left:auto}
+.pdrv-s{margin-top:14px;font-size:14px;font-weight:600;color:#f4f4f5;line-height:1.55}
 .pglance{margin-top:12px;padding:13px 15px;background:#131316;border:1px solid #27272a;
   border-left:2px solid #3f3f46;border-radius:10px;font-size:13px;line-height:1.6;color:#e4e4e7}
+.phead.sig{align-items:flex-start}
+.phead.sig svg{margin-top:2px}
+.sigtxt{font-size:13px;line-height:1.6;color:#e4e4e7}
 .pchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .pchip{font-size:10.5px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:4px 10px}
 .pchip b{color:#f4f4f5}
@@ -107,7 +134,8 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .aud[open] summary{border-radius:8px 8px 0 0;border-bottom-color:transparent}
 .audl{margin:0;padding:12px 14px 4px 28px;font-size:11.5px;color:#a1a1aa;line-height:1.55;
   border:1px solid #27272a;border-top:0;border-radius:0 0 8px 8px;background:#131316}
-.audl li{margin-bottom:7px}
+.audl li{margin-bottom:9px}
+.audd{display:block;font-size:9.5px;color:#52525b;letter-spacing:.5px;margin-bottom:2px}
 .audn{font-size:10.5px;color:#52525b;font-style:italic;margin:8px 2px 0}
 .audn code{font-style:normal;color:#71717a}
 .bkt{margin-top:16px;border-top:1px solid #232326;padding-top:13px}
@@ -238,6 +266,8 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
       <div class="s">Daily research terminal</div></div></div>
     <span class="chip" id="chip"></span>
   </div>
+
+  <nav class="pnav" id="pnav"></nav>
 
   <div class="hero">
     <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
@@ -404,25 +434,25 @@ function openPanel(o){
   const PC=o.k==="theme"?COL[o.st]:o.k==="radar"?(RC[o.status]||"#71717a")
           :o.k==="faded"?"#a1a1aa":o.k==="driver"?({tailwind:"#10b981",headwind:"#f43f5e",rotational:"#60a5fa"}[o.dir]||"#60a5fa"):"#a78bfa";
   if(o.k&&o.k!=="cat"){
-    const big=o.k==="theme"?o.conv+"/5":o.k==="radar"?o.met+"/5":o.k==="faded"?(o.call||"—"):
-              o.k==="driver"?o.arrow+" "+o.conv+"/5":(o.sub||"").split("  ")[0];
-    h+=`<div class="phead" style="--pc:${PC}">${icon(KIND)}<div>
-        <div class="pbig">${big}</div><div class="psm">${o.k==="theme"?"conviction · "+(o.timing||o.st)
-        :o.k==="radar"?"criteria met · "+o.status:o.k==="faded"?"how the call scored"
-        :o.k==="driver"?"conviction":""}</div></div></div>`;
+    if(o.k==="driver"){
+      const dots=[0,1,2,3,4].map(k=>`<i class="${k<o.conv?"on":""}"></i>`).join("");
+      h+=`<div class="phead drv" style="--pc:${PC}">${icon(o.icon)}
+          <span class="dir ${o.dir}">${o.dirLbl}</span>
+          <span class="arc ${o.traj}">${o.arrow}</span>
+          <span class="dots" title="conviction ${o.conv}/5">${dots}</span></div>`;
+    }else{
+      const big=o.k==="theme"?o.conv+"/5":o.k==="radar"?o.met+"/5":o.k==="faded"?(o.call||"—"):
+                (o.sub||"").split("  ")[0];
+      h+=`<div class="phead" style="--pc:${PC}">${icon(KIND)}<div>
+          <div class="pbig">${big}</div><div class="psm">${o.k==="theme"?"conviction · "+(o.timing||o.st)
+          :o.k==="radar"?"criteria met · "+o.status:o.k==="faded"?"how the call scored":""}</div></div></div>`;
+    }
     const chips=[];
     if(o.k==="theme"){chips.push(["stage",o.st]);if(o.mom)chips.push(["momentum",{imp:"improving",flat:"flat",det:"rolling over"}[o.mom]]);}
     if(o.k==="radar")chips.push(["status",o.status]);
-    if(o.k==="driver"){}
+  
     if(chips.length) h+=`<div class="pchips">`+chips.map(([a,b])=>`<span class="pchip">${a} <b>${b}</b></span>`).join("")+`</div>`;
-    if(o.k==="driver"){
-      const dots=[0,1,2,3,4].map(k=>`<i class="${k<o.conv?"on":""}"></i>`).join("");
-      h+=`<div class="pdrv">
-        <span class="dir ${o.dir}">${o.dirLbl}</span>
-        <span class="arc ${o.traj}">${o.arrow}</span>
-        <span class="pdrv-s">${o.snap||""}</span>
-        <span class="dots" title="conviction ${o.conv}/5">${dots}</span></div>`;
-    }
+    if(o.k==="driver"&&o.snap) h+=`<div class="pdrv-s">${o.snap}</div>`;
   }
   if(o.glance) h+=`<div class="pglance">${o.glance}</div>`;
   if(o.mv){const c={new:"#60a5fa",up:"#10b981",down:"#f43f5e",retired:"#a1a1aa"}[o.mv.tag];
@@ -460,7 +490,8 @@ function openPanel(o){
   if(o.drives&&o.drives.length===0){}
   if(o.audit&&o.audit.length) h+=`<details class="aud"><summary>${icon("info")}
     <span>How this assessment changed &middot; ${o.audit.length} desk note${o.audit.length===1?"":"s"}</span></summary>
-    <ul class="audl">`+o.audit.map(a=>`<li>${a}</li>`).join("")+`</ul>
+    <ul class="audl">`+o.audit.map(a=>typeof a==="string"?`<li>${a}</li>`
+      :`<li><span class="audd">${a.date||""}</span>${a.note||a.text||""}</li>`).join("")+`</ul>
     <p class="audn">Desk working, kept out of the read above. In the data model this is the
     record's <code>audit</code> field &mdash; dated and append-only.</p></details>`;
   if(o.bullets&&o.bullets.length) h+=`<div class="plabel">Evidence</div><ul class="pbul">`+
@@ -678,12 +709,44 @@ const HINTS={
   life:"Click a stage on the axis to give it the width. Click any mark for the full detail.",
   driv:"37 driver→theme links from the data model. Hover a driver to isolate what it moves.",
   radar:"Seven pre-investible themes. Click any for evidence and what it needs to graduate."};
+const isNarrow=()=>matchMedia("(max-width: 720px)").matches;
+function drawLifeBar(){
+  /* The bubble chart needs width the phone does not have. This is V2.7's bar:
+     proportional mass per stage, tap a segment for the names behind it. */
+  svg.style.display="none";
+  let box=document.getElementById("lifebar");
+  if(!box){box=document.createElement("div");box.id="lifebar";svg.parentNode.insertBefore(box,svg);}
+  const tot=MARKS.length;
+  box.innerHTML=`<div class="hl-head"><span>Theme lifecycle</span><b>${tot} tracked</b></div>
+    <div class="hl-bar">`+STAGES.filter(s=>CNT[s]).map(s=>
+      `<span class="hl-seg" data-s="${s}" style="flex:${CNT[s]};background:${COL[s]}"></span>`).join("")+
+    `</div><div class="hl-key">`+STAGES.filter(s=>CNT[s]).map(s=>
+      `<span data-s="${s}"><i style="background:${COL[s]}"></i>${s==="Faded / Retired"?"Faded":s} <b>${CNT[s]}</b></span>`).join("")+
+    `</div><div class="hl-list" id="hl-list"></div>`;
+  const show=st=>{
+    document.getElementById("hl-list").innerHTML=
+      `<div class="hl-st" style="color:${COL[st]}">${st} · ${CNT[st]}</div>`+
+      MARKS.filter(m=>m.st===st).map(m=>
+        `<button class="hl-item" data-id="${m.id}">${m.nm}</button>`).join("");
+  };
+  box.addEventListener("click",e=>{
+    const seg=e.target.closest("[data-s]"); if(seg){show(seg.dataset.s);return;}
+    const it=e.target.closest(".hl-item");
+    if(it) openPanel(MARKS.find(m=>m.id===it.dataset.id));
+  });
+  show("Radar");
+}
 function render(){
+  const bar=document.getElementById("lifebar"); if(bar) bar.remove();
+  svg.style.display="";
   document.getElementById("legend").innerHTML=LEGENDS[view];
   document.getElementById("hint").textContent=HINTS[view];
-  if(view==="life"){cur=layout(focus);drawLife(cur);}
+  if(view==="life"){ if(isNarrow()){drawLifeBar();document.getElementById("legend").innerHTML="";
+      document.getElementById("hint").textContent="Tap a stage for the themes behind it, then a theme for the detail.";}
+    else {cur=layout(focus);drawLife(cur);} }
   else if(view==="driv")drawDrivers(); else drawRadar();
 }
+let rzT;addEventListener("resize",()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(view==="life")render();},180);});
 document.getElementById("seg").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
   [...e.currentTarget.children].forEach(c=>c.classList.toggle("on",c===b));
@@ -713,7 +776,14 @@ document.getElementById("seg").addEventListener("click",e=>{
       k:null,logHTML:
       `<div class="phead" style="--pc:${col}">${icon("compass")}<div><div class="pbig">${CRASH.v}</div>
         <div class="psm">${CRASH.lvl} · composite</div></div></div>
-       <div class="plabel">Why it sits here</div><div class="ptext">${CRASH.read}</div>`+
+       <div class="plabel">Why it sits here</div><div class="ptext">${CRASH.read}</div>
+       <div class="plabel">How this number is derived</div><div class="ptext">${CRASH.method||""}</div>
+       <div class="pchips">
+         <span class="pchip">buckets <b>${CRASH.buckets.length}</b></span>
+         <span class="pchip">indicators <b>${nInd}</b></span>
+         ${CRASH.asOf?`<span class="pchip">computed <b>${CRASH.asOf}</b></span>`:""}
+         ${CRASH.estimate?`<span class="pchip">estimate</span>`:""}
+       </div>`+
       CRASH.buckets.map(b=>{const w=worst(b),c=SC[w];
         return `<div class="bkt"><div class="bkth"><span class="bdot" style="background:${c}"></span>
           <span class="bnm">${b.nm}</span><span class="bst" style="color:${c}">${w}</span></div>
@@ -722,7 +792,8 @@ document.getElementById("seg").addEventListener("click",e=>{
             <b>${i.nm}</b> ${i.val} <em style="color:${SC[i.status]}">${TA[i.tr]||""}</em></span>`).join("")+
           `</div></div>`;}).join("")});
   });
-  document.getElementById("chip").textContent="Data "+META.build+" · analysis "+META.report;
+  document.getElementById("chip").innerHTML="Data "+META.build+(META.buildTime?` <span class="tm">${META.buildTime}</span>`:"")+
+    " · analysis "+META.report+(META.reportTime?` <span class="tm">${META.reportTime}</span>`:"");
 })();
 
 /* ---------- tiles + period selector ----------
@@ -778,10 +849,9 @@ document.getElementById("sigs").innerHTML=CATS.map((c,i)=>
 document.getElementById("sigs").addEventListener("click",e=>{
   const li=e.target.closest("li[data-c]"); if(!li) return;
   const c=CATS[+li.dataset.c];
-  openPanel(Object.assign({},c,{logHTML:`<div class="phead" style="--pc:#60a5fa">${icon(c.icon)}
-    <div><div class="pbig">${c.n}</div><div class="psm">${c.sec}</div></div></div>
-    <div class="pglance">${c.digest}</div>
-    <div class="plabel">Signals</div>`+
+  openPanel(Object.assign({},c,{logHTML:`<div class="phead sig" style="--pc:#60a5fa">${icon(c.icon)}
+      <div class="sigtxt">${c.digest}</div></div>
+    <div class="plabel">${c.n} signal${c.n===1?"":"s"} · last 7 days</div>`+
     c.rows.map(r=>`<div class="vrow"><span class="ago">${r.ago}d</span>
       <span class="vhd"><b style="color:#f4f4f5;font-weight:600">${r.hd}</b><br>${r.sm}</span></div>`).join("")}));
 });
@@ -853,6 +923,35 @@ document.getElementById("grid").addEventListener("click",e=>{
 });
 document.getElementById("i5").innerHTML=icon("grid");
 document.getElementById("i6").innerHTML=icon("compass");
+/* section nav: built from the sections that actually rendered, so it cannot list
+   something that is not there */
+(function(){
+  const nav=document.getElementById("pnav");
+  const secs=[...document.querySelectorAll(".wrap > .sec")].map(sec=>{
+    const h=sec.querySelector("h2"); if(!h) return null;
+    const id="s-"+h.textContent.trim().toLowerCase().replace(/[^a-z]+/g,"-");
+    sec.id=id; return {id,label:h.textContent.trim()};
+  }).filter(Boolean);
+  nav.innerHTML=secs.map(x=>`<a href="#${x.id}">${x.label}</a>`).join("");
+  const links=[...nav.querySelectorAll("a")];
+  nav.addEventListener("click",e=>{
+    const a=e.target.closest("a"); if(!a) return;
+    e.preventDefault();
+    const el=document.getElementById(a.getAttribute("href").slice(1));
+    if(el) scrollTo({top:el.getBoundingClientRect().top+scrollY-nav.offsetHeight-14,behavior:"smooth"});
+  });
+  let tick=false;
+  addEventListener("scroll",()=>{
+    if(tick) return; tick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY+nav.offsetHeight+40; let cur=secs[0];
+      secs.forEach(x=>{const el=document.getElementById(x.id);
+        if(el&&el.getBoundingClientRect().top+scrollY<=y) cur=x;});
+      links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+cur.id));
+      tick=false;
+    });
+  },{passive:true});
+})();
 document.getElementById("sop").textContent=STATE.lead||"";
 document.getElementById("sopmore").addEventListener("click",()=>openPanel({
   nm:"State of play",sub:META.reportLong||META.report||"",k:null,audit:STATE.audit||[],
