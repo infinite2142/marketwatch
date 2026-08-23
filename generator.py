@@ -203,6 +203,14 @@ def _pick(table, key, default):
             return val
     return default
 
+def _cap_words(t, n):
+    """Trim to n characters on a word boundary. The signal line is a glance, not a
+    paragraph; the full set is one click away."""
+    t = (t or "").strip()
+    if len(t) <= n:
+        return t
+    return t[:n].rsplit(" ", 1)[0].rstrip(" ,;:-—") + "…"
+
 def _cap(t):
     """Reader prose is a summary, not the working. Trim to the last whole sentence
     inside CAP so one long entry cannot crowd out everything below it."""
@@ -235,6 +243,53 @@ def reader_prose(txt):
     if len(out) <= 60:
         return _cap(txt), []          # never blank a field to enforce a style
     return _cap(out), drop
+
+def summarise(txt, cap=190):
+    """One or two sentences of assessment — where a theme stands today. Falls back to
+    the head of `read` until the daily writes a `glance` field of its own."""
+    t = _rp(txt)
+    if not t:
+        return ""
+    out, parts = "", re.split(r'(?<=[.!?])\s+', t)
+    for p in parts:
+        if out and len(out) + len(p) + 1 > cap:
+            break
+        out = (out + " " + p).strip()
+        if len(out) >= cap * 0.55:
+            break
+    out = out or _cap(t)
+    return _desnout(out)
+
+# Acronyms and brands that stay upper-case when a shouted clause is calmed down.
+ACRO = {"AI","US","UK","EU","G7","G20","OPEC","FOMC","NDAA","IEEPA","MASGA","HBM","NAND",
+        "DRAM","ASP","ASPS","CPI","PCE","GDP","VIX","ETF","ETFS","IPO","LNG","EV","EVS",
+        "SMR","SMRS","GPU","GPUS","CPU","TAM","RPO","OAS","HALEU","NVIDIA","OEM","OEMS",
+        "Q1","Q2","Q3","Q4","H1","H2","YTD","M2"}
+TITLE = {"MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY",
+         "JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST",
+         "SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","CHINA","JAPAN","KOREA",
+         "EUROPE","AMERICA","WASHINGTON","BERLIN","BRUSSELS","CONGRESS","FED"}
+
+def _desnout(txt):
+    """The house style opens a read with an all-caps clause. At tile size that reads as
+    shouting, so the LEADING clause is sentence-cased; the rest of the passage already
+    has normal casing and is left untouched."""
+    if not txt:
+        return txt
+    m = re.match(r"^(.{0,180}?[.!?])(\s+|$)", txt)
+    head, rest = (m.group(1), txt[m.end():]) if m else (txt, "")
+    letters = [c for c in head if c.isalpha()]
+    if not letters or sum(1 for c in letters if c.isupper()) / len(letters) < 0.7:
+        return txt
+    def fix(w):
+        t = w.group(0)
+        if t in ACRO or any(c.isdigit() for c in t):
+            return t
+        return t.capitalize() if t in TITLE else t.lower()
+    head = re.sub(r"\b[A-Z][A-Z'’&/-]+\b", fix, head)
+    head = re.sub(r"\bA\b", "a", head)          # stray article left upper by the rule above
+    head = head[0].upper() + head[1:] if head else head
+    return (head + (" " + rest if rest else "")).strip()
 
 def _rp(t): return reader_prose(t)[0]
 def _au(t): return reader_prose(t)[1]
@@ -338,6 +393,7 @@ def build_v28(data):
             runway=t.get("runway"), now=t.get("now", ""), proj=t.get("proj", ""),
             hz=t.get("hz", ""), sizeUnit=t.get("sizeUnit", ""),
             nowEst=bool(t.get("nowEst")), projEst=bool(t.get("projEst")),
+            glance=(t.get("glance") or summarise(t.get("read", ""))),
             body=[["Includes", t.get("includes", "")], ["Read", _rp(t.get("read", ""))]],
             audit=(t.get("audit") or _au(t.get("read", ""))), access=acc,
             bullets=[e for e in (t.get("flows", []) + t.get("tail", []))
@@ -424,12 +480,17 @@ def build_v28(data):
     sigs = data.get("signals", [])
     def is_ops(s):
         return bool(OPS.search(s.get("headline", "")) or OPS.search(s.get("assessment") or ""))
+    driver_ids = {d.get("id") for d in data.get("drivers", [])}
     win = [s for s in sigs if s.get("daysAgo", 99) <= WINDOW]
-    vis = [s for s in win if not is_ops(s)]
+    # Driver-level categories (rates, geo, intl…) have their own section; this list is
+    # the theme-level tape, which is what "signals" meant before the rollup.
+    vis = [s for s in win if not is_ops(s) and s.get("sector") not in driver_ids]
+    drv_cats = len({s["sector"] for s in win if s.get("sector") in driver_ids})
     written = {w.get("cat"): w for w in (data.get("what_changed") or [])}
 
     cats = []
-    for sec, n in Counter(s["sector"] for s in vis).most_common():
+    MAXCATS = 10
+    for sec, n in Counter(s["sector"] for s in vis).most_common(MAXCATS):
         rows = sorted([s for s in vis if s["sector"] == sec], key=lambda s: s["daysAgo"])
         span = max(r["daysAgo"] for r in rows)
         w = written.get(sec)
@@ -440,6 +501,7 @@ def build_v28(data):
                                               else "the last %d days" % span)
             digest = "%d signal%s over %s" % (n, "" if n == 1 else "s", when)
             placeholder = True
+        digest = _cap_words(digest, 118)
         cats.append(dict(
             sec=sec, n=n, icon=_pick(SECICON, sec, "activity"), newest=rows[0]["daysAgo"],
             span=span, digest=digest, placeholder=placeholder, nm=sec.upper(), sub=digest,
@@ -496,7 +558,9 @@ def build_v28(data):
         "MARKS": marks, "DRIVERS": drivers, "TILES": tiles,
         "SIGNALS": [dict(ago=s["daysAgo"], sec=s["sector"], hd=s["headline"]) for s in sigs],
         "CATS": cats,
-        "SIGMETA": dict(window=WINDOW, shown=len(vis), ops=len(win) - len(vis), total=len(sigs)),
+        "SIGMETA": dict(window=WINDOW, shown=sum(c["n"] for c in cats),
+                        cats=len(cats), ops=sum(1 for s in win if is_ops(s)),
+                        drvcats=drv_cats, total=len(sigs)),
         "CRASH": crash, "WINDOWS": data.get("windows", {}), "STATE": state,
         "META": dict(build=(meta.get("last_fetch") or "")[:10],
                      report=meta.get("report_date", ""),

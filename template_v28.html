@@ -91,6 +91,8 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
   background:#131316;border:1px solid #27272a;border-radius:11px}
 .pdrv-s{flex:1;min-width:140px;font-size:12.5px;color:#d4d4d8;line-height:1.5}
 .pdrv .dots{margin-left:auto}
+.pglance{margin-top:12px;padding:13px 15px;background:#131316;border:1px solid #27272a;
+  border-left:2px solid #3f3f46;border-radius:10px;font-size:13px;line-height:1.6;color:#e4e4e7}
 .pchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .pchip{font-size:10.5px;color:#a1a1aa;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:4px 10px}
 .pchip b{color:#f4f4f5}
@@ -159,6 +161,9 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .gt .r2{display:flex;align-items:baseline;justify-content:space-between;margin-top:5px;padding-left:5px;gap:8px}
 .gt .big{font-size:14px;font-weight:700;line-height:1;opacity:.92}
 .gt .st{font-size:9.5px;text-transform:uppercase;letter-spacing:.7px;text-align:right}
+.gt .gl{font-size:11.5px;color:#a1a1aa;line-height:1.5;margin-top:9px;padding-left:5px;
+  padding-top:9px;border-top:1px solid #232326;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .gt .sm{font-size:10.5px;color:#71717a;margin-top:5px;padding-left:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gt .mom{width:11px;height:11px;display:inline-block;vertical-align:-1px;margin-left:3px}
 @media (max-width:1080px){.grid{grid-template-columns:repeat(3,1fr)}}
@@ -321,7 +326,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
       <p class="hint">One row per tracked theme, same records as the chart above. Click any for full detail. <span id="mvwin"></span></p></div>
   </div>
 
-  <div class="sec"><div class="sechead"><div class="lhs"><span id="i3"></span><h2>What changed</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
+  <div class="sec"><div class="sechead"><div class="lhs"><span id="i3"></span><h2>Signals</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
     <div class="card"><ul class="lst" id="sigs"></ul></div></div>
   <div class="sec"><div class="sechead"><div class="lhs"><span id="i4"></span><h2>Drivers</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
     <div class="card"><div class="dlist" id="drivs"></div></div>
@@ -419,6 +424,7 @@ function openPanel(o){
         <span class="dots" title="conviction ${o.conv}/5">${dots}</span></div>`;
     }
   }
+  if(o.glance) h+=`<div class="pglance">${o.glance}</div>`;
   if(o.mv){const c={new:"#60a5fa",up:"#10b981",down:"#f43f5e",retired:"#a1a1aa"}[o.mv.tag];
     h+=`<div class="pmove" style="background:color-mix(in srgb,${c} 15%,#18181b);color:${c}">
         ${icon(o.mv.tag==="down"?"down":o.mv.tag==="up"?"up":"sparkles")}
@@ -782,9 +788,9 @@ document.getElementById("sigs").addEventListener("click",e=>{
       <span class="vhd"><b style="color:#f4f4f5;font-weight:600">${r.hd}</b><br>${r.sm}</span></div>`).join("")}));
 });
 document.getElementById("sigs").insertAdjacentHTML("afterend",
-  `<p class="mvnote" style="margin:10px 0 0">Last ${SIGMETA.window} days · ${SIGMETA.shown} signals in ${CATS.length} categories`+
-   (SIGMETA.ops?` · ${SIGMETA.ops} desk corrections held back (ledger, not feed)`:"")+
-   `<br><span style="color:#a16207">Summaries are placeholders — the data model has no reader-facing digest field.</span></p>`);
+  `<p class="mvnote" style="margin:12px 0 0">Last ${SIGMETA.window} days · ${SIGMETA.shown} signals across ${SIGMETA.cats} themes`+
+   (SIGMETA.drvcats?` · ${SIGMETA.drvcats} driver-level categories shown under Drivers`:"")+
+   (SIGMETA.ops?` · ${SIGMETA.ops} desk corrections held back`:"")+`</p>`);
 /* the per-category rows carry the drill-down now; the global "view all" is gone */
 
 document.getElementById("drivs").innerHTML=DRIVERS.map((d,i)=>{
@@ -829,7 +835,8 @@ function tileFor(m,i){
     <div class="n">${m.nm}${m.mv?`<span class="mv ${m.mv.tag}">${m.mv.tag==="up"?"↑":m.mv.tag==="down"?"↓":""}${m.mv.txt.split(" ")[0]}</span>`:""}</div>
     <div class="r2"><span class="big" style="color:${bigcol}">${big}</span>
       <span class="st" style="color:${bigcol}">${st}</span></div>
-    <div class="sm">${sm}</div></button>`;
+    <div class="sm">${sm}</div>
+    ${m.glance?`<div class="gl">${m.glance}</div>`:""}</button>`;
 }
 function renderGrid(){
   document.getElementById("tabs").innerHTML=STAGES.map(s2=>
