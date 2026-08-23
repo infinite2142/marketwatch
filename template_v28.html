@@ -401,6 +401,10 @@ const ICONS={
  landmark:'<path d="M10 18v-7"/><path d="M11.12 2.2a2 2 0 0 1 1.76.01l7.87 3.84c.47.24.3.95-.23.95H3.47c-.53 0-.69-.71-.22-.95z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/>',
 
  alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+
+ droplet:'<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
+ flask:'<path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/>',
+ leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
  factory:'<path d="M12 16h.01"/><path d="M16 16h.01"/><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/>'};
 const icon=(n,cls)=>`<svg class="ic ${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
@@ -664,50 +668,87 @@ function drawDrivers(){
 
 /* ---------- view 3: radar ---------- */
 function drawRadar(){
-  svg.innerHTML="";const H=470;
+  svg.innerHTML="";
   const rs=MARKS.filter(m=>m.k==="radar").sort((a,b)=>a.met-b.met||a.nm.localeCompare(b.nm));
-  const cw=(W-40)/rs.length;
-  rs.forEach((m,i)=>{
-    const x=20+cw*(i+.5),c=RC[m.status]||"#71717a",g=el("g",{class:"mk"});
-    el("rect",{x:x-cw/2+5,y:24,width:cw-10,height:H-84,rx:10,fill:c,opacity:.05,stroke:c,"stroke-opacity":.18},g);
-    for(let k=0;k<5;k++){
-      const met=m.crit[k][1],yy=206+(4-k)*23;
-      el("rect",{x:x-26,y:yy,width:52,height:14,rx:7,fill:met?c:"#232326",opacity:met?.85:1,
-                 stroke:met?c:"#27272a","stroke-width":1},g);
-      el("text",{x,y:yy+10,"text-anchor":"middle","font-size":7.5,
-                 fill:met?"#09090b":"#52525b","font-weight":met?700:400},g).textContent=m.crit[k][0];
+  if(!rs.length){svg.setAttribute("viewBox","0 0 1180 120");return;}
+  /* Lay out from the space available rather than assuming one row: the radar has
+     gone from 7 entries to 11 in a single run, and a fixed row squeezed each card
+     to ~100px, which is where the text started overlapping. */
+  const PAD=20, MINW=168;
+  const perRow=Math.max(1,Math.min(rs.length,Math.floor((W-PAD*2)/MINW)));
+  const rows=Math.ceil(rs.length/perRow);
+  const cw=(W-PAD*2)/perRow;
+  const cardW=cw-12;
+  const TOP=34, CARD_H=384, GAP=20;
+  const H=TOP+rows*(CARD_H+GAP)+16;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+
+  const fs=Math.max(10.5,Math.min(13.5,cardW/13));      // title scales with the card
+  const chars=Math.max(9,Math.floor(cardW/(fs*0.55)));  // wrap on measured width
+  const wrap=(txt,max,cap)=>{
+    const out=[];let line="";
+    for(const w of (txt||"").split(/\s+/)){
+      if(!w) continue;
+      if(line && (line+" "+w).length>max){out.push(line);line=w;if(out.length>=cap)break;}
+      else line=line?line+" "+w:w;
     }
-    el("text",{x,y:64,"text-anchor":"middle","font-size":21,"font-weight":700,fill:c},g).textContent=m.met+"/5";
-    el("text",{x,y:79,"text-anchor":"middle","font-size":9,fill:c,"letter-spacing":.6},g).textContent=m.status.toUpperCase();
-    {const SZ=39, k=SZ/24;                        // inline, not foreignObject: exact centring
-     const ig=el("g",{transform:`translate(${(x-SZ/2).toFixed(1)} 96) scale(${k.toFixed(4)})`,
+    if(out.length<cap && line) out.push(line);
+    return out;
+  };
+
+  rs.forEach((m,i)=>{
+    const col=i%perRow, row=Math.floor(i/perRow);
+    const x=PAD+cw*(col+0.5), y0=TOP+row*(CARD_H+GAP);
+    const c=RC[m.status]||"#71717a", g=el("g",{class:"mk"});
+    el("rect",{x:x-cardW/2,y:y0,width:cardW,height:CARD_H,rx:12,
+      fill:c,opacity:.05,stroke:c,"stroke-opacity":.2},g);
+
+    el("text",{x,y:y0+38,"text-anchor":"middle","font-size":23,"font-weight":700,fill:c},g)
+      .textContent=m.met+"/5";
+    el("text",{x,y:y0+55,"text-anchor":"middle","font-size":9.5,fill:c,"letter-spacing":.7},g)
+      .textContent=m.status.toUpperCase();
+
+    {const SZ=Math.min(40,cardW*0.30), k=SZ/24;
+     const ig=el("g",{transform:`translate(${(x-SZ/2).toFixed(1)} ${y0+70}) scale(${k.toFixed(4)})`,
        fill:"none",stroke:c,"stroke-width":1.5,"stroke-linecap":"round","stroke-linejoin":"round",
        opacity:.92},g);
      ig.innerHTML=ICONS[m.icon]||ICONS.sparkles;}
-    if(m.mv){const bc={new:"#93c5fd",up:"#6ee7b7",down:"#fda4af",retired:"#d4d4d8"}[m.mv.tag];
-      el("rect",{x:x-30,y:H-32,width:60,height:14,rx:7,fill:bc,opacity:.16},g);
-      el("text",{x,y:H-22,"text-anchor":"middle","font-size":8,"font-weight":700,fill:bc,"letter-spacing":.5},g)
-        .textContent=m.mv.txt.split(" ")[0].toUpperCase();}
-    const words=m.nm.split(" ");let line="",ln=0;
-    words.forEach(w=>{ if((line+" "+w).trim().length>16){ 
-        el("text",{x,y:150+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
-      else line=(line+" "+w).trim(); });
-    el("text",{x,y:150+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
-    /* cap at 4 lines: below that the text collides with the criteria pips */
-    const MAXL=3, NY=332, needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
-    let nl="",nn=0;
-    for(const w of needs.split(" ")){
-      if((nl+" "+w).trim().length>22){
-        if(nn===MAXL-1){ nl=nl.replace(/[,;:]$/,"")+"…"; break; }
-        el("text",{x,y:NY+nn*12,"text-anchor":"middle","font-size":8.6,fill:"#71717a"},g).textContent=nl;
-        nl=w; nn++;
-      } else nl=(nl+" "+w).trim();
+
+    const nameY=y0+82+Math.min(40,cardW*0.30)+16;
+    wrap(m.nm,chars,3).forEach((ln,j)=>
+      el("text",{x,y:nameY+j*(fs+2),"text-anchor":"middle","font-size":fs,"font-weight":600,
+        fill:"#f4f4f5"},g).textContent=ln);
+
+    const pipY=y0+CARD_H-194;
+    for(let k2=0;k2<5;k2++){
+      const met=m.crit[k2][1], yy=pipY+(4-k2)*23;
+      el("rect",{x:x-27,y:yy,width:54,height:15,rx:7.5,fill:met?c:"#232326",opacity:met?.85:1,
+        stroke:met?c:"#27272a","stroke-width":1},g);
+      el("text",{x,y:yy+10.6,"text-anchor":"middle","font-size":8,
+        fill:met?"#09090b":"#52525b","font-weight":met?700:400},g).textContent=m.crit[k2][0];
     }
-    if(nn<MAXL) el("text",{x,y:NY+nn*12,"text-anchor":"middle","font-size":8.6,fill:"#71717a"},g).textContent=nl;
-    el("text",{x,y:H-52,"text-anchor":"middle","font-size":9,fill:"#a1a1aa"},g).textContent=m.note;
+
+    /* "what it needs" sits under the pips with real line breaks, clipped by line
+       count rather than by running into whatever is below it */
+    const needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
+    const nLines=wrap(needs,Math.max(14,Math.floor(cardW/5.4)),3);
+    nLines.forEach((ln,j)=>
+      el("text",{x,y:y0+CARD_H-46+j*12,"text-anchor":"middle","font-size":9,fill:"#71717a"},g)
+        .textContent=(j===nLines.length-1 && nLines.length===3)?ln+"…":ln);
+
+    el("text",{x,y:y0+CARD_H+13,"text-anchor":"middle","font-size":9.5,fill:"#a1a1aa"},g)
+      .textContent=m.note||"";
+    if(m.mv){
+      const bc={new:"#93c5fd",up:"#6ee7b7",down:"#fda4af",retired:"#d4d4d8"}[m.mv.tag];
+      el("rect",{x:x-30,y:y0+8,width:60,height:15,rx:7.5,fill:bc,opacity:.16},g);
+      el("text",{x,y:y0+18.8,"text-anchor":"middle","font-size":8,"font-weight":700,fill:bc,
+        "letter-spacing":.5},g).textContent=m.mv.txt.split(" ")[0].toUpperCase();
+    }
     hover(g,m);
   });
-  el("text",{x:20,y:16,"font-size":10,fill:"#71717a","letter-spacing":1}).textContent="PRE-INVESTIBLE · SCORED AGAINST THE 5 PROMOTION CRITERIA · FURTHEST RIGHT IS CLOSEST TO GRADUATING →";
+  el("text",{x:PAD,y:16,"font-size":10.5,fill:"#71717a","letter-spacing":1.1})
+    .textContent="PRE-INVESTIBLE · SCORED AGAINST THE 5 PROMOTION CRITERIA · "
+                +(rows>1?"READS LEFT TO RIGHT, THEN DOWN":"FURTHEST RIGHT IS CLOSEST TO GRADUATING →");
 }
 
 const LEGENDS={
@@ -717,7 +758,7 @@ const LEGENDS={
 const HINTS={
   life:"Click a stage on the axis to give it the width. Click any mark for the full detail.",
   driv:"37 driver→theme links from the data model. Hover a driver to isolate what it moves.",
-  radar:"Seven pre-investible themes. Click any for evidence and what it needs to graduate."};
+  radar:""};
 const isNarrow=()=>matchMedia("(max-width: 720px)").matches;
 function drawLifeBar(){
   /* The bubble chart needs width the phone does not have. This is V2.7's bar:
@@ -749,7 +790,10 @@ function render(){
   const bar=document.getElementById("lifebar"); if(bar) bar.remove();
   svg.style.display="";
   document.getElementById("legend").innerHTML=LEGENDS[view];
-  document.getElementById("hint").textContent=HINTS[view];
+  document.getElementById("hint").textContent = view==="radar"
+    ? `${MARKS.filter(m=>m.k==="radar").length} pre-investible themes, lowest score first. Click any for evidence and what it needs to graduate.`
+    : HINTS[view];
+  if(view!=="radar") svg.setAttribute("viewBox","0 0 1180 476");
   if(view==="life"){ if(isNarrow()){drawLifeBar();document.getElementById("legend").innerHTML="";
       document.getElementById("hint").textContent="Tap a stage for the themes behind it, then a theme for the detail.";}
     else {cur=layout(focus);drawLife(cur);} }

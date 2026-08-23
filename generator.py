@@ -191,8 +191,12 @@ SECICON = {"rates":"activity","capex":"layers","power":"zap","memory":"cpu","sem
            "nuclear":"atom","defence":"shield","cyber":"shield","geo":"globe","intl":"globe",
            "reshore":"factory","shipbuilding":"ship","labour":"users","privmkts":"landmark",
            "neoclouds":"layers"}
-RADICON = {"quantum":"atom","humanoid":"cpu","shipbuilding":"ship","trades":"users",
-           "labourdef":"shield","stablecoin":"coins","privmkts":"landmark"}
+RADICON = {"quantum":"atom","humanoid":"cpu","robot":"cpu","shipbuilding":"ship","maritime":"ship",
+           "trades":"users","labour":"shield","defensive":"shield","stablecoin":"coins",
+           "crypto":"coins","privmkts":"landmark","private":"landmark","fusion":"atom",
+           "nuclear":"atom","storage":"zap","batter":"zap","grid":"zap","power":"zap",
+           "water":"droplet","pfas":"droplet","medicine":"flask","biotech":"flask","techbio":"flask","bio":"flask",
+           "pharma":"flask","longevity":"flask","space":"sparkles","agri":"leaf","food":"leaf"}
 DRVICON = {"capex":"layers","rates":"activity","energy":"zap","fiscal":"landmark",
            "reshore":"factory","supply":"shield","labour":"users","intl":"globe","geo":"alert"}
 
