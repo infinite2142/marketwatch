@@ -170,6 +170,15 @@ LOOKBACK = "HEAD~30"
 # V1 tracked single-name exit flags (MSTR, MU, SPCX) alongside themes. The book is
 # themes now, so they are dropped from the page. The ledger keeps their history —
 # the MSTR flag being scored wrong on 21 Aug is a logged correction and stays there.
+# Words too generic to imply two entries are the same subject.
+GENERIC = {"power","energy","infrastructure","market","markets","global","industrial",
+           "policy","technology","systems","complex","assets","digital","compliance",
+           "premium","payments","service","automation"}
+
+def subject_tokens(name):
+    return {w for w in re.findall(r"[a-z]{4,}", (name or "").lower())
+            if w not in GENERIC}
+
 STOCK_FLAG = re.compile(r'\(id \d+\)|exit flag|catalyst watch', re.I)
 WINDOW   = 7
 CAP      = 420
@@ -459,12 +468,22 @@ def build_v28(data):
             bullets=[e for e in (t.get("flows", []) + t.get("tail", []))
                      if not BAD.search(e)][:4], crit=None))
 
-    dropped_flags = 0
+    # A theme lives at exactly one stage. If a subject is live on the radar or in the
+    # book, a faded copy of it is stale state, not history — the history belongs to the
+    # ledger. Today: "Fusion power" was both a 3/5 radar entry and a dormant one.
+    live_subjects = [subject_tokens(m["nm"]) for m in marks]
+    dropped_flags = dropped_dupes = revived_stuck = 0
     for bucket, items in (data.get("faded") or {}).items():
         for f in items:
             if STOCK_FLAG.search(f.get("nm", "")):
                 dropped_flags += 1
                 continue
+            fs = subject_tokens(f.get("nm", ""))
+            if fs and any(fs & ls for ls in live_subjects):
+                dropped_dupes += 1
+                continue
+            if f.get("revived"):
+                revived_stuck += 1
             marks.append(dict(
                 id=f["id"], nm=f["nm"], k="faded", st="Faded / Retired",
                 y=CALLY.get(f.get("call"), 40), call=f.get("call", ""),
@@ -480,6 +499,12 @@ def build_v28(data):
     if dropped_flags:
         print("note: %d single-name exit flag(s) hidden from the page (themes only); "
               "their history stays in the ledger" % dropped_flags, file=sys.stderr)
+    if dropped_dupes:
+        print("note: %d faded entr(y/ies) hidden because the same subject is live at an "
+              "earlier stage — a theme belongs to one stage" % dropped_dupes, file=sys.stderr)
+    if revived_stuck:
+        print("WARN: %d faded entr(y/ies) marked revived but still in Faded — a revival is "
+              "a move back to an earlier stage, not a label" % revived_stuck, file=sys.stderr)
 
     def clean_traj(lbl, raw):
         t = (lbl or "").strip()
