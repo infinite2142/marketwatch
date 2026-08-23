@@ -501,7 +501,6 @@ def build_v28(data):
                                               else "the last %d days" % span)
             digest = "%d signal%s over %s" % (n, "" if n == 1 else "s", when)
             placeholder = True
-        digest = _cap_words(digest, 118)
         cats.append(dict(
             sec=sec, n=n, icon=_pick(SECICON, sec, "activity"), newest=rows[0]["daysAgo"],
             span=span, digest=digest, placeholder=placeholder, nm=sec.upper(), sub=digest,

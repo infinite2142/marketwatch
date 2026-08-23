@@ -637,25 +637,22 @@ function drawRadar(){
       el("text",{x,y:yy+10,"text-anchor":"middle","font-size":7.5,
                  fill:met?"#09090b":"#52525b","font-weight":met?700:400},g).textContent=m.crit[k][0];
     }
-    el("text",{x,y:52,"text-anchor":"middle","font-size":21,"font-weight":700,fill:c},g).textContent=m.met+"/5";
-    el("text",{x,y:66,"text-anchor":"middle","font-size":9,fill:c,"letter-spacing":.6},g).textContent=m.status.toUpperCase();
-    {const fo=document.createElementNS(NS,"foreignObject");
-     fo.setAttribute("x",x-30);fo.setAttribute("y",80);fo.setAttribute("width",60);fo.setAttribute("height",60);
-     fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" style="color:${c};width:60px;height:60px;`+
-       `opacity:.92;display:flex;align-items:center;justify-content:center;line-height:0">${icon(m.icon)}</div>`;
-     const isvg=fo.querySelector("svg");          // .ic pins width/height in CSS — override both
-     isvg.setAttribute("stroke-width","1.15");
-     isvg.setAttribute("width","56"); isvg.setAttribute("height","56");
-     isvg.setAttribute("style","width:56px;height:56px;flex:0 0 56px;display:block"); g.appendChild(fo);}
+    el("text",{x,y:64,"text-anchor":"middle","font-size":21,"font-weight":700,fill:c},g).textContent=m.met+"/5";
+    el("text",{x,y:79,"text-anchor":"middle","font-size":9,fill:c,"letter-spacing":.6},g).textContent=m.status.toUpperCase();
+    {const SZ=39, k=SZ/24;                        // inline, not foreignObject: exact centring
+     const ig=el("g",{transform:`translate(${(x-SZ/2).toFixed(1)} 96) scale(${k.toFixed(4)})`,
+       fill:"none",stroke:c,"stroke-width":1.5,"stroke-linecap":"round","stroke-linejoin":"round",
+       opacity:.92},g);
+     ig.innerHTML=ICONS[m.icon]||ICONS.sparkles;}
     if(m.mv){const bc={new:"#93c5fd",up:"#6ee7b7",down:"#fda4af",retired:"#d4d4d8"}[m.mv.tag];
       el("rect",{x:x-30,y:H-32,width:60,height:14,rx:7,fill:bc,opacity:.16},g);
       el("text",{x,y:H-22,"text-anchor":"middle","font-size":8,"font-weight":700,fill:bc,"letter-spacing":.5},g)
         .textContent=m.mv.txt.split(" ")[0].toUpperCase();}
     const words=m.nm.split(" ");let line="",ln=0;
     words.forEach(w=>{ if((line+" "+w).trim().length>16){ 
-        el("text",{x,y:148+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
+        el("text",{x,y:150+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line; line=w; ln++; }
       else line=(line+" "+w).trim(); });
-    el("text",{x,y:148+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
+    el("text",{x,y:150+ln*14,"text-anchor":"middle","font-size":12,"font-weight":600,fill:"#f4f4f5"},g).textContent=line;
     /* cap at 4 lines: below that the text collides with the criteria pips */
     const MAXL=3, NY=332, needs=(m.body.find(b=>b[0]==="To graduate")||["",""])[1];
     let nl="",nn=0;
@@ -670,7 +667,7 @@ function drawRadar(){
     el("text",{x,y:H-52,"text-anchor":"middle","font-size":9,fill:"#a1a1aa"},g).textContent=m.note;
     hover(g,m);
   });
-  el("text",{x:20,y:14,"font-size":10,fill:"#71717a","letter-spacing":1}).textContent="PRE-INVESTIBLE · SCORED AGAINST THE 5 PROMOTION CRITERIA · FURTHEST RIGHT IS CLOSEST TO GRADUATING →";
+  el("text",{x:20,y:16,"font-size":10,fill:"#71717a","letter-spacing":1}).textContent="PRE-INVESTIBLE · SCORED AGAINST THE 5 PROMOTION CRITERIA · FURTHEST RIGHT IS CLOSEST TO GRADUATING →";
 }
 
 const LEGENDS={
@@ -782,7 +779,8 @@ document.getElementById("sigs").addEventListener("click",e=>{
   const li=e.target.closest("li[data-c]"); if(!li) return;
   const c=CATS[+li.dataset.c];
   openPanel(Object.assign({},c,{logHTML:`<div class="phead" style="--pc:#60a5fa">${icon(c.icon)}
-    <div><div class="pbig">${c.n}</div><div class="psm">${c.digest}</div></div></div>
+    <div><div class="pbig">${c.n}</div><div class="psm">${c.sec}</div></div></div>
+    <div class="pglance">${c.digest}</div>
     <div class="plabel">Signals</div>`+
     c.rows.map(r=>`<div class="vrow"><span class="ago">${r.ago}d</span>
       <span class="vhd"><b style="color:#f4f4f5;font-weight:600">${r.hd}</b><br>${r.sm}</span></div>`).join("")}));
