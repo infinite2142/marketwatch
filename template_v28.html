@@ -112,8 +112,10 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .phead svg{width:26px;height:26px;color:var(--pc);flex:0 0 26px}
 .pbig{font-size:23px;font-weight:700;color:var(--pc);line-height:1}
 .psm{font-size:11.5px;color:#a1a1aa;margin-top:3px}
-.phead.drv{gap:12px;flex-wrap:wrap}
-.phead.drv .dots{margin-left:auto}
+.phead.merged{gap:11px;flex-wrap:wrap;align-items:center;padding:14px 16px}
+.phead.merged .dots{margin-left:auto}
+.pstage{font-size:11px;font-weight:600;color:var(--pc);text-transform:uppercase;letter-spacing:.7px}
+.ptim{font-size:12px;color:#a1a1aa}
 .pdrv-s{margin-top:14px;font-size:14px;font-weight:600;color:#f4f4f5;line-height:1.55}
 .pglance{margin-top:12px;padding:13px 15px;background:#131316;border:1px solid #27272a;
   border-left:2px solid #3f3f46;border-radius:10px;font-size:13px;line-height:1.6;color:#e4e4e7}
@@ -434,25 +436,32 @@ function openPanel(o){
   const PC=o.k==="theme"?COL[o.st]:o.k==="radar"?(RC[o.status]||"#71717a")
           :o.k==="faded"?"#a1a1aa":o.k==="driver"?({tailwind:"#10b981",headwind:"#f43f5e",rotational:"#60a5fa"}[o.dir]||"#60a5fa"):"#a78bfa";
   if(o.k&&o.k!=="cat"){
+    /* one card, not three rows: stage, conviction and trend were each being
+       stated separately in the header, the chip row and again in the body. */
+    const dots=n=>[0,1,2,3,4].map(k=>`<i class="${k<n?"on":""}"></i>`).join("");
+    const MOM={imp:["up","improving"],flat:["flat","flat"],det:["down","rolling over"]};
+    let bits="";
     if(o.k==="driver"){
-      const dots=[0,1,2,3,4].map(k=>`<i class="${k<o.conv?"on":""}"></i>`).join("");
-      h+=`<div class="phead drv" style="--pc:${PC}">${icon(o.icon)}
-          <span class="dir ${o.dir}">${o.dirLbl}</span>
-          <span class="arc ${o.traj}">${o.arrow}</span>
-          <span class="dots" title="conviction ${o.conv}/5">${dots}</span></div>`;
+      bits=`<span class="dir ${o.dir}">${o.dirLbl}</span>
+            <span class="arc ${o.traj}">${o.arrow}</span>
+            <span class="dots" title="conviction ${o.conv}/5">${dots(o.conv)}</span>`;
+    }else if(o.k==="theme"){
+      const m=MOM[o.mom]||MOM.flat;
+      bits=`<span class="pstage" style="--pc:${PC}">${o.st}</span>
+            <span class="ptim">${o.timing||""}</span>
+            <span class="arc ${m[0]}" title="momentum ${m[1]}">${{up:"↗",flat:"→",down:"↘"}[m[0]]}</span>
+            <span class="dots" title="conviction ${o.conv}/5">${dots(o.conv)}</span>`;
+    }else if(o.k==="radar"){
+      bits=`<span class="pstage" style="--pc:${PC}">${o.met}/5 criteria</span>
+            <span class="ptim">${o.status}</span>
+            <span class="dots" title="${o.met} of 5 met">${dots(o.met)}</span>`;
+    }else if(o.k==="faded"){
+      bits=`<span class="pstage" style="--pc:${PC}">call ${o.call||"—"}</span>
+            <span class="ptim">${o.revived?"revived":"retired"}</span>`;
     }else{
-      const big=o.k==="theme"?o.conv+"/5":o.k==="radar"?o.met+"/5":o.k==="faded"?(o.call||"—"):
-                (o.sub||"").split("  ")[0];
-      h+=`<div class="phead" style="--pc:${PC}">${icon(KIND)}<div>
-          <div class="pbig">${big}</div><div class="psm">${o.k==="theme"?"conviction · "+(o.timing||o.st)
-          :o.k==="radar"?"criteria met · "+o.status:o.k==="faded"?"how the call scored":""}</div></div></div>`;
+      bits=`<span class="ptim">${(o.sub||"").split("  ")[0]}</span>`;
     }
-    const chips=[];
-    if(o.k==="theme"){chips.push(["stage",o.st]);if(o.mom)chips.push(["momentum",{imp:"improving",flat:"flat",det:"rolling over"}[o.mom]]);}
-    if(o.k==="radar")chips.push(["status",o.status]);
-  
-    if(chips.length) h+=`<div class="pchips">`+chips.map(([a,b])=>`<span class="pchip">${a} <b>${b}</b></span>`).join("")+`</div>`;
-    if(o.k==="driver"&&o.snap) h+=`<div class="pdrv-s">${o.snap}</div>`;
+    h+=`<div class="phead merged" style="--pc:${PC}">${icon(o.k==="driver"?o.icon:KIND)}${bits}</div>`;
   }
   if(o.glance) h+=`<div class="pglance">${o.glance}</div>`;
   if(o.mv){const c={new:"#60a5fa",up:"#10b981",down:"#f43f5e",retired:"#a1a1aa"}[o.mv.tag];

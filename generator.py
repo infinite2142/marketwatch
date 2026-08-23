@@ -291,6 +291,30 @@ def _desnout(txt):
     head = head[0].upper() + head[1:] if head else head
     return (head + (" " + rest if rest else "")).strip()
 
+def _trim_lead(text, glance):
+    """The glance is cut from the head of `read`, so printing both repeats those
+    sentences. Drop the overlap. Compares on letters only, since the glance has
+    been sentence-cased and the source has not."""
+    if not text or not glance:
+        return text
+    norm = lambda x: re.sub(r"[^a-z0-9]", "", (x or "").lower())
+    g = norm(glance)
+    parts = re.split(r'(?<=[.!?])\s+', text)
+    i = 0
+    acc = ""
+    while i < len(parts) and len(norm(acc)) < len(g):
+        acc += (" " if acc else "") + parts[i]
+        i += 1
+    if norm(acc)[:len(g)] == g and i < len(parts):
+        return " ".join(parts[i:]).strip()
+    # the other direction: the glance often reuses read's lead clause and adds to
+    # it, so read's first sentence is a prefix of the glance rather than vice versa
+    if len(parts) > 1:
+        first = norm(parts[0])
+        if first and len(first) > 20 and g.startswith(first[:min(len(first), 60)]):
+            return " ".join(parts[1:]).strip()
+    return text
+
 def _rp(t): return reader_prose(t)[0]
 def _au(t): return reader_prose(t)[1]
 
@@ -398,7 +422,7 @@ def build_v28(data):
             id=r["id"], nm=r["nm"], k="radar", st="Radar", y=n / 5 * 100, met=n,
             status=r["status"], icon=_pick(RADICON, r["id"], "sparkles"),
             mv=movement(r["id"], "Radar"),
-            sub="%s · %d/5 criteria" % (r["status"], n), note=r.get("eta", ""),
+            sub="Pre-investible", note=r.get("eta", ""),
             body=[["What it is", r.get("what", "")], ["To graduate", _rp(r.get("needs", ""))]],
             audit=(r.get("audit") or _au(r.get("needs", "")) + _au(r.get("summ", ""))),
             bullets=[e for e in r.get("evidence", []) if not BAD.search(e)][:4],
@@ -418,14 +442,15 @@ def build_v28(data):
             id="theme-" + t["id"], nm=t["nm"], k="theme", st=stage, y=t.get("y", 50),
             size=t.get("size", 100), conv=t.get("conv", 3), mom=mom, timing=tim,
             mv=movement("theme-" + t["id"], stage),
-            sub="%s · conviction %s/5 · %s, momentum %s"
-                % (t.get("stageLbl", stage), t.get("conv", 3), tim.lower(), MOMLBL.get(mom, mom)),
+            sub=("first seen " + t["first_seen"]) if t.get("first_seen") else "",
             note="",   # the runway size line already shows now -> proj; see the panel
             runway=t.get("runway"), now=t.get("now", ""), proj=t.get("proj", ""),
             hz=t.get("hz", ""), sizeUnit=t.get("sizeUnit", ""),
             nowEst=bool(t.get("nowEst")), projEst=bool(t.get("projEst")),
             glance=(t.get("glance") or summarise(t.get("read", ""))),
-            body=[["Includes", t.get("includes", "")], ["Read", _rp(t.get("read", ""))]],
+            body=[["Includes", t.get("includes", "")],
+                  ["Read", _desnout(_trim_lead(_rp(t.get("read", "")),
+                                      t.get("glance") or summarise(t.get("read", ""))))]],
             audit=(t.get("audit") or _au(t.get("read", ""))), access=acc,
             bullets=[e for e in (t.get("flows", []) + t.get("tail", []))
                      if not BAD.search(e)][:4], crit=None))
@@ -440,11 +465,11 @@ def build_v28(data):
                 id=f["id"], nm=f["nm"], k="faded", st="Faded / Retired",
                 y=CALLY.get(f.get("call"), 40), call=f.get("call", ""),
                 revived=bool(f.get("revived")), mv=movement(f["id"], "Faded / Retired"),
-                sub="%s · call scored %s" % (bucket, f.get("call", "?")),
+                sub=f.get("ran", ""),
                 note=f.get("ran", ""),
-                body=[["Why it rolled over", _rp(f.get("why", ""))],
-                      ["How the call scored", _rp(f.get("callTxt", ""))],
-                      ["Revival condition", _rp(f.get("reviveIf", ""))]],
+                body=[["Why it rolled over", _desnout(_rp(f.get("why", "")))],
+                      ["How the call scored", _desnout(_rp(f.get("callTxt", "")))],
+                      ["Revival condition", _desnout(_rp(f.get("reviveIf", "")))]],
                 audit=(f.get("audit") or _au(f.get("why", "")) + _au(f.get("callTxt", ""))),
                 bullets=[], crit=None))
 
@@ -492,8 +517,7 @@ def build_v28(data):
             detail=rest[:3],
             audit=(x.get("audit") or [p for p in (x.get("summary") or [])[1:] if BAD.search(p)]),
             bullets=[e for e in x.get("ev", []) if not BAD.search(e)][:4],
-            sub="%s · conviction %s/5" % (DIRLBL.get(x.get("dir", ""), "Rotational"),
-                                               x.get("conv", 3)),
+            sub="",
             note="", k="driver", crit=None))
 
     tiles = []
