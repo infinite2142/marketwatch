@@ -69,7 +69,26 @@ or which `python3` runs them. Keep it that way — a third-party import is what 
 | `fetch_data.py` | Pulls numeric metrics from FRED CSV + Stooq/Yahoo into the JSON. |
 | `.github/workflows/deploy.yml` | Renders and deploys on push; runs a staleness check on a schedule. |
 
-The prompts and the wrapper live in `../marketwatch-core`: `daily-prompt.md`, `daily-update.sh`, and `stream-log.py` (turns the analysis's stream-json into a live progress log).
+The prompts and the wrapper live in `../marketwatch-core`: `daily-prompt.md`, `daily-update.sh`,
+`stream-log.py` (turns the analysis's stream-json into a live progress log), and
+`collect_signals.py`.
+
+## Collection is separate from judgement
+
+Added 2026-08-23. `collect_signals.py` (in `marketwatch-core`) pulls dated news per domain into a
+rolling 30-day store and the daily **filters** it instead of gathering. It runs on its own
+LaunchAgent four times a day, plus once inside the run before the analysis.
+
+The reason is measured, not theoretical: on 2026-08-22 the analysis made **24 searches across ~30
+domains in 32 minutes** and wrote 66 signals — fewer than one search per domain — so the page was
+surfacing nearly everything it saw rather than filtering, because it saw very little. The first
+collector run returned **2,789 items in a 7-day window**.
+
+Collection is throughput work and needs no judgement; it does not belong inside a 90-minute session
+that is also doing the thinking. The store is gitignored: it is a cache, rebuildable from scratch,
+and committing it would bloat the history with thousands of headlines a day.
+
+Standard-library only, like `fetch_data.py`, and for the same reason.
 
 `index.html` is **gitignored**. It is rendered in CI and published straight from the Pages
 artifact. Never commit it — tracking it causes push conflicts.
