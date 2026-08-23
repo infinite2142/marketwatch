@@ -618,12 +618,12 @@ function goLife(){
 
 /* ---------- view 2: drivers (bipartite, real `drives` links) ---------- */
 function drawDrivers(){
-  svg.innerHTML="";const H=420;
+  svg.innerHTML="";
   const seen=[...new Set(DRIVERS.flatMap(d=>d.drives))];
   /* order targets by the mean index of the drivers touching them -- fewer crossings */
   const targets=seen.map(t=>{const ix=DRIVERS.map((d,i)=>d.drives.includes(t)?i:-1).filter(i=>i>=0);
     return {t,b:ix.reduce((a,b)=>a+b,0)/ix.length};}).sort((a,b)=>a.b-b.b).map(o=>o.t);
-  const LX=250, RX=930, top=26, bh=H-56;
+  const LX=262, RX=944, top=30, bh=H-58;
   const dy=bh/DRIVERS.length, ty=bh/targets.length;
   const dpos={},tpos={};
   DRIVERS.forEach((d,i)=>dpos[d.id]=top+dy*(i+.5));
@@ -637,13 +637,13 @@ function drawDrivers(){
     const y=dpos[d.id],g=el("g",{class:"mk"});
     el("rect",{x:14,y:y-13,width:LX-14,height:26,fill:"transparent"},g);
     const dc={tailwind:"#10b981",headwind:"#f43f5e",rotational:"#60a5fa"}[d.dir]||"#60a5fa";
-    el("circle",{cx:LX,cy:y,r:5+d.conv*1.3,fill:dc,opacity:.25,stroke:dc,"stroke-width":1.4},g);
-    {const SZ=13, k=SZ/24;
+    el("circle",{cx:LX,cy:y,r:6+d.conv*1.5,fill:dc,opacity:.25,stroke:dc,"stroke-width":1.5},g);
+    {const SZ=15, k=SZ/24;
      const ig=el("g",{transform:`translate(${(LX-SZ/2).toFixed(1)} ${(y-SZ/2).toFixed(1)}) scale(${k.toFixed(4)})`,
        fill:"none",stroke:dc,"stroke-width":1.9,"stroke-linecap":"round","stroke-linejoin":"round"},g);
      ig.innerHTML=ICONS[d.icon]||ICONS.activity;}
-    el("text",{x:LX-34,y:y-1,"text-anchor":"end","font-size":11,fill:"#f4f4f5"},g).textContent=short(d.nm,28);
-    el("text",{x:LX-34,y:y+10,"text-anchor":"end","font-size":9,fill:"#71717a"},g)
+    el("text",{x:LX-34,y:y-2,"text-anchor":"end","font-size":12.5,"font-weight":500,fill:"#f4f4f5"},g).textContent=short(d.nm,30);
+    el("text",{x:LX-34,y:y+11,"text-anchor":"end","font-size":10,fill:"#71717a"},g)
       .textContent="conviction "+d.conv+"/5 · drives "+d.drives.length;
     g.addEventListener("mouseenter",()=>svg.querySelectorAll(".lnk").forEach(l=>
       l.setAttribute("opacity",l.dataset.d===d.id?.75:.05)));
@@ -652,14 +652,14 @@ function drawDrivers(){
   });
   targets.forEach(t=>{
     const y=tpos[t],n=DRIVERS.filter(d=>d.drives.includes(t)).length,g=el("g",{class:"mk"});
-    el("circle",{cx:RX,cy:y,r:3.5+n*1.5,fill:"#a78bfa",opacity:.3,stroke:"#a78bfa","stroke-width":1.2},g);
-    el("text",{x:RX+15,y:y+3.5,"font-size":10.5,fill:"#a1a1aa"},g).textContent=t+"  ("+n+")";
+    el("circle",{cx:RX,cy:y,r:4+n*1.7,fill:"#a78bfa",opacity:.3,stroke:"#a78bfa","stroke-width":1.3},g);
+    el("text",{x:RX+16,y:y+4,"font-size":11.5,fill:"#a1a1aa"},g).textContent=t+"  ("+n+")";
     g.addEventListener("mouseenter",()=>svg.querySelectorAll(".lnk").forEach(l=>
       l.setAttribute("opacity",l.dataset.t===t?.75:.05)));
     g.addEventListener("mouseleave",()=>svg.querySelectorAll(".lnk").forEach(l=>l.setAttribute("opacity",.16)));
   });
-  el("text",{x:LX,y:14,"text-anchor":"end","font-size":10,fill:"#71717a","letter-spacing":1}).textContent="DRIVER";
-  el("text",{x:RX+15,y:14,"font-size":10,fill:"#71717a","letter-spacing":1}).textContent="THEMES IT DRIVES";
+  el("text",{x:LX,y:15,"text-anchor":"end","font-size":10.5,fill:"#71717a","letter-spacing":1.1}).textContent="DRIVER";
+  el("text",{x:RX+16,y:15,"font-size":10.5,fill:"#71717a","letter-spacing":1.1}).textContent="THEMES IT DRIVES";
 }
 
 /* ---------- view 3: radar ---------- */
@@ -860,7 +860,7 @@ document.getElementById("sigs").addEventListener("click",e=>{
   const c=CATS[+li.dataset.c];
   openPanel(Object.assign({},c,{logHTML:`<div class="phead sig" style="--pc:#60a5fa">${icon(c.icon)}
       <div class="sigtxt">${c.digest}</div></div>
-    <div class="plabel">${c.n} signal${c.n===1?"":"s"} · last 7 days</div>`+
+    <div class="plabel">Signals</div>`+
     c.rows.map(r=>`<div class="vrow"><span class="ago">${r.ago}d</span>
       <span class="vhd"><b style="color:#f4f4f5;font-weight:600">${r.hd}</b><br>${r.sm}</span></div>`).join("")}));
 });

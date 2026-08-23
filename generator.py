@@ -558,7 +558,9 @@ def build_v28(data):
             placeholder = True
         cats.append(dict(
             sec=sec, n=n, icon=_pick(SECICON, sec, "activity"), newest=rows[0]["daysAgo"],
-            span=span, digest=digest, placeholder=placeholder, nm=sec.upper(), sub=digest,
+            span=span, digest=digest, placeholder=placeholder, nm=sec.upper(),
+            sub="%d signal%s · newest %s" % (n, "" if n == 1 else "s",
+                 "today" if rows[0]["daysAgo"] == 0 else "%dd ago" % rows[0]["daysAgo"]),
             note="", k="cat", crit=None, bullets=[], body=[],
             rows=[dict(ago=r["daysAgo"], hd=r["headline"], src=r.get("src", ""),
                        sm=" ".join(r.get("summary", []))[:200]) for r in rows]))
