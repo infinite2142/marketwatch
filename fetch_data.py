@@ -442,7 +442,11 @@ def main():
     meta["last_fetch"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 
     with open(DATA_PATH, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        # indent=1 matches what the analysis step writes. They disagreed until
+        # 2026-08-24, so every fetch reformatted all ~9,800 lines and the analysis
+        # reformatted them back: a 19,233-line diff for five changed keys, which
+        # makes reviewing a day's change by diff impossible.
+        json.dump(data, f, ensure_ascii=False, indent=1)
 
     print("fetch_data.py: %d updated, %d stale/kept-prior"
           % (len(report["ok"]), len(report["stale"])))
