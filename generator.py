@@ -230,12 +230,20 @@ def whole_sentences(t, budget, floor=190):
     if not parts:
         return ""
     out = parts[0]
+    # The floor may overshoot, and fairly far: this narrative pairs short openers
+    # with 370-character sentences, so a tight ceiling leaves a 62-character section
+    # that reads as broken. Deriving a summary from someone else's prose cannot do
+    # better than this — daily-task.md now specs sections[].line so the run writes
+    # them, and this becomes the fallback.
+    ceiling = int(budget * 1.6)
     for p in parts[1:]:
-        if len(out) >= floor and len(out) + len(p) + 1 > budget:
-            break
+        nxt = len(out) + len(p) + 1
+        if len(out) >= floor:
+            if nxt > budget:
+                break
+        elif nxt > ceiling:
+            break                     # a short opener beats dragging in a 370-char sentence
         out += " " + p
-        if len(out) > budget:
-            break
     return out.strip()
 
 def _cap_words(t, n):
@@ -577,6 +585,7 @@ def build_v28(data):
             hist=t.get("hist") or [], chgw=t.get("chgw") or {}, k="tile", crit=None,
             bullets=[], nm=t["lbl"],
             sub=("as of " + m["as_of"]) if m.get("as_of") else "",
+            asOf=m.get("as_of", ""),
             note=t.get("chartRead", ""),
             body=[["What it is", t.get("back", "")],
                   ["Source", (m.get("source", "") or "") +
@@ -657,7 +666,7 @@ def build_v28(data):
     if written:
         for w in written:
             sections.append({"h": w.get("area", ""),
-                             "b": whole_sentences(_rp(w.get("line", "")), 420)})
+                             "b": whole_sentences(_rp(w.get("line", "")), 300, 150)})
     else:
         paras = [p.strip() for p in re.split(r'\n+', nar) if p.strip()]
         for p in paras:
@@ -676,7 +685,7 @@ def build_v28(data):
             if a not in merged:
                 continue
             full = " ".join(merged[a]).strip()
-            shown = whole_sentences(full, 420)
+            shown = whole_sentences(full, 300, 150)
             rest = full[len(shown):].strip()
             sections.append({"h": a, "b": shown, "more": rest})
     # The page's box is a summary of the day, not the opening of whichever section
@@ -685,11 +694,11 @@ def build_v28(data):
     # top-line finding.
     written_sum = (data.get("state_of_play", {}) or {}).get("summary")
     if written_sum:
-        lead = whole_sentences(_rp(written_sum), 420)
+        lead = whole_sentences(_rp(written_sum), 320, 160)
     else:
         first = next((p for p in re.split(r'\n+', nar) if p.strip()
                       and desk_share(p) < 0.5), "")
-        lead = whole_sentences(_desnout(_rp(first)), 400) or _rp(nar)
+        lead = whole_sentences(_desnout(_rp(first)), 320, 160) or _rp(nar)
     # The summary is cut from the narrative's opening paragraph, which also lands in
     # one of the areas — so that section would repeat it verbatim. Drop the overlap,
     # the same way a theme's `read` drops what its `glance` already carries.
@@ -699,7 +708,7 @@ def build_v28(data):
             keep = [x for x in sentences(sec["b"])
                     if re.sub(r"[^a-z0-9]", "", x.lower()) not in lead_set]
             if len(keep) != len(sentences(sec["b"])):
-                sec["b"] = " ".join(keep).strip() or whole_sentences(sec.get("more", ""), 420)
+                sec["b"] = " ".join(keep).strip() or whole_sentences(sec.get("more", ""), 300, 150)
                 break
     sections = [x for x in sections if x["b"].strip()]
     state = dict(lead=lead, summary=lead, sections=sections, audit=nar_audit[:8])

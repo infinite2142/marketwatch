@@ -155,7 +155,9 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .pcchg{font-size:13px;font-weight:600}
 .pcwin{margin-left:auto;font-size:10px;color:#71717a;background:#232326;border-radius:5px;padding:2px 7px}
 .pchart svg{width:100%;height:118px;display:block}
-.pcfoot{display:flex;justify-content:space-between;font-size:10.5px;color:#52525b;margin-top:7px;
+.pcaxis{display:flex;justify-content:space-between;font-size:10px;color:#71717a;margin-top:5px;
+  padding:0 2px;font-family:"SF Mono",ui-monospace,Menlo,monospace}
+.pcfoot{display:flex;justify-content:space-between;font-size:10.5px;color:#52525b;margin-top:6px;padding-top:6px;border-top:1px solid #232326;
   font-family:"SF Mono",ui-monospace,Menlo,monospace}
 .pglance{margin-top:12px;padding:13px 15px;background:#131316;border:1px solid #27272a;
   border-left:2px solid #3f3f46;border-radius:10px;font-size:13px;line-height:1.6;color:#e4e4e7}
@@ -541,6 +543,17 @@ function openPanel(o){
       const W=520,H=132,P=10;
       const d=pts.map((v,i)=>`${(P+i/(pts.length-1)*(W-P*2)).toFixed(1)},${(H-P-((v-lo)/rg)*(H-P*2)).toFixed(1)}`).join(" ");
       const chg=(o.chgw&&o.chgw[win])?o.chgw[win]:o.chg;
+      /* Dates derived from the tile's own as_of and the window's session count.
+         WINDOWS carries start/end strings but they are a stale fixture — they read
+         "10 Aug" against data dated the 24th — so they are not trusted here. */
+      const CAL={"1W":7,"1M":31,"3M":91,"6M":175,"1Y":350};
+      const end=o.asOf?new Date(o.asOf+"T00:00:00Z"):null;
+      const fmt=d=>d?(win==="1Y"
+        ?d.toLocaleDateString("en-GB",{month:"short",year:"numeric",timeZone:"UTC"})
+        :d.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})):"";
+      const back=n=>{const d=new Date(end);d.setUTCDate(d.getUTCDate()-n);return d;};
+      const span=CAL[win]||31;
+      const axis=end?[fmt(back(span)),fmt(back(Math.round(span/2))),fmt(end)]:["","",""];
       h+=`<div class="pchart">
         <div class="pchead"><span class="pcval">${o.val}</span>
           <span class="pcchg" style="color:${c}">${chg}</span>
@@ -552,6 +565,7 @@ function openPanel(o){
           <polygon fill="url(#pcg)" points="${P},${H-P} ${d} ${W-P},${H-P}"/>
           <polyline fill="none" stroke="${c}" stroke-width="1.8" points="${d}"/>
         </svg>
+        <div class="pcaxis"><span>${axis[0]}</span><span>${axis[1]}</span><span>${axis[2]}</span></div>
         <div class="pcfoot"><span>${pts.length} points</span><span>low ${lo.toLocaleString()}</span><span>high ${hi.toLocaleString()}</span></div>
       </div>`;
     }
