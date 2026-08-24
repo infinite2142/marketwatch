@@ -149,6 +149,14 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .pstage{font-size:11px;font-weight:600;color:var(--pc);text-transform:uppercase;letter-spacing:.7px}
 .ptim{font-size:12px;color:#a1a1aa}
 .pdrv-s{margin-top:14px;font-size:14px;font-weight:600;color:#f4f4f5;line-height:1.55}
+.pchart{margin-top:12px;background:#131316;border:1px solid #27272a;border-radius:12px;padding:13px 14px}
+.pchead{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.pcval{font-size:19px;font-weight:600;font-family:"SF Mono",ui-monospace,Menlo,monospace;color:#f4f4f5}
+.pcchg{font-size:13px;font-weight:600}
+.pcwin{margin-left:auto;font-size:10px;color:#71717a;background:#232326;border-radius:5px;padding:2px 7px}
+.pchart svg{width:100%;height:118px;display:block}
+.pcfoot{display:flex;justify-content:space-between;font-size:10.5px;color:#52525b;margin-top:7px;
+  font-family:"SF Mono",ui-monospace,Menlo,monospace}
 .pglance{margin-top:12px;padding:13px 15px;background:#131316;border:1px solid #27272a;
   border-left:2px solid #3f3f46;border-radius:10px;font-size:13px;line-height:1.6;color:#e4e4e7}
 .phead.sig{align-items:flex-start}
@@ -241,7 +249,12 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .hd.ph{color:#71717a;font-style:italic}
 .trj{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#a1a1aa;background:#232326;
      border-radius:999px;padding:2px 9px;white-space:nowrap;flex:0 0 auto}
-.sopp{margin-bottom:16px}
+.sopp{margin-bottom:18px}
+.sopmore-t{display:none}
+.sopmore-t.on{display:inline}
+.soplink{display:inline;background:none;border:0;padding:0;margin-left:4px;cursor:pointer;
+  color:#60a5fa;font:inherit;font-size:12.5px;text-decoration:underline;text-underline-offset:2px}
+.soplink:hover{color:#93c5fd}
 .sop{font-size:13px;color:#d4d4d8;line-height:1.68;margin:0}
 .mvnote{font-size:10.5px;color:#71717a;font-style:italic}
 .dlist{display:flex;flex-direction:column}
@@ -491,7 +504,7 @@ function openPanel(o){
   const KIND=o.k==="driver"?o.icon:({theme:"layers",radar:"sparkles",faded:"flat",tile:"activity",cat:"activity"}[o.k]||"layers");
   const PC=o.k==="theme"?COL[o.st]:o.k==="radar"?(RC[o.status]||"#71717a")
           :o.k==="faded"?"#a1a1aa":o.k==="driver"?({tailwind:"#10b981",headwind:"#f43f5e",rotational:"#60a5fa"}[o.dir]||"#60a5fa"):"#a78bfa";
-  if(o.k&&o.k!=="cat"){
+  if(o.k&&o.k!=="cat"&&o.k!=="tile"){
     /* one card, not three rows: stage, conviction and trend were each being
        stated separately in the header, the chip row and again in the body. */
     const dots=n=>[0,1,2,3,4].map(k=>`<i class="${k<n?"on":""}"></i>`).join("");
@@ -518,6 +531,30 @@ function openPanel(o){
       bits=`<span class="ptim">${(o.sub||"").split("  ")[0]}</span>`;
     }
     h+=`<div class="phead merged" style="--pc:${PC}">${icon(o.k==="driver"?o.icon:KIND)}${bits}</div>`;
+  }
+  if(o.k==="tile"){
+    const hs=histSlice(o,win);
+    if(hs){
+      const pts=thin(hs), lo=Math.min(...pts), hi=Math.max(...pts), rg=(hi-lo)||1;
+      const dir=pts[pts.length-1]-pts[0];
+      const c=dir>0?"#10b981":dir<0?"#f43f5e":"#a1a1aa";
+      const W=520,H=132,P=10;
+      const d=pts.map((v,i)=>`${(P+i/(pts.length-1)*(W-P*2)).toFixed(1)},${(H-P-((v-lo)/rg)*(H-P*2)).toFixed(1)}`).join(" ");
+      const chg=(o.chgw&&o.chgw[win])?o.chgw[win]:o.chg;
+      h+=`<div class="pchart">
+        <div class="pchead"><span class="pcval">${o.val}</span>
+          <span class="pcchg" style="color:${c}">${chg}</span>
+          <span class="pcwin">${win}</span></div>
+        <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+          <defs><linearGradient id="pcg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${c}" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="${c}" stop-opacity="0"/></linearGradient></defs>
+          <polygon fill="url(#pcg)" points="${P},${H-P} ${d} ${W-P},${H-P}"/>
+          <polyline fill="none" stroke="${c}" stroke-width="1.8" points="${d}"/>
+        </svg>
+        <div class="pcfoot"><span>${pts.length} points</span><span>low ${lo.toLocaleString()}</span><span>high ${hi.toLocaleString()}</span></div>
+      </div>`;
+    }
   }
   if(o.glance) h+=`<div class="pglance">${o.glance}</div>`;
   if(o.mv){const c={new:"#60a5fa",up:"#10b981",down:"#f43f5e",retired:"#a1a1aa"}[o.mv.tag];
@@ -1168,8 +1205,20 @@ document.getElementById("i6").innerHTML=icon("compass");
 document.getElementById("sop").textContent=STATE.lead||"";
 document.getElementById("sopmore").addEventListener("click",()=>openPanel({
   nm:"State of play",sub:META.reportLong||META.report||"",k:null,audit:STATE.audit||[],
-  logHTML:(STATE.sections||[]).map(x=>
-    (x.h?`<div class="plabel">${x.h}</div>`:"")+`<div class="ptext sopp">${x.b}</div>`).join("")}));
+  logHTML:`<div class="pglance">${STATE.summary||STATE.lead||""}</div>`+
+    (STATE.sections||[]).map((x,i)=>
+      (x.h?`<div class="plabel">${x.h}</div>`:"")+
+      `<div class="ptext sopp">${x.b}`+
+      (x.more?` <span class="sopmore-t" id="sm-${i}">${x.more}</span>`+
+              `<button class="soplink" data-i="${i}">Read the rest</button>`:"")+
+      `</div>`).join("")}));
+/* the sections were hard-cut and could not be opened, which read as a fault
+   rather than a summary. They end on a sentence now and the remainder expands. */
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".soplink"); if(!b) return;
+  const t=document.getElementById("sm-"+b.dataset.i);
+  if(t){t.classList.add("on"); b.remove();}
+});
 document.getElementById("sopmore").textContent=
   `Read the full state of play · ${(STATE.sections||[]).length} sections →`;
 {const n=MARKS.filter(m=>m.mv).length;

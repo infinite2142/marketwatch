@@ -216,6 +216,28 @@ def _pick(table, key, default):
             return val
     return default
 
+def sentences(t):
+    return [x for x in re.split(r'(?<=[.!?])\s+', (t or "").strip()) if x]
+
+def whole_sentences(t, budget, floor=190):
+    """Trim on a sentence boundary, never mid-clause. Always returns at least one
+    complete sentence even if it exceeds the budget — a finished thought that runs
+    long reads better than an unfinished one that fits — and keeps taking sentences
+    until `floor`, because this house style writes long ones and a lone short
+    opener next to a full paragraph looks like a rendering fault rather than a
+    summary."""
+    parts = sentences(t)
+    if not parts:
+        return ""
+    out = parts[0]
+    for p in parts[1:]:
+        if len(out) >= floor and len(out) + len(p) + 1 > budget:
+            break
+        out += " " + p
+        if len(out) > budget:
+            break
+    return out.strip()
+
 def _cap_words(t, n):
     """Trim to n characters on a word boundary. The signal line is a glance, not a
     paragraph; the full set is one click away."""
@@ -553,7 +575,8 @@ def build_v28(data):
         tiles.append(dict(
             lbl=t["lbl"], val=t["val"], chg=t["chg"], dir=t.get("dir", "flat"),
             hist=t.get("hist") or [], chgw=t.get("chgw") or {}, k="tile", crit=None,
-            bullets=[], nm=t["lbl"], sub="%s  %s" % (t["val"], t["chg"]),
+            bullets=[], nm=t["lbl"],
+            sub=("as of " + m["as_of"]) if m.get("as_of") else "",
             note=t.get("chartRead", ""),
             body=[["What it is", t.get("back", "")],
                   ["Source", (m.get("source", "") or "") +
@@ -633,7 +656,8 @@ def build_v28(data):
     sections, nar_audit = [], []
     if written:
         for w in written:
-            sections.append({"h": w.get("area", ""), "b": _cap_words(_rp(w.get("line", "")), 300)})
+            sections.append({"h": w.get("area", ""),
+                             "b": whole_sentences(_rp(w.get("line", "")), 420)})
     else:
         paras = [p.strip() for p in re.split(r'\n+', nar) if p.strip()]
         for p in paras:
@@ -643,14 +667,42 @@ def build_v28(data):
             body = " ".join(x for x in re.split(r'(?<=[.!?])\s+', p)
                             if not (BAD.search(x) or DESK.search(x))).strip() or p
             area = _classify(body)
-            sections.append({"h": area, "b": _cap_words(_desnout(body), 300)})
+            sections.append({"h": area, "b": _desnout(body)})
         merged = {}
         for sec in sections:                      # one entry per area, in fixed order
             merged.setdefault(sec["h"], []).append(sec["b"])
-        sections = [{"h": a, "b": _cap_words(" ".join(merged[a]), 300)}
-                    for a in AREAS if a in merged]
-    lead = _cap_words(sections[0]["b"], 260) if sections else _rp(nar)
-    state = dict(lead=lead, sections=sections, audit=nar_audit[:8])
+        sections = []
+        for a in AREAS:
+            if a not in merged:
+                continue
+            full = " ".join(merged[a]).strip()
+            shown = whole_sentences(full, 420)
+            rest = full[len(shown):].strip()
+            sections.append({"h": a, "b": shown, "more": rest})
+    # The page's box is a summary of the day, not the opening of whichever section
+    # happened to sort first. Prefer one the daily wrote; otherwise take the whole
+    # opening sentences of the narrative, which is where the house style puts the
+    # top-line finding.
+    written_sum = (data.get("state_of_play", {}) or {}).get("summary")
+    if written_sum:
+        lead = whole_sentences(_rp(written_sum), 420)
+    else:
+        first = next((p for p in re.split(r'\n+', nar) if p.strip()
+                      and desk_share(p) < 0.5), "")
+        lead = whole_sentences(_desnout(_rp(first)), 400) or _rp(nar)
+    # The summary is cut from the narrative's opening paragraph, which also lands in
+    # one of the areas — so that section would repeat it verbatim. Drop the overlap,
+    # the same way a theme's `read` drops what its `glance` already carries.
+    if lead:
+        lead_set = {re.sub(r"[^a-z0-9]", "", x.lower()) for x in sentences(lead)}
+        for sec in sections:
+            keep = [x for x in sentences(sec["b"])
+                    if re.sub(r"[^a-z0-9]", "", x.lower()) not in lead_set]
+            if len(keep) != len(sentences(sec["b"])):
+                sec["b"] = " ".join(keep).strip() or whole_sentences(sec.get("more", ""), 420)
+                break
+    sections = [x for x in sections if x["b"].strip()]
+    state = dict(lead=lead, summary=lead, sections=sections, audit=nar_audit[:8])
 
     meta = data.get("meta", {})
     return {
