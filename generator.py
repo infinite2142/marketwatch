@@ -455,6 +455,12 @@ def derive_changelog(limit=40):
     revs = [l.split() for l in out.split("\n") if l.strip()]
     if len(revs) < 2:
         # A shallow clone gives one revision and the walk finds nothing, which looks
+        # exactly like a quiet week. Say so rather than render an empty section.
+        print("WARN: change log needs history — only %d revision(s) visible. "
+              "Is this a shallow checkout? (deploy.yml sets fetch-depth)" % len(revs),
+              file=sys.stderr)
+    if len(revs) < 2:
+        # A shallow clone gives one revision and the walk finds nothing, which looks
         # exactly like a quiet week. Say so instead of rendering an empty section.
         print("WARN: change log needs history — only %d revision(s) visible. "
               "Is this a shallow checkout? (deploy.yml sets fetch-depth)" % len(revs),
@@ -500,6 +506,13 @@ def derive_changelog(limit=40):
                          if i != tid and subject_tokens(n) & subject_tokens(nm)), None)
             evs.append(dict(id=tid, nm=nm, kind="deduped" if twin else "removed",
                             frm=stage, twin=twin or ""))
+        # The log is for the book moving, not for tidying up after it. Two classes
+        # of event are housekeeping and are dropped: anything that is a single-name
+        # exit flag rather than a theme (MSTR, MU, SPCX — already hidden from the
+        # page), and a duplicate being cleared, which is a correction to the record
+        # rather than a change in what is tracked.
+        evs = [e for e in evs
+               if not STOCK_FLAG.search(e.get("nm", "")) and e["kind"] != "deduped"]
         if evs:
             by_date.setdefault(date, []).extend(evs)
     log = [dict(date=d, events=by_date[d]) for d in sorted(by_date, reverse=True)]
