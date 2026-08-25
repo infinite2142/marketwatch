@@ -453,6 +453,12 @@ def derive_changelog(limit=40):
         print("WARN: changelog unavailable (%s)" % e, file=sys.stderr)
         return []
     revs = [l.split() for l in out.split("\n") if l.strip()]
+    if len(revs) < 2:
+        # A shallow clone gives one revision and the walk finds nothing, which looks
+        # exactly like a quiet week. Say so instead of rendering an empty section.
+        print("WARN: change log needs history — only %d revision(s) visible. "
+              "Is this a shallow checkout? (deploy.yml sets fetch-depth)" % len(revs),
+              file=sys.stderr)
     revs.reverse()                                    # oldest first
     order = {s: i for i, s in enumerate(STAGE_ORDER_V28)}
     snaps = []

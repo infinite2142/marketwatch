@@ -31,6 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # generator.py derives the change log by walking this file's own history.
+          # The default shallow clone is one commit, so the walk had nothing to diff
+          # and the section rendered empty in CI while being correct locally — a
+          # silent failure, since an empty log looks like a quiet week. 60 covers the
+          # 40-revision window it reads, without cloning the whole history.
+          fetch-depth: 60
 
       - name: Set up Python
         uses: actions/setup-python@v5
