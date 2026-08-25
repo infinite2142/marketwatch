@@ -27,7 +27,7 @@ OUT_PATH      = os.path.join(HERE, "index.html")
 
 # JS var name in the template  ->  path into the JSON data
 INJECT_V28 = ["MARKS","DRIVERS","TILES","SIGNALS","CATS","SIGMETA",
-              "CRASH","META","WINDOWS","STATE"]
+              "CRASH","META","WINDOWS","STATE","CHANGELOG"]
 
 def find_literal_end(s, i):
     """Return index just past the JS array/object literal that starts at s[i] ('[' or '{').
@@ -415,6 +415,92 @@ def _classify(text):
             best, score = area, n
     return best
 
+CHANGE_LABEL = {
+    "added":     "added to the book",
+    "graduated": "graduated from radar",
+    "promoted":  "promoted",
+    "demoted":   "demoted",
+    "retired":   "retired",
+    "revived":   "revived",
+    "removed":   "removed",
+    "deduped":   "duplicate cleared",
+}
+
+def _stage_map(d):
+    """id -> (stage, name) for everything the book tracks at one revision."""
+    o = {}
+    for r in d.get("radar", []):
+        o[r["id"]] = ("Radar", r.get("nm", r["id"]))
+    for t in d.get("investible_themes", []):
+        o["theme-" + t["id"]] = (THEME_STAGE_V28.get((t.get("stage") or "").lower(), "Building"),
+                                 t.get("nm", t["id"]))
+    for _, items in (d.get("faded") or {}).items():
+        for f in items:
+            o[f["id"]] = ("Faded / Retired", f.get("nm", f["id"]))
+    return o
+
+def derive_changelog(limit=40):
+    """When themes joined, moved or left — read out of git history rather than kept
+    as a field. The data file is committed on every run, so the record already
+    exists and cannot fall out of step with the book the way a hand-maintained log
+    would. Costs about 0.4s across 29 revisions."""
+    try:
+        out = subprocess.run(["git", "log", "--format=%H %cs", "-n", str(limit),
+                              "--", "market_watch_data.json"],
+                             capture_output=True, text=True, check=True,
+                             cwd=HERE, timeout=30).stdout.strip()
+    except Exception as e:
+        print("WARN: changelog unavailable (%s)" % e, file=sys.stderr)
+        return []
+    revs = [l.split() for l in out.split("\n") if l.strip()]
+    revs.reverse()                                    # oldest first
+    order = {s: i for i, s in enumerate(STAGE_ORDER_V28)}
+    snaps = []
+    for sha, date in revs:
+        try:
+            raw = subprocess.run(["git", "show", sha + ":market_watch_data.json"],
+                                 capture_output=True, text=True, check=True,
+                                 cwd=HERE, timeout=30).stdout
+            snaps.append((date, _stage_map(json.loads(raw))))
+        except Exception:
+            continue
+    by_date = {}
+    for i in range(1, len(snaps)):
+        date, cur = snaps[i]
+        _, prev = snaps[i - 1]
+        evs = []
+        for tid, (stage, nm) in cur.items():
+            if tid not in prev:
+                evs.append(dict(id=tid, nm=nm, kind="added", to=stage))
+                continue
+            was = prev[tid][0]
+            if was == stage:
+                continue
+            if stage == "Faded / Retired":
+                kind = "retired"
+            elif was == "Faded / Retired":
+                kind = "revived"
+            elif was == "Radar":
+                kind = "graduated"
+            else:
+                kind = "promoted" if order.get(stage, 0) > order.get(was, 0) else "demoted"
+            evs.append(dict(id=tid, nm=nm, kind=kind, frm=was, to=stage))
+        for tid, (stage, nm) in prev.items():
+            if tid in cur:
+                continue
+            # "Fusion power removed" is misleading when the subject is still live
+            # somewhere else — that entry was a stale duplicate, not a retirement.
+            twin = next((n for i, (_, n) in cur.items()
+                         if i != tid and subject_tokens(n) & subject_tokens(nm)), None)
+            evs.append(dict(id=tid, nm=nm, kind="deduped" if twin else "removed",
+                            frm=stage, twin=twin or ""))
+        if evs:
+            by_date.setdefault(date, []).extend(evs)
+    log = [dict(date=d, events=by_date[d]) for d in sorted(by_date, reverse=True)]
+    for entry in log:                                 # stable, readable ordering
+        entry["events"].sort(key=lambda e: (list(CHANGE_LABEL).index(e["kind"]), e["nm"]))
+    return log
+
 def build_v28(data):
     """Everything template_v28.html renders, shaped once."""
     prior = _prior_stages(LOOKBACK)
@@ -722,6 +808,7 @@ def build_v28(data):
                         cats=len(cats), ops=sum(1 for s in win if is_ops(s)),
                         drvcats=drv_cats, total=len(sigs)),
         "CRASH": crash, "WINDOWS": data.get("windows", {}), "STATE": state,
+        "CHANGELOG": derive_changelog(),
         "META": dict(build=(meta.get("last_fetch") or "")[:10],
                      buildTime=(meta.get("last_fetch") or "")[11:16],
                      report=meta.get("report_date", ""),

@@ -315,6 +315,26 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
   .panel{width:100vw}
   ul.lst li b{min-width:0;flex:1 0 100%}
 }
+.clog{list-style:none;margin:0;padding:0 0 0 20px;position:relative}
+.clog::before{content:"";position:absolute;left:4px;top:7px;bottom:7px;border-left:1px solid #27272a}
+.clog > li{position:relative;padding:0 0 20px}
+.clog > li:last-child{padding-bottom:0}
+.clog .cdot{position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:50%;
+  background:#27272a;border:2px solid #09090b;box-shadow:0 0 0 1px #3f3f46}
+.cdate{font-size:10.5px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:#a1a1aa;
+  margin-bottom:9px;font-family:"SF Mono",ui-monospace,Menlo,monospace}
+.cevs{display:flex;flex-direction:column;gap:7px}
+.cev{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;background:none;border:0;padding:0;
+  text-align:left;font:inherit;color:inherit;cursor:pointer}
+.cev:hover .cnm{color:#fff}
+.ckind{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;
+  border-radius:999px;border:1px solid transparent;white-space:nowrap;flex:0 0 auto}
+.ckind.added,.ckind.revived{background:rgba(96,165,250,.13);color:#93c5fd;border-color:rgba(96,165,250,.42)}
+.ckind.graduated,.ckind.promoted{background:rgba(16,185,129,.13);color:#6ee7b7;border-color:rgba(16,185,129,.42)}
+.ckind.demoted,.ckind.retired{background:rgba(244,63,94,.13);color:#fda4af;border-color:rgba(244,63,94,.42)}
+.ckind.removed,.ckind.deduped{background:rgba(161,161,170,.10);color:#a1a1aa;border-color:rgba(161,161,170,.34)}
+.cnm{font-size:12.5px;color:#e4e4e7;font-weight:600}
+.cmv{font-size:11.5px;color:#71717a}
 .guard{font-size:10.5px;color:#52525b;border-top:1px solid #232326;margin-top:26px;padding-top:12px;line-height:1.6}
 
 /* Mobile section headers: the control goes hard right. Declared last because the
@@ -431,6 +451,17 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
     <div class="card"><div class="dlist" id="drivs"></div></div>
     <p class="mvnote" style="margin:10px 0 0">Macro forces behind the book &middot; a weekly state, not a daily headline &middot; click any for evidence</p></div>
 
+  <div class="sec">
+    <div class="sechead"><div class="lhs"><span id="i7"></span><h2>Change log</h2><div class="rule"></div></div>
+      <div class="seg" id="logfilt"></div><div class="rule"></div></div>
+    <div class="card">
+      <ul class="clog" id="clog"></ul>
+      <button class="viewall" id="clogmore">Show earlier changes</button>
+      <p class="hint">When a theme joined the book, moved stage or left it &mdash; read from the
+        data file's own history, so it cannot fall out of step with the book above.</p>
+    </div>
+  </div>
+
   <p class="guard">Research, not a portfolio. Nothing here is a holding, a position or a size &mdash;
   conviction is the strength of the case, and &ldquo;fading&rdquo; means largely priced, not sold.
   Every figure carries a dated source; estimates are marked as such.</p>
@@ -478,6 +509,7 @@ const icon=(n,cls)=>`<svg class="ic ${cls||''}" viewBox="0 0 24 24" fill="none" 
 const CATS=[];
 const SIGMETA={};
 const STATE={};
+const CHANGELOG=[];
 const MARKS=[];
 const DRIVERS=[];
 const TILES=[];
@@ -1184,6 +1216,49 @@ document.getElementById("grid").addEventListener("click",e=>{
 });
 document.getElementById("i5").innerHTML=icon("grid");
 document.getElementById("i6").innerHTML=icon("compass");
+document.getElementById("i7").innerHTML=icon("activity");
+/* Change log: dated events derived from git history, newest first. */
+(function(){
+  const LABEL={added:"added",graduated:"graduated",promoted:"promoted",demoted:"demoted",
+               retired:"retired",revived:"revived",removed:"removed",deduped:"duplicate cleared"};
+  const wrap=document.getElementById("clog"), more=document.getElementById("clogmore");
+  const filt=document.getElementById("logfilt");
+  let days=0, shown=4;
+  const inWindow=e=>{
+    if(!days) return true;
+    const d=(Date.now()-new Date(e.date+"T00:00:00Z").getTime())/86400000;
+    return d<=days;
+  };
+  filt.innerHTML=[["7d",7],["30d",30],["All",0]].map(([l,v])=>
+    `<button data-d="${v}"${v===0?' class="on"':''}>${l}</button>`).join("");
+  filt.addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b) return;
+    [...filt.children].forEach(c=>c.classList.toggle("on",c===b));
+    days=+b.dataset.d; shown=4; paint();
+  });
+  function paint(){
+    const rows=(CHANGELOG||[]).filter(inWindow);
+    wrap.innerHTML=rows.slice(0,shown).map(g=>
+      `<li><span class="cdot"></span><div class="cdate">${g.date}</div>
+        <div class="cevs">`+g.events.map(e=>{
+          const mv=e.frm&&e.to?`${e.frm} → ${e.to}`:(e.to||e.frm||"");
+          return `<button class="cev" data-id="${e.id}">
+            <span class="ckind ${e.kind}">${LABEL[e.kind]||e.kind}</span>
+            <span class="cnm">${e.nm}</span>
+            <span class="cmv">${mv}${e.twin?" · still live as "+e.twin:""}</span></button>`;
+        }).join("")+`</div></li>`).join("")
+      || `<li><div class="cmv">No changes in this period.</div></li>`;
+    more.style.display=rows.length>shown?"":"none";
+    more.textContent=`Show earlier changes · ${rows.length-shown} more`;
+  }
+  more.addEventListener("click",()=>{shown+=6;paint();});
+  wrap.addEventListener("click",e=>{
+    const b=e.target.closest(".cev"); if(!b) return;
+    const m=MARKS.find(x=>x.id===b.dataset.id);
+    if(m) openPanel(m);
+  });
+  paint();
+})();
 /* section nav: built from the sections that actually rendered, so it cannot list
    something that is not there */
 (function(){
