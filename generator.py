@@ -481,7 +481,31 @@ def derive_changelog(audit_index=None, limit=40):
         date, cur = snaps[i]
         _, prev = snaps[i - 1]
         evs = []
+        gone = {t: v for t, v in prev.items() if t not in cur}
+        fresh = {t: v for t, v in cur.items() if t not in prev}
+        # The daily renames a record when it moves bucket — faded-edgeai becomes
+        # radar-edgeai on a revival — so an id-keyed diff reads one move as a
+        # removal plus an addition. Pair them by subject and emit the move.
+        paired = set()
+        for nid, (nstage, nnm) in fresh.items():
+            for oid, (ostage, onm) in gone.items():
+                if oid in paired or not (subject_tokens(nnm) & subject_tokens(onm)):
+                    continue
+                if ostage == "Faded / Retired":
+                    kind = "revived"
+                elif nstage == "Faded / Retired":
+                    kind = "retired"
+                elif ostage == "Radar":
+                    kind = "graduated"
+                else:
+                    kind = ("promoted" if order.get(nstage, 0) > order.get(ostage, 0)
+                            else "demoted")
+                evs.append(dict(id=nid, nm=nnm, kind=kind, frm=ostage, to=nstage))
+                paired.add(oid); paired.add(nid)
+                break
         for tid, (stage, nm) in cur.items():
+            if tid in paired:
+                continue
             if tid not in prev:
                 evs.append(dict(id=tid, nm=nm, kind="added", to=stage))
                 continue
@@ -498,10 +522,8 @@ def derive_changelog(audit_index=None, limit=40):
                 kind = "promoted" if order.get(stage, 0) > order.get(was, 0) else "demoted"
             evs.append(dict(id=tid, nm=nm, kind=kind, frm=was, to=stage))
         for tid, (stage, nm) in prev.items():
-            if tid in cur:
+            if tid in cur or tid in paired:
                 continue
-            # "Fusion power removed" is misleading when the subject is still live
-            # somewhere else — that entry was a stale duplicate, not a retirement.
             twin = next((n for i, (_, n) in cur.items()
                          if i != tid and subject_tokens(n) & subject_tokens(nm)), None)
             evs.append(dict(id=tid, nm=nm, kind="deduped" if twin else "removed",
