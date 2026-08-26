@@ -322,18 +322,22 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .pgb:hover:not(:disabled){border-color:#3f3f46;color:#f4f4f5;background:#18181b}
 .pgb:disabled{opacity:.32;cursor:default}
 .pgn{font-size:11.5px;color:#71717a;font-variant-numeric:tabular-nums;white-space:nowrap}
-.clog{list-style:none;margin:0;padding:0 0 0 20px;position:relative}
-.clog::before{content:"";position:absolute;left:4px;top:7px;bottom:7px;border-left:1px solid #27272a}
-.clog > li{position:relative;padding:0 0 20px}
-.clog > li:last-child{padding-bottom:0}
-.clog .cdot{position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:50%;
-  background:#27272a;border:2px solid #09090b;box-shadow:0 0 0 1px #3f3f46}
+.clog{list-style:none;margin:0;padding:0 0 0 30px;position:relative}
+.clog::before{content:"";position:absolute;left:5px;top:10px;bottom:10px;border-left:1px solid #27272a}
+.clog > li{position:relative;padding:0}
+.clog > li + li{margin-top:30px}          /* between days, and clearly more than within one */
+.clog .cdot{position:absolute;left:-30px;top:3px;width:11px;height:11px;border-radius:50%;
+  background:#18181b;border:2px solid #09090b;box-shadow:0 0 0 1px #52525b}
 .cdate{font-size:10.5px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:#a1a1aa;
-  margin-bottom:9px;font-family:"SF Mono",ui-monospace,Menlo,monospace}
-.cevs{display:flex;flex-direction:column;gap:7px}
-.cev{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;background:none;border:0;padding:0;
-  text-align:left;font:inherit;color:inherit;cursor:pointer}
+  margin-bottom:10px;font-family:"SF Mono",ui-monospace,Menlo,monospace}
+.cevs{display:flex;flex-direction:column;gap:8px}
+.cev{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#131316;
+  border:1px solid #27272a;border-radius:10px;padding:11px 13px;width:100%;
+  text-align:left;font:inherit;color:inherit;cursor:pointer;transition:.12s}
+.cev:hover{border-color:#3f3f46;background:#18181b}
 .cev:hover .cnm{color:#fff}
+.cwhy{flex:1 0 100%;font-size:11.5px;color:#71717a;line-height:1.55;margin-top:3px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ckind{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;
   border-radius:999px;border:1px solid transparent;white-space:nowrap;flex:0 0 auto}
 .ckind.added,.ckind.revived{background:rgba(96,165,250,.13);color:#93c5fd;border-color:rgba(96,165,250,.42)}
@@ -544,7 +548,8 @@ function paged(host, itemsHTML, opts){
   function draw(){
     host._page=page;
     const from=page*per, slice=itemsHTML.slice(from,from+per);
-    host.innerHTML=`<div class="${wrapCls}">${slice.join("")}</div>`+
+    const body=(opts&&opts.renderSlice)?opts.renderSlice(slice):`<div class="${wrapCls}">${slice.join("")}</div>`;
+    host.innerHTML=body+
       (pages>1?`<div class="pgr">
         <button class="pgb" data-d="-1"${page===0?" disabled":""} aria-label="Previous">&larr;</button>
         <span class="pgn">${from+1}&ndash;${Math.min(from+per,itemsHTML.length)} of ${itemsHTML.length} ${label}</span>
@@ -1285,24 +1290,52 @@ document.getElementById("i7").innerHTML=icon("activity");
       g.events.forEach(e=>flat.push(Object.assign({date:g.date},e))));
     if(!flat.length){ wrap.innerHTML=`<li><div class="cmv">No changes in this period.</div></li>`;
       wrap._page=0; return; }
-    let last=null;
-    const items=flat.map(e=>{
-      const head=e.date!==last?`<div class="cdate">${e.date}</div>`:"";
-      last=e.date;
-      const mv=e.frm&&e.to?`${e.frm} → ${e.to}`:(e.to||e.frm||"");
-      return `<li><span class="cdot"${head?"":' style="opacity:0"'}></span>${head}
-        <div class="cevs"><button class="cev" data-id="${e.id}">
-          <span class="ckind ${e.kind}">${LABEL[e.kind]||e.kind}</span>
-          <span class="cnm">${e.nm}</span>
-          <span class="cmv">${mv}${e.twin?" · still live as "+e.twin:""}</span>
-        </button></div></li>`;
-    });
-    paged(wrap,items,{label:"changes"});
+    paged(wrap,flat,{label:"changes",renderSlice:slice=>{
+      const days=[];
+      slice.forEach(e=>{
+        if(!days.length||days[days.length-1].date!==e.date) days.push({date:e.date,evs:[]});
+        days[days.length-1].evs.push(e);
+      });
+      return days.map(d=>`<li><span class="cdot"></span><div class="cdate">${d.date}</div>
+        <div class="cevs">`+d.evs.map((e,k)=>{
+          const mv=e.frm&&e.to?`${e.frm} → ${e.to}`:(e.to||e.frm||"");
+          return `<button class="cev" data-i="${slice.indexOf(e)}">
+            <span class="ckind ${e.kind}">${LABEL[e.kind]||e.kind}</span>
+            <span class="cnm">${e.nm}</span>
+            <span class="cmv">${mv}${e.twin?" · still live as "+e.twin:""}</span>
+            ${e.why&&e.why.length?`<span class="cwhy">${e.why[0]}</span>`:""}</button>`;
+        }).join("")+`</div></li>`).join("");
+    }});
+    wrap._slice=flat;
   }
   wrap.addEventListener("click",e=>{
     const b=e.target.closest(".cev"); if(!b) return;
-    const m=MARKS.find(x=>x.id===b.dataset.id);
-    if(m) openPanel(m);
+    const per=10, page=wrap._page||0;
+    const ev=(wrap._slice||[]).slice(page*per,page*per+per)[+b.dataset.i];
+    if(!ev) return;
+    const m=MARKS.find(x=>x.id===ev.id);
+    const PC={added:"#60a5fa",revived:"#60a5fa",graduated:"#10b981",promoted:"#10b981",
+              demoted:"#f43f5e",retired:"#f43f5e",removed:"#a1a1aa",deduped:"#a1a1aa"}[ev.kind]||"#a1a1aa";
+    const mv=ev.frm&&ev.to?`${ev.frm} → ${ev.to}`:(ev.to||ev.frm||"");
+    const said={added:"joined the book",graduated:"graduated off the radar",
+                promoted:"moved up a stage",demoted:"moved down a stage",
+                retired:"was retired",revived:"was revived",removed:"left the book",
+                deduped:"had a duplicate record cleared"}[ev.kind]||ev.kind;
+    openPanel({
+      nm:ev.nm, sub:`${LABEL[ev.kind]||ev.kind} · ${ev.date}`, k:null,
+      logHTML:`<div class="phead merged" style="--pc:${PC}">
+          <span class="ckind ${ev.kind}">${LABEL[ev.kind]||ev.kind}</span>
+          <span class="ptim">${mv}</span></div>
+        <div class="plabel">What happened</div>
+        <div class="ptext">${ev.nm} ${said}${mv?` — ${mv}`:""}, recorded ${ev.date}.</div>`+
+        (ev.why&&ev.why.length
+          ? `<div class="plabel">Why</div>`+ev.why.map(w=>`<div class="ptext sopp">${w}</div>`).join("")
+          : `<div class="plabel">Why</div><div class="ptext" style="color:#71717a">`+
+            `No desk note was recorded against this change. Dated notes began on 23 August.</div>`)+
+        (m?`<button class="viewall" id="cgoto">Open ${ev.nm} &rarr;</button>`:"")
+    });
+    const go=document.getElementById("cgoto");
+    if(go) go.addEventListener("click",()=>openPanel(m));
   });
   paint();
 })();

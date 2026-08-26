@@ -439,7 +439,7 @@ def _stage_map(d):
             o[f["id"]] = ("Faded / Retired", f.get("nm", f["id"]))
     return o
 
-def derive_changelog(limit=40):
+def derive_changelog(audit_index=None, limit=40):
     """When themes joined, moved or left — read out of git history rather than kept
     as a field. The data file is committed on every run, so the record already
     exists and cannot fall out of step with the book the way a hand-maintained log
@@ -515,6 +515,20 @@ def derive_changelog(limit=40):
                if not STOCK_FLAG.search(e.get("nm", "")) and e["kind"] != "deduped"]
         if evs:
             by_date.setdefault(date, []).extend(evs)
+    # Why it happened, not just that it did: the daily writes dated `audit` notes,
+    # so an event on 23 August can carry that record's note from the same day.
+    ai = audit_index or {}
+    for d, evs in by_date.items():
+        for e in evs:
+            notes = [a for a in ai.get(e["id"], [])
+                     if isinstance(a, dict) and a.get("date") == d and a.get("note")]
+            if not notes:                       # else the newest note at or before it
+                earlier = sorted([a for a in ai.get(e["id"], [])
+                                  if isinstance(a, dict) and a.get("note")
+                                  and (a.get("date") or "") <= d],
+                                 key=lambda a: a.get("date") or "")
+                notes = earlier[-1:]
+            e["why"] = [a["note"] for a in notes][:2]
     log = [dict(date=d, events=by_date[d]) for d in sorted(by_date, reverse=True)]
     for entry in log:                                 # stable, readable ordering
         entry["events"].sort(key=lambda e: (list(CHANGE_LABEL).index(e["kind"]), e["nm"]))
@@ -827,7 +841,7 @@ def build_v28(data):
                         cats=len(cats), ops=sum(1 for s in win if is_ops(s)),
                         drvcats=drv_cats, total=len(sigs)),
         "CRASH": crash, "WINDOWS": data.get("windows", {}), "STATE": state,
-        "CHANGELOG": derive_changelog(),
+        "CHANGELOG": derive_changelog({m["id"]: m.get("audit") or [] for m in marks}),
         "META": dict(build=(meta.get("last_fetch") or "")[:10],
                      buildTime=(meta.get("last_fetch") or "")[11:16],
                      report=meta.get("report_date", ""),
