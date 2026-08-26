@@ -439,6 +439,97 @@ def _stage_map(d):
             o[f["id"]] = ("Faded / Retired", f.get("nm", f["id"]))
     return o
 
+# Why the book moved, for the window that predates dated `audit` notes.
+#
+# The change log derives its events from git history, but the reason for an event
+# comes from the record's own `audit` note, and those only began on 23 August. Nine
+# earlier events rendered with no explanation at all. The reasoning was never lost —
+# it is in the run reports and the ledger — it simply had nowhere on the record to
+# live, and for four of these there is no record left to put it on: faded-semicycle
+# was deleted outright, faded-edgeai and faded-fusion were renamed when they moved.
+#
+# So this is a fixed, closed table keyed by (date, id), not a field and not a habit.
+# It only fills an event that has no `audit` note, so a real note always wins, and it
+# will never grow: from 23 August the daily writes the note at the time of the move.
+BACKFILL_WHY = {
+ ("2026-08-17", "theme-energyprem"): [
+  "The page carried an Energy tile with no theme behind it, while the energy-premium "
+  "case was already confirmed at conviction 5 with a real listed basket. The first "
+  "reconciliation of the sector list against the theme list, run on 17 August, found "
+  "the two had drifted apart — 15 sectors against 13 themes — and this was the "
+  "sharpest of the gaps. Energy became a theme in its own right with four access "
+  "routes. The orphan on the other side, Electrification / Grid, was dropped instead: "
+  "it duplicated ground the AI power and electrical infrastructure entry already "
+  "covered, down to the same grid equipment and the same Section 232 carve-out."],
+ ("2026-08-17", "radar-privmkts"): [
+  "An August executive order directs regulators to ease private assets into 401(k) "
+  "plans, escalating the safe-harbour rule the Department of Labor proposed in March "
+  "2026. The distribution rails are already forming — KKR with Capital Group, "
+  "Wellington with Vanguard and Blackstone — aimed at target-date funds, and PwC "
+  "estimates that a 5% allocation to alternatives could unlock more than $1tn of "
+  "assets by 2030 (an estimate, not a measured figure). It enters the radar at 4 of "
+  "5 rather than as a theme because the missing leg is price: the policy and the "
+  "plumbing are documented, the market response is not."],
+ ("2026-08-17", "radar-shipbuilding"): [
+  "An August US national-security memorandum lets foreign shipbuilders with "
+  "substantial and durable US investments build up to two US Navy ships in their home "
+  "yards — the first time in decades. Hanwha Ocean rose 5% on 15 August and already "
+  "qualifies, having bought Philly Shipyard for $100m in December 2024 and announced "
+  "a roughly $5bn expansion; a July Navy request for information went to Korean yards "
+  "for tankers and destroyers. The constraint that lifted here is legal rather than "
+  "industrial, so the response can be quick. It enters at 4 of 5, needing flows and a "
+  "second award before it is more than one policy datapoint."],
+ ("2026-08-17", "faded-fusion"): [
+  "Recorded as watch-only rather than as an opportunity, because every leader was "
+  "private and there was no listed way to reach any of it: Commonwealth Fusion "
+  "Systems had raised $3.94bn including a $1bn round in July 2026, Helion $465m at a "
+  "$15.5bn valuation, and at least 17 startups were past $100m. Filing it here was "
+  "meant to make the domain's quiet read as 'private-market only' rather than as "
+  "'nothing happening'. That ground stopped holding on 23 August, when General Fusion "
+  "turned out to have been listed since 13 July, and fusion moved to the radar."],
+ ("2026-08-17", "theme-optics"): [
+  "Lumentum's result on 11-12 August did it: revenue $1.01bn, up 109% year on year, "
+  "EPS $3.23 against $2.97 expected, non-GAAP gross margin through 50% ahead of its "
+  "own target, record 800G shipments and 1.6T production started on plan, ramping "
+  "through calendar 2027 on custom hyperscaler clusters. The shares rose 14.19% on 12 "
+  "August. The drafted FCC ban on Chinese optics is treated as optional upside rather "
+  "than part of the case, and the risk runs both ways: indium phosphide, the "
+  "substrate every Western alternative depends on, sits under Chinese export "
+  "licensing."],
+ ("2026-08-19", "faded-agtech"): [
+  "A third consecutive sweep with no dated August catalyst, which fires the fading "
+  "flag. It was checked with a second, independently phrased search before firing — "
+  "two days earlier a domain had been recorded as silent while a $350m contract award "
+  "existed, so a quiet sweep is now tested for being a thin sweep before it is "
+  "believed. The structural picture is flat rather than deteriorating: AgFunder puts "
+  "2026 funding at $16.2bn, level with the prior year, with deal count down 12% and "
+  "capital rotating upstream. It returns on a dated funding round, policy action or "
+  "listed result large enough to name a basket around."],
+ ("2026-08-19", "faded-edgeai"): [
+  "A fourth consecutive quiet sweep, re-swept independently and confirmed rather than "
+  "carried forward on the earlier reading. Nothing was dated August: the named "
+  "hardware was still Snapdragon X2 Elite, and Qualcomm's Snapdragon Wear Elite is a "
+  "March 2026 part. The aggregator sources that had produced a false break in the "
+  "silence on 18 August surfaced again and were again not adopted. It came back to "
+  "the radar on 26 August on two primary-sourced launches."],
+ ("2026-08-24", "faded-semicycle"): [
+  "Removed under the rule that a revival is a move, not a flag. This entry sat in "
+  "Faded while its own text said it had already been revived and folded into the "
+  "AI-semiconductor cycle — a contradiction with a practical cost, because an idea "
+  "that is live but filed under Faded can only be found by scanning the one place "
+  "nobody looks for live ideas. Four other entries were moved or renamed on the same "
+  "ground the same day. Nothing is lost by removing it: the history stays in the "
+  "theme ledger, which is append-only and is where history belongs."],
+ ("2026-08-26", "radar-edgeai"): [
+  "NVIDIA's newsroom launched the Jetson Orin Nano 2 edge-AI robotics computer on 25 "
+  "August, with Cognex and Aptiv both confirming support the same day, and Apple's "
+  "newsroom launched the M6 and M5 Max and Ultra chips framed explicitly around "
+  "on-device AI compute. Two dated, primary-sourced launches with named listed "
+  "beneficiaries is this domain's own stated bar for coming back, and it is what the "
+  "previous nine quiet cycles never produced — their candidates were repackaged older "
+  "chips."],
+}
+
 def derive_changelog(audit_index=None, limit=40):
     """When themes joined, moved or left — read out of git history rather than kept
     as a field. The data file is committed on every run, so the record already
@@ -551,6 +642,8 @@ def derive_changelog(audit_index=None, limit=40):
                                  key=lambda a: a.get("date") or "")
                 notes = earlier[-1:]
             e["why"] = [a["note"] for a in notes][:2]
+            if not e["why"]:
+                e["why"] = BACKFILL_WHY.get((d, e["id"]), [])
     log = [dict(date=d, events=by_date[d]) for d in sorted(by_date, reverse=True)]
     for entry in log:                                 # stable, readable ordering
         entry["events"].sort(key=lambda e: (list(CHANGE_LABEL).index(e["kind"]), e["nm"]))

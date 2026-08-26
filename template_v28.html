@@ -1331,7 +1331,7 @@ document.getElementById("i7").innerHTML=icon("activity");
         (ev.why&&ev.why.length
           ? `<div class="plabel">Why</div>`+ev.why.map(w=>`<div class="ptext sopp">${w}</div>`).join("")
           : `<div class="plabel">Why</div><div class="ptext" style="color:#71717a">`+
-            `No desk note was recorded against this change. Dated notes began on 23 August.</div>`)+
+            `No note was recorded against this change.</div>`)+
         (m?`<button class="viewall" id="cgoto">Open ${ev.nm} &rarr;</button>`:"")
     });
     const go=document.getElementById("cgoto");
