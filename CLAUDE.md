@@ -67,7 +67,26 @@ or which `python3` runs them. Keep it that way — a third-party import is what 
 | `market_watch_data.json` | The data model, one key per section. Single source of truth for page content. |
 | `generator.py` | template + JSON → `index.html`. The only thing that writes `index.html`. It also builds the V2.8 view model: one dataset shaped once, so the lifecycle chart, the themes grid and the detail panel cannot disagree. |
 | `fetch_data.py` | Pulls numeric metrics from FRED CSV + Stooq/Yahoo into the JSON. |
-| `.github/workflows/deploy.yml` | Renders and deploys on push; runs a staleness check on a schedule. |
+| `.github/workflows/deploy.yml` | Renders and deploys on push; runs a staleness check on a schedule. Checks out with `fetch-depth: 60`, because the change log is derived from this file's own git history and a shallow clone renders it silently empty. |
+
+Two things live in `../marketwatch-core` that this repo depends on:
+`collect_signals.py` (gathering, on its own schedule) and `assess_run.py` (scores every run against
+the specs and reports cost). Read `../marketwatch-core/LEARNINGS.md` before changing anything
+structural — it is the retrospective, where this file is the manual.
+
+## Derived, not stored
+
+Three things on the page are computed at render rather than kept as fields, because a second copy
+drifts from the first:
+
+- the **lifecycle spine**, from radar + themes + faded
+- the **movement badges**, by diffing stages against a commit 30 days back
+- the **change log**, by walking the data file's own history — including pairing a rename
+  (`faded-edgeai` becoming `radar-edgeai`) into one "revived" event rather than a removal plus an
+  addition
+
+`generator.py` also strips desk-voice prose as a backstop. It is a backstop, not a standard: it can
+only delete, so a passage written for the desk survives as a shorter passage written for the desk.
 
 The prompts and the wrapper live in `../marketwatch-core`: `daily-prompt.md`, `daily-update.sh`,
 `stream-log.py` (turns the analysis's stream-json into a live progress log), and
