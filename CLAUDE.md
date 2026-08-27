@@ -139,11 +139,6 @@ date — a dated snapshot rather than a false claim of freshness. Regenerate it 
 composite moves; the `og:image` URL carries `?v=<the commit date of preview.png>`, so
 caches refetch when the picture changes and not on every render.
 
-The hero backdrop on the page is the same idea applied to the page itself: it is drawn
-from the S&P series `TILES` already carries, not from a picture, so it cannot disagree
-with the tile beside it, and it is coloured by its own direction — a year that fell does
-not render as a year that rose.
-
 ## Publish path
 
 Edit the JSON or the template → commit → push to `main` → Actions renders `index.html` and
