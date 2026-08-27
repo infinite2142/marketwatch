@@ -67,6 +67,8 @@ or which `python3` runs them. Keep it that way — a third-party import is what 
 | `market_watch_data.json` | The data model, one key per section. Single source of truth for page content. |
 | `generator.py` | template + JSON → `index.html`. The only thing that writes `index.html`. It also builds the V2.8 view model: one dataset shaped once, so the lifecycle chart, the themes grid and the detail panel cannot disagree. |
 | `fetch_data.py` | Pulls numeric metrics from FRED CSV + Stooq/Yahoo into the JSON. |
+| `make_preview.py` | Builds the link-preview card as HTML, to be screenshotted into `preview.png`. |
+| `preview.png` | The 1200×630 Open Graph card. **Committed**, because `og:image` needs a real URL. |
 | `.github/workflows/deploy.yml` | Renders and deploys on push; runs a staleness check on a schedule. Checks out with `fetch-depth: 60`, because the change log is derived from this file's own git history and a shallow clone renders it silently empty. |
 
 Two things live in `../marketwatch-core` that this repo depends on:
@@ -111,6 +113,36 @@ Standard-library only, like `fetch_data.py`, and for the same reason.
 
 `index.html` is **gitignored**. It is rendered in CI and published straight from the Pages
 artifact. Never commit it — tracking it causes push conflicts.
+
+## The share card
+
+What a shared link looks like in WhatsApp, iMessage, Slack or a tweet is split in two,
+because the two halves have different costs:
+
+- **The words** — `<title>`, `og:title`, `og:description` — are built by `generator.py`
+  in `head_meta()` on every render, from `meta.report_date_long`, the crash composite and
+  the opening sentence of `meta.refresh_label`. They cost nothing and are always current.
+- **The picture** — `preview.png` — needs a browser, so it is made by hand and committed:
+
+  ```
+  python3 make_preview.py market_watch_data.json /tmp/card.html
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new \
+    --screenshot=preview.png --window-size=1200,630 --hide-scrollbars \
+    --virtual-time-budget=5000 file:///tmp/card.html
+  ```
+
+`make_preview.py` is deliberately outside `generator.py` and outside the daily run: the
+daily must not depend on Chrome being installed, the same reason `fetch_data.py` is
+stdlib-only. The card therefore lags the page between regenerations, so it prints the
+crash composite with **the composite's own `as_of` beside it** rather than the report
+date — a dated snapshot rather than a false claim of freshness. Regenerate it when the
+composite moves; the `og:image` URL carries `?v=<the commit date of preview.png>`, so
+caches refetch when the picture changes and not on every render.
+
+The hero backdrop on the page is the same idea applied to the page itself: it is drawn
+from the S&P series `TILES` already carries, not from a picture, so it cannot disagree
+with the tile beside it, and it is coloured by its own direction — a year that fell does
+not render as a year that rose.
 
 ## Publish path
 

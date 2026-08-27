@@ -1,5 +1,9 @@
 <!doctype html><html><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Market Watch V2.8</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Market Watch V2.8</title>
+<!-- HEADMETA: generator.py replaces this line with the canonical, Open Graph and
+     Twitter tags, built from meta.report_date and the day's refresh label. The
+     card image itself is preview.png, made by make_preview.py. -->
+<!--HEADMETA--><style>
 *{box-sizing:border-box}
 body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
 .wrap{max-width:1280px;margin:0 auto;padding:18px 24px 90px}
@@ -68,6 +72,16 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 .hero{position:relative;margin:30px 0 64px}
 .herog{position:absolute;right:-6px;top:-34px;width:340px;height:300px;pointer-events:none}
 @media (max-width:1000px){.herog{display:none}}
+/* The backdrop is the S&P series the tile already carries, so the picture behind
+   the headline cannot disagree with the number beside it. Bleeds into the wrap's
+   own padding, and fades out under the copy rather than sitting behind it. */
+.herobg{position:absolute;left:-24px;right:-24px;bottom:-36px;height:168px;pointer-events:none;z-index:0;
+  -webkit-mask-image:linear-gradient(100deg,transparent 4%,rgba(0,0,0,.12) 30%,rgba(0,0,0,.5) 54%,#000 76%);
+          mask-image:linear-gradient(100deg,transparent 4%,rgba(0,0,0,.12) 30%,rgba(0,0,0,.5) 54%,#000 76%)}
+.hero h2,.hero p,.hero .disc,.herocap{position:relative;z-index:1}
+.herocap{position:absolute;left:0;bottom:-30px;font-size:10px;letter-spacing:.4px;
+  color:#3f3f46;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:720px){.herobg{height:136px;bottom:-20px}.herocap{font-size:9.5px;bottom:-24px}}
 .hero h2{font-size:29px;line-height:1.22;margin:0 0 14px;font-weight:600;letter-spacing:-.5px;max-width:22ch}
 .hero h2 em{font-style:normal;background:linear-gradient(95deg,#60a5fa,#a78bfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -370,6 +384,16 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
   <nav class="pnav" id="pnav"><span class="pbrand" id="pbrand"></span></nav>
 
   <div class="hero">
+    <svg class="herobg" id="herobg" viewBox="0 0 1000 168" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="hbFill" x1="0" y1="0" x2="0" y2="1">
+        <stop id="hbF0" offset="0%"  stop-color="#10b981" stop-opacity=".17"/>
+        <stop id="hbF1" offset="100%" stop-color="#10b981" stop-opacity="0"/>
+      </linearGradient></defs>
+      <path id="hbArea" fill="url(#hbFill)"/>
+      <path id="hbLine" fill="none" stroke="#10b981" stroke-opacity=".55" stroke-width="1.5"
+            stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="herocap" id="herocap"></div>
     <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
     <p>A daily read on markets, macro drivers and crash risk, alongside a running register of
        investible themes tracked from first sighting on the radar through to played-out.
@@ -1341,6 +1365,29 @@ document.getElementById("i7").innerHTML=icon("activity");
     if(go) go.addEventListener("click",()=>openPanel(m));
   });
   paint();
+})();
+/* Hero backdrop, drawn from the same TILES array the S&P tile renders — one
+   series, two places, no second copy to drift. Coloured by its own direction, so
+   a year that fell does not render as a year that rose. If the series is missing
+   or too short the graphic is removed rather than drawn from something invented. */
+(function(){
+  const svg=document.getElementById("herobg"); if(!svg) return;
+  const cap=document.getElementById("herocap");
+  const t=(typeof TILES!=="undefined"?TILES:[]).find(x=>/s&p/i.test(x.lbl||""));
+  const h=(t&&t.hist)||[];
+  if(h.length<8){svg.remove(); if(cap) cap.remove(); return;}
+  const W=1000,H=168,TOP=20,BOT=16;
+  const lo=Math.min(...h),hi=Math.max(...h),rng=(hi-lo)||1;
+  const X=i=>i*W/(h.length-1), Y=v=>TOP+(1-(v-lo)/rng)*(H-TOP-BOT);
+  const d=h.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join("");
+  document.getElementById("hbLine").setAttribute("d",d);
+  document.getElementById("hbArea").setAttribute("d",d+`L${W} ${H}L0 ${H}Z`);
+  const pc=(h[h.length-1]/h[0]-1)*100, col=pc>=0?"#10b981":"#f43f5e";
+  document.getElementById("hbLine").setAttribute("stroke",col);
+  document.getElementById("hbF0").setAttribute("stop-color",col);
+  document.getElementById("hbF1").setAttribute("stop-color",col);
+  if(cap) cap.textContent=`Backdrop: ${t.lbl}, last ${h.length} sessions · `+
+    `${pc>=0?"+":""}${pc.toFixed(1)}%`;
 })();
 /* section nav: built from the sections that actually rendered, so it cannot list
    something that is not there */
