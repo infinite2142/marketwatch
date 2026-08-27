@@ -149,6 +149,6 @@ jobs:
             --data-binary @- "https://ntfy.sh/$TOPIC" >/dev/null <<MSG
           Checked from GitHub, independent of the mini.
           analysis dated $REPORT
-          https://infinite2142.github.io/MarketWatch/
+          https://infinite2142.github.io/marketwatch/
           MSG
           echo "heartbeat sent: $TITLE ($REPORT, ${GAP}d)"
