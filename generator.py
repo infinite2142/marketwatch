@@ -417,6 +417,7 @@ def _classify(text):
 
 CHANGE_LABEL = {
     "added":     "added to the book",
+    "filed":     "recorded as faded",
     "graduated": "graduated from radar",
     "promoted":  "promoted",
     "demoted":   "demoted",
@@ -598,7 +599,13 @@ def derive_changelog(audit_index=None, limit=40):
             if tid in paired:
                 continue
             if tid not in prev:
-                evs.append(dict(id=tid, nm=nm, kind="added", to=stage))
+                # A record created straight into Faded never held a live stage here,
+                # so "added to the book · Faded / Retired" reads as a contradiction:
+                # the book is recording history, not gaining a theme. No `to` either,
+                # because the label already says where it landed.
+                evs.append(dict(id=tid, nm=nm, kind="filed")
+                           if stage == "Faded / Retired"
+                           else dict(id=tid, nm=nm, kind="added", to=stage))
                 continue
             was = prev[tid][0]
             if was == stage:

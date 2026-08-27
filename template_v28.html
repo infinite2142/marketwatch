@@ -343,7 +343,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
 .ckind.added,.ckind.revived{background:rgba(96,165,250,.13);color:#93c5fd;border-color:rgba(96,165,250,.42)}
 .ckind.graduated,.ckind.promoted{background:rgba(16,185,129,.13);color:#6ee7b7;border-color:rgba(16,185,129,.42)}
 .ckind.demoted,.ckind.retired{background:rgba(244,63,94,.13);color:#fda4af;border-color:rgba(244,63,94,.42)}
-.ckind.removed,.ckind.deduped{background:rgba(161,161,170,.10);color:#a1a1aa;border-color:rgba(161,161,170,.34)}
+.ckind.removed,.ckind.deduped,.ckind.filed{background:rgba(161,161,170,.10);color:#a1a1aa;border-color:rgba(161,161,170,.34)}
 .cnm{font-size:12.5px;color:#e4e4e7;font-weight:600}
 .cmv{font-size:11.5px;color:#71717a}
 .guard{font-size:10.5px;color:#52525b;border-top:1px solid #232326;margin-top:26px;padding-top:12px;line-height:1.6}
@@ -1265,8 +1265,9 @@ document.getElementById("i6").innerHTML=icon("compass");
 document.getElementById("i7").innerHTML=icon("activity");
 /* Change log: dated events derived from git history, newest first. */
 (function(){
-  const LABEL={added:"added",graduated:"graduated",promoted:"promoted",demoted:"demoted",
-               retired:"retired",revived:"revived",removed:"removed",deduped:"duplicate cleared"};
+  const LABEL={added:"added",filed:"recorded as faded",graduated:"graduated",
+               promoted:"promoted",demoted:"demoted",retired:"retired",revived:"revived",
+               removed:"removed",deduped:"duplicate cleared"};
   const wrap=document.getElementById("clog");
   const filt=document.getElementById("logfilt");
   let days=0;
@@ -1315,9 +1316,11 @@ document.getElementById("i7").innerHTML=icon("activity");
     if(!ev) return;
     const m=MARKS.find(x=>x.id===ev.id);
     const PC={added:"#60a5fa",revived:"#60a5fa",graduated:"#10b981",promoted:"#10b981",
-              demoted:"#f43f5e",retired:"#f43f5e",removed:"#a1a1aa",deduped:"#a1a1aa"}[ev.kind]||"#a1a1aa";
+              demoted:"#f43f5e",retired:"#f43f5e",removed:"#a1a1aa",deduped:"#a1a1aa",
+              filed:"#a1a1aa"}[ev.kind]||"#a1a1aa";
     const mv=ev.frm&&ev.to?`${ev.frm} → ${ev.to}`:(ev.to||ev.frm||"");
-    const said={added:"joined the book",graduated:"graduated off the radar",
+    const said={added:"joined the book",filed:"was recorded as faded",
+                graduated:"graduated off the radar",
                 promoted:"moved up a stage",demoted:"moved down a stage",
                 retired:"was retired",revived:"was revived",removed:"left the book",
                 deduped:"had a duplicate record cleared"}[ev.kind]||ev.kind;
@@ -1327,7 +1330,7 @@ document.getElementById("i7").innerHTML=icon("activity");
           <span class="ckind ${ev.kind}">${LABEL[ev.kind]||ev.kind}</span>
           <span class="ptim">${mv}</span></div>
         <div class="plabel">What happened</div>
-        <div class="ptext">${ev.nm} ${said}${mv?` — ${mv}`:""}, recorded ${ev.date}.</div>`+
+        <div class="ptext">${ev.nm} ${said}${mv?` — ${mv}`:""} on ${ev.date}.</div>`+
         (ev.why&&ev.why.length
           ? `<div class="plabel">Why</div>`+ev.why.map(w=>`<div class="ptext sopp">${w}</div>`).join("")
           : `<div class="plabel">Why</div><div class="ptext" style="color:#71717a">`+
