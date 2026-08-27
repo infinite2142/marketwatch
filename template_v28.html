@@ -70,7 +70,7 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
   .pnav{margin:0 -14px;padding:8px 14px}
 }
 .hero{position:relative;margin:30px 0 64px}
-.herog{position:absolute;right:-6px;top:-34px;width:340px;height:300px;pointer-events:none;z-index:0}
+.herog{position:absolute;right:26px;top:-34px;width:340px;height:300px;pointer-events:none;z-index:0}
 .hero h2,.hero p,.hero .disc{position:relative;z-index:1}
 /* Portrait: the radar does not fit beside the copy, so it goes behind it — pushed
    off the right edge, faint, and faded out where the text starts. `overflow:hidden`
@@ -79,11 +79,11 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
    first attempt at this made the phone scroll sideways. */
 @media (max-width:1000px){
   .hero{overflow:hidden}
-  .herog{right:-64px;top:50%;bottom:auto;transform:translateY(-50%);width:326px;height:326px;opacity:.5;
+  .herog{right:-28px;top:50%;bottom:auto;transform:translateY(-50%);width:326px;height:326px;opacity:.5;
     -webkit-mask-image:linear-gradient(90deg,transparent 6%,rgba(0,0,0,.28) 38%,#000 74%);
             mask-image:linear-gradient(90deg,transparent 6%,rgba(0,0,0,.28) 38%,#000 74%)}
 }
-@media (max-width:560px){.herog{right:-78px;width:290px;height:290px;opacity:.46}}
+@media (max-width:560px){.herog{right:-40px;width:290px;height:290px;opacity:.46}}
 .hero h2{font-size:29px;line-height:1.22;margin:0 0 14px;font-weight:600;letter-spacing:-.5px;max-width:22ch}
 .hero h2 em{font-style:normal;background:linear-gradient(95deg,#60a5fa,#a78bfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
