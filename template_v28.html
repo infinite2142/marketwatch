@@ -360,6 +360,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .seg button.on{background:var(--ink);color:var(--bg);font-weight:600}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px}
 .cond{display:grid;grid-template-columns:minmax(230px,.8fr) 3fr;gap:16px}
+/* The composite answers the crash half's question, not the opportunities half's.
+   It stays in the shared Conditions band — which is the first section either way
+   — and is hidden when the reader is on the other half, where the row is market
+   numbers and nothing else. The tiles take the full width when it goes. */
+:root[data-half="themes"] .gauge-card{display:none}
+:root[data-half="themes"] .cond{grid-template-columns:1fr}
 .gauge-card{cursor:pointer;transition:.15s}
 .gauge-card:hover{border-color:var(--line-2)}
 .gauge-card{background:linear-gradient(150deg,var(--raise),var(--card));border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column}
@@ -704,11 +710,12 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
     </div>
   </div>
 
-  <p class="vnote">The composite and the market tiles above answer both halves of this
-    page, so they sit outside either. <b>Crash risk</b> is the detail behind that number:
+  <p class="vnote">The market tiles above answer both halves of this page, so they sit
+    outside either. <b>Crash risk</b> adds the composite reading and the detail behind it:
     the indicators it is built from, the scenarios it is a reading on, how far each one
     falls and what would move it. <b>Opportunities</b> is the theme register — what is
-    forming, what is confirmed and what has played out. Switch in the bar above.</p>
+    forming, what is confirmed and what has played out, and it stays on the markets.
+    Switch in the bar above.</p>
 
   <div class="vw" id="v-crash">
 
@@ -1462,16 +1469,75 @@ document.getElementById("seg").addEventListener("click",e=>{
 /* ---------- conditions ---------- */
 (function(){
   const g=document.getElementById("gauge"),v=CRASH.v;
-  const col=v>=70?"var(--bad)":v>=40?"var(--warn)":"var(--ok)";
-  const cx=58,cy=60,r=44,a=Math.PI*(1-v/100);
-  const mk=(t,at)=>{const e=document.createElementNS(NS,t);for(const k in at)setA(e,k,at[k]);g.appendChild(e);};
+  const band=x=>x>=70?"var(--bad)":x>=40?"var(--warn)":"var(--ok)";
+  const col=band(v);
+  const cx=58,cy=60,r=44;
+  const mk=(t,at)=>{const e=document.createElementNS(NS,t);for(const k in at)setA(e,k,at[k]);
+    g.appendChild(e);return e;};
   mk("path",{d:`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}`,fill:"none",stroke:"var(--line)","stroke-width":9,"stroke-linecap":"round"});
-  mk("path",{d:`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${(cx+r*Math.cos(a)).toFixed(1)} ${(cy-r*Math.sin(a)).toFixed(1)}`,
-             fill:"none",stroke:col,"stroke-width":9,"stroke-linecap":"round"});
-  mk("text",{x:cx,y:cy-4,"text-anchor":"middle","font-size":25,"font-weight":700,fill:col});
-  g.lastChild.textContent=v;
-  document.getElementById("glvl").textContent=CRASH.lvl;
-  document.getElementById("glvl").style.color=col;
+  const arc=mk("path",{fill:"none",stroke:col,"stroke-width":9,"stroke-linecap":"round"});
+  const num=mk("text",{x:cx,y:cy-4,"text-anchor":"middle","font-size":25,"font-weight":700,fill:col});
+  const lvl=document.getElementById("glvl");
+  lvl.textContent=CRASH.lvl;
+  lvl.style.color=col;
+  /* Paint the gauge at any value, not just its own. An arc whose end point equals
+     its start is omitted by the renderer, so zero draws nothing rather than a
+     stray dot, which is what makes starting from zero clean. */
+  function paint(x){
+    const a=Math.PI*(1-x/100), c=band(x);
+    arc.setAttribute("d",`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 `+
+      `${(cx+r*Math.cos(a)).toFixed(1)} ${(cy-r*Math.sin(a)).toFixed(1)}`);
+    arc.style.stroke=c; num.style.fill=c; num.textContent=Math.round(x);
+  }
+  /* ---- the composite ramps up from zero the first time it is seen ----------
+     The Autonomy Index's treatment: 1.1s, ease-out cubic, counted from zero.
+     Started by an IntersectionObserver rather than on load, because the gauge is
+     hidden on the opportunities half — a deep link to #themes would otherwise
+     spend the animation on a display:none element and the reader would arrive at
+     a gauge that had already finished. The arc, the number and their colour move
+     together, so the reading is seen climbing through calm and watch into the
+     band it ends in, and the level word fades in behind it. Reduced motion gets
+     the final state and no animation at all. */
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduced){ paint(v); }
+  else{
+    paint(0); lvl.style.opacity=0;
+    let started=false;
+    const run=()=>{
+      if(started) return; started=true;
+      const dur=1100, t0=performance.now();
+      let done=false;
+      /* A gauge left part-way up does not read as an animation that stalled, it
+         reads as a number: 5, in green, is a claim that nothing is wrong. rAF is
+         throttled to nothing in a background tab and can be driven at zero in
+         some embedded views, so a timer settles the true value either way. */
+      const settle=()=>{ if(done) return; done=true; paint(v); lvl.style.opacity=""; };
+      (function step(now){
+        if(done) return;
+        const p=Math.min((now-t0)/dur,1), e=1-Math.pow(1-p,3);
+        paint(e*v); lvl.style.opacity=e;
+        if(p<1) requestAnimationFrame(step); else settle();
+      })(performance.now());
+      setTimeout(settle,dur+600);
+    };
+    /* Trigger on plain visibility rather than an IntersectionObserver. The
+       observer is the tidier API but it is also the one that can quietly never
+       deliver — and the failure mode here is the worst one available: a gauge
+       frozen at 0, in green, reading as "no crash risk" rather than as an
+       animation that did not play. A rect test cannot not-fire. */
+    const card=document.getElementById("gcard");
+    const onScreen=()=>{
+      if(!card.offsetParent) return false;              // display:none on the other half
+      const r=card.getBoundingClientRect();
+      return r.bottom>0 && r.top<innerHeight;
+    };
+    const check=()=>{ if(!started && onScreen()) run(); };
+    addEventListener("scroll",check,{passive:true});
+    addEventListener("resize",check);
+    /* the half switch reveals the card without scrolling, so it asks too */
+    window.__gaugeCheck=check;
+    check();
+  }
   document.getElementById("gread").textContent=CRASH.read;
   document.getElementById("gcard").addEventListener("click",()=>{
     const SC={calm:"var(--ok)",watch:"var(--warn)",stress:"var(--bad)"};
@@ -2044,6 +2110,8 @@ const VIEWS=[["crash","Crash risk","alert"],["themes","Opportunities","sparkles"
   let secs=[],links=[];
   function build(){
     document.querySelectorAll(".vw").forEach(v=>v.classList.toggle("on",v.id==="v-"+half));
+    document.documentElement.setAttribute("data-half",half);
+    if(window.__gaugeCheck) window.__gaugeCheck();
     vsw.querySelectorAll("button").forEach(b=>{
       const on=b.dataset.v===half;
       b.classList.toggle("on",on); b.setAttribute("aria-pressed",on);});

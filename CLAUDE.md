@@ -128,8 +128,18 @@ the render engine — and a second copy drifts. Here the switch toggles which `.
 the flow and writes `#crash` / `#themes` into the URL with `replaceState`, so either half is still a
 link someone can send, and a link to a *section* (`#s-scenarios`) resolves to the half that owns it.
 
-- **Above the split**, because they answer both: the masthead, the freshness chip, the hero, the
-  composite gauge and the market tiles (`Conditions`), and the guardrail footer.
+- **Above the split**, because they answer both: the masthead, the freshness stamp, the market
+  tiles (`Conditions`), and the guardrail footer.
+- **The composite gauge** sits in that shared `Conditions` band but is shown on the crash half
+  only (`:root[data-half]`, set by the nav's `build()`), and the tiles take the full width when
+  it goes. Opportunities is the theme register and stays on the markets; a crash reading over it
+  is answering a question that half does not ask.
+- **The composite ramps from zero** the first time it is seen — 1.1s ease-out cubic, arc, number
+  and colour together, the level word fading in behind, the same treatment as the Autonomy
+  Index's headline. It is triggered by a rect test on scroll/resize/half-switch rather than an
+  IntersectionObserver, and a `setTimeout` settles the true value regardless. Both choices are
+  about one failure mode: a gauge stalled at 5 in green is not a visibly broken animation, it is
+  a false claim that nothing is wrong. `prefers-reduced-motion` skips it entirely.
 - **Crash risk**: Indicators (10 buckets, 35 indicators), Scenarios, If it falls, Precedents,
   What next.
 - **Opportunities**: State of play, The book, All themes, Signals, Drivers, Change log — unchanged.
