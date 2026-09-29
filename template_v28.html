@@ -371,9 +371,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .gauge-card{cursor:pointer;transition:.15s}
 .gauge-card:hover{border-color:var(--line-2)}
 .gauge-card{background:linear-gradient(150deg,var(--raise),var(--card));border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column}
-.gwrap{display:flex;align-items:center;gap:14px}
-.gauge{width:118px;height:72px;flex:0 0 118px}
-.glvl{font-size:19px;font-weight:600;line-height:1.15}
+.gwrap{display:flex;align-items:center;gap:18px}
+.gauge{width:164px;height:100px;flex:0 0 164px}
+.glvl{font-size:22px;font-weight:600;line-height:1.15}
 .gsub{font-size:10px;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
 .gread{font-size:11px;color:var(--sub);line-height:1.45;margin-top:9px;border-top:1px solid var(--line);padding-top:9px}
 /* The first band is one section carrying two different things, because the two
@@ -393,10 +393,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 :root[data-half="crash"] #tf{display:none}
 @media (min-width:761px){
   :root[data-half="crash"] .gauge-card{flex-direction:row;align-items:center;
-    gap:24px;padding:18px 22px}
-  :root[data-half="crash"] .gwrap{flex:0 0 auto}
-  :root[data-half="crash"] .gread{margin-top:0;padding:2px 0 2px 24px;flex:1;
-    border-top:0;border-left:1px solid var(--line);font-size:12.5px;max-width:92ch}
+    gap:28px;padding:24px 28px}
+  :root[data-half="crash"] .gwrap{flex:0 0 auto;gap:22px}
+  :root[data-half="crash"] .gauge{width:230px;height:140px;flex:0 0 230px}
+  :root[data-half="crash"] .gsub{font-size:11px;letter-spacing:1.3px;margin-bottom:5px}
+  :root[data-half="crash"] .glvl{font-size:29px;letter-spacing:-.4px}
+  :root[data-half="crash"] .gread{margin-top:0;padding:4px 0 4px 28px;flex:1;
+    border-top:0;border-left:1px solid var(--line);font-size:13px;line-height:1.6;
+    max-width:86ch}
 }
 .tiles{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;gap:11px}
 .tile{cursor:pointer}.tile:hover{border-color:var(--line-2);background:var(--card)}
