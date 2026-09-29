@@ -356,6 +356,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .pul li{margin-bottom:5px}
 .pul li::marker{color:var(--dim)}
 .sec{margin-bottom:60px}
+/* 60px between sections is right on a desktop column and is a fifth of a phone
+   screen; the point of the compact layout is what fits above the fold. */
+@media (max-width:760px){.sec{margin-bottom:36px}}
 .sechead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:18px}
 .sechead .lhs{display:flex;align-items:center;gap:8px;min-width:0}
 .sechead .lhs .rule{flex:1;height:1px;background:var(--line)}
@@ -392,6 +395,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    That is a headline band rather than a narrow card with a lot of empty space
    to its right. Below 760px it folds back to a column. */
 :root[data-half="themes"] .gauge-card{display:none}
+/* State of play sits above the band, so it is outside both .vw containers and
+   has to be hidden by hand on the half it does not belong to. */
+:root[data-half="crash"] #s-state-of-play{display:none}
 :root[data-half="crash"] .cond > .card{display:none}
 :root[data-half="crash"] #tf{display:none}
 @media (min-width:761px){
@@ -716,6 +722,13 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
 
   <nav class="pnav" id="pnav"></nav>
 
+
+  <div class="sec" id="s-state-of-play" data-only="themes">
+    <div class="sechead"><div class="lhs"><span id="i6"></span><h2>State of play</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
+    <div class="card"><p class="sop" id="sop"></p>
+      <button class="viewall" id="sopmore">Read the full state of play &rarr;</button></div>
+  </div>
+
   <div class="sec" id="s-conditions" data-crash="Crash Risk" data-themes="Markets">
     <div class="sechead"><div class="lhs"><span id="i1"></span><h2 id="condh2">Markets</h2><div class="rule"></div></div>
       <div class="seg" id="tf"></div><div class="rule"></div></div>
@@ -791,12 +804,6 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
 
   </div>
   <div class="vw" id="v-themes">
-
-  <div class="sec">
-    <div class="sechead"><div class="lhs"><span id="i6"></span><h2>State of play</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
-    <div class="card"><p class="sop" id="sop"></p>
-      <button class="viewall" id="sopmore">Read the full state of play &rarr;</button></div>
-  </div>
 
   <div class="sec">
     <div class="sechead"><div class="lhs"><span id="i2"></span><h2>The book</h2><div class="rule"></div></div>
@@ -2130,7 +2137,8 @@ const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
     const id=sec.id||("s-"+h.textContent.trim().toLowerCase().replace(/[^a-z]+/g,"-"));
     sec.id=id;
     const host=sec.closest(".vw");
-    return {id,el:sec,h:h,label:h.textContent.trim(),vw:host?host.id.slice(2):null};
+    return {id,el:sec,h:h,label:h.textContent.trim(),vw:host?host.id.slice(2):null,
+            only:sec.dataset.only||null};
   }).filter(Boolean);
 
   const hash=(location.hash||"").slice(1);
@@ -2170,7 +2178,7 @@ const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
       b.classList.toggle("on",on); b.setAttribute("aria-pressed",on);});
     const view=VIEWS.find(v=>v[0]===half);
     if(view) document.getElementById("masth1").textContent=view[1];
-    secs=all.filter(x=>!x.vw||x.vw===half);
+    secs=all.filter(x=>(!x.vw||x.vw===half)&&(!x.only||x.only===half));
     secs.forEach(x=>{
       const per=x.el.dataset[half];
       if(per){ x.label=per; x.h.textContent=per; }

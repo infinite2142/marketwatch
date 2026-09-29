@@ -151,8 +151,11 @@ link someone can send, and a link to a *section* (`#s-scenarios`) resolves to th
   a false claim that nothing is wrong. `prefers-reduced-motion` skips it entirely.
 - **Crash risk**: the composite, Indicators (10 buckets, 35 indicators), Scenarios, If it
   falls, Precedents, What next.
-- **Market Opportunities**: Markets, State of play, The book, All themes, Signals, Drivers,
-  Change log. It leads and is the default half.
+- **Market Opportunities**: State of play, Markets, The book, All themes, Signals, Drivers,
+  Change log. It leads and is the default half. State of play is the overall summary, so it
+  opens the half — which means it sits **above** the shared band and therefore outside both
+  `.vw` containers. A section there cannot say which half it belongs to by where it lives, so
+  it says so with `data-only`, which the nav filters on and the CSS hides on.
 - **The market rows** are one line per instrument — name, value, change, direction — not the
   twelve sparkline cards they used to be. Twelve cards is a grid to read; twelve rows is a list
   to scan, which is what a phone in portrait is for. The series behind each row is in its panel,
