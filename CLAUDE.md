@@ -163,6 +163,15 @@ link someone can send, and a link to a *section* (`#s-scenarios`) resolves to th
   fold to two lines each** (name and direction over value and change), because one line will not
   fit two across at 320px — that puts the twelve instruments and the state of play in one
   portrait screen, which is the point.
+- **The five indices that vote are marked with an asterisk** in the market rows, with the note
+  under the card saying what the mark means. An arrow derived from a subset is only honest if
+  the subset is visible.
+- **The crash half's indicators open with one line per bucket** — worst reading, how many
+  indicators, which way they are moving — above the ten detail cards, the same treatment the
+  market instruments get. That arrow is **muted on purpose**: it says which way a bucket's
+  numbers are moving, not whether that is good. A rise in the share of the index above its
+  200-day average is health and a rise in top-ten concentration is not, and both sit in Breadth.
+  The status word beside it is the verdict.
 - **The equity readout** (`MKT`, built in `generator.py`) is the net direction of the five
   equity indices, one vote each — deliberately not of all twelve tiles, because "up" means
   opposite things for the S&P and for the VIX or the dollar, and a count across them would look

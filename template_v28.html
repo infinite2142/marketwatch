@@ -130,7 +130,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
   overflow-x:auto;scrollbar-width:none;height:var(--navh);align-items:center;
   background:var(--bg-blur);backdrop-filter:blur(10px);
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  margin:0 -24px 34px;padding:0 24px}
+  margin:0 -24px 46px;padding:0 24px}
 .pnav::-webkit-scrollbar{display:none}
 .pnav a{color:var(--muted);font-size:11.5px;font-weight:500;text-decoration:none;
   padding:6px 12px;border-radius:8px;white-space:nowrap;transition:.12s}
@@ -138,7 +138,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .pnav a.on{color:var(--ink);background:var(--raise)}
 .sec{scroll-margin-top:calc(var(--brandh) + var(--navh) + 16px)}
 @media (max-width:720px){
-  .brandrow,.pnav{margin:0 -14px;padding:0 14px}
+  .brandrow{margin:0 -14px;padding:0 14px}
+  .pnav{margin:0 -14px 34px;padding:0 14px}
 }
 
 #lifebar{padding:4px 2px 2px}
@@ -232,7 +233,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 /* ---- crash risk: indicator buckets --------------------------------------- */
 .bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 @media (max-width:900px){.bgrid{grid-template-columns:1fr}}
-.bcard{background:var(--inset);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+.bcard{background:var(--inset);border:1px solid var(--line);border-radius:12px;padding:15px 16px;transition:border-color .25s,background .25s}
 .bch{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .bcn{font-size:12.5px;font-weight:600;color:var(--ink);flex:1;min-width:0}
 .bcs{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;flex:0 0 auto}
@@ -437,6 +438,24 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
   font-family:"SF Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
 .m-c{font-size:11px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
 .m-a{font-size:11px;text-align:center}
+/* The five indices behind the switch's trend arrow are marked where a reader
+   meets them, with the note under the card saying what the mark means. An arrow
+   derived from a subset is only honest if the subset is visible. */
+.ast{font-style:normal;color:var(--muted);font-weight:700;padding-left:2px}
+.mnote{font-size:10.5px;color:var(--muted);font-style:italic;margin:14px 0 0;
+  border-top:1px solid var(--hair);padding-top:11px}
+.mnote b{font-style:normal;color:var(--sub);font-weight:700}
+/* The crash half's indicator list is ten cards of prose and thirty-five rows. The
+   same one-line treatment the market instruments get goes on top of it, so the
+   shape of the reading is legible before any of the detail is. Same grid, so the
+   two halves scan the same way. */
+.bsum{margin-bottom:0}
+.brow .m-v{font-family:inherit;font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.7px}
+.brow .m-c{color:var(--muted);font-weight:500}
+.brow .m-a{color:var(--muted)}
+.brow.hot{background:color-mix(in srgb,var(--line) 55%,transparent)}
+.bcard.flash{border-color:var(--line-2);background:var(--card)}
 @media (max-width:1080px){.mkt{grid-template-columns:repeat(2,1fr);gap:0 22px}}
 /* Two instruments across on a phone. One line each will not fit two abreast at
    320px — the name, the value and the change are 134px before any gap — so each
@@ -738,7 +757,8 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
           <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div></div></div>
         <div class="gread" id="gread"></div>
       </div>
-      <div class="card"><div class="mkt" id="tiles"></div></div>
+      <div class="card"><div class="mkt" id="tiles"></div>
+      <p class="mnote" id="mktnote"></p></div>
     </div>
   </div>
 
@@ -747,7 +767,13 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
   <div class="sec">
     <div class="sechead"><div class="lhs"><span id="i8"></span><h2>Indicators</h2><div class="rule"></div></div>
       <div class="seg" id="indfilt"></div><div class="rule"></div></div>
-    <div class="card"><div class="bgrid" id="bgrid"></div>
+    <div class="card">
+      <div class="mkt bsum" id="bsum"></div>
+      <p class="mnote">Ten buckets at a glance: the worst reading in each, how many indicators
+        it holds, and which way those numbers are moving on balance. The arrow is a direction,
+        not a verdict &mdash; a rise is not bad in every bucket, and the word beside it is the
+        judgement. Click one for its detail below; the filter applies to the detail, not to this.</p>
+      <div class="bgrid" id="bgrid"></div>
       <p class="hint">The buckets behind the composite, each scored from its own indicators.
         Click any indicator for what it means, what would signal a shift, and its dated source.
         <span id="indcount"></span></p></div>
@@ -1634,11 +1660,18 @@ function renderTiles(){
     const c=dir==="up"?"var(--ok)":dir==="down"?"var(--bad)":"var(--sub)";
     const chg=t.chgw&&t.chgw[win]?t.chgw[win]:t.chg;
     return `<button class="mrow" data-i="${i}" title="${t.lbl} \u00b7 ${chg} over ${win}">
-      <span class="m-l">${t.lbl}</span>
+      <span class="m-l">${t.lbl}${(MKT.keys||[]).indexOf(t.lbl)<0?"":'<i class="ast">*</i>'}</span>
       <span class="m-v">${t.val}</span>
       <span class="m-c" style="color:${c}">${chg}</span>
       <span class="m-a" style="color:${c}">${ARROW[dir]||""}</span></button>`;}).join("");
   if(window.__mktBadge) window.__mktBadge(marketDir());
+  const note=document.getElementById("mktnote");
+  if(note){const m=marketDir();
+    note.innerHTML=`<b>*</b> The ${m.n} equity indices behind the trend arrow in the switch `+
+      `above \u2014 one vote each, over the window shown. `+
+      `${m.up} up and ${m.down} down over ${win}. `+
+      `The other rows are read alongside them but do not vote: a rise in the dollar or in `+
+      `volatility does not mean the same thing as a rise in an index.`;}
 }
 document.getElementById("tf").innerHTML=WINKEYS.map(k=>
   `<button data-w="${k}"${k===win?' class="on"':''}>${k}</button>`).join("");
@@ -1885,6 +1918,45 @@ document.addEventListener("click",e=>{
 });
 
 /* ---------- indicators ---------- */
+/* One line per bucket above the detail: the worst reading in it, how many
+   indicators it holds, and the net direction of those indicators. The net is a
+   plain majority of their `tr` fields — a bucket whose indicators are split reads
+   flat, which is the honest answer rather than a tie broken silently. Drawn once,
+   because it describes all ten buckets whatever the filter below is set to. */
+function bucketNet(b){
+  let up=0,down=0;
+  b.inds.forEach(i=>{ if(i.tr==="up")up++; else if(i.tr==="down")down++; });
+  return {dir:up>down?"up":down>up?"down":"flat",up:up,down:down};
+}
+function renderBucketSummary(){
+  document.getElementById("bsum").innerHTML=CRASH.buckets.map((b,i)=>{
+    const w=worstOf(b),c=CSC[w],net=bucketNet(b);
+    /* The arrow is muted on purpose. It says which way this bucket's numbers are
+       moving, not whether that is good: a rise in the share of the index above its
+       200-day average is health, a rise in top-ten concentration is not, and both
+       sit in Breadth. Colouring it green or red would assert a verdict the count
+       cannot support. The status word beside it is the verdict. */
+    return `<button class="mrow brow" data-b="${i}"
+        title="${b.nm}: worst reading ${w}, ${b.inds.length} indicators, `+
+        `${net.up} rising and ${net.down} falling">
+      <span class="m-l">${b.nm}</span>
+      <span class="m-v" style="color:${c}">${w}</span>
+      <span class="m-c">${b.inds.length}</span>
+      <span class="m-a">${CTA[net.dir]||""}</span></button>`;}).join("");
+}
+document.getElementById("bsum").addEventListener("click",e=>{
+  const r=e.target.closest(".brow"); if(!r) return;
+  /* the summary is a way into the detail, so it goes there rather than opening a
+     panel over the thing it is pointing at */
+  const card=document.querySelectorAll("#bgrid .bcard")[+r.dataset.b];
+  if(!card) return;
+  const nav=document.getElementById("pnav"), brand=document.getElementById("brandrow");
+  const off=brand.offsetHeight+nav.offsetHeight+14;
+  scrollTo({top:card.getBoundingClientRect().top+scrollY-off,
+    behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  card.classList.add("flash");
+  setTimeout(()=>card.classList.remove("flash"),1400);
+});
 let indf="all";
 function renderInds(){
   const keep=b=>indf==="all"?b.inds:b.inds.filter(i=>i.status===indf);
@@ -2104,6 +2176,7 @@ document.getElementById("scnnote").textContent=
   });
 })();
 
+renderBucketSummary();
 document.getElementById("i8").innerHTML=icon("activity");
 document.getElementById("i9").innerHTML=icon("network");
 document.getElementById("i10").innerHTML=icon("down");
