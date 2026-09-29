@@ -93,8 +93,9 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
 2. **The masthead** (`.mast`), which scrolls away: the half's name and the freshness stamp, and
    nothing else. It is read on a phone in portrait, and the job of the first screen is to show
    the reading, not to explain the site — the standfirst that used to sit here was 90px of prose
-   between the reader and the number they opened the page for. What it said now lives in the
-   note under the first band; the disclaimer moved to the footer guard.
+   between the reader and the number they opened the page for. The disclaimer moved to the
+   footer guard; the note that explained the split went too, once the switch carried both
+   names and both readouts and was saying it better.
 3. **The section navigator** (`.pnav`), sticky under the brand row, listing the sections of
    whichever half is on screen.
 
@@ -155,7 +156,10 @@ link someone can send, and a link to a *section* (`#s-scenarios`) resolves to th
 - **The market rows** are one line per instrument — name, value, change, direction — not the
   twelve sparkline cards they used to be. Twelve cards is a grid to read; twelve rows is a list
   to scan, which is what a phone in portrait is for. The series behind each row is in its panel,
-  dated, which is where anyone reading a trend should be.
+  dated, which is where anyone reading a trend should be. Below 620px they go **two abreast and
+  fold to two lines each** (name and direction over value and change), because one line will not
+  fit two across at 320px — that puts the twelve instruments and the state of play in one
+  portrait screen, which is the point.
 - **The equity readout** (`MKT`, built in `generator.py`) is the net direction of the five
   equity indices, one vote each — deliberately not of all twelve tiles, because "up" means
   opposite things for the S&P and for the VIX or the dollar, and a count across them would look

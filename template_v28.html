@@ -198,8 +198,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    but how high is the crash risk" without switching. The active pill inverts to
    solid ink, and the bright semantic tones are unreadable on it in either theme,
    so the readout takes the --on-ink-* step when it sits there. */
-.vsw .rd{font-weight:700;font-size:11px;line-height:1;font-variant-numeric:tabular-nums;
-  padding-left:1px}
+/* A disc, so the readout reads as a state rather than as trailing text. The
+   padding is tight enough that a two-digit composite lands on min-width and comes
+   out round; a three-digit one (only 100) stretches to a pill rather than being
+   clipped, which is the right way round for a number. */
+.vsw .rd{display:inline-flex;align-items:center;justify-content:center;
+  min-width:22px;height:22px;padding:0 2px;border-radius:999px;
+  border:1px solid currentColor;background:color-mix(in srgb,currentColor 13%,transparent);
+  font-weight:700;font-size:10.5px;line-height:1;font-variant-numeric:tabular-nums}
 .rd.ok{color:var(--ok)} .rd.warn{color:var(--warn)} .rd.bad{color:var(--bad)}
 .rd.flat{color:var(--muted)}
 .vsw button.on .rd.ok{color:var(--on-ink-ok)}
@@ -222,8 +228,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .vw.on{display:block}
 /* The shared band above the switch: the composite and the market tiles belong to
    both halves, so they sit outside either. */
-.vnote{font-size:11.5px;color:var(--muted);line-height:1.6;margin:0 0 42px;max-width:86ch}
-.vnote b{color:var(--ink-2);font-weight:600}
 
 /* ---- crash risk: indicator buckets --------------------------------------- */
 .bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
@@ -418,9 +422,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    is where anyone reading a trend should be. Columns fill out on wider screens
    so the list does not become a single long ribbon. */
 .mkt{display:grid;grid-template-columns:repeat(3,1fr);gap:0 26px}
-.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto 13px;align-items:baseline;gap:10px;
-  width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--hair);
-  padding:9px 2px;color:inherit;font:inherit;cursor:pointer}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto 13px;align-items:baseline;
+  gap:9px;width:100%;text-align:left;background:none;border:0;
+  border-top:1px solid var(--hair);padding:9px 2px;color:inherit;font:inherit;cursor:pointer}
 .mrow:hover .m-l{color:var(--ink)}
 .m-l{font-size:12px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .m-v{font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;
@@ -428,7 +432,20 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .m-c{font-size:11px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
 .m-a{font-size:11px;text-align:center}
 @media (max-width:1080px){.mkt{grid-template-columns:repeat(2,1fr);gap:0 22px}}
-@media (max-width:620px){.mkt{grid-template-columns:1fr}}
+/* Two instruments across on a phone. One line each will not fit two abreast at
+   320px — the name, the value and the change are 134px before any gap — so each
+   cell folds to two lines instead: name and direction over value and change.
+   Twelve instruments in six rows rather than twelve, which is the whole point of
+   compressing them. */
+@media (max-width:620px){
+  .mkt{grid-template-columns:repeat(2,1fr);gap:0 16px}
+  .mrow{grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"l a" "v c";gap:1px 8px;padding:8px 1px}
+  .m-l{grid-area:l;font-size:11px}
+  .m-a{grid-area:a}
+  .m-v{grid-area:v;font-size:12px}
+  .m-c{grid-area:c;justify-self:end;font-size:10.5px}
+}
 svg.view{width:100%;height:auto;display:block;overflow:visible}
 .stage-hit{cursor:pointer}
 .nm{font-size:8.8px;fill:var(--sub);pointer-events:none}
@@ -711,12 +728,6 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
       <div class="card"><div class="mkt" id="tiles"></div></div>
     </div>
   </div>
-
-  <p class="vnote">Two halves, one page. <b>Crash Risk</b> is the composite and the
-    detail behind it: the indicators it is built from, the scenarios it is a reading on,
-    how far each one could fall and what would move it. <b>Market Opportunities</b> is
-    the market numbers and the theme register beside them — what is forming, what is
-    confirmed and what has played out. Switch in the bar above.</p>
 
   <div class="vw" id="v-crash">
 
@@ -1617,7 +1628,8 @@ function renderTiles(){
     const chg=t.chgw&&t.chgw[win]?t.chgw[win]:t.chg;
     return `<button class="mrow" data-i="${i}" title="${t.lbl} \u00b7 ${chg} over ${win}">
       <span class="m-l">${t.lbl}</span>
-      <span class="m-v">${t.val} <span class="m-c" style="color:${c}">${chg}</span></span>
+      <span class="m-v">${t.val}</span>
+      <span class="m-c" style="color:${c}">${chg}</span>
       <span class="m-a" style="color:${c}">${ARROW[dir]||""}</span></button>`;}).join("");
   if(window.__mktBadge) window.__mktBadge(marketDir());
 }
