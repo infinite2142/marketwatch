@@ -105,8 +105,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .eyebrow .ic{width:13px;height:13px;flex:0 0 13px;color:var(--purple)}
 .mast h2{font-size:38px;line-height:1.14;margin:0 0 18px;font-weight:600;
   letter-spacing:-.9px;max-width:25ch}
-.mast h2 em{font-style:normal;background:linear-gradient(95deg,var(--blue),var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mast h2 em{font-style:normal;color:inherit}
+
 .mast p{margin:0;font-size:14.5px;line-height:1.7;color:var(--sub);max-width:70ch}
 .mast .disc{margin-top:13px;font-size:11.5px;color:var(--dim);max-width:70ch}
 .mmeta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:26px;
@@ -192,6 +192,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .vsw button.on{background:var(--ink);color:var(--bg)}
 .vsw .ic{width:13px;height:13px;flex:0 0 13px}
 @media (max-width:720px){.vsw{margin-right:6px}.vsw button{padding:4px 9px}}
+/* "Market Opportunities" is a long label in the middle slot of a fixed bar. On a
+   small phone the icons are the first thing to go: they are decoration next to a
+   word that has to stay readable, and losing them buys back the width. */
+@media (max-width:479px){
+  .vsw{margin-right:4px;gap:1px}
+  .vsw .ic{display:none}
+  .vsw button{padding:4px 7px;font-size:10.5px;gap:0}
+}
 .vw{display:none}
 .vw.on{display:block}
 /* The shared band above the switch: the composite and the market tiles belong to
@@ -359,13 +367,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .seg button:hover{color:var(--ink)}
 .seg button.on{background:var(--ink);color:var(--bg);font-weight:600}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px}
-.cond{display:grid;grid-template-columns:minmax(230px,.8fr) 3fr;gap:16px}
-/* The composite answers the crash half's question, not the opportunities half's.
-   It stays in the shared Conditions band — which is the first section either way
-   — and is hidden when the reader is on the other half, where the row is market
-   numbers and nothing else. The tiles take the full width when it goes. */
-:root[data-half="themes"] .gauge-card{display:none}
-:root[data-half="themes"] .cond{grid-template-columns:1fr}
+.cond{display:grid;grid-template-columns:1fr;gap:16px}
 .gauge-card{cursor:pointer;transition:.15s}
 .gauge-card:hover{border-color:var(--line-2)}
 .gauge-card{background:linear-gradient(150deg,var(--raise),var(--card));border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column}
@@ -374,6 +376,28 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .glvl{font-size:19px;font-weight:600;line-height:1.15}
 .gsub{font-size:10px;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
 .gread{font-size:11px;color:var(--sub);line-height:1.45;margin-top:9px;border-top:1px solid var(--line);padding-top:9px}
+/* The first band is one section carrying two different things, because the two
+   halves ask different questions of it. Crash risk gets the composite and only
+   the composite; Market Opportunities gets the market numbers and only those --
+   a crash reading over the theme register answers a question that half does not
+   ask, and the index prices are not what the crash half is about. The period
+   selector goes with the tiles, because it drives nothing else. The heading
+   follows in build().
+
+   Whichever survives takes the whole width, so the composite card turns on its
+   side there: gauge and level left, the read beside it rather than under it.
+   That is a headline band rather than a narrow card with a lot of empty space
+   to its right. Below 760px it folds back to a column. */
+:root[data-half="themes"] .gauge-card{display:none}
+:root[data-half="crash"] .cond > .card{display:none}
+:root[data-half="crash"] #tf{display:none}
+@media (min-width:761px){
+  :root[data-half="crash"] .gauge-card{flex-direction:row;align-items:center;
+    gap:24px;padding:18px 22px}
+  :root[data-half="crash"] .gwrap{flex:0 0 auto}
+  :root[data-half="crash"] .gread{margin-top:0;padding:2px 0 2px 24px;flex:1;
+    border-top:0;border-left:1px solid var(--line);font-size:12.5px;max-width:92ch}
+}
 .tiles{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;gap:11px}
 .tile{cursor:pointer}.tile:hover{border-color:var(--line-2);background:var(--card)}
 .tile{background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-width:0}
@@ -582,7 +606,6 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
 .cpip i{width:6px;height:6px;border-radius:50%;background:var(--line-2);display:block}
 .cpip.met{color:var(--ok);border-color:var(--ok-d)}.cpip.met i{background:var(--ok)}
 @media (max-width:1080px){
-  .cond{grid-template-columns:1fr}
   .tiles{grid-template-columns:repeat(4,1fr);grid-template-rows:auto}
 }
 @media (max-width:720px){
@@ -697,25 +720,24 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
 
   <nav class="pnav" id="pnav"></nav>
 
-  <div class="sec">
-    <div class="sechead"><div class="lhs"><span id="i1"></span><h2>Conditions</h2><div class="rule"></div></div>
+  <div class="sec" id="s-conditions" data-crash="Crash risk" data-themes="Markets">
+    <div class="sechead"><div class="lhs"><span id="i1"></span><h2 id="condh2">Crash risk</h2><div class="rule"></div></div>
       <div class="seg" id="tf"></div><div class="rule"></div></div>
     <div class="cond">
       <div class="gauge-card" id="gcard" title="How this number is built">
         <div class="gwrap"><svg class="gauge" id="gauge" viewBox="0 0 118 72"></svg>
-          <div><div class="gsub">Crash risk</div><div class="glvl" id="glvl"></div></div></div>
+          <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div></div></div>
         <div class="gread" id="gread"></div>
       </div>
       <div class="card"><div class="tiles" id="tiles"></div></div>
     </div>
   </div>
 
-  <p class="vnote">The market tiles above answer both halves of this page, so they sit
-    outside either. <b>Crash risk</b> adds the composite reading and the detail behind it:
-    the indicators it is built from, the scenarios it is a reading on, how far each one
-    falls and what would move it. <b>Opportunities</b> is the theme register — what is
-    forming, what is confirmed and what has played out, and it stays on the markets.
-    Switch in the bar above.</p>
+  <p class="vnote">Two halves, one page. <b>Crash risk</b> is the composite and the
+    detail behind it: the indicators it is built from, the scenarios it is a reading on,
+    how far each one could fall and what would move it. <b>Market Opportunities</b> is
+    the market numbers and the theme register beside them — what is forming, what is
+    confirmed and what has played out. Switch in the bar above.</p>
 
   <div class="vw" id="v-crash">
 
@@ -2088,15 +2110,18 @@ renderScen();
    so it cannot list something that is not there. The switch writes #crash /
    #themes with replaceState: either half is still a link someone can send, and
    flipping back and forth does not stack up back-button entries. */
-const VIEWS=[["crash","Crash risk","alert"],["themes","Opportunities","sparkles"]];
+const VIEWS=[["crash","Crash risk","alert"],["themes","Market Opportunities","sparkles"]];
 (function(){
   const nav=document.getElementById("pnav"),vsw=document.getElementById("vsw");
   const all=[...document.querySelectorAll(".wrap .sec")].map(sec=>{
     const h=sec.querySelector("h2"); if(!h) return null;
-    const id="s-"+h.textContent.trim().toLowerCase().replace(/[^a-z]+/g,"-");
+    /* A section that carries a different name on each half declares its id in the
+       markup and its labels in data-crash / data-themes. Deriving the id from the
+       heading would move the anchor every time the heading changed. */
+    const id=sec.id||("s-"+h.textContent.trim().toLowerCase().replace(/[^a-z]+/g,"-"));
     sec.id=id;
     const host=sec.closest(".vw");
-    return {id,label:h.textContent.trim(),vw:host?host.id.slice(2):null};
+    return {id,el:sec,h:h,label:h.textContent.trim(),vw:host?host.id.slice(2):null};
   }).filter(Boolean);
 
   const hash=(location.hash||"").slice(1);
@@ -2116,6 +2141,10 @@ const VIEWS=[["crash","Crash risk","alert"],["themes","Opportunities","sparkles"
       const on=b.dataset.v===half;
       b.classList.toggle("on",on); b.setAttribute("aria-pressed",on);});
     secs=all.filter(x=>!x.vw||x.vw===half);
+    secs.forEach(x=>{
+      const per=x.el.dataset[half];
+      if(per){ x.label=per; x.h.textContent=per; }
+    });
     nav.querySelectorAll("a").forEach(a=>a.remove());
     nav.insertAdjacentHTML("beforeend",
       secs.map(x=>`<a href="#${x.id}">${x.label}</a>`).join(""));

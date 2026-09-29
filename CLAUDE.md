@@ -140,9 +140,10 @@ link someone can send, and a link to a *section* (`#s-scenarios`) resolves to th
   IntersectionObserver, and a `setTimeout` settles the true value regardless. Both choices are
   about one failure mode: a gauge stalled at 5 in green is not a visibly broken animation, it is
   a false claim that nothing is wrong. `prefers-reduced-motion` skips it entirely.
-- **Crash risk**: Indicators (10 buckets, 35 indicators), Scenarios, If it falls, Precedents,
-  What next.
-- **Opportunities**: State of play, The book, All themes, Signals, Drivers, Change log — unchanged.
+- **Crash risk**: the composite, Indicators (10 buckets, 35 indicators), Scenarios, If it
+  falls, Precedents, What next.
+- **Market Opportunities**: Markets (the tiles), State of play, The book, All themes, Signals,
+  Drivers, Change log.
 
 The section nav is rebuilt from the sections belonging to the half on screen, so it can never list
 one that is not there. `Crash risk` is the default view; flip the `let half="crash"` fallback in the
