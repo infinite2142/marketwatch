@@ -84,9 +84,17 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
    things that are true of the whole page: the brandmark (left, and the way back to the top),
    the half switch (centre), the theme toggle (right). Below 620px the wordmark drops and the
    mark stands alone, so the switch keeps the middle.
-2. **The masthead** (`.mast`), which scrolls away: eyebrow, title, standfirst, the guardrail
-   line, then a meta row carrying the freshness stamp. That stamp used to sit in the top-right
-   corner, where it read as decoration; it qualifies the whole page, so it belongs under it.
+   **Each switch button carries its half's state**, shown whether or not you are on that half —
+   the composite in its band colour for Crash Risk, and for Market Opportunities the net
+   direction of the equity indices. That is the point of it: answering "opportunities, fine,
+   but how high is the crash risk" without switching. The active pill inverts to solid ink and
+   the bright semantic tones are unreadable on it in either theme, so the readout takes the
+   `--on-ink-*` step when it sits there.
+2. **The masthead** (`.mast`), which scrolls away: the half's name and the freshness stamp, and
+   nothing else. It is read on a phone in portrait, and the job of the first screen is to show
+   the reading, not to explain the site — the standfirst that used to sit here was 90px of prose
+   between the reader and the number they opened the page for. What it said now lives in the
+   note under the first band; the disclaimer moved to the footer guard.
 3. **The section navigator** (`.pnav`), sticky under the brand row, listing the sections of
    whichever half is on screen.
 
@@ -142,8 +150,18 @@ link someone can send, and a link to a *section* (`#s-scenarios`) resolves to th
   a false claim that nothing is wrong. `prefers-reduced-motion` skips it entirely.
 - **Crash risk**: the composite, Indicators (10 buckets, 35 indicators), Scenarios, If it
   falls, Precedents, What next.
-- **Market Opportunities**: Markets (the tiles), State of play, The book, All themes, Signals,
-  Drivers, Change log.
+- **Market Opportunities**: Markets, State of play, The book, All themes, Signals, Drivers,
+  Change log. It leads and is the default half.
+- **The market rows** are one line per instrument — name, value, change, direction — not the
+  twelve sparkline cards they used to be. Twelve cards is a grid to read; twelve rows is a list
+  to scan, which is what a phone in portrait is for. The series behind each row is in its panel,
+  dated, which is where anyone reading a trend should be.
+- **The equity readout** (`MKT`, built in `generator.py`) is the net direction of the five
+  equity indices, one vote each — deliberately not of all twelve tiles, because "up" means
+  opposite things for the S&P and for the VIX or the dollar, and a count across them would look
+  like breadth while meaning nothing. The badge recomputes for the window on screen rather than
+  using the stored daily direction, because a badge reading "down" beside rows reading "up" is
+  not a subtlety a reader should have to resolve.
 
 The section nav is rebuilt from the sections belonging to the half on screen, so it can never list
 one that is not there. `Crash risk` is the default view; flip the `let half="crash"` fallback in the

@@ -36,6 +36,7 @@
   --ok-2:#34d399;    --bad-2:#fb7185;
   --ok-t:#6ee7b7;    --bad-t:#fda4af;  --blue-t:#93c5fd;
   --ok-d:#064e3b;    --bad-d:#4c1d24;  --blue-d:#1e3a5f;
+  --on-ink-ok:#047857; --on-ink-warn:#b45309; --on-ink-bad:#be123c;
 }
 :root[data-theme="light"]{
   --bg:#f4f4f5;      --bg-blur:rgba(244,244,245,.92);
@@ -49,6 +50,7 @@
   --ok-2:#047857;    --bad-2:#be123c;
   --ok-t:#047857;    --bad-t:#be123c;  --blue-t:#1d4ed8;
   --ok-d:#d1fae5;    --bad-d:#ffe4e6;  --blue-d:#dbeafe;
+  --on-ink-ok:#34d399; --on-ink-warn:#fbbf24; --on-ink-bad:#fb7185;
 }
 
 *{box-sizing:border-box}
@@ -92,34 +94,34 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 :root[data-theme="light"] .ghost .moon{display:none}
 @media (max-width:620px){.bname{display:none}}
 
-/* ---- masthead ------------------------------------------------------------
-   Taller than the old hero, and structured rather than a headline with a
-   paragraph under it: an eyebrow that says what kind of thing this is, the
-   title, the standfirst, then a meta line carrying the freshness stamp that
-   used to sit in the corner. The stamp belongs here because it qualifies the
-   whole page, and in the corner it read as decoration. */
-.mast{position:relative;padding:54px 0 38px;margin:0}
-.mast>*{position:relative;z-index:1}
-.eyebrow{font-size:10.5px;text-transform:uppercase;letter-spacing:1.9px;font-weight:700;
-  color:var(--muted);margin:0 0 16px;display:flex;align-items:center;gap:8px}
-.eyebrow .ic{width:13px;height:13px;flex:0 0 13px;color:var(--purple)}
-.mast h2{font-size:38px;line-height:1.14;margin:0 0 18px;font-weight:600;
-  letter-spacing:-.9px;max-width:25ch}
-.mast h2 em{font-style:normal;color:inherit}
+/* ---- masthead -----------------------------------------------------------
+   Cut to a title and a date. The page is read on a phone in portrait, and the
+   job of the first screen is to show the reading, not to explain the site: the
+   standfirst that used to sit here was 90px of prose between the reader and the
+   number they opened the page for. What it said now lives in the note under the
+   first band, where someone who wants it will look and everyone else scrolls
+   past it rather than through it. The disclaimer moved to the footer guard,
+   which already carried most of it.
 
-.mast p{margin:0;font-size:14.5px;line-height:1.7;color:var(--sub);max-width:70ch}
-.mast .disc{margin-top:13px;font-size:11.5px;color:var(--dim);max-width:70ch}
-.mmeta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:26px;
-  padding-top:18px;border-top:1px solid var(--hair);font-size:11.5px;color:var(--muted)}
+   The title is the half's name, so it changes with the switch. That repeats the
+   switch's own label, which is the trade HeatWatch makes too: the switch is a
+   control and the heading is what the page is called, and a screen reader needs
+   the second one. */
+.mast{position:relative;padding:26px 0 22px;margin:0}
+.mast>*{position:relative;z-index:1}
+.mast h1{font-size:31px;line-height:1.1;margin:0;font-weight:600;letter-spacing:-.7px}
+.mmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:11px;
+  font-size:11.5px;color:var(--muted)}
 .mmeta .tm{color:var(--dim);font-variant-numeric:tabular-nums}
 .mmeta .dot{width:5px;height:5px;border-radius:50%;background:var(--ok);flex:0 0 5px}
 .mmeta .sep{color:var(--line-2)}
-@media (max-width:1000px){.mast{overflow:hidden}}
 @media (max-width:760px){
-  .mast{padding:30px 0 28px}
-  .mast h2{font-size:29px;letter-spacing:-.5px;max-width:none}
-  .mast p{font-size:13.5px}
-  .mmeta{margin-top:20px;padding-top:14px}
+  /* the dates are the subtext; the method claim is a second line on a phone and
+     the footer guard already carries the provenance */
+  .mmeta .how{display:none}
+  .mast{padding:20px 0 18px}
+  .mast h1{font-size:25px;letter-spacing:-.4px}
+  .mmeta{margin-top:9px;font-size:11px}
 }
 
 /* ---- section navigator ---------------------------------------------------
@@ -186,19 +188,35 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .vsw{display:flex;gap:2px;flex:0 0 auto;background:var(--inset);border:1px solid var(--line);
   border-radius:8px;padding:2px;margin-right:10px}
 .vsw button{display:inline-flex;align-items:center;gap:6px;background:none;border:0;
-  color:var(--muted);font:inherit;font-size:11.5px;font-weight:600;padding:4px 11px;
+  color:var(--muted);font:inherit;font-size:11.5px;font-weight:600;padding:4px 10px;
   border-radius:6px;cursor:pointer;white-space:nowrap;transition:.15s}
 .vsw button:hover{color:var(--ink)}
 .vsw button.on{background:var(--ink);color:var(--bg)}
 .vsw .ic{width:13px;height:13px;flex:0 0 13px}
+/* Each half carries a one-glance readout of its own state, shown whether or not
+   that half is the one you are on — the point is to answer "opportunities, fine,
+   but how high is the crash risk" without switching. The active pill inverts to
+   solid ink, and the bright semantic tones are unreadable on it in either theme,
+   so the readout takes the --on-ink-* step when it sits there. */
+.vsw .rd{font-weight:700;font-size:11px;line-height:1;font-variant-numeric:tabular-nums;
+  padding-left:1px}
+.rd.ok{color:var(--ok)} .rd.warn{color:var(--warn)} .rd.bad{color:var(--bad)}
+.rd.flat{color:var(--muted)}
+.vsw button.on .rd.ok{color:var(--on-ink-ok)}
+.vsw button.on .rd.warn{color:var(--on-ink-warn)}
+.vsw button.on .rd.bad{color:var(--on-ink-bad)}
+.vsw button.on .rd.flat{color:var(--bg);opacity:.62}
+.vsw .vshort{display:none}
 @media (max-width:720px){.vsw{margin-right:6px}.vsw button{padding:4px 9px}}
-/* "Market Opportunities" is a long label in the middle slot of a fixed bar. On a
-   small phone the icons are the first thing to go: they are decoration next to a
-   word that has to stay readable, and losing them buys back the width. */
-@media (max-width:479px){
+/* "Market Opportunities" plus a readout will not fit the middle slot of a fixed
+   bar on a small phone. The icons go first, then the long label gives way to a
+   short one; the readouts never go, because they are the reason it is there. */
+@media (max-width:560px){
   .vsw{margin-right:4px;gap:1px}
   .vsw .ic{display:none}
-  .vsw button{padding:4px 7px;font-size:10.5px;gap:0}
+  .vsw button{padding:4px 7px;font-size:10.5px;gap:4px}
+  .vsw .vfull{display:none}
+  .vsw .vshort{display:inline}
 }
 .vw{display:none}
 .vw.on{display:block}
@@ -333,25 +351,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .pul{margin:4px 0 0;padding-left:17px;font-size:12.5px;color:var(--ink-2);line-height:1.65}
 .pul li{margin-bottom:5px}
 .pul li::marker{color:var(--dim)}
-.herog{position:absolute;right:26px;top:8px;width:340px;height:300px;pointer-events:none;z-index:0}
-/* Portrait: the radar does not fit beside the copy, so it goes behind it — pushed
-   off the right edge, faint, and faded out where the text starts. `overflow:hidden`
-   on the hero is what makes the bleed safe: an absolutely positioned child hanging
-   past the wrap still counts towards the page's scroll width, which is how the
-   first attempt at this made the phone scroll sideways. */
-/* Portrait: the radar does not fit beside the copy, so it goes behind it — pushed
-   off the right edge, faint, and faded out where the text starts. `overflow:hidden`
-   on the masthead is what makes the bleed safe: an absolutely positioned child
-   hanging past the wrap still counts towards the page's scroll width, which is how
-   the first attempt at this made the phone scroll sideways. The mask stops at
-   literal black on purpose — a mask reads alpha, so theming it would be a
-   category error. */
-@media (max-width:1000px){
-  .herog{right:-28px;top:50%;bottom:auto;transform:translateY(-50%);width:326px;height:326px;opacity:.5;
-    -webkit-mask-image:linear-gradient(90deg,transparent 6%,rgba(0,0,0,.28) 38%,#000 74%);
-            mask-image:linear-gradient(90deg,transparent 6%,rgba(0,0,0,.28) 38%,#000 74%)}
-}
-@media (max-width:560px){.herog{right:-40px;width:290px;height:290px;opacity:.46}}
 .sec{margin-bottom:60px}
 .sechead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:18px}
 .sechead .lhs{display:flex;align-items:center;gap:8px;min-width:0}
@@ -402,14 +401,34 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
     border-top:0;border-left:1px solid var(--line);font-size:13px;line-height:1.6;
     max-width:86ch}
 }
-.tiles{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;gap:11px}
-.tile{cursor:pointer}.tile:hover{border-color:var(--line-2);background:var(--card)}
-.tile{background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-width:0}
-.t-l{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.t-v{font-size:14.5px;font-weight:600;margin-top:1px;font-family:"SF Mono",ui-monospace,Menlo,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.t-c{font-size:10.5px;font-weight:600}
-.t-c .w{color:var(--dim);font-weight:500;margin-left:3px}
-.spark{width:100%;height:24px;display:block;margin-top:3px}
+/* The enlarged gauge does not fit a small phone beside its label: 164 + 18 + the
+   word "Elevated" at 22px is wider than the card's inner width at 320. It steps
+   down rather than the label wrapping under it, which would cost a line. */
+@media (max-width:440px){
+  .gauge{width:132px;height:81px;flex:0 0 132px}
+  .gwrap{gap:13px}
+  .gwrap>div{min-width:0}
+  .glvl{font-size:19px}
+}
+/* ---- market rows ---------------------------------------------------------
+   One line per instrument: name, value, change, direction. Twelve cards with
+   sparklines was a grid to read; twelve rows is a list to scan, which is what
+   this is for on a phone in portrait. The spark did not survive the cut and is
+   no loss here — the panel behind each row carries the full series, dated, which
+   is where anyone reading a trend should be. Columns fill out on wider screens
+   so the list does not become a single long ribbon. */
+.mkt{display:grid;grid-template-columns:repeat(3,1fr);gap:0 26px}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto 13px;align-items:baseline;gap:10px;
+  width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--hair);
+  padding:9px 2px;color:inherit;font:inherit;cursor:pointer}
+.mrow:hover .m-l{color:var(--ink)}
+.m-l{font-size:12px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-v{font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;
+  font-family:"SF Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.m-c{font-size:11px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.m-a{font-size:11px;text-align:center}
+@media (max-width:1080px){.mkt{grid-template-columns:repeat(2,1fr);gap:0 22px}}
+@media (max-width:620px){.mkt{grid-template-columns:1fr}}
 svg.view{width:100%;height:auto;display:block;overflow:visible}
 .stage-hit{cursor:pointer}
 .nm{font-size:8.8px;fill:var(--sub);pointer-events:none}
@@ -609,12 +628,8 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
 .cpip{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
 .cpip i{width:6px;height:6px;border-radius:50%;background:var(--line-2);display:block}
 .cpip.met{color:var(--ok);border-color:var(--ok-d)}.cpip.met i{background:var(--ok)}
-@media (max-width:1080px){
-  .tiles{grid-template-columns:repeat(4,1fr);grid-template-rows:auto}
-}
 @media (max-width:720px){
-  .wrap{padding:14px 14px 48px}
-  .tiles{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:0 14px 48px}
   .seg button{padding:4px 8px;font-size:11px}
   .panel{width:100vw}
   ul.lst li b{min-width:0;flex:1 0 100%}
@@ -655,12 +670,16 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
 /* Mobile section headers: the control goes hard right. Declared last because the
    desktop rule that centres it has the same specificity and would otherwise win. */
 @media (max-width:720px){
-  .sechead{grid-template-columns:auto 1fr;gap:10px}
+  .sechead{grid-template-columns:auto minmax(0,1fr);gap:10px}
   .sechead .lhs .rule,.sechead>.rule{display:none}
   .sechead .seg{grid-column:2;justify-self:end}
-  .top{flex-wrap:wrap;gap:8px}
-  .brand h1{font-size:14px}
-  .chip{font-size:10.5px;padding:4px 10px}
+  /* The stage filter is six buttons with counts and it is 430px wide. On a real
+     phone that is wider than the page, and a grid track defaults to min-content
+     so it pushed the whole document sideways rather than clipping. It scrolls
+     instead; minmax(0,1fr) on the track is what lets it. Everything else in a
+     section header is short enough not to care. */
+  .sechead .seg{max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .sechead .seg::-webkit-scrollbar{display:none}
 }
 </style></head><body>
 <div class="wrap">
@@ -674,58 +693,14 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
   </div></div>
 
   <header class="mast">
-    <div class="eyebrow"><span id="eyeic"></span>Daily research terminal</div>
-    <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
-    <p>A daily read on markets, macro drivers and crash risk, alongside a running register of
-       investible themes tracked from first sighting on the radar through to played-out.
-       Ratings, convictions and stages are the desk's own judgement; each carries its evidence
-       and date.</p>
-    <p class="disc">Long-only research aid. Not financial advice. No holdings, no positions,
-       no sizing &mdash; conviction is the strength of the case.</p>
-    <svg class="herog" viewBox="0 0 340 300" aria-hidden="true">
-      <defs>
-        <radialGradient id="hgSweep" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="var(--purple)" stop-opacity=".30"/>
-          <stop offset="70%" stop-color="var(--blue)" stop-opacity=".07"/>
-          <stop offset="100%" stop-color="var(--blue)" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="hgArc" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="var(--blue)"/><stop offset="100%" stop-color="var(--purple)"/>
-        </linearGradient>
-      </defs>
-      <g transform="translate(170 150)">
-        <circle r="140" fill="url(#hgSweep)"/>
-        <circle r="46"  fill="none" stroke="var(--line)"/>
-        <circle r="86"  fill="none" stroke="var(--line)"/>
-        <circle r="126" fill="none" stroke="var(--line)"/>
-        <path d="M0 0 L126 0 A126 126 0 0 0 89 -89 Z" fill="url(#hgArc)" opacity=".13"/>
-        <line x1="-140" y1="0" x2="140" y2="0" stroke="var(--line)"/>
-        <line x1="0" y1="-140" x2="0" y2="140" stroke="var(--line)"/>
-        <g stroke="url(#hgArc)" fill="none" stroke-width="1.6" stroke-dasharray="2.6 2.4">
-          <circle cx="-96" cy="34"  r="9"/><circle cx="-58" cy="-72" r="7"/>
-        </g>
-        <g fill="var(--purple)">
-          <circle cx="-14" cy="-40" r="10" opacity=".55"/>
-          <circle cx="34"  cy="-78" r="7"  opacity=".45"/>
-        </g>
-        <g fill="var(--ok)">
-          <circle cx="58"  cy="16"  r="17" opacity=".62"/>
-          <circle cx="104" cy="-34" r="11" opacity=".5"/>
-          <circle cx="22"  cy="62"  r="13" opacity=".45"/>
-        </g>
-        <circle cx="118" cy="70" r="8" fill="var(--warn)" opacity=".5"/>
-        <g stroke="var(--dim)" fill="none" stroke-width="1.2">
-          <circle cx="-118" cy="94" r="6"/><circle cx="-42" cy="112" r="6"/>
-        </g>
-      </g>
-    </svg>
+    <h1 id="masth1">Market Opportunities</h1>
     <div class="mmeta" id="mmeta"></div>
   </header>
 
   <nav class="pnav" id="pnav"></nav>
 
-  <div class="sec" id="s-conditions" data-crash="Crash risk" data-themes="Markets">
-    <div class="sechead"><div class="lhs"><span id="i1"></span><h2 id="condh2">Crash risk</h2><div class="rule"></div></div>
+  <div class="sec" id="s-conditions" data-crash="Crash Risk" data-themes="Markets">
+    <div class="sechead"><div class="lhs"><span id="i1"></span><h2 id="condh2">Markets</h2><div class="rule"></div></div>
       <div class="seg" id="tf"></div><div class="rule"></div></div>
     <div class="cond">
       <div class="gauge-card" id="gcard" title="How this number is built">
@@ -733,11 +708,11 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
           <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div></div></div>
         <div class="gread" id="gread"></div>
       </div>
-      <div class="card"><div class="tiles" id="tiles"></div></div>
+      <div class="card"><div class="mkt" id="tiles"></div></div>
     </div>
   </div>
 
-  <p class="vnote">Two halves, one page. <b>Crash risk</b> is the composite and the
+  <p class="vnote">Two halves, one page. <b>Crash Risk</b> is the composite and the
     detail behind it: the indicators it is built from, the scenarios it is a reading on,
     how far each one could fall and what would move it. <b>Market Opportunities</b> is
     the market numbers and the theme register beside them — what is forming, what is
@@ -925,6 +900,7 @@ const SIGNALS=[];
 const CRASH={};
 const META={};
 const WINDOWS={};
+const MKT={};
 const STAGES=["Radar","Emerging","Building","Confirmed","Fading","Faded / Retired"];
 const COL={Radar:"var(--muted)",Emerging:"var(--blue)",Building:"var(--purple)",Confirmed:"var(--ok)",Fading:"var(--warn)","Faded / Retired":"var(--bad)"};
 const RC={climbing:"var(--ok)",stalled:"var(--warn)",fading:"var(--bad)"};
@@ -1595,7 +1571,7 @@ document.getElementById("seg").addEventListener("click",e=>{
     (META.buildTime?` <span class="tm">${META.buildTime}</span>`:"")+
     `<span class="sep">·</span>analysis ${META.report}`+
     (META.reportTime?` <span class="tm">${META.reportTime}</span>`:"")+
-    `<span class="sep">·</span>rebuilt daily from primary sources`;
+    `<span class="sep how">·</span><span class="how">rebuilt daily from primary sources</span>`;
 })();
 
 /* ---------- tiles + period selector ----------
@@ -1616,20 +1592,34 @@ function thin(h){
   for(let i=0;i<40;i++) out.push(h[Math.round(i*step)]);
   return out;
 }
+const ARROW={up:"\u2197",down:"\u2198",flat:"\u2192"};
+/* The switch's market readout is recomputed from the window on screen, not from
+   the daily direction the fetch stored. A badge reading "down" beside a list of
+   rows reading "up" is not a subtlety a reader is supposed to resolve; whatever
+   period they picked, both describe it. Equity indices only, one vote each, for
+   the reason set out in generator.py. */
+function marketDir(){
+  const keys=MKT.keys||[]; let up=0,down=0,n=0;
+  TILES.forEach(t=>{
+    if(keys.indexOf(t.lbl)<0) return;
+    n++;
+    const h=histSlice(t,win);
+    const d=h?(h[h.length-1]-h[0]>0?"up":h[h.length-1]-h[0]<0?"down":"flat"):t.dir;
+    if(d==="up")up++; else if(d==="down")down++;
+  });
+  return {dir:up>down?"up":down>up?"down":"flat",up:up,down:down,n:n};
+}
 function renderTiles(){
   document.getElementById("tiles").innerHTML=TILES.map((t,i)=>{
     const h=histSlice(t,win);
     const dir=h?(h[h.length-1]-h[0]>0?"up":h[h.length-1]-h[0]<0?"down":"flat"):t.dir;
     const c=dir==="up"?"var(--ok)":dir==="down"?"var(--bad)":"var(--sub)";
     const chg=t.chgw&&t.chgw[win]?t.chgw[win]:t.chg;
-    const tag=t.chgw&&t.chgw[win]?win:"1d";
-    let sp="";
-    if(h){const s=thin(h),lo=Math.min(...s),hi=Math.max(...s),rg=(hi-lo)||1;
-      sp=`<svg class="spark" viewBox="0 0 100 24"><polyline points="${s.map((v,j)=>
-        `${(j/(s.length-1)*100).toFixed(1)},${(22-((v-lo)/rg)*20).toFixed(1)}`).join(" ")}"
-        fill="none" stroke="${c}" stroke-width="1.4"/></svg>`;}
-    return `<div class="tile" data-i="${i}"><div class="t-l">${t.lbl}</div><div class="t-v">${t.val}</div>
-      <div class="t-c" style="color:${c}">${chg}<span class="w">${tag}</span></div>${sp}</div>`;}).join("");
+    return `<button class="mrow" data-i="${i}" title="${t.lbl} \u00b7 ${chg} over ${win}">
+      <span class="m-l">${t.lbl}</span>
+      <span class="m-v">${t.val} <span class="m-c" style="color:${c}">${chg}</span></span>
+      <span class="m-a" style="color:${c}">${ARROW[dir]||""}</span></button>`;}).join("");
+  if(window.__mktBadge) window.__mktBadge(marketDir());
 }
 document.getElementById("tf").innerHTML=WINKEYS.map(k=>
   `<button data-w="${k}"${k===win?' class="on"':''}>${k}</button>`).join("");
@@ -1639,7 +1629,7 @@ document.getElementById("tf").addEventListener("click",e=>{
   win=b.dataset.w;renderTiles();
 });
 document.getElementById("tiles").addEventListener("click",e=>{
-  const t=e.target.closest(".tile");if(t)openPanel(TILES[+t.dataset.i]);});
+  const t=e.target.closest(".mrow");if(t)openPanel(TILES[+t.dataset.i]);});
 renderTiles();
 
 /* ---------- lists ---------- */
@@ -1682,7 +1672,6 @@ document.getElementById("i2").innerHTML=icon("layers");
 document.getElementById("i3").innerHTML=icon("activity");
 document.getElementById("i4").innerHTML=icon("globe");
 document.getElementById("ilogo").innerHTML=icon("target");
-document.getElementById("eyeic").innerHTML=icon("activity");
 {const b=document.getElementById("themetog");
  b.innerHTML=icon("moon","moon")+icon("sun","sun");
  b.setAttribute("aria-label",theme()==="light"?"Switch to the dark theme":"Switch to the light theme");
@@ -2114,7 +2103,11 @@ renderScen();
    so it cannot list something that is not there. The switch writes #crash /
    #themes with replaceState: either half is still a link someone can send, and
    flipping back and forth does not stack up back-button entries. */
-const VIEWS=[["crash","Crash risk","alert"],["themes","Market Opportunities","sparkles"]];
+/* Market Opportunities leads: it is the larger half and the one most visits are
+   for. Each row carries a short label for the phone, where the full one will not
+   fit beside a readout. */
+const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
+             ["crash","Crash Risk","Crash Risk","alert"]];
 (function(){
   const nav=document.getElementById("pnav"),vsw=document.getElementById("vsw");
   const all=[...document.querySelectorAll(".wrap .sec")].map(sec=>{
@@ -2129,12 +2122,31 @@ const VIEWS=[["crash","Crash risk","alert"],["themes","Market Opportunities","sp
   }).filter(Boolean);
 
   const hash=(location.hash||"").slice(1);
-  let half="crash", deep=null;
+  let half=VIEWS[0][0], deep=null;
   if(hash==="crash"||hash==="themes") half=hash;
   else if(hash){const m=all.find(x=>x.id===hash); if(m){half=m.vw||half;deep=m.id;}}
 
-  vsw.innerHTML=VIEWS.map(([k,l,ic])=>
-    `<button data-v="${k}" aria-pressed="${k===half}">${icon(ic)}<span>${l}</span></button>`).join("");
+  /* Each button carries its half's state, not just its name. Crash Risk shows the
+     composite in its band colour; Market Opportunities shows which way the equity
+     indices went, as a direction rather than a number, because there is no single
+     number for that half. Both are readable from the other half, which is the
+     whole reason they are here. */
+  const BAND=v=>v>=70?"bad":v>=40?"warn":"ok";
+  const DIRC={up:"ok",down:"bad",flat:"flat"};
+  const readout={
+    crash:CRASH.v==null?"" :
+      `<span class="rd ${BAND(CRASH.v)}">${CRASH.v}</span>`,
+    themes:!MKT.n?"" : `<span class="rd flat" id="mktrd"></span>`
+  };
+  const TITLES={
+    crash:CRASH.v==null?"Crash risk":
+      `Crash risk composite ${CRASH.v} of 100 \u2014 ${CRASH.lvl}`,
+    themes:"Net direction of the equity indices"
+  };
+  vsw.innerHTML=VIEWS.map(([k,l,short,ic])=>
+    `<button data-v="${k}" aria-pressed="${k===half}" title="${TITLES[k]}">${icon(ic)}`+
+    `<span class="vfull">${l}</span><span class="vshort">${short}</span>`+
+    `${readout[k]||""}</button>`).join("");
 
   let secs=[],links=[];
   function build(){
@@ -2144,6 +2156,8 @@ const VIEWS=[["crash","Crash risk","alert"],["themes","Market Opportunities","sp
     vsw.querySelectorAll("button").forEach(b=>{
       const on=b.dataset.v===half;
       b.classList.toggle("on",on); b.setAttribute("aria-pressed",on);});
+    const view=VIEWS.find(v=>v[0]===half);
+    if(view) document.getElementById("masth1").textContent=view[1];
     secs=all.filter(x=>!x.vw||x.vw===half);
     secs.forEach(x=>{
       const per=x.el.dataset[half];
@@ -2183,6 +2197,18 @@ const VIEWS=[["crash","Crash risk","alert"],["themes","Market Opportunities","sp
       tick=false;
     });
   },{passive:true});
+
+  /* The badge is owned here but written by renderTiles, which is the only thing
+     that knows which window is on screen. */
+  window.__mktBadge=m=>{
+    const el=document.getElementById("mktrd"); if(!el) return;
+    el.className="rd "+(DIRC[m.dir]||"flat");
+    el.textContent=ARROW[m.dir]||"";
+    const b=el.closest("button");
+    if(b) b.title=`${m.up} of ${m.n} equity indices up over ${win}, ${m.down} down `+
+      `\u2014 ${(MKT.keys||[]).join(", ")}`;
+  };
+  if(typeof marketDir==="function") window.__mktBadge(marketDir());
 
   const bl=document.getElementById("blink");
   if(bl) bl.addEventListener("click",e=>{e.preventDefault();

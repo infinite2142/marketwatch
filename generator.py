@@ -27,7 +27,7 @@ OUT_PATH      = os.path.join(HERE, "index.html")
 
 # JS var name in the template  ->  path into the JSON data
 INJECT_V28 = ["MARKS","DRIVERS","TILES","SIGNALS","CATS","SIGMETA",
-              "CRASH","META","WINDOWS","STATE","CHANGELOG"]
+              "CRASH","META","WINDOWS","STATE","CHANGELOG","MKT"]
 
 def find_literal_end(s, i):
     """Return index just past the JS array/object literal that starts at s[i] ('[' or '{').
@@ -731,6 +731,29 @@ def head_meta(data, report_date):
     ]
     return title, "\n".join("<%s %s>" % t for t in tags)
 
+# The half switch carries a one-glance readout of each half, so a reader on one
+# can see the state of the other without leaving it. The crash half's readout is
+# its composite. The markets half's is the net direction of the EQUITY indices
+# only — deliberately not of all twelve tiles, because "up" means opposite things
+# for the S&P and for the VIX or the dollar, and a count across them would look
+# like breadth while meaning nothing. Five indices, one vote each, from the tile
+# `dir` that fetch_data.py owns; a tie or a miss reads flat rather than guessing.
+EQUITY_TILES = ["S&P 500", "STOXX 600", "FTSE 100", "Nikkei 225", "MSCI EM"]
+
+def market_read(tiles):
+    by = {t["lbl"]: t for t in tiles}
+    seen = [by[k] for k in EQUITY_TILES if k in by]
+    up = sum(1 for t in seen if t.get("dir") == "up")
+    down = sum(1 for t in seen if t.get("dir") == "down")
+    d = "up" if up > down else "down" if down > up else "flat"
+    missing = [k for k in EQUITY_TILES if k not in by]
+    if missing:
+        print("WARN: equity tiles missing from the market readout: %s" % missing,
+              file=sys.stderr)
+    return dict(dir=d, up=up, down=down, n=len(seen),
+                keys=[t["lbl"] for t in seen],
+                asOf=max([t.get("asOf", "") for t in seen] or [""]))
+
 def build_v28(data):
     """Everything template_v28.html renders, shaped once."""
     prior = _prior_stages(LOOKBACK)
@@ -1127,6 +1150,7 @@ def build_v28(data):
                         drvcats=drv_cats, total=len(sigs)),
         "CRASH": crash, "WINDOWS": data.get("windows", {}), "STATE": state,
         "CHANGELOG": derive_changelog({m["id"]: m.get("audit") or [] for m in marks}),
+        "MKT": market_read(tiles),
         "META": dict(build=(meta.get("last_fetch") or "")[:10],
                      buildTime=(meta.get("last_fetch") or "")[11:16],
                      report=meta.get("report_date", ""),
