@@ -69,6 +69,155 @@ body{margin:0;background:#09090b;color:#f4f4f5;font:14px/1.55 -apple-system,Blin
 @media (max-width:720px){
   .pnav{margin:0 -14px;padding:8px 14px}
 }
+/* ---- the two halves of the page -----------------------------------------
+   Crash risk and opportunities are different questions, not two more sections,
+   so they get a switch of their own in the sticky bar rather than another tab.
+   One page rather than two files: this template is hand-edited, and a second
+   copy of the CSS and the render engine is a second copy that drifts. The
+   switch swaps which half is in the document flow and writes #crash / #themes
+   into the URL, so either half is still a link someone can send. */
+.vsw{display:flex;gap:2px;flex:0 0 auto;background:#131316;border:1px solid #27272a;
+  border-radius:8px;padding:2px;margin-right:10px}
+.vsw button{display:inline-flex;align-items:center;gap:6px;background:none;border:0;
+  color:#71717a;font:inherit;font-size:11.5px;font-weight:600;padding:4px 11px;
+  border-radius:6px;cursor:pointer;white-space:nowrap;transition:.15s}
+.vsw button:hover{color:#f4f4f5}
+.vsw button.on{background:#f4f4f5;color:#09090b}
+.vsw .ic{width:13px;height:13px;flex:0 0 13px}
+@media (max-width:720px){.vsw{margin-right:6px}.vsw button{padding:4px 9px}}
+.vw{display:none}
+.vw.on{display:block}
+/* The shared band above the switch: the composite and the market tiles belong to
+   both halves, so they sit outside either. */
+.vnote{font-size:11.5px;color:#71717a;line-height:1.6;margin:0 0 42px;max-width:86ch}
+.vnote b{color:#d4d4d8;font-weight:600}
+
+/* ---- crash risk: indicator buckets --------------------------------------- */
+.bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+@media (max-width:900px){.bgrid{grid-template-columns:1fr}}
+.bcard{background:#131316;border:1px solid #27272a;border-radius:12px;padding:15px 16px}
+.bch{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bcn{font-size:12.5px;font-weight:600;color:#f4f4f5;flex:1;min-width:0}
+.bcs{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;flex:0 0 auto}
+.bcx{font-size:11.5px;color:#a1a1aa;line-height:1.55;margin:0 0 4px}
+.irow{display:grid;grid-template-columns:1fr auto 16px;align-items:center;gap:10px;
+  width:100%;text-align:left;background:none;border:0;border-top:1px solid #232326;
+  padding:8px 2px;color:inherit;font:inherit;cursor:pointer}
+.irow:hover .inm{color:#f4f4f5}
+.inm{font-size:12px;color:#a1a1aa;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;display:flex;align-items:center;gap:7px}
+.idot{width:6px;height:6px;border-radius:50%;flex:0 0 6px}
+.ival{font-size:12px;font-weight:600;color:#f4f4f5;font-variant-numeric:tabular-nums;white-space:nowrap}
+.itr{font-size:11px;color:#52525b;text-align:center}
+.bempty{font-size:11.5px;color:#52525b;font-style:italic;padding:10px 2px 2px}
+
+/* ---- crash risk: scenarios ----------------------------------------------- */
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:16px}
+@media (max-width:900px){.sgrid{grid-template-columns:1fr}}
+.scard{background:#131316;border:1px solid #27272a;border-radius:12px;padding:14px 15px;
+  text-align:left;color:inherit;font:inherit;cursor:pointer;width:100%;transition:.14s}
+.scard:hover{border-color:#3f3f46;background:#18181b}
+.sch{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.sid{font-size:10.5px;font-weight:700;letter-spacing:.6px;border-radius:6px;padding:3px 8px;
+  flex:0 0 auto;font-variant-numeric:tabular-nums}
+.snm{font-size:13px;font-weight:600;color:#f4f4f5;flex:1;min-width:0}
+.sprob{font-size:15px;font-weight:700;color:#f4f4f5;font-variant-numeric:tabular-nums;flex:0 0 auto}
+.spb{position:relative;height:5px;border-radius:999px;background:#232326;margin:0 0 7px}
+.spb i{position:absolute;top:0;bottom:0;border-radius:999px;opacity:.55}
+.spb b{position:absolute;top:-3.5px;width:2px;height:12px;background:#f4f4f5;border-radius:1px}
+.smet{display:flex;justify-content:space-between;align-items:center;gap:8px;
+  font-size:10.5px;color:#71717a;margin-bottom:9px}
+.scu{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  border-radius:999px;padding:3px 8px;white-space:nowrap}
+.swh{font-size:11.5px;color:#a1a1aa;line-height:1.55;margin:0}
+.seq{font-size:11.5px;color:#d4d4d8;margin:8px 0 0;font-weight:500}
+/* likelihood against severity: the trade-off the whole section is about, which a
+   list of eight cards cannot show. Colour is whether bonds cushion the fall. */
+.scat{width:100%;height:auto;display:block;margin-bottom:6px}
+.scat text{font-family:inherit}
+.slg{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:#71717a;margin:2px 0 0}
+.slg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+/* the signpost clusters: a single reading means little */
+.clus{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:16px;
+  border-top:1px solid #232326;padding-top:16px}
+@media (max-width:760px){.clus{grid-template-columns:1fr}}
+.clu{background:#131316;border:1px solid #27272a;border-radius:10px;padding:11px 13px}
+.cluh{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap}
+.clun{font-size:12px;font-weight:600;color:#f4f4f5}
+.clut{font-size:11.5px;color:#a1a1aa;line-height:1.55}
+
+/* ---- crash risk: how far it could fall ----------------------------------- */
+.dpr{display:grid;grid-template-columns:58px 1fr auto;gap:15px;align-items:start;
+  width:100%;text-align:left;background:none;border:0;border-top:1px solid #232326;
+  padding:15px 2px;color:inherit;font:inherit;cursor:pointer}
+.dpr:first-child{border-top:0;padding-top:4px}
+.dpr:hover .dpn{color:#f4f4f5}
+.dpc{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.dpn{font-size:12.5px;font-weight:600;color:#d4d4d8}
+.dpx{font-size:11.5px;color:#71717a;line-height:1.55;margin-top:4px}
+.dpv{text-align:right;flex:0 0 auto}
+.dpvn{font-size:16px;font-weight:600;color:#f4f4f5;font-variant-numeric:tabular-nums;line-height:1.2}
+.dpvl{font-size:10.5px;color:#52525b;margin-top:3px;white-space:nowrap}
+.dpbar{height:4px;border-radius:999px;background:#232326;margin-top:8px;overflow:hidden}
+.dpbar i{display:block;height:100%;border-radius:999px}
+
+/* ---- crash risk: precedents ---------------------------------------------- */
+.epr{display:grid;grid-template-columns:118px 62px 1fr auto;gap:13px;align-items:center;
+  width:100%;text-align:left;background:none;border:0;border-top:1px solid #232326;
+  padding:11px 2px;color:inherit;font:inherit;cursor:pointer}
+.epr:hover .epn{color:#f4f4f5}
+.epn{font-size:12.5px;font-weight:600;color:#d4d4d8;white-space:nowrap}
+.epf{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:#f43f5e;text-align:right}
+.epd{font-size:11.5px;color:#71717a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.epb{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  border-radius:999px;padding:3px 9px;white-space:nowrap;flex:0 0 auto}
+@media (max-width:760px){
+  .epr{grid-template-columns:1fr auto;gap:8px 11px}
+  .epf{grid-row:1;grid-column:2}
+  .epd{grid-column:1/-1}
+  .epb{grid-column:1/-1;justify-self:start}
+}
+
+/* ---- crash risk: what next ------------------------------------------------ */
+.nxg{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:20px}
+@media (max-width:900px){.nxg{grid-template-columns:1fr;gap:20px}}
+.nxh{display:flex;align-items:center;gap:8px;font-size:10.5px;text-transform:uppercase;
+  letter-spacing:1.3px;font-weight:700;margin-bottom:4px}
+.nxi{width:15px;height:15px;flex:0 0 15px}
+.nxr{width:100%;text-align:left;background:none;border:0;border-top:1px solid #232326;
+  padding:11px 2px;color:inherit;font:inherit;cursor:pointer;display:block}
+.nxt{display:flex;align-items:baseline;gap:9px;font-size:12.5px;font-weight:600;color:#d4d4d8}
+.nxt:hover{color:#f4f4f5}
+.nxt em{margin-left:auto;font-style:normal;color:#52525b;font-size:15px;line-height:1;
+  transition:.15s;flex:0 0 auto}
+.nxr.open .nxt em{transform:rotate(45deg)}
+.nxw{display:none;font-size:11.5px;color:#a1a1aa;line-height:1.6;margin-top:7px;
+  padding-right:14px}
+.nxr.open .nxw{display:block}
+.nxb{background:#131316;border:1px solid #27272a;border-radius:12px;padding:15px 17px;
+  margin-top:14px}
+.nxbh{font-size:10.5px;text-transform:uppercase;letter-spacing:1.3px;font-weight:700;
+  color:#a1a1aa;margin-bottom:7px}
+.nxbb{font-size:12.5px;color:#d4d4d8;line-height:1.65;margin:0}
+.cav{margin-top:20px;border-top:1px solid #232326;padding-top:16px}
+
+/* ---- shared: the scenario badge, which is clickable wherever it appears ---- */
+.scb{display:inline-flex;align-items:center;font-size:9.5px;font-weight:700;
+  letter-spacing:.5px;border-radius:5px;padding:2px 6px;cursor:pointer;
+  border:1px solid transparent;font-variant-numeric:tabular-nums}
+.scb:hover{border-color:currentColor}
+.scbs{display:inline-flex;gap:4px;flex-wrap:wrap;align-items:center}
+.scbl{font-size:10px;color:#52525b;margin-right:2px}
+/* panel bits reused by the crash half */
+.psrc{font-size:10.5px;color:#52525b;line-height:1.55;margin-top:9px;
+  border-top:1px solid #232326;padding-top:9px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:7px;margin-top:4px}
+.pgc{background:#131316;border:1px solid #27272a;border-radius:8px;padding:8px 10px}
+.pgcl{font-size:10px;color:#71717a;margin-bottom:3px}
+.pgcv{font-size:13px;font-weight:700}
+.pul{margin:4px 0 0;padding-left:17px;font-size:12.5px;color:#d4d4d8;line-height:1.65}
+.pul li{margin-bottom:5px}
+.pul li::marker{color:#52525b}
 .hero{position:relative;margin:30px 0 64px}
 .herog{position:absolute;right:26px;top:-34px;width:340px;height:300px;pointer-events:none;z-index:0}
 .hero h2,.hero p,.hero .disc{position:relative;z-index:1}
@@ -383,7 +532,7 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
     <span class="chip" id="chip"></span>
   </div>
 
-  <nav class="pnav" id="pnav"><span class="pbrand" id="pbrand"></span></nav>
+  <nav class="pnav" id="pnav"><span class="pbrand" id="pbrand"></span><span class="vsw" id="vsw"></span></nav>
 
   <div class="hero">
     <h2>Markets, drivers and the themes <em>forming underneath them</em></h2>
@@ -445,6 +594,75 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
     </div>
   </div>
 
+  <p class="vnote">The composite and the market tiles above answer both halves of this
+    page, so they sit outside either. <b>Crash risk</b> is the detail behind that number:
+    the indicators it is built from, the scenarios it is a reading on, how far each one
+    falls and what would move it. <b>Opportunities</b> is the theme register — what is
+    forming, what is confirmed and what has played out. Switch in the bar above.</p>
+
+  <div class="vw" id="v-crash">
+
+  <div class="sec">
+    <div class="sechead"><div class="lhs"><span id="i8"></span><h2>Indicators</h2><div class="rule"></div></div>
+      <div class="seg" id="indfilt"></div><div class="rule"></div></div>
+    <div class="card"><div class="bgrid" id="bgrid"></div>
+      <p class="hint">The buckets behind the composite, each scored from its own indicators.
+        Click any indicator for what it means, what would signal a shift, and its dated source.
+        <span id="indcount"></span></p></div>
+  </div>
+
+  <div class="sec">
+    <div class="sechead"><div class="lhs"><span id="i9"></span><h2>Scenarios</h2><div class="rule"></div></div>
+      <div class="seg" id="scnfilt"></div><div class="rule"></div></div>
+    <div class="card">
+      <p class="sop" id="scnlead"></p>
+      <svg class="scat" id="scat" viewBox="0 0 900 340" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="slg" id="scatlg"></div>
+      <div class="sgrid" id="sgrid"></div>
+      <div class="clus" id="clus"></div>
+      <p class="hint" id="scnnote"></p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sechead"><div class="lhs"><span id="i10"></span><h2>If it falls</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
+    <div class="card">
+      <p class="sop" id="dpllead"></p>
+      <div id="dpl"></div>
+      <p class="hint" id="dplnote"></p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sechead"><div class="lhs"><span id="i11"></span><h2>Precedents</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
+    <div class="card">
+      <p class="sop" id="epslead"></p>
+      <div id="eps"></div>
+      <p class="hint" id="epsnote"></p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sechead"><div class="lhs"><span id="i12"></span><h2>What next</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
+    <div class="card">
+      <p class="sop" id="nxlead"></p>
+      <div class="nxg">
+        <div><div class="nxh" style="color:#f43f5e"><span class="nxi" id="i13"></span>What would push it higher</div>
+          <div id="nxup"></div></div>
+        <div><div class="nxh" style="color:#10b981"><span class="nxi" id="i14"></span>What would bring it down</div>
+          <div id="nxdown"></div></div>
+      </div>
+      <div id="nxblocks"></div>
+      <div class="cav"><div class="nxh" style="color:#a1a1aa"><span class="nxi" id="i15"></span>What this reading cannot tell you</div>
+        <div id="nxcav"></div></div>
+      <p class="hint">Watch-and-confirm, not positioning. Nothing here is a holding, a trade or a
+        size &mdash; it is what would move the reading and what history says each move has cost.</p>
+    </div>
+  </div>
+
+  </div>
+  <div class="vw" id="v-themes">
+
   <div class="sec">
     <div class="sechead"><div class="lhs"><span id="i6"></span><h2>State of play</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
     <div class="card"><p class="sop" id="sop"></p>
@@ -486,6 +704,8 @@ ul.lst li .ol{color:#71717a;font-size:11.5px;overflow:hidden;text-overflow:ellip
       <p class="hint">When a theme joined the book, moved stage or left it &mdash; read from the
         data file's own history, so it cannot fall out of step with the book above.</p>
     </div>
+  </div>
+
   </div>
 
   <p class="guard">Research, not a portfolio. Nothing here is a holding, a position or a size &mdash;
@@ -1358,25 +1578,357 @@ document.getElementById("i7").innerHTML=icon("activity");
   });
   paint();
 })();
-/* section nav: built from the sections that actually rendered, so it cannot list
-   something that is not there */
+/* ====================== crash risk: the detail half ========================
+   The composite and the market tiles sit above the split, because they answer
+   both halves. Everything below answers one: the buckets behind the number,
+   the scenarios the number is a reading on, how far each one falls, what it
+   cost last time, and what would move it. All of it is state the daily owns —
+   see daily-task.md. The one derived thing is the implied index level on each
+   fall size, computed in generator.py from the base close. */
+const CSC={calm:"#10b981",watch:"#f59e0b",stress:"#f43f5e"};
+/* ISO dates are what the data file stores; the page writes them out */
+const dlong=d=>{const t=Date.parse(d+"T00:00:00Z");
+  return isNaN(t)?(d||"—"):new Date(t).toLocaleDateString("en-GB",
+    {day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});};
+const CRK={calm:0,watch:1,stress:2};
+const CTA={up:"↗",flat:"→",down:"↘"};
+const SCN=(CRASH.scen&&CRASH.scen.items)||[];
+const SCMAP={}; SCN.forEach(s=>SCMAP[s.id]=s);
+const SKIND={main:"#60a5fa",worst:"#f43f5e"};
+const CUSH={yes:["#10b981","bonds cushion"],no:["#f43f5e","bonds fall too"],
+            na:["#71717a","no bear market"]};
+const ARAT={"++":["#10b981",1],"+":["#34d399",.72],"0":["#a1a1aa",.6],
+            "-":["#fb7185",.72],"--":["#f43f5e",1]};
+const worstOf=b=>b.inds.reduce((mx,i)=>CRK[i.status]>CRK[mx]?i.status:mx,"calm");
+
+/* a scenario badge is clickable wherever it appears — in an indicator, a fall
+   size, a cluster — and always opens the same scenario panel */
+const scb=ids=>!ids||!ids.length?"":`<span class="scbs"><span class="scbl">points to</span>`+
+  ids.filter(i=>SCMAP[i]).map(i=>{const s=SCMAP[i],c=SKIND[s.kind];
+    return `<span class="scb" data-sc="${i}" title="${s.nm} — ${s.prob}% by 2029"
+      style="color:${c};background:${c}22">${i}</span>`;}).join("")+`</span>`;
+
+function openScenario(id){
+  const s=SCMAP[id]; if(!s) return;
+  const c=SKIND[s.kind],cu=CUSH[s.cushion]||CUSH.na;
+  const li=a=>`<ul class="pul">`+a.map(x=>`<li>${x}</li>`).join("")+`</ul>`;
+  openPanel({nm:s.id+" · "+s.nm,
+    sub:(s.kind==="worst"?"Worst case":"Main scenario")+" · "+s.lo+"–"+s.hi+"% by 2029",
+    k:null,logHTML:
+    `<div class="phead" style="--pc:${c}">${icon(s.kind==="worst"?"alert":"compass")}
+      <div><div class="pbig">${s.prob}%</div>
+      <div class="psm">mid-point of a ${s.lo}–${s.hi}% judgement range</div></div></div>
+     <div class="pchips">
+       <span class="pchip">equities <b>${s.eq}</b></span>
+       <span class="pchip" style="color:${cu[0]}">${cu[1]}</span>
+       ${CRASH.scen.est?`<span class="pchip">estimate</span>`:""}
+     </div>`,
+    body:[["What happens",s.what],["Bonds and yields",s.bonds],["Equities",s.equities]]});
+  const b=document.getElementById("pbody");
+  b.insertAdjacentHTML("beforeend",
+    `<div class="plabel">What would confirm it</div>${li(s.confirms)}`+
+    (s.kills.length?`<div class="plabel">What would rule it out</div>${li(s.kills)}`:"")+
+    `<div class="plabel">The nearest precedent</div><div class="ptext">${s.hist}</div>`+
+    `<div class="plabel">Asset read</div><div class="pgrid">`+
+      s.assets.map(([nm,r])=>{const a=ARAT[r]||ARAT["0"];
+        return `<div class="pgc"><div class="pgcl">${nm}</div>
+          <div class="pgcv" style="color:${a[0]};opacity:${a[1]}">${r==="0"?"—":r}</div></div>`;}).join("")+
+    `</div><div class="accnote">Direction only, in real terms for a sterling holder. Not weights,
+      not sizes, not a recommendation.</div>`+
+    `<div class="psrc">Likelihood and asset reads are judgement, framed on ${CRASH.scen.src||"the desk's own sources"}.
+      Reviewed ${dlong(CRASH.scen.asOf)}. Scenarios overlap and do not sum to 100.</div>`);
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".scb"); if(!b) return;
+  e.stopPropagation(); openScenario(b.dataset.sc);
+});
+
+/* ---------- indicators ---------- */
+let indf="all";
+function renderInds(){
+  const keep=b=>indf==="all"?b.inds:b.inds.filter(i=>i.status===indf);
+  document.getElementById("bgrid").innerHTML=CRASH.buckets.map((b,bi)=>{
+    const w=worstOf(b),c=CSC[w],rows=keep(b);
+    return `<div class="bcard">
+      <div class="bch"><span class="bdot" style="background:${c}"></span>
+        <span class="bcn">${b.nm}</span><span class="bcs" style="color:${c}">${w}</span></div>
+      <p class="bcx">${b.summary}</p>`+
+      (rows.length?rows.map(i=>{const ic=CSC[i.status];
+        const gi=b.inds.indexOf(i);
+        return `<button class="irow" data-b="${bi}" data-i="${gi}">
+          <span class="inm"><span class="idot" style="background:${ic}"></span>${i.nm}</span>
+          <span class="ival">${i.val}</span>
+          <span class="itr" style="color:${ic}">${CTA[i.tr]||""}</span></button>`;}).join("")
+        :`<div class="bempty">Nothing at ${indf} in this bucket.</div>`)+
+    `</div>`;}).join("");
+  const n=CRASH.buckets.reduce((a,b)=>a+keep(b).length,0);
+  const tot=CRASH.buckets.reduce((a,b)=>a+b.inds.length,0);
+  document.getElementById("indcount").textContent=
+    indf==="all"?`${tot} indicators across ${CRASH.buckets.length} buckets.`
+               :`Showing ${n} of ${tot} indicators at ${indf}.`;
+}
+document.getElementById("indfilt").innerHTML=
+  [["all","All"],["stress","Stress"],["watch","Watch"],["calm","Calm"]].map(([v,l])=>
+    `<button data-f="${v}"${v===indf?' class="on"':''}>${l}</button>`).join("");
+document.getElementById("indfilt").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  [...e.currentTarget.children].forEach(c=>c.classList.toggle("on",c===b));
+  indf=b.dataset.f; renderInds();
+});
+document.getElementById("bgrid").addEventListener("click",e=>{
+  const r=e.target.closest(".irow"); if(!r) return;
+  const b=CRASH.buckets[+r.dataset.b],i=b.inds[+r.dataset.i],c=CSC[i.status];
+  openPanel({nm:i.nm,sub:b.nm+" · "+i.status+" · "+(i.tr==="flat"?"steady":i.tr),
+    k:null,logHTML:
+    `<div class="phead" style="--pc:${c}">${icon("activity")}
+      <div><div class="pbig">${i.val}</div>
+      <div class="psm">${i.status} · ${CTA[i.tr]||""} ${i.tr==="flat"?"steady":i.tr}</div></div></div>`+
+    (i.sc&&i.sc.length?`<div class="pchips">${scb(i.sc)}</div>`:""),
+    body:[["What it measures",i.mean],["What would signal a shift",i.shift]]});
+  document.getElementById("pbody").insertAdjacentHTML("beforeend",
+    `<div class="psrc">Source: ${i.src||"—"}${i.est?" · estimate":""}<br>
+      As of ${dlong(i.asOf)}${i.cad?" · "+i.cad:""}${i.note?"<br>"+i.note:""}</div>`);
+});
+
+/* ---------- scenarios ---------- */
+let scnf="all";
+function drawScat(items){
+  const s=document.getElementById("scat"); s.innerHTML="";
+  const L=64,R=20,T=20,B=48,W=900,H=340;
+  const xm=50,ym=62;                                  /* severity %, likelihood % */
+  const X=v=>L+(v/xm)*(W-L-R), Y=v=>H-B-(v/ym)*(H-T-B);
+  const mk=(t,a,txt)=>{const e=document.createElementNS(NS,t);
+    for(const k in a)e.setAttribute(k,a[k]);
+    if(txt!=null)e.textContent=txt; s.appendChild(e); return e;};
+  for(let v=0;v<=60;v+=20){
+    mk("line",{x1:L,y1:Y(v),x2:W-R,y2:Y(v),stroke:"#232326"});
+    mk("text",{x:L-10,y:Y(v)+4,"text-anchor":"end","font-size":11,fill:"#52525b"},v+"%");
+  }
+  for(let v=0;v<=50;v+=10){
+    mk("line",{x1:X(v),y1:T,x2:X(v),y2:H-B,stroke:"#1c1c1f"});
+    mk("text",{x:X(v),y:H-B+20,"text-anchor":"middle","font-size":11,fill:"#52525b"},
+       (v?"\u2212":"")+v+"%");
+  }
+  mk("text",{x:(L+W-R)/2,y:H-10,"text-anchor":"middle","font-size":11,fill:"#71717a"},
+     "Severity — mid-point of the equity fall");
+  mk("text",{x:14,y:(T+H-B)/2,"text-anchor":"middle","font-size":11,fill:"#71717a",
+     transform:`rotate(-90 14 ${(T+H-B)/2})`},"Likelihood by 2029");
+  /* Two scenarios can share a severity and sit within a bubble of each other on
+     likelihood — W1 and W3 both fall 35-50% — which draws them as one blob. Nudge
+     any colliding pair apart along x, so the reading stays "same severity, one is
+     likelier" rather than a smear. */
+  const RAD=19, pos=items.map(d=>({d,x:X(((d.eqLo||0)+(d.eqHi||0))/2),y:Y(d.prob)}));
+  for(let a=0;a<pos.length;a++)for(let b=a+1;b<pos.length;b++){
+    const dx=pos[b].x-pos[a].x, dy=pos[b].y-pos[a].y;
+    const dist=Math.hypot(dx,dy) || 0.01;
+    if(dist>=RAD*2+4) continue;
+    const push=(RAD*2+4-dist)/2, ux=(dx/dist)||1, uy=dy/dist;
+    pos[a].x-=ux*push; pos[a].y-=uy*push; pos[b].x+=ux*push; pos[b].y+=uy*push;
+  }
+  pos.forEach(({d,x:cx,y:cy})=>{
+    const c=(CUSH[d.cushion]||CUSH.na)[0];
+    const g=document.createElementNS(NS,"g");
+    g.setAttribute("style","cursor:pointer"); s.appendChild(g);
+    const add=(t,a,txt)=>{const e=document.createElementNS(NS,t);
+      for(const k in a)e.setAttribute(k,a[k]); if(txt!=null)e.textContent=txt;
+      g.appendChild(e); return e;};
+    add("circle",{cx:cx,cy:cy,r:RAD,fill:c,"fill-opacity":.17,stroke:c,"stroke-width":1.4});
+    add("text",{x:cx,y:cy+4.5,"text-anchor":"middle","font-size":12,
+      "font-weight":700,fill:c},d.id);
+    add("title",{},`${d.id} · ${d.nm} — ${d.lo}–${d.hi}% likely, ${d.eq.toLowerCase()}`);
+    g.addEventListener("click",()=>openScenario(d.id));
+  });
+}
+function renderScen(){
+  const items=SCN.filter(s=>scnf==="all"||s.kind===scnf);
+  drawScat(items);
+  document.getElementById("sgrid").innerHTML=items.map(s=>{
+    const c=SKIND[s.kind],cu=CUSH[s.cushion]||CUSH.na;
+    const lo=Math.min(s.lo,60),hi=Math.min(s.hi,60);
+    return `<button class="scard" data-sc="${s.id}">
+      <div class="sch"><span class="sid" style="color:${c};background:${c}22">${s.id}</span>
+        <span class="snm">${s.nm}</span><span class="sprob">${s.prob}%</span></div>
+      <div class="spb"><i style="left:${lo/60*100}%;width:${Math.max(hi-lo,1)/60*100}%;background:${c}"></i>
+        <b style="left:calc(${s.prob/60*100}% - 1px)"></b></div>
+      <div class="smet"><span>${s.lo}–${s.hi}% by 2029</span>
+        <span class="scu" style="color:${cu[0]};background:${cu[0]}1c">${cu[1]}</span></div>
+      <p class="swh">${s.what}</p>
+      <p class="seq">Equities: ${s.eq}</p></button>`;}).join("");
+  document.getElementById("clus").innerHTML=(CRASH.clusters||[]).map(c=>
+    `<div class="clu"><div class="cluh"><span class="clun">${c.nm}</span>${scb(c.sc)}</div>
+      <div class="clut">${c.tell}</div></div>`).join("");
+}
+document.getElementById("scnfilt").innerHTML=
+  [["all","All eight"],["main","Main"],["worst","Worst cases"]].map(([v,l])=>
+    `<button data-f="${v}"${v===scnf?' class="on"':''}>${l}</button>`).join("");
+document.getElementById("scnfilt").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  [...e.currentTarget.children].forEach(c=>c.classList.toggle("on",c===b));
+  scnf=b.dataset.f; renderScen();
+});
+document.getElementById("sgrid").addEventListener("click",e=>{
+  /* a scenario badge inside a card wins over the card itself */
+  if(e.target.closest(".scb")) return;
+  const c=e.target.closest(".scard"); if(c) openScenario(c.dataset.sc);
+});
+document.getElementById("scatlg").innerHTML=
+  [["yes","Government bonds cushion the fall"],["no","Bonds fall with equities"],
+   ["na","No bear market in this path"]].map(([k,l])=>
+    `<span><i style="background:${CUSH[k][0]}"></i>${l}</span>`).join("");
+document.getElementById("scnlead").textContent=CRASH.scen.lead||"";
+document.getElementById("scnnote").textContent=
+  (CRASH.scen.note||"")+" "+(CRASH.scen.seq||"");
+
+/* ---------- how far it could fall ---------- */
 (function(){
-  const nav=document.getElementById("pnav");
-  const secs=[...document.querySelectorAll(".wrap > .sec")].map(sec=>{
+  const D=CRASH.depth||{},steps=D.steps||[];
+  document.getElementById("dpllead").textContent=D.lead||"";
+  document.getElementById("dplnote").textContent=D.note||"";
+  const col=p=>p>=50?"#f43f5e":p>=35?"#fb7185":p>=20?"#f59e0b":"#a1a1aa";
+  document.getElementById("dpl").innerHTML=steps.map((s,i)=>{
+    const c=col(s.pct);
+    return `<button class="dpr" data-i="${i}">
+      <span class="dpc" style="color:${c}">−${s.pct}%</span>
+      <span><span class="dpn">${s.nm}</span>
+        <span class="dpx">Back to ${s.back}. ${s.hist}</span>
+        <span class="dpbar"><i style="width:${s.pct*2}%;background:${c}"></i></span></span>
+      <span class="dpv"><span class="dpvn">${s.lvl!=null?s.lvl.toLocaleString():"—"}</span>
+        <span class="dpvl">implied level</span></span></button>`;}).join("");
+  document.getElementById("dpl").addEventListener("click",e=>{
+    const r=e.target.closest(".dpr"); if(!r) return;
+    const s=steps[+r.dataset.i],c=col(s.pct);
+    openPanel({nm:`A ${s.pct}% fall · ${s.nm}`,
+      sub:`${D.baseLbl} ${D.base?D.base.toLocaleString():""} on ${dlong(D.baseAsOf)} → ${s.lvl!=null?s.lvl.toLocaleString():"—"}`,
+      k:null,logHTML:
+      `<div class="phead" style="--pc:${c}">${icon("down")}
+        <div><div class="pbig">${s.lvl!=null?s.lvl.toLocaleString():"—"}</div>
+        <div class="psm">−${s.pct}% from ${D.base?D.base.toLocaleString():"—"}</div></div></div>`+
+      (s.sc&&s.sc.length?`<div class="pchips">${scb(s.sc)}</div>`:""),
+      body:[["Where that takes the index","Back to "+s.back+"."],
+            ["What history says",s.hist]]});
+    document.getElementById("pbody").insertAdjacentHTML("beforeend",
+      `<div class="psrc">Level derived at render from the ${D.baseLbl} on
+        ${dlong(D.baseAsOf)}, not stored — a second copy would drift from the base.
+        Fall sizes: ${D.src||"—"}</div>`);
+  });
+})();
+
+/* ---------- precedents ---------- */
+(function(){
+  const H=CRASH.hist||{},eps=H.eps||[];
+  document.getElementById("epslead").textContent=H.lead||"";
+  document.getElementById("epsnote").textContent=(H.note||"")+" "+(H.note2||"");
+  const BC=b=>/rose/.test(b)?"#10b981":/fell/.test(b)?"#f43f5e":"#a1a1aa";
+  document.getElementById("eps").innerHTML=eps.map((e,i)=>{
+    const c=BC(e.bonds);
+    return `<button class="epr" data-i="${i}">
+      <span class="epn">${e.nm}</span>
+      <span class="epf">\u2212${Math.abs(e.fall)}%</span>
+      <span class="epd">${e.dur} down · ${e.rec} back</span>
+      <span class="epb" style="color:${c};background:${c}1c">bonds ${e.bonds}</span></button>`;}).join("");
+  document.getElementById("eps").addEventListener("click",ev=>{
+    const r=ev.target.closest(".epr"); if(!r) return;
+    const e=eps[+r.dataset.i],c=BC(e.bonds);
+    openPanel({nm:e.nm,sub:`\u2212${Math.abs(e.fall)}% · ${e.dur} down · ${e.rec} to recover`,
+      k:null,logHTML:
+      `<div class="phead" style="--pc:#f43f5e">${icon("down")}
+        <div><div class="pbig">−${Math.abs(e.fall)}%</div>
+        <div class="psm">peak to trough · ${e.kind}</div></div></div>
+       <div class="pchips">
+         <span class="pchip">down <b>${e.dur}</b></span>
+         <span class="pchip">back <b>${e.rec}</b></span>
+         <span class="pchip" style="color:${c}">government bonds ${e.bonds}</span>
+       </div>`,
+      body:[["What caused it",e.cause],["How policy answered",e.policy]]});
+    document.getElementById("pbody").insertAdjacentHTML("beforeend",
+      `<div class="psrc">${H.src||"—"}. Recovery is in price terms; after inflation it
+        took longer, as in the 1970s.</div>`);
+  });
+})();
+
+/* ---------- what next ---------- */
+(function(){
+  const N=CRASH.next||{};
+  document.getElementById("nxlead").textContent=N.lead||"";
+  const rows=a=>(a||[]).map(x=>
+    `<div class="nxr"><div class="nxt">${x.t}<em>+</em></div><div class="nxw">${x.why}</div></div>`).join("");
+  document.getElementById("nxup").innerHTML=rows(N.up);
+  document.getElementById("nxdown").innerHTML=rows(N.down);
+  document.getElementById("nxcav").innerHTML=rows(N.caveats);
+  document.getElementById("nxblocks").innerHTML=(N.blocks||[]).map(b=>
+    `<div class="nxb"><div class="nxbh">${b.h}</div><p class="nxbb">${b.b}</p></div>`).join("");
+  document.addEventListener("click",e=>{
+    const r=e.target.closest(".nxr"); if(!r) return;
+    r.classList.toggle("open");
+  });
+})();
+
+document.getElementById("i8").innerHTML=icon("activity");
+document.getElementById("i9").innerHTML=icon("network");
+document.getElementById("i10").innerHTML=icon("down");
+document.getElementById("i11").innerHTML=icon("landmark");
+document.getElementById("i12").innerHTML=icon("compass");
+document.getElementById("i13").innerHTML=icon("alert");
+document.getElementById("i14").innerHTML=icon("shield");
+document.getElementById("i15").innerHTML=icon("info");
+renderInds();
+renderScen();
+
+/* ---- the two halves, and the section nav within whichever one is on screen ----
+   Every section gets its id up front, whichever half it lives in, so a deep link
+   to a section can be resolved before we know which half to show. The nav is then
+   built from the sections that actually rendered AND belong to the half on screen,
+   so it cannot list something that is not there. The switch writes #crash /
+   #themes with replaceState: either half is still a link someone can send, and
+   flipping back and forth does not stack up back-button entries. */
+const VIEWS=[["crash","Crash risk","alert"],["themes","Opportunities","sparkles"]];
+(function(){
+  const nav=document.getElementById("pnav"),vsw=document.getElementById("vsw");
+  const all=[...document.querySelectorAll(".wrap .sec")].map(sec=>{
     const h=sec.querySelector("h2"); if(!h) return null;
     const id="s-"+h.textContent.trim().toLowerCase().replace(/[^a-z]+/g,"-");
-    sec.id=id; return {id,label:h.textContent.trim()};
+    sec.id=id;
+    const host=sec.closest(".vw");
+    return {id,label:h.textContent.trim(),vw:host?host.id.slice(2):null};
   }).filter(Boolean);
-  nav.insertAdjacentHTML("beforeend",
-    secs.map(x=>`<a href="#${x.id}">${x.label}</a>`).join(""));
+
+  const hash=(location.hash||"").slice(1);
+  let half="crash", deep=null;
+  if(hash==="crash"||hash==="themes") half=hash;
+  else if(hash){const m=all.find(x=>x.id===hash); if(m){half=m.vw||half;deep=m.id;}}
+
   document.getElementById("pbrand").innerHTML=
     `<span class="pblogo">${icon("target")}</span><span class="pbname">Market Watch</span>`;
-  const links=[...nav.querySelectorAll("a")];
+  vsw.innerHTML=VIEWS.map(([k,l,ic])=>
+    `<button data-v="${k}" aria-pressed="${k===half}">${icon(ic)}<span>${l}</span></button>`).join("");
+
+  let secs=[],links=[];
+  function build(){
+    document.querySelectorAll(".vw").forEach(v=>v.classList.toggle("on",v.id==="v-"+half));
+    vsw.querySelectorAll("button").forEach(b=>{
+      const on=b.dataset.v===half;
+      b.classList.toggle("on",on); b.setAttribute("aria-pressed",on);});
+    secs=all.filter(x=>!x.vw||x.vw===half);
+    nav.querySelectorAll("a").forEach(a=>a.remove());
+    nav.insertAdjacentHTML("beforeend",
+      secs.map(x=>`<a href="#${x.id}">${x.label}</a>`).join(""));
+    links=[...nav.querySelectorAll("a")];
+  }
+  const jump=el=>{if(el)scrollTo({top:el.getBoundingClientRect().top+scrollY-nav.offsetHeight-14,
+    behavior:"smooth"});};
+
+  vsw.addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b||b.dataset.v===half) return;
+    half=b.dataset.v; build();
+    history.replaceState(null,"","#"+half);
+    /* the lifecycle chart drops to a bar below 900px and that is decided at draw
+       time, so the half that was hidden through a resize is redrawn on the way in */
+    if(half==="themes") render();
+    scrollTo({top:0,behavior:"smooth"});
+  });
   nav.addEventListener("click",e=>{
     const a=e.target.closest("a"); if(!a) return;
-    e.preventDefault();
-    const el=document.getElementById(a.getAttribute("href").slice(1));
-    if(el) scrollTo({top:el.getBoundingClientRect().top+scrollY-nav.offsetHeight-14,behavior:"smooth"});
+    e.preventDefault(); jump(document.getElementById(a.getAttribute("href").slice(1)));
   });
   let tick=false;
   addEventListener("scroll",()=>{
@@ -1385,10 +1937,13 @@ document.getElementById("i7").innerHTML=icon("activity");
       const y=scrollY+nav.offsetHeight+40; let cur=secs[0];
       secs.forEach(x=>{const el=document.getElementById(x.id);
         if(el&&el.getBoundingClientRect().top+scrollY<=y) cur=x;});
-      links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+cur.id));
+      links.forEach(a=>a.classList.toggle("on",!!cur&&a.getAttribute("href")==="#"+cur.id));
       tick=false;
     });
   },{passive:true});
+
+  build();
+  if(deep) requestAnimationFrame(()=>jump(document.getElementById(deep)));
 })();
 document.getElementById("sop").textContent=STATE.lead||"";
 document.getElementById("sopmore").addEventListener("click",()=>openPanel({

@@ -76,6 +76,33 @@ Two things live in `../marketwatch-core` that this repo depends on:
 the specs and reports cost). Read `../marketwatch-core/LEARNINGS.md` before changing anything
 structural — it is the retrospective, where this file is the manual.
 
+## Two halves, one page
+
+Added 2026-09-29. The page splits into **Crash risk** and **Opportunities** behind a segmented
+switch in the sticky bar, the same idea as HeatWatch's `Updates | Workability`. The difference is
+the mechanism, and it is deliberate: HeatWatch emits its HTML from Python, so two files cost it
+nothing. `template_v28.html` is hand-edited, so a second file would be a second copy of the CSS and
+the render engine — and a second copy drifts. Here the switch toggles which `.vw` container is in
+the flow and writes `#crash` / `#themes` into the URL with `replaceState`, so either half is still a
+link someone can send, and a link to a *section* (`#s-scenarios`) resolves to the half that owns it.
+
+- **Above the split**, because they answer both: the masthead, the freshness chip, the hero, the
+  composite gauge and the market tiles (`Conditions`), and the guardrail footer.
+- **Crash risk**: Indicators (10 buckets, 35 indicators), Scenarios, If it falls, Precedents,
+  What next.
+- **Opportunities**: State of play, The book, All themes, Signals, Drivers, Change log — unchanged.
+
+The section nav is rebuilt from the sections belonging to the half on screen, so it can never list
+one that is not there. `Crash risk` is the default view; flip the `let half="crash"` fallback in the
+nav IIFE to change that.
+
+The crash half's content was transformed from *Debt, Money and Markets* (in-house guide, 24 Sept
+2026). Its Part 11 — allocation ranges, duration advice, rebalancing rules — was **deliberately not
+carried across**: the editorial guardrail below is older and binds. What was carried is the
+diagnostic half: what each scenario does, what confirms or kills it, and what history says each
+size of fall has cost. The spec for maintaining it is **The crash half** in
+`../marketwatch-core/daily-task.md`.
+
 ## Derived, not stored
 
 Three things on the page are computed at render rather than kept as fields, because a second copy
@@ -86,6 +113,11 @@ drifts from the first:
 - the **change log**, by walking the data file's own history — including pairing a rename
   (`faded-edgeai` becoming `radar-edgeai`) into one "revived" event rather than a removal plus an
   addition
+- the **implied levels on the fall ladder**, from the S&P 500 tile. `crash_risk.depth.base_from`
+  names the tile; `generator.py` reads its value and its `as_of` from there. Storing the close
+  beside the ladder would make the daily a second writer of a number `fetch_data.py` owns, and the
+  page would print an implied level off a stale close under today's date. A missing tile warns on
+  stderr and drops the levels rather than inventing them.
 
 `generator.py` also strips desk-voice prose as a backstop. It is a backstop, not a standard: it can
 only delete, so a passage written for the desk survives as a shorter passage written for the desk.
@@ -157,7 +189,9 @@ Three writers share `market_watch_data.json`. Editing outside your lane gets sil
 
 - **`fetch_data.py`** owns tile `val`/`chg`/`dir`, every per-metric `as_of` and stale flag, and
   `meta.last_fetch`.
-- **The daily analysis task** owns `state_of_play.narrative`, crash-risk assessments, `sectors`,
+- **The daily analysis task** owns `state_of_play.narrative`, the whole of `crash_risk` except
+  `depth.base_from`'s resolved value (`read`, `buckets` including each indicator's `shift` and `sc`,
+  `scenarios`, `clusters`, `depth`, `history`, `whats_next`), `sectors`,
   `drivers`, `investible_themes` (incl. `access` routes), `radar`, `faded`, `signals`, and
   `meta.report_date` / `report_date_long` / `refresh_label`. It rebuilds these **from the ledger**
   on every run.

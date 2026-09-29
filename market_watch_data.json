@@ -3560,7 +3560,11 @@
        "source": "multpl.com / Shiller data (Yale) — scrape/CSV, free",
        "cadence": "monthly",
        "estimate": false
-      }
+      },
+      "shift": "Above 44 is the dot-com peak. It says little about timing: it passed 30 in mid-1997 and the market rose for three more years.",
+      "sc": [
+       "W3"
+      ]
      },
      {
       "nm": "Forward P/E",
@@ -3573,7 +3577,11 @@
        "source": "valuations.csv (editorial); no clean single free feed",
        "cadence": "weekly",
        "estimate": true
-      }
+      },
+      "shift": "Only as good as the earnings forecast, and forecasts are most optimistic at peaks. A downgrade cycle is the thing to watch, not the level.",
+      "sc": [
+       "W3"
+      ]
      },
      {
       "nm": "Excess CAPE yield",
@@ -3586,7 +3594,12 @@
        "source": "derived (CAPE + FRED (fredgraph.csv / api), free, no key DFII10)",
        "cadence": "weekly",
        "estimate": false
-      }
+      },
+      "shift": "Towards zero or below: shares paying nothing for their risk over bonds. Repairs on falling yields (benign) or a falling multiple (not).",
+      "sc": [
+       "A",
+       "W2"
+      ]
      },
      {
       "nm": "Buffett indicator",
@@ -3599,7 +3612,9 @@
        "source": "computed/derived — no single clean free feed (Wilshire 5000 via FRED ÷ GDP; quarterly GDP lag)",
        "cadence": "quarterly",
        "estimate": true
-      }
+      },
+      "shift": "Above 150% is stretched on any historical reading; 217% has only been exceeded in 2021. A quarterly GDP lag makes it slow.",
+      "sc": []
      }
     ]
    },
@@ -3618,7 +3633,12 @@
        "source": "FRED (fredgraph.csv / api), free, no key (BAMLH0A0HYM2)",
        "cadence": "daily",
        "estimate": false
-      }
+      },
+      "shift": "Above 400–500bp: recession or a financial accident (B or W3). This is the single change that would move the composite most.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "IG OAS spread",
@@ -3632,7 +3652,12 @@
        "cadence": "daily",
        "estimate": false,
        "note": "Approx this run; clean FRED daily feed."
-      }
+      },
+      "shift": "A widening here with high yield is a funding problem, not a credit-cycle one — the AI build is financing itself in this market.",
+      "sc": [
+       "W3",
+       "W2"
+      ]
      }
     ]
    },
@@ -3651,7 +3676,12 @@
        "source": "FRED (fredgraph.csv / api), free, no key (VIXCLS) / Yahoo ^VIX",
        "cadence": "daily",
        "estimate": false
-      }
+      },
+      "shift": "Sustained above 25 rather than a one-day spike. From 16 the base is low, so a doubling is a smaller event than it reads.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "VIX term structure",
@@ -3664,7 +3694,12 @@
        "source": "computed/derived — no single clean free feed (VIX vs VIX3M / futures curve)",
        "cadence": "daily",
        "estimate": true
-      }
+      },
+      "shift": "Backwardation — near-term above far-term — is the signature of a real event rather than a wobble.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "MOVE index",
@@ -3678,7 +3713,11 @@
        "cadence": "daily",
        "estimate": true,
        "note": "ICE MOVE is licensed; Yahoo mirror works but is unofficial."
-      }
+      },
+      "shift": "Rising with the ten-year is the bond-crisis tell: forced selling through repo rather than a repricing.",
+      "sc": [
+       "W2"
+      ]
      }
     ]
    },
@@ -3697,7 +3736,12 @@
        "source": "computed/derived — no single clean free feed (compute from 500 constituents' 200-DMA via Stooq CSV (stooq.com/q/l/), free, no key)",
        "cadence": "daily",
        "estimate": true
-      }
+      },
+      "shift": "Below 40% while the index holds up: the advance is narrowing to the few names that cannot carry it.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "New highs − new lows",
@@ -3710,7 +3754,12 @@
        "source": "computed/derived — no single clean free feed (compute from constituent data) / WSJ market-data",
        "cadence": "daily",
        "estimate": true
-      }
+      },
+      "shift": "Turning persistently negative while the index makes highs is the classic pre-bear divergence.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "Top-10 concentration",
@@ -3723,7 +3772,11 @@
        "source": "computed/derived — no single clean free feed (index weights; S&P/Slickcharts scrape)",
        "cadence": "weekly",
        "estimate": true
-      }
+      },
+      "shift": "About 40% of the index. Concentration is not a trigger, it is the transmission: a fall in a handful of AI-linked names is a fall in the index.",
+      "sc": [
+       "W3"
+      ]
      }
     ]
    },
@@ -3743,7 +3796,11 @@
        "cadence": "weekly",
        "estimate": false,
        "note": "Approx this run; clean FRED weekly feed."
-      }
+      },
+      "shift": "Above zero: financial conditions tighter than average. At −0.56 they are still loose, which is the Money & liquidity story.",
+      "sc": [
+       "B"
+      ]
      },
      {
       "nm": "SOFR-OIS spread",
@@ -3756,7 +3813,12 @@
        "source": "FRED (fredgraph.csv / api), free, no key (SOFR - OIS/EFFR proxy)",
        "cadence": "daily",
        "estimate": true
-      }
+      },
+      "shift": "SOFR above the policy rate is funding stress — the September 2019 and March 2020 signature, and it forces Treasury selling for reasons unrelated to the economy.",
+      "sc": [
+       "W2",
+       "W3"
+      ]
      },
      {
       "nm": "USD (DXY) funding",
@@ -3769,7 +3831,12 @@
        "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
        "cadence": "daily",
        "estimate": false
-      }
+      },
+      "shift": "A sharp rise tightens conditions worldwide through dollar debt; a fall alongside rising gold is the fiscal-dominance tell.",
+      "sc": [
+       "C",
+       "W3"
+      ]
      }
     ]
    },
@@ -3788,7 +3855,11 @@
        "source": "FRED (fredgraph.csv / api), free, no key (T10Y2Y)",
        "cadence": "daily",
        "estimate": false
-      }
+      },
+      "shift": "Inversion preceded most US recessions since the 1960s, with a 6–24 month lag. At about +0.27pp the concern is the level of long yields, not inversion.",
+      "sc": [
+       "B"
+      ]
      },
      {
       "nm": "Sahm-rule gap",
@@ -3802,7 +3873,12 @@
        "cadence": "monthly",
        "estimate": true,
        "note": "Rose on the July -23k NFP + revisions."
-      }
+      },
+      "shift": "A 0.5pp rise in the three-month unemployment average from its low. Running at 0.2–0.3pp, so this is close: the cleanest confirmation of B or W3.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "Jobless-claims trend",
@@ -3815,7 +3891,11 @@
        "source": "FRED (fredgraph.csv / api), free, no key (ICSA / CCSA)",
        "cadence": "weekly",
        "estimate": false
-      }
+      },
+      "shift": "Above 250,000 and rising: the labour market cracking. 197,000 is still tight, which is why the Fed is hiking.",
+      "sc": [
+       "B"
+      ]
      }
     ]
    },
@@ -3834,7 +3914,12 @@
        "source": "FRED (fredgraph.csv / api), free, no key (BAMLEMHBHYCRPIOAS / EMBI proxy)",
        "cadence": "daily",
        "estimate": false
-      }
+      },
+      "shift": "Widens with the dollar. Emerging markets usually fall as much as or more than developed markets in a global crash, and worst when the dollar rises.",
+      "sc": [
+       "B",
+       "W3"
+      ]
      },
      {
       "nm": "China credit impulse",
@@ -3848,7 +3933,11 @@
        "cadence": "monthly",
        "estimate": true,
        "note": "Persistent-deflation prints Mon corroborate a soft impulse."
-      }
+      },
+      "shift": "Deflation exported through goods prices is disinflationary for the West — the one force pushing the other way.",
+      "sc": [
+       "D"
+      ]
      },
      {
       "nm": "Italy-Germany 10Y",
@@ -3861,7 +3950,11 @@
        "source": "computed/derived — no single clean free feed (FRED (fredgraph.csv / api), free, no key IRLTLT01ITM/DEM or Stooq 10Y yields)",
        "cadence": "daily",
        "estimate": true
-      }
+      },
+      "shift": "Above 250bp: the euro area's own fiscal stress reasserting itself.",
+      "sc": [
+       "W2"
+      ]
      },
      {
       "nm": "USD (DXY) stress",
@@ -3874,11 +3967,987 @@
        "source": "Stooq CSV (stooq.com/q/l/), free, no key (dx.f)",
        "cadence": "daily",
        "estimate": false
+      },
+      "shift": "Gold up with the dollar down is the C, W2 and W4 cluster. A dollar spike is the B and W3 one.",
+      "sc": [
+       "C",
+       "W2",
+       "W4"
+      ]
+     }
+    ]
+   },
+   {
+    "nm": "Money & liquidity",
+    "summary": "The loosest bucket on the board, and the reason equities sit near records against 5% long yields. Policy is tighter on price than on quantity: the Fed raised on 16 September, yet M2 is growing at its fastest pace since 2022 and quantitative tightening ended in December 2025. Money growth of this size is not restrictive with inflation near 3–4%.",
+    "inds": [
+     {
+      "nm": "M2 growth y/y",
+      "val": "+5.7%",
+      "status": "watch",
+      "tr": "up",
+      "mean": "US money supply, $23.3tn in August. Fastest since 2022; about 6.7% annualised so far in 2026.",
+      "shift": "Above 7%: fiscal dominance (C). A renewed fall: liquidity draining.",
+      "sc": [
+       "C"
+      ],
+      "meta": {
+       "as_of": "2026-08-31",
+       "source": "FRED (fredgraph.csv / api), free, no key (M2SL)",
+       "cadence": "monthly",
+       "estimate": false
+      }
+     },
+     {
+      "nm": "Reverse repo balance",
+      "val": "$4bn",
+      "status": "stress",
+      "tr": "down",
+      "mean": "The cash buffer that absorbed bill issuance from 2022. Effectively exhausted, so any further drain hits bank reserves directly.",
+      "shift": "It cannot fall further. Renewed balance-sheet shrinking from here drains reserves: funding stress, W2 or W3.",
+      "sc": [
+       "W2",
+       "W3"
+      ],
+      "meta": {
+       "as_of": "2026-09-24",
+       "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 5, from the New York Fed",
+       "cadence": "weekly",
+       "estimate": false
+      }
+     },
+     {
+      "nm": "Fed balance sheet",
+      "val": "$6.75tn",
+      "status": "calm",
+      "tr": "flat",
+      "mean": "Down from the $8.96tn 2022 peak. QT ended December 2025 and the Fed is buying about $40bn of bills a month to keep reserves ample.",
+      "shift": "A return to shrinking, with the reverse repo buffer gone, drains reserves directly. Chair Warsh has long argued for a smaller sheet.",
+      "sc": [
+       "W2",
+       "W3"
+      ],
+      "meta": {
+       "as_of": "2026-09-16",
+       "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 5, from the Federal Reserve H.4.1",
+       "cadence": "weekly",
+       "estimate": false
+      }
+     },
+     {
+      "nm": "Treasury cash account",
+      "val": "$877bn",
+      "status": "watch",
+      "tr": "flat",
+      "mean": "The Treasury's balance at the Fed. Rebuilding it drains reserves; spending it down adds them.",
+      "shift": "A sharp rebuild alongside heavy bill issuance tightens repo.",
+      "sc": [
+       "W2"
+      ],
+      "meta": {
+       "as_of": "2026-09-24",
+       "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 5, from the Daily Treasury Statement",
+       "cadence": "daily",
+       "estimate": false
+      }
+     }
+    ]
+   },
+   {
+    "nm": "Long rates & public finances",
+    "summary": "Where the pressure is concentrated, and has been all month: the price of long money. The ten-year closed at 5.24% on 28 September, the highest since 2007, and the thirty-year at 5.44%. Most of the rise is attributed to the term premium rather than to rate expectations, which makes it a debt story rather than a policy one. Federal debt is above $40tn; the next refunding is 4 November.",
+    "inds": [
+     {
+      "nm": "US 10Y yield",
+      "val": "5.24%",
+      "status": "stress",
+      "tr": "up",
+      "mean": "The global benchmark. Highest since 2007, and the discount rate every other asset is priced against.",
+      "shift": "Towards 6% with weak auctions: W2 or C. Below 4% as jobs weaken: B.",
+      "sc": [
+       "W2",
+       "C",
+       "B"
+      ],
+      "meta": {
+       "as_of": "2026-09-28",
+       "source": "Stooq / FRED (DGS10), free",
+       "cadence": "daily",
+       "estimate": false
+      }
+     },
+     {
+      "nm": "US 30Y yield",
+      "val": "5.44%",
+      "status": "stress",
+      "tr": "up",
+      "mean": "Highest since 2007. A one-point rise in yields costs a thirty-year bond about 14% of its price, against about 7% for a ten-year.",
+      "shift": "The long end leading the curve higher is the fiscal signature, not the policy one.",
+      "sc": [
+       "W2",
+       "C"
+      ],
+      "meta": {
+       "as_of": "2026-09-28",
+       "source": "Stooq / FRED (DGS30), free",
+       "cadence": "daily",
+       "estimate": false
+      }
+     },
+     {
+      "nm": "Auction demand",
+      "val": "clean",
+      "status": "calm",
+      "tr": "flat",
+      "mean": "Bid-to-cover ratios and tails. A low cover, or a yield above what markets expected, is the earliest sign of a financing problem.",
+      "shift": "A tail or weak cover at the 4 November refunding, or a visible shift into bills to avoid the long end: W2.",
+      "sc": [
+       "W2"
+      ],
+      "meta": {
+       "as_of": "2026-09-29",
+       "source": "TreasuryDirect auction results, free",
+       "cadence": "per auction",
+       "estimate": true,
+       "note": "Judgement over recent results rather than a single ratio."
+      }
+     },
+     {
+      "nm": "30Y gilt",
+      "val": "~6.0%",
+      "status": "stress",
+      "tr": "up",
+      "mean": "The UK long end, and the market that already forced a policy reversal once, in 2022.",
+      "shift": "Sustained above 6%: a UK-led bond crisis (W2).",
+      "sc": [
+       "W2"
+      ],
+      "meta": {
+       "as_of": "2026-09-24",
+       "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 9, from the Bank of England",
+       "cadence": "daily",
+       "estimate": true
+      }
+     },
+     {
+      "nm": "10Y JGB",
+      "val": "3.06%",
+      "status": "watch",
+      "tr": "up",
+      "mean": "Japan normalising rates pulls its own investors home, and they are large holders of Treasuries, gilts and Bunds.",
+      "shift": "A further rise, or a sharp rise in the yen from about 157, signals a carry-trade unwind: W3.",
+      "sc": [
+       "W3"
+      ],
+      "meta": {
+       "as_of": "2026-09-24",
+       "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 9, from the Ministry of Finance Japan",
+       "cadence": "daily",
+       "estimate": false
+      }
+     }
+    ]
+   },
+   {
+    "nm": "Leverage & the AI build",
+    "summary": "The fuel and the concentration. Margin debt at about $1.5tn is what turns a fall into a crash, and the top ten names are about 40% of the index. The circularity is the specific risk: AI-infrastructure companies account for roughly half of S&P 500 earnings growth in 2026, and that revenue is largely the hyperscalers' own capital spending.",
+    "inds": [
+     {
+      "nm": "Margin debt",
+      "val": "~$1.5tn",
+      "status": "stress",
+      "tr": "up",
+      "mean": "Borrowing against portfolios. Leverage is what forced selling runs through — 1929, 1987, 2008.",
+      "shift": "A sharp fall is not a warning: it is forced selling already under way.",
+      "sc": [
+       "B",
+       "W3"
+      ],
+      "meta": {
+       "as_of": "2026-09-24",
+       "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 9, from FINRA",
+       "cadence": "monthly",
+       "estimate": false
+      }
+     },
+     {
+      "nm": "Hyperscaler capex",
+      "val": "~$725bn",
+      "status": "watch",
+      "tr": "up",
+      "mean": "2026 guidance for Amazon, Alphabet, Microsoft and Meta, up 77% from about $410bn in 2025. Consensus is about $1tn for 2027. Capital spending now absorbs roughly 45–57% of their revenue.",
+      "shift": "Cuts to spending plans: W3. Rising measured productivity: D.",
+      "sc": [
+       "W3",
+       "D"
+      ],
+      "meta": {
+       "as_of": "2026-08-31",
+       "source": "company reports via Debt, Money and Markets (in-house guide), 24 September 2026 § 13; 2027 is analyst consensus",
+       "cadence": "quarterly",
+       "estimate": true
+      }
+     },
+     {
+      "nm": "AI share of earnings growth",
+      "val": "~50%",
+      "status": "stress",
+      "tr": "up",
+      "mean": "Goldman Sachs' estimate of AI infrastructure's share of S&P 500 earnings growth in 2026. The spenders' capex is the suppliers' revenue, so a cut hits both sides at once.",
+      "shift": "Any downgrade to AI-linked earnings forecasts lowers the index's growth and its multiple together.",
+      "sc": [
+       "W3"
+      ],
+      "meta": {
+       "as_of": "2026-09-24",
+       "source": "Goldman Sachs via Debt, Money and Markets (in-house guide), 24 September 2026 § 7",
+       "cadence": "quarterly",
+       "estimate": true
+      }
+     },
+     {
+      "nm": "Equity risk premium",
+      "val": "~0",
+      "status": "stress",
+      "tr": "flat",
+      "mean": "A forward multiple of 20.6 is an earnings yield near 4.9%, against 5.24% on a ten-year Treasury. Historically shares paid several points more than bonds for their risk. That cushion is gone.",
+      "shift": "It repairs either by yields falling on demand (benign) or by the multiple falling (not).",
+      "sc": [
+       "A",
+       "W2"
+      ],
+      "meta": {
+       "as_of": "2026-09-28",
+       "source": "derived — forward P/E (editorial) vs FRED DGS10",
+       "cadence": "daily",
+       "estimate": true
       }
      }
     ]
    }
-  ]
+  ],
+  "scenarios": {
+   "as_of": "2026-09-29",
+   "horizon": "to 2029",
+   "lead": "Eight ways the next two to three years could run. Four describe the likely range; four are worst cases, less likely but large enough that the reading has to be tested against them. Each pairs bonds with equities, because the two move together when inflation is the problem and apart when growth is.",
+   "note": "Likelihoods are judgement, not model output. They overlap and do not sum to 100, because more than one can run in sequence — most plausibly A, then B, then C.",
+   "seq": "The common historical sequence: rates stay high, something breaks, the economy slows, and the response is easing plus deficit spending, which brings inflation back. The path of the Iran conflict and the oil price is the largest near-term swing factor.",
+   "meta": {
+    "as_of": "2026-09-24",
+    "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 8",
+    "cadence": "reviewed on the daily; ranges revisited when a signpost cluster fires",
+    "estimate": true,
+    "note": "Ranges are the guide's own judgement, carried forward. A likelihood is an estimate and is not comparable run to run."
+   },
+   "items": [
+    {
+     "id": "A",
+     "nm": "Higher for longer",
+     "kind": "main",
+     "prob": 55,
+     "lo": 50,
+     "hi": 60,
+     "eq_lo": 10,
+     "eq_hi": 20,
+     "eq": "Corrections of 10–20%",
+     "cushion": "na",
+     "what": "The Fed holds near 4% or above, oil stays in the $85–105 band, growth slows without a recession.",
+     "bonds": "Long yields around 5%. Short bonds and cash pay a real return for the first time in a decade.",
+     "equities": "No bear market, but the multiple is squeezed: a 5% risk-free rate leaves almost nothing in the equity risk premium, so any earnings disappointment is paid for in the multiple.",
+     "confirms": [
+      "Policy rate held at or above 4% through 2027",
+      "Brent holding the $85–105 band",
+      "Core inflation stuck near 2.5–3% without accelerating",
+      "Unemployment flat, Sahm gap under 0.5pp"
+     ],
+     "kills": [
+      "A 0.5pp rise in the three-month unemployment average — that is B",
+      "Core inflation above 3% with the Fed still pressured to cut — that is C",
+      "Hormuz reopening and oil towards $70 — that is D"
+     ],
+     "history": "The closest analogue is 1994 or 2018: a repricing of the discount rate without a recession. Falls without a recession or a banking crisis have tended to stop at 25–35% and recover inside about two years.",
+     "assets": [
+      [
+       "Government bonds",
+       "0"
+      ],
+      [
+       "Inflation-linked",
+       "+"
+      ],
+      [
+       "Equities",
+       "-"
+      ],
+      [
+       "Gold",
+       "0"
+      ],
+      [
+       "Energy & real assets",
+       "+"
+      ],
+      [
+       "Cash & short bonds",
+       "++"
+      ],
+      [
+       "Bitcoin",
+       "-"
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "nm": "Growth scare / recession",
+     "kind": "main",
+     "prob": 40,
+     "lo": 35,
+     "hi": 45,
+     "eq_lo": 25,
+     "eq_hi": 35,
+     "eq": "Bear market of 25–35%",
+     "cushion": "yes",
+     "what": "Borrowing costs and energy prices finally bite on housing, companies and consumers. Unemployment rises. Most likely in 2027–28.",
+     "bonds": "The Fed cuts sharply, long yields fall and government bonds do the job they are held for — the one main scenario where they cushion equities.",
+     "equities": "A conventional recession bear market. Cyclicals and the most expensive growth names take the worst of it.",
+     "confirms": [
+      "Sahm rule triggering: a 0.5pp rise in the three-month unemployment average from its low",
+      "High-yield spreads above 400–500bp",
+      "Ten-year yield falling below 4% as jobs weaken",
+      "Jobless claims trending above 250,000"
+     ],
+     "kills": [
+      "Claims falling back and spreads holding under 350bp",
+      "The Fed hiking again into firm employment — back to A"
+     ],
+     "history": "1990, 2001 and 2008 in shape if not in scale. Recession-linked falls have reached 45–57% only when a bubble or the banks were involved; without that, 25–35% and two years is the pattern. Government bonds rose in every growth-driven crash on record.",
+     "assets": [
+      [
+       "Government bonds",
+       "++"
+      ],
+      [
+       "Inflation-linked",
+       "+"
+      ],
+      [
+       "Equities",
+       "--"
+      ],
+      [
+       "Gold",
+       "+"
+      ],
+      [
+       "Energy & real assets",
+       "-"
+      ],
+      [
+       "Cash & short bonds",
+       "+"
+      ],
+      [
+       "Bitcoin",
+       "--"
+      ]
+     ]
+    },
+    {
+     "id": "C",
+     "nm": "Fiscal dominance",
+     "kind": "main",
+     "prob": 30,
+     "lo": 25,
+     "hi": 35,
+     "eq_lo": 10,
+     "eq_hi": 25,
+     "eq": "Falls of 10–25%; up in name, down after inflation",
+     "cushion": "no",
+     "what": "Deficits widen and the priority shifts from the inflation target to the cost of the debt. The Fed and the Treasury between them hold borrowing costs down, inflation settles at 3–4%, the dollar weakens. Rises by 2028–29, and most likely after B.",
+     "bonds": "Yields capped by policy rather than by the market. Nominal returns look acceptable and real returns are negative for years — the 1945–80 pattern, which cut US and UK debt by roughly 3–4% of GDP a year and was paid for by savers.",
+     "equities": "Higher in nominal terms, weaker after inflation. Pricing power is what separates one company from another here.",
+     "confirms": [
+      "Core inflation above 3% with pressure on the Fed to cut anyway",
+      "M2 growth above 7% a year",
+      "Talk of yield caps, or a shift in issuance towards bills",
+      "Gold rising while the dollar falls",
+      "Long yields rising on weak auctions"
+     ],
+     "kills": [
+      "Core inflation returning towards 2% with the Fed unpressured",
+      "A credible deficit reduction at a refunding"
+     ],
+     "history": "1945–80 is the main precedent: US federal debt fell from about 106% of GDP in 1946 to about 24% by 1974 without being repaid, through growth and inflation while rates were held below inflation. Japan is the long-duration version. There is no crash to date in this scenario — the loss is slow and shows up in real returns.",
+     "assets": [
+      [
+       "Government bonds",
+       "--"
+      ],
+      [
+       "Inflation-linked",
+       "++"
+      ],
+      [
+       "Equities",
+       "0"
+      ],
+      [
+       "Gold",
+       "++"
+      ],
+      [
+       "Energy & real assets",
+       "+"
+      ],
+      [
+       "Cash & short bonds",
+       "--"
+      ],
+      [
+       "Bitcoin",
+       "+"
+      ]
+     ]
+    },
+    {
+     "id": "D",
+     "nm": "Benign disinflation",
+     "kind": "main",
+     "prob": 12,
+     "lo": 10,
+     "hi": 15,
+     "eq_lo": 0,
+     "eq_hi": 10,
+     "eq": "Routine corrections only",
+     "cushion": "na",
+     "what": "Hormuz reopens, oil falls towards $70, AI starts to show up in productivity, inflation returns to 2%.",
+     "bonds": "Yields drift lower and bonds do well from a 5% starting yield.",
+     "equities": "The strongest of the eight. The multiple survives because the discount rate falls to meet it.",
+     "confirms": [
+      "Hormuz reopening and Brent towards $70",
+      "Headline inflation towards 2% with core following",
+      "Measured productivity growth picking up",
+      "Yields drifting lower without job losses"
+     ],
+     "kills": [
+      "Renewed attacks on shipping or Saudi export routes",
+      "Core inflation broadening while headline falls"
+     ],
+     "history": "1982–99 in spirit: a falling discount rate meeting a rising earnings stream. The caution is that it was also the setup for 2000.",
+     "assets": [
+      [
+       "Government bonds",
+       "+"
+      ],
+      [
+       "Inflation-linked",
+       "0"
+      ],
+      [
+       "Equities",
+       "++"
+      ],
+      [
+       "Gold",
+       "-"
+      ],
+      [
+       "Energy & real assets",
+       "--"
+      ],
+      [
+       "Cash & short bonds",
+       "0"
+      ],
+      [
+       "Bitcoin",
+       "++"
+      ]
+     ]
+    },
+    {
+     "id": "W1",
+     "nm": "Stagflation",
+     "kind": "worst",
+     "prob": 17,
+     "lo": 15,
+     "hi": 20,
+     "eq_lo": 35,
+     "eq_hi": 50,
+     "eq": "Bear market of 35–50%, recovering slowly",
+     "cushion": "no",
+     "what": "Oil stays above $120, a recession arrives with inflation at 4–6%, and central banks are trapped between the two. The energy shock makes this the most relevant of the worst cases.",
+     "bonds": "Bonds fall with equities, as in 2022 and through the 1970s. The conventional diversifier stops working exactly when it is needed.",
+     "equities": "The deepest of the plausible falls, and the slowest recovery: 1973–74 took 21 months down and seven and a half years back in price, longer still after inflation.",
+     "confirms": [
+      "Brent above $120 for months",
+      "Core inflation above 3% and rising",
+      "Unemployment rising at the same time",
+      "Long yields rising while equities fall"
+     ],
+     "kills": [
+      "Oil easing back below $100 with core inflation contained",
+      "Unemployment holding while inflation falls — that is D"
+     ],
+     "history": "1973–74: −48%, 21 months, seven and a half years to recover in price and longer after inflation. Bonds fell too. Policy was constrained by inflation and stagflation ran into the early 1980s.",
+     "assets": [
+      [
+       "Government bonds",
+       "--"
+      ],
+      [
+       "Inflation-linked",
+       "++"
+      ],
+      [
+       "Equities",
+       "--"
+      ],
+      [
+       "Gold",
+       "++"
+      ],
+      [
+       "Energy & real assets",
+       "++"
+      ],
+      [
+       "Cash & short bonds",
+       "-"
+      ],
+      [
+       "Bitcoin",
+       "-"
+      ]
+     ]
+    },
+    {
+     "id": "W2",
+     "nm": "Bond market crisis",
+     "kind": "worst",
+     "prob": 10,
+     "lo": 5,
+     "hi": 15,
+     "eq_lo": 20,
+     "eq_hi": 40,
+     "eq": "Falls of 20–40%",
+     "cushion": "no",
+     "what": "A buyers' strike in long Treasuries, gilts or JGBs. The US ten-year goes above 6% and forced selling runs through the repo market.",
+     "bonds": "Long bonds fall sharply until a central bank steps in — which, on the 2022 gilt precedent, it does, and quickly.",
+     "equities": "Rising yields make shares look expensive and force leveraged holders to sell. This is the channel by which a bond crash becomes an equity crash, and the reason 5% long yields and 41.8x CAPE are read together.",
+     "confirms": [
+      "Ten-year towards 6% with weak auctions: low bid-to-cover, or a tail",
+      "Thirty-year gilt above 6%",
+      "A shift in issuance towards bills to avoid the long end",
+      "SOFR above the policy rate — funding stress",
+      "Gold rising while the dollar falls"
+     ],
+     "kills": [
+      "Auctions clearing cleanly at the quarterly refunding",
+      "Long yields falling back below 5% on demand rather than on policy"
+     ],
+     "history": "The 2022 UK gilt crisis is the live precedent: some long gilts lost more than half their value from the 2021 peak and the Bank of England intervened. 1994 is the global version. In 2022 long US Treasuries lost about a third of their value.",
+     "assets": [
+      [
+       "Government bonds",
+       "--"
+      ],
+      [
+       "Inflation-linked",
+       "+"
+      ],
+      [
+       "Equities",
+       "--"
+      ],
+      [
+       "Gold",
+       "++"
+      ],
+      [
+       "Energy & real assets",
+       "0"
+      ],
+      [
+       "Cash & short bonds",
+       "+"
+      ],
+      [
+       "Bitcoin",
+       "-"
+      ]
+     ]
+    },
+    {
+     "id": "W3",
+     "nm": "Deflationary bust",
+     "kind": "worst",
+     "prob": 12,
+     "lo": 10,
+     "hi": 15,
+     "eq_lo": 35,
+     "eq_hi": 50,
+     "eq": "Falls of 35–50%; crypto more",
+     "cushion": "yes",
+     "what": "A financial accident rather than an economic one: private credit, an unwind of AI investment, a carry-trade unwind, or a single leveraged trade going wrong.",
+     "bonds": "Government bonds rally hard and the dollar rises. The one worst case where the conventional hedge works.",
+     "equities": "The concentration is the exposure: AI-linked companies account for about half of S&P 500 earnings growth in 2026, and much of that revenue is the hyperscalers' own capital spending. A cut to those plans lowers the suppliers' earnings and the spenders' profits at once.",
+     "confirms": [
+      "Cuts to hyperscaler capital spending plans",
+      "A sharp fall in margin debt — forced selling under way",
+      "High-yield spreads above 500bp in weeks rather than months",
+      "A sharp rise in the yen — carry-trade unwind",
+      "Private-credit marks moving away from par"
+     ],
+     "kills": [
+      "Capex guidance held or raised at the next reporting round",
+      "Margin debt stable and spreads holding"
+     ],
+     "history": "2000–02 for the mechanism (−49%, Nasdaq −78%, 31 months, seven years back and fifteen for the Nasdaq) and 2008 for the speed. The guide's own caution applies: the internet was a real revolution and the Nasdaq still fell 78%.",
+     "assets": [
+      [
+       "Government bonds",
+       "++"
+      ],
+      [
+       "Inflation-linked",
+       "0"
+      ],
+      [
+       "Equities",
+       "--"
+      ],
+      [
+       "Gold",
+       "+"
+      ],
+      [
+       "Energy & real assets",
+       "-"
+      ],
+      [
+       "Cash & short bonds",
+       "++"
+      ],
+      [
+       "Bitcoin",
+       "--"
+      ]
+     ]
+    },
+    {
+     "id": "W4",
+     "nm": "Loss of Fed independence",
+     "kind": "worst",
+     "prob": 7,
+     "lo": 5,
+     "hi": 10,
+     "eq_lo": 0,
+     "eq_hi": 20,
+     "eq": "Nominal gains, real losses",
+     "cushion": "no",
+     "what": "Rates set to suit the government rather than the target. Yields capped, inflation above 5% for years. An extreme version of C.",
+     "bonds": "Heavy losses after inflation, and no market signal left to read, because the price is administered.",
+     "equities": "Nominal gains that do not survive contact with the inflation rate. Real assets and pricing power are what is left.",
+     "confirms": [
+      "Appointments or public pressure aimed at the policy rate",
+      "Explicit yield caps or their equivalent",
+      "Inflation above 5% with no policy response",
+      "Foreign buyers stepping back from Treasury auctions"
+     ],
+     "kills": [
+      "The Fed hiking against political pressure — as it did on 16 September"
+     ],
+     "history": "The Fed's own 1942–51 yield cap is the domestic precedent, and it worked as intended: the debt shrank and savers paid. With debt held by the public near 100% of GDP against about 25% in 1980, the political tolerance for a Volcker response is much lower than it was.",
+     "assets": [
+      [
+       "Government bonds",
+       "--"
+      ],
+      [
+       "Inflation-linked",
+       "++"
+      ],
+      [
+       "Equities",
+       "-"
+      ],
+      [
+       "Gold",
+       "++"
+      ],
+      [
+       "Energy & real assets",
+       "+"
+      ],
+      [
+       "Cash & short bonds",
+       "--"
+      ],
+      [
+       "Bitcoin",
+       "+"
+      ]
+     ]
+    }
+   ]
+  },
+  "clusters": [
+   {
+    "nm": "Stagflation",
+    "sc": [
+     "W1"
+    ],
+    "tell": "Oil and core inflation rising while unemployment rises."
+   },
+   {
+    "nm": "Recession and equity bear market",
+    "sc": [
+     "B",
+     "W3"
+    ],
+    "tell": "The Sahm rule triggering, credit spreads widening and margin debt falling, with long yields dropping."
+   },
+   {
+    "nm": "Fiscal stress",
+    "sc": [
+     "C",
+     "W2"
+    ],
+    "tell": "Long yields rising on weak auctions while gold rises and the dollar falls."
+   },
+   {
+    "nm": "Benign path",
+    "sc": [
+     "D"
+    ],
+    "tell": "Oil falling, inflation easing and yields drifting lower without job losses."
+   }
+  ],
+  "depth": {
+   "base_from": "S&P 500",
+   "lead": "What each size of fall would actually mean, from the last close. None of them erases the past decade: the index was about 2,000 in 2016.",
+   "note": "A fall of 20–35% at some point in the next two to three years is plausible. The base rate alone — one bear market every six to seven years — gives roughly 40% over three years, and today's valuations, leverage, concentration and yields put it above average. That is judgement, not a forecast.",
+   "meta": {
+    "as_of": "2026-09-24",
+    "source": "derived — the S&P 500 tile (owned by fetch_data.py) × the fall sizes in Debt, Money and Markets (in-house guide), 24 September 2026 § 7",
+    "cadence": "recomputed each render from the last close",
+    "estimate": false
+   },
+   "steps": [
+    {
+     "pct": 10,
+     "nm": "Correction",
+     "back_to": "spring 2026",
+     "hist": "Routine. The index closed at a record 27 times by August 2026, which is normal in a rising market.",
+     "sc": [
+      "A",
+      "D"
+     ]
+    },
+    {
+     "pct": 20,
+     "nm": "Bear market",
+     "back_to": "mid-2025",
+     "hist": "The threshold definition. About a dozen since 1950, one every six to seven years.",
+     "sc": [
+      "A",
+      "C",
+      "W2"
+     ]
+    },
+    {
+     "pct": 35,
+     "nm": "Recession bear",
+     "back_to": "the April 2025 low",
+     "hist": "The typical recession fall, and where 1987 (−34%, three months, two years back) and 2020 (−34%, one month, five months back) stopped.",
+     "sc": [
+      "B",
+      "W1",
+      "W3"
+     ]
+    },
+    {
+     "pct": 50,
+     "nm": "Bubble unwind",
+     "back_to": "late 2022",
+     "hist": "2000–02 (−49%) and 2007–09 (−57%). Possible from these valuations, less likely. Five to seven years to recover in price.",
+     "sc": [
+      "W1",
+      "W3"
+     ]
+    }
+   ]
+  },
+  "history": {
+   "lead": "A century of falls, and what each one cost. The pattern that matters for a portfolio is the bonds column: in every crash driven by growth or financial stress, government bonds rose and cushioned the fall. In the two driven by inflation, 1973–74 and 2022, they fell as well.",
+   "note": "Three patterns. Falls of 20% or more are regular — about a dozen since 1950, one every six to seven years. Falls without a recession or a banking crisis (1987, 2022) stopped at 25–35% and recovered in about two years; falls tied to a bursting bubble or a recession (1973–74, 2000–02, 2007–09) reached 45–57% and took five to seven years. The worst outcomes, 1929 and Japan after 1989, combined extreme valuations, heavy borrowing and a slow or mistaken policy response.",
+   "meta": {
+    "as_of": "2026-09-23",
+    "source": "Debt, Money and Markets (in-house guide), 24 September 2026 § 7, from the Shiller dataset and daily closes",
+    "cadence": "static — revisited only if an episode is added",
+    "estimate": false,
+    "note": "Falls are peak-to-trough on daily closes. Monthly averages understate short, sharp falls such as 1987 and 2020."
+   },
+   "episodes": [
+    {
+     "nm": "1929–32",
+     "fall": -86,
+     "dur": "34 months",
+     "rec": "25 years",
+     "kind": "bubble",
+     "bonds": "rose",
+     "cause": "Speculation, shares bought on borrowed money, bank failures, tight money under the gold standard.",
+     "policy": "Too little, too late. Deposit insurance and leaving gold in 1933."
+    },
+    {
+     "nm": "1973–74",
+     "fall": -48,
+     "dur": "21 months",
+     "rec": "7.5 years",
+     "kind": "inflation",
+     "bonds": "fell",
+     "cause": "Oil shock, high inflation, the end of fixed exchange rates, expensive “Nifty Fifty” shares.",
+     "policy": "Constrained by inflation. Stagflation into the early 1980s."
+    },
+    {
+     "nm": "1987",
+     "fall": -34,
+     "dur": "3 months",
+     "rec": "2 years",
+     "kind": "valuation",
+     "bonds": "rose",
+     "cause": "High valuations, rising bond yields, automated selling. Down 20% in a single day.",
+     "policy": "The Fed promised liquidity and cut rates."
+    },
+    {
+     "nm": "2000–02",
+     "fall": -49,
+     "dur": "31 months",
+     "rec": "7 years",
+     "kind": "bubble",
+     "bonds": "rose",
+     "cause": "Dot-com bubble, record valuations, rate rises in 1999–2000. The Nasdaq fell 78% and took fifteen years.",
+     "policy": "The Fed cut from 6.5% to 1%. Tax cuts."
+    },
+    {
+     "nm": "2007–09",
+     "fall": -57,
+     "dur": "17 months",
+     "rec": "5.5 years",
+     "kind": "credit",
+     "bonds": "rose strongly",
+     "cause": "Housing and credit bubble, highly leveraged banks.",
+     "policy": "Rates to zero, QE, bank rescues, fiscal stimulus."
+    },
+    {
+     "nm": "2020",
+     "fall": -34,
+     "dur": "1 month",
+     "rec": "5 months",
+     "kind": "shock",
+     "bonds": "rose",
+     "cause": "Pandemic shutdown.",
+     "policy": "Rates to zero, unlimited QE, about $5 trillion of US fiscal support."
+    },
+    {
+     "nm": "2022",
+     "fall": -25,
+     "dur": "9 months",
+     "rec": "2 years",
+     "kind": "inflation",
+     "bonds": "fell sharply",
+     "cause": "Inflation and the fastest rate rises since the 1980s.",
+     "policy": "None. The Fed kept tightening — the precedent for a slower response now."
+    },
+    {
+     "nm": "Japan 1989–2003",
+     "fall": -80,
+     "dur": "13 years",
+     "rec": "34 years",
+     "kind": "bubble",
+     "bonds": "rose",
+     "cause": "Property and stock bubble funded by bank lending. The Nikkei fell 80%.",
+     "policy": "Slow bank clean-up; decades of low rates and QE."
+    }
+   ]
+  },
+  "whats_next": {
+   "lead": "The composite is a reading, not a forecast. What follows is what would move it, what history says a fall of each size costs in time, and where the whole thing most plausibly ends.",
+   "meta": {
+    "as_of": "2026-09-29",
+    "source": "desk judgement over the buckets, framed on Debt, Money and Markets (in-house guide), 24 September 2026 §§ 7, 9, 12",
+    "cadence": "rewritten on the daily",
+    "estimate": true
+   },
+   "up": [
+    {
+     "t": "Index credit spreads widening",
+     "why": "The single change that would move this reading most. High yield at 293bp and investment grade at 81bp are the main reason the composite is 77 and not higher: the AI build is financing itself in bond markets at scale and the index has not repriced for it. Above 400bp reads as B or W3."
+    },
+    {
+     "t": "The ten-year towards 6% with weak auctions",
+     "why": "5.24% on 28 September was already the highest since 2007. A tail or a weak bid-to-cover at the 4 November refunding, or a visible shift into bills, turns a level problem into a financing problem — W2 or C."
+    },
+    {
+     "t": "The Sahm rule triggering",
+     "why": "A 0.5pp rise in the three-month unemployment average from its low. The gap is running at about 0.2–0.3pp, so this is close rather than remote, and it is the cleanest single confirmation of B."
+    },
+    {
+     "t": "A cut to hyperscaler capital spending",
+     "why": "About $725bn planned for 2026 and roughly half of index earnings growth depends on it continuing. The revenue is largely the spenders' own capex, so a cut lowers suppliers' earnings and spenders' profits at the same time. This is the W3 trigger."
+    },
+    {
+     "t": "Oil above $120 for months",
+     "why": "Brent near $105 already keeps the macro bucket heavy. Sustained above $120 with core inflation rising and unemployment rising is W1, the worst case the current shock makes most relevant."
+    },
+    {
+     "t": "A sharp fall in margin debt",
+     "why": "At about $1.5tn, margin debt is the leverage that turns a fall into a crash. A sharp fall in it is not a warning — it is forced selling already under way."
+    }
+   ],
+   "down": [
+    {
+     "t": "Hormuz reopening",
+     "why": "The largest single near-term swing factor, and the one that most directly unwinds the macro bucket. Oil towards $70 is the path to D. The EIA does not expect Middle East output back near pre-war levels until early 2027."
+    },
+    {
+     "t": "Core inflation returning towards 2%",
+     "why": "Core at 2.4% in August was the encouraging half of the picture; a Fed official calling the pressure broadening was the discouraging half. Core easing without the Fed being pressured to cut takes C and W1 off the table together."
+    },
+    {
+     "t": "The long end falling back on demand",
+     "why": "Not on a policy cap, which is C, but on buyers returning at clean auctions. That would repair the equity risk premium without needing the multiple to fall, which is the only benign way out of the valuation bucket."
+    }
+   ],
+   "caveats": [
+    {
+     "t": "High valuations are the fuel, not the trigger",
+     "why": "They set how far prices can fall once something goes wrong, and say almost nothing about timing. The CAPE passed 30 in mid-1997 and the market rose for almost three more years."
+    },
+    {
+     "t": "Record highs are not a warning sign",
+     "why": "The S&P 500 closed at a record 27 times by August 2026. That is what a rising market looks like."
+    },
+    {
+     "t": "The forward multiple is only as good as the forecast",
+     "why": "Forecasts are most optimistic at peaks. In 2000 technology forecasts proved far too high, and the largest tech companies' combined earnings fell 14% in 2022. Margins are at record levels, so a return to average margins would lower earnings with no recession at all."
+    },
+    {
+     "t": "“This time is different” cuts both ways",
+     "why": "The internet was a real revolution and the Nasdaq still fell 78%. AI can be transformative and still be overpriced. Equally, a 1929-style 86% collapse is very unlikely: deposit insurance, lenders of last resort, floating currencies and automatic fiscal support now break the chain of bank failures that turned 1929 into the Depression."
+    }
+   ],
+   "response": {
+    "h": "What the response would look like",
+    "b": "Policy has changed more than markets have. Since 1987 the answer has been fast and large — rate cuts, emergency lending, QE, bank rescues, spending — and that is why recent crashes recovered in months or years rather than decades. It would be slower this time. In 2022, with inflation high, the Fed did not rescue markets at all. With inflation at 3–4%, the Fed raising rates and federal debt around 120% of GDP against 62% in 2007, support would probably arrive only once unemployment rises and markets stop functioning smoothly. That points to a fall that lasts longer than 2020's — closer to 1973–74 or 2000–02 — followed by money creation on the 2008 and 2020 scale."
+   },
+   "endgame": {
+    "h": "Where it ends",
+    "b": "Something does give, but history suggests it is rarely a single day of reckoning. Governments that borrow in their own currency do not usually default; the binding constraint is inflation and the currency, so the question at very high debt is not whether the debt is paid but what the money is worth when it is. There are five routes out — growth, austerity, inflation, default, currency crisis — and the US and UK are most likely to use a mix of the first three with inflation doing most of the work. The likely shape is a decade or more in which cash and conventional bonds return less than inflation, interspersed with sharp but temporary crashes that are met with money creation. Crashes are deflationary and temporary; the response is inflationary and lasting. That asymmetry is the reason this page carries a crash reading and a themes register side by side rather than one or the other."
+   }
+  }
  },
  "sectors": [
   {

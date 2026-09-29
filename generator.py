@@ -359,6 +359,17 @@ def _trim_lead(text, glance):
     return text
 
 def _rp(t): return reader_prose(t)[0]
+def _rp_full(t):
+    """The desk-voice strip without the length cap. _rp trims to CAP so one long
+    theme read cannot crowd out the cards below it. The crash half's prose blocks
+    are the only thing in their own card, so capping them there does not protect a
+    layout — it just deletes the second half of the argument."""
+    if not t:
+        return ""
+    parts = re.split(r'(?<=[.!?])\s+', t)
+    keep = [p for p in parts if not BAD.search(p) and not DESK.search(p)]
+    out = " ".join(keep).strip()
+    return out if len(out) > 60 else t.strip()
 def _au(t): return reader_prose(t)[1]
 
 def _prior_stages(rev):
@@ -934,10 +945,20 @@ def build_v28(data):
 
     cr = data.get("crash_risk", {})
     cm = cr.get("composite_meta") or {}
-    method = ("A blended 0-100 judgement over the seven buckets below, each scored from its own "
+    nbk = len(cr.get("buckets") or [])
+    method = ("A blended 0-100 judgement over the %d buckets below, each scored from its own "
               "indicators. It flags fragility, not a crash date. "
               "Recomputed when the last computation is more than 7 days old — age-triggered, so a "
-              "missed run cannot strand it.")
+              "missed run cannot strand it." % nbk)
+
+    def _imeta(i):
+        """Each indicator carries its own dated source, so a number on the page can
+        always be traced without opening the data file."""
+        m = i.get("meta") or {}
+        return dict(asOf=m.get("as_of", ""), src=m.get("source", ""),
+                    cad=m.get("cadence", ""), est=bool(m.get("estimate")),
+                    note=m.get("note", ""))
+
     crash = dict(
         method=method,
         asOf=cm.get("as_of", cr.get("as_of", "")),
@@ -948,9 +969,87 @@ def build_v28(data):
         deskvoice=round(desk_share(cr.get("read", "")), 2),
         buckets=[dict(nm=b["nm"], summary=_rp(b.get("summary", "")),
                       inds=[dict(nm=i["nm"], val=i["val"], status=i["status"],
-                                 tr=i.get("tr", "flat"), mean=i.get("mean", ""))
+                                 tr=i.get("tr", "flat"), mean=i.get("mean", ""),
+                                 shift=i.get("shift", ""), sc=i.get("sc") or [],
+                                 **_imeta(i))
                             for i in (b.get("inds") or [])])
                  for b in (cr.get("buckets") or [])])
+
+    # ---- the crash-risk half: scenarios, depth, precedents, what next ------
+    # Everything here is analytical state the daily owns (see daily-task.md).
+    # The one thing NOT stored is the implied index level for each fall size: it is
+    # derived from the base close at render, because a stored second copy would drift
+    # from the base the moment the base moved — the same rule as the lifecycle spine.
+    sc = cr.get("scenarios") or {}
+    scen_meta = sc.get("meta") or {}
+    crash["scen"] = dict(
+        lead=_rp_full(sc.get("lead", "")), note=sc.get("note", ""), seq=sc.get("seq", ""),
+        horizon=sc.get("horizon", ""),
+        asOf=scen_meta.get("as_of", ""), src=scen_meta.get("source", ""),
+        est=bool(scen_meta.get("estimate", True)),
+        items=[dict(id=x["id"], nm=x["nm"], kind=x.get("kind", "main"),
+                    prob=x.get("prob"), lo=x.get("lo"), hi=x.get("hi"),
+                    eqLo=x.get("eq_lo"), eqHi=x.get("eq_hi"), eq=x.get("eq", ""),
+                    cushion=x.get("cushion", "na"),
+                    what=_rp(x.get("what", "")), bonds=_rp(x.get("bonds", "")),
+                    equities=_rp(x.get("equities", "")),
+                    confirms=x.get("confirms") or [], kills=x.get("kills") or [],
+                    hist=_rp(x.get("history", "")), assets=x.get("assets") or [])
+               for x in (sc.get("items") or [])])
+
+    crash["clusters"] = [dict(nm=c["nm"], sc=c.get("sc") or [], tell=c.get("tell", ""))
+                         for c in (cr.get("clusters") or [])]
+
+    dep = cr.get("depth") or {}
+    dmeta = dep.get("meta") or {}
+    # The base close is READ FROM THE TILE, never stored beside it. A stored copy is a
+    # second writer of a number fetch_data.py owns, and it would go stale the first day
+    # the daily forgot to update it — printing an "implied level" off last month's close
+    # with today's date on it. `base_from` names the tile; the value and its date come
+    # from there. The same rule as the lifecycle spine and the movement badges.
+    base_lbl = dep.get("base_from") or "S&P 500"
+    base_tile = next((t for t in tiles if t["lbl"] == base_lbl), None)
+    base = None
+    if base_tile:
+        try:
+            base = float(re.sub(r"[^0-9.]", "", base_tile["val"]))
+        except ValueError:
+            base = None
+    if base is None:
+        print("WARN: crash_risk.depth.base_from=%r matches no tile — the fall ladder "
+              "will render without implied levels" % base_lbl, file=sys.stderr)
+    crash["depth"] = dict(
+        base=base, baseLbl=base_lbl,
+        baseAsOf=(base_tile or {}).get("asOf", ""),
+        lead=_rp_full(dep.get("lead", "")), note=dep.get("note", ""),
+        asOf=dmeta.get("as_of", ""), src=dmeta.get("source", ""),
+        steps=[dict(pct=s["pct"], nm=s.get("nm", ""),
+                    lvl=(int(round(base * (1 - s["pct"] / 100.0))) if base else None),
+                    back=s.get("back_to", ""), hist=_rp(s.get("hist", "")),
+                    sc=s.get("sc") or [])
+               for s in (dep.get("steps") or [])])
+
+    hs = cr.get("history") or {}
+    hmeta = hs.get("meta") or {}
+    crash["hist"] = dict(
+        lead=_rp_full(hs.get("lead", "")), note=hs.get("note", ""),
+        asOf=hmeta.get("as_of", ""), src=hmeta.get("source", ""),
+        note2=hmeta.get("note", ""),
+        eps=[dict(nm=e["nm"], fall=e.get("fall"), dur=e.get("dur", ""),
+                  rec=e.get("rec", ""), kind=e.get("kind", ""),
+                  bonds=e.get("bonds", ""), cause=_rp(e.get("cause", "")),
+                  policy=_rp(e.get("policy", "")))
+             for e in (hs.get("episodes") or [])])
+
+    wn = cr.get("whats_next") or {}
+    wmeta = wn.get("meta") or {}
+    _pair = lambda k: [dict(t=x["t"], why=_rp(x.get("why", ""))) for x in (wn.get(k) or [])]
+    crash["next"] = dict(
+        lead=_rp_full(wn.get("lead", "")),
+        asOf=wmeta.get("as_of", ""), src=wmeta.get("source", ""),
+        up=_pair("up"), down=_pair("down"), caveats=_pair("caveats"),
+        blocks=[dict(h=b.get("h", ""), b=_rp_full(b.get("b", "")))
+                for b in (wn.get("response"), wn.get("endgame")) if b])
 
     # The narrative is ~5-6k characters of continuous prose with a capitalised lead
     # clause opening each paragraph. Those clauses are already section headings, so the
