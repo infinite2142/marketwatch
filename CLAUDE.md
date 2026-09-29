@@ -76,6 +76,48 @@ Two things live in `../marketwatch-core` that this repo depends on:
 the specs and reports cost). Read `../marketwatch-core/LEARNINGS.md` before changing anything
 structural — it is the retrospective, where this file is the manual.
 
+## Chrome and theme
+
+Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
+
+1. **The brand row** (`.brandrow`), sticky at the top, a `1fr auto 1fr` grid holding the three
+   things that are true of the whole page: the brandmark (left, and the way back to the top),
+   the half switch (centre), the theme toggle (right). Below 620px the wordmark drops and the
+   mark stands alone, so the switch keeps the middle.
+2. **The masthead** (`.mast`), which scrolls away: eyebrow, title, standfirst, the guardrail
+   line, then a meta row carrying the freshness stamp. That stamp used to sit in the top-right
+   corner, where it read as decoration; it qualifies the whole page, so it belongs under it.
+3. **The section navigator** (`.pnav`), sticky under the brand row, listing the sections of
+   whichever half is on screen.
+
+**Two sticky bars means two offsets, and getting them out of step is how an anchor lands under
+the navigator instead of at the top of its section.** The heights are declared once as
+`--brandh` and `--navh`; `.sec`'s `scroll-margin-top` and the nav's own `jump()` and scroll-spy
+both derive from them. Nothing hardcodes 54.
+
+### Light and dark
+
+Dark is the default and lives on `:root`; light is an override on `:root[data-theme="light"]`.
+That way round because this has always been a dark terminal, and a light-first root would give
+every returning reader a flash of a page they have never seen. A pre-paint script in `<head>`
+reads `localStorage["mw-theme"]` before the stylesheet does anything, for the same reason.
+Storage is best-effort — a private window throws on read and on write, and the page still works.
+
+Two token families, and the split is what keeps it honest:
+
+- **Neutrals** (`--bg` … `--ink`) invert between themes. Everything structural is built from
+  them, so nothing is left black-on-black when the theme flips.
+- **Semantics** (`--ok`, `--warn`, `--bad`, `--blue`, `--purple` and their tints) keep their
+  meaning and only change tone. The bright Tailwind-500 tones read well on `#09090b` and wash
+  out on a light background, so light mode takes the darker step of the same hue.
+
+**No colour literal survives outside the token block** — CSS, body markup and the JS that paints
+SVG all resolve through custom properties. An SVG *presentation attribute* cannot take a custom
+property, so `el()` and `mk()` route any `fill`/`stroke` value beginning `var(` to the style
+property instead (`setA`). That is what makes a theme switch instant: nothing is redrawn, the
+browser re-resolves. Adding a raw hex to a chart is the one thing that breaks this — it will look
+right in dark and wrong in light, and only in light.
+
 ## Two halves, one page
 
 Added 2026-09-29. The page splits into **Crash risk** and **Opportunities** behind a segmented
