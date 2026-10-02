@@ -1121,7 +1121,12 @@ def build_v28(data):
     # top-line finding.
     written_sum = (data.get("state_of_play", {}) or {}).get("summary")
     if written_sum:
-        lead = whole_sentences(_rp(written_sum), 320, 160)
+        # The summary is the day's overall read and it is the first thing on the
+        # page, so the length belongs to the daily, not to this cap. At 320 the
+        # cap was quietly dropping half of what the daily had written — a
+        # two-sentence summary rendering as one. 700 is a backstop against a
+        # runaway paragraph, not a house style; daily-task.md sets the target.
+        lead = whole_sentences(_rp(written_sum), 700, 300)
     else:
         first = next((p for p in re.split(r'\n+', nar) if p.strip()
                       and desk_share(p) < 0.5), "")
