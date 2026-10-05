@@ -32,12 +32,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # generator.py derives the change log by walking this file's own history.
-          # The default shallow clone is one commit, so the walk had nothing to diff
-          # and the section rendered empty in CI while being correct locally — a
-          # silent failure, since an empty log looks like a quiet week. 60 covers the
-          # 40-revision window it reads, without cloning the whole history.
-          fetch-depth: 60
+          # generator.py derives two things by walking this file's own history: the
+          # change log, and every computed reading of the crash composite. The
+          # default shallow clone is one commit, so the walk had nothing to diff and
+          # the change log rendered empty in CI while being correct locally — a
+          # silent failure, since an empty log looks like a quiet week.
+          #
+          # This was 60. That covered the change log's 40-revision window, but the
+          # composite series wants all of it, and at 60 commits CI saw back only to
+          # 26 Aug: the 60 and 67 readings fell off and the rise drew as 65 -> 79
+          # instead of 60 -> 79. A truncated trend does not fail, it understates —
+          # and an understated trend looks like a calm one. Full history is 10 MB.
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5

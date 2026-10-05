@@ -542,6 +542,49 @@ BACKFILL_WHY = {
   "chips."],
 }
 
+def derive_composite_series(cur_value=None, cur_as_of=None, limit=400):
+    """Every computed reading of the crash composite, read out of the data file's
+    own git history rather than kept as a field — the same reason the change log
+    is derived: the record already exists in every committed revision, so a
+    second copy could only drift from it.
+
+    The composite is recomputed on an age trigger and carried in between, so the
+    history is a handful of real readings, not a daily series. This returns the
+    readings — one point per distinct composite_meta.as_of — and the page draws
+    them as steps. Plotting the carried days as if each were measured would show
+    a smooth line that implies sixty measurements where there were eight.
+
+    Needs the whole history: deploy.yml checks out with fetch-depth 0 for it. At
+    a fixed depth the walk silently loses the oldest readings, which understates
+    the trend rather than failing, and an understated trend looks like a calm one.
+    """
+    pts = {}
+    try:
+        out = subprocess.run(["git", "log", "--format=%H", "-n", str(limit),
+                              "--", "market_watch_data.json"],
+                             capture_output=True, text=True, check=True,
+                             cwd=HERE, timeout=30).stdout.split()
+    except Exception as e:
+        print("WARN: composite history unavailable (%s)" % e, file=sys.stderr)
+        out = []
+    for sha in reversed(out):                          # oldest first
+        try:
+            raw = subprocess.run(["git", "show", sha + ":market_watch_data.json"],
+                                 capture_output=True, text=True, check=True,
+                                 cwd=HERE, timeout=30).stdout
+            cr = json.loads(raw).get("crash_risk") or {}
+        except Exception:
+            continue
+        v, d = cr.get("composite"), (cr.get("composite_meta") or {}).get("as_of")
+        if isinstance(v, (int, float)) and d:
+            pts[d[:10]] = v                            # a same-day correction wins
+    if isinstance(cur_value, (int, float)) and cur_as_of:
+        pts[cur_as_of[:10]] = cur_value                # the working copy is newest
+    if len(pts) < 2:
+        print("WARN: composite history has %d reading(s) — shallow checkout? "
+              "(deploy.yml should use fetch-depth 0)" % len(pts), file=sys.stderr)
+    return [dict(d=d, v=pts[d]) for d in sorted(pts)]
+
 def derive_changelog(audit_index=None, limit=40):
     """When themes joined, moved or left — read out of git history rather than kept
     as a field. The data file is committed on every run, so the record already
@@ -997,6 +1040,8 @@ def build_v28(data):
                                  **_imeta(i))
                             for i in (b.get("inds") or [])])
                  for b in (cr.get("buckets") or [])])
+
+    crash["series"] = derive_composite_series(cr.get("composite"), cm.get("as_of"))
 
     # ---- the crash-risk half: scenarios, depth, precedents, what next ------
     # Everything here is analytical state the daily owns (see daily-task.md).

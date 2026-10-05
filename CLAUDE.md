@@ -91,13 +91,20 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
    the bright semantic tones are unreadable on it in either theme, so the readout takes the
    `--on-ink-*` step when it sits there.
 2. **The masthead** (`.mast`), which scrolls away: the half's name and the freshness stamp, and
-   nothing else. It is read on a phone in portrait, and the job of the first screen is to show
+   nothing else — with the radar back to its right on desktop (hidden below 1000px), now that the
+   header is tall enough (min 206px) to hold it rather than have it overhang the navigator. The
+   radar moves, lightly: the sweep rotates once every 11s (SMIL, so it turns about the radar's own
+   centre) and the blobs breathe between their own opacity and a little over half of it, on
+   staggered delays. Never to nothing — it is ambient, not a light show. Reduced motion stops
+   both, the SMIL half from script because SMIL ignores CSS media queries. It is read on a phone in portrait, and the job of the first screen is to show
    the reading, not to explain the site — the standfirst that used to sit here was 90px of prose
    between the reader and the number they opened the page for. The disclaimer moved to the
    footer guard; the note that explained the split went too, once the switch carried both
    names and both readouts and was saying it better.
 3. **The section navigator** (`.pnav`), sticky under the brand row, listing the sections of
-   whichever half is on screen.
+   whichever half is on screen. Uppercase and tracked like the section headings, on the inset
+   surface, with the current section underlined — a row of small grey words read as a caption,
+   and people missed that it was navigation at all.
 
 **Two sticky bars means two offsets, and getting them out of step is how an anchor lands under
 the navigator instead of at the top of its section.** The heights are declared once as
@@ -200,6 +207,14 @@ drifts from the first:
 - the **change log**, by walking the data file's own history — including pairing a rename
   (`faded-edgeai` becoming `radar-edgeai`) into one "revived" event rather than a removal plus an
   addition
+- the **crash composite's history**, every computed reading back to the first, from the data
+  file's revisions — one point per distinct `composite_meta.as_of`. The composite is recomputed
+  on an age trigger and carried between, so it is drawn as **steps with a dot per reading**,
+  never as a smooth line: a smooth line would show sixty measurements where there were eight.
+  It needs the whole history, so `deploy.yml` checks out with `fetch-depth: 0`; at the old depth
+  of 60 CI saw back only to 26 Aug and drew the rise as 65 -> 79 instead of 60 -> 79. A
+  truncated trend does not fail, it understates. The card shows a sparkline and the net move;
+  the detail pane shows the chart and every reading.
 - the **implied levels on the fall ladder**, from the S&P 500 tile. `crash_risk.depth.base_from`
   names the tile; `generator.py` reads its value and its `as_of` from there. Storing the close
   beside the ladder would make the daily a second writer of a number `fetch_data.py` owns, and the

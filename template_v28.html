@@ -24,7 +24,7 @@
    SVG presentation attribute cannot take a custom property. That is what makes a
    theme switch instant: nothing is redrawn, the browser re-resolves. */
 :root{
-  --brandh:54px; --navh:44px;
+  --brandh:54px; --navh:46px;
   --bg:#09090b;      --bg-blur:rgba(9,9,11,.92);
   --inset:#131316;   --card:#18181b;   --raise:#1f1f23;
   --faint:#1c1c1f;   --hair:#232326;   --line:#27272a;  --line-2:#3f3f46;
@@ -107,10 +107,25 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    switch's own label, which is the trade HeatWatch makes too: the switch is a
    control and the heading is what the page is called, and a screen reader needs
    the second one. */
-.mast{position:relative;padding:26px 0 22px;margin:0}
+.mast{position:relative;padding:54px 0 44px;margin:0;min-height:206px;
+  display:flex;flex-direction:column;justify-content:center}
 .mast>*{position:relative;z-index:1}
-.mast h1{font-size:31px;line-height:1.1;margin:0;font-weight:600;letter-spacing:-.7px}
-.mmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:11px;
+.mast h1{font-size:38px;line-height:1.08;margin:0;font-weight:600;letter-spacing:-1px}
+/* The radar is back, and it is sized to sit inside the header rather than hang
+   out of it: at 206px of header it has somewhere to be, which it did not when
+   the header was 111px and it overhung the navigator. Absolutely positioned, so
+   it still costs no height — min-height is what reserves the room, not the SVG.
+   Desktop only: on a phone there is no space to its left to be beside. */
+.herog{position:absolute;right:-6px;top:50%;transform:translateY(-50%);
+  width:218px;height:192px;opacity:.72;pointer-events:none;z-index:0}
+@media (max-width:1000px){.herog{display:none}}
+/* Motion, lightly. fill- and stroke-opacity multiply with each blob's own
+   opacity, so a blob dims to a little over half of itself and back rather than
+   blinking out — this is ambient, not a light show. */
+@keyframes hgpulse{0%,100%{fill-opacity:1;stroke-opacity:1}50%{fill-opacity:.55;stroke-opacity:.55}}
+.herog .hgb{animation:hgpulse 7s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.herog .hgb{animation:none}}
+.mmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;
   font-size:11.5px;color:var(--muted)}
 .mmeta .tm{color:var(--dim);font-variant-numeric:tabular-nums}
 .mmeta .dot{width:5px;height:5px;border-radius:50%;background:var(--ok);flex:0 0 5px}
@@ -119,23 +134,33 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
   /* the dates are the subtext; the method claim is a second line on a phone and
      the footer guard already carries the provenance */
   .mmeta .how{display:none}
-  .mast{padding:20px 0 18px}
-  .mast h1{font-size:25px;letter-spacing:-.4px}
+  .mast{padding:26px 0 24px;min-height:0;display:block}
+  .mast h1{font-size:26px;letter-spacing:-.4px}
   .mmeta{margin-top:9px;font-size:11px}
 }
 
 /* ---- section navigator ---------------------------------------------------
    Sticks under the brand row and is rebuilt from the half on screen. */
-.pnav{position:sticky;top:var(--brandh);z-index:30;display:flex;gap:2px;
-  overflow-x:auto;scrollbar-width:none;height:var(--navh);align-items:center;
-  background:var(--bg-blur);backdrop-filter:blur(10px);
+/* A row of small grey words reads as a caption, not as navigation. Three things
+   fix that without turning it into a second switch: the links carry the page's
+   own label styling (uppercase, tracked, the type the section headings use), the
+   current one is marked with a rule rather than only a shade, and the bar sits
+   on the inset surface so it reads as chrome rather than as part of the page. */
+.pnav{position:sticky;top:var(--brandh);z-index:30;display:flex;gap:1px;
+  overflow-x:auto;scrollbar-width:none;height:var(--navh);align-items:stretch;
+  background:var(--inset);backdrop-filter:blur(10px);
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  margin:0 -24px 46px;padding:0 24px}
+  margin:0 -24px 46px;padding:0 20px}
 .pnav::-webkit-scrollbar{display:none}
-.pnav a{color:var(--muted);font-size:11.5px;font-weight:500;text-decoration:none;
-  padding:6px 12px;border-radius:8px;white-space:nowrap;transition:.12s}
-.pnav a:hover{color:var(--ink);background:var(--inset)}
-.pnav a.on{color:var(--ink);background:var(--raise)}
+.pnav a{display:inline-flex;align-items:center;color:var(--sub);font-size:11px;
+  font-weight:700;text-transform:uppercase;letter-spacing:.9px;text-decoration:none;
+  padding:0 13px;white-space:nowrap;transition:.12s;position:relative}
+.pnav a::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:2px;
+  background:transparent;border-radius:2px 2px 0 0;transition:.12s}
+.pnav a:hover{color:var(--ink)}
+.pnav a:hover::after{background:var(--line-2)}
+.pnav a.on{color:var(--ink)}
+.pnav a.on::after{background:var(--purple)}
 .sec{scroll-margin-top:calc(var(--brandh) + var(--navh) + 16px)}
 @media (max-width:720px){
   .brandrow{margin:0 -14px;padding:0 14px}
@@ -396,6 +421,23 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    That is a headline band rather than a narrow card with a lot of empty space
    to its right. Below 760px it folds back to a column. */
 :root[data-half="themes"] .gauge-card{display:none}
+/* ---- composite history ---------------------------------------------------
+   Steps, not a line. The composite is recomputed on an age trigger and carried
+   in between, so the history is a handful of real readings; a smooth line would
+   draw sixty measurements where there were eight. Dots mark the readings. */
+.gtrend{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:11px;
+  color:var(--muted);white-space:nowrap}
+.gtrend svg{width:92px;height:24px;flex:0 0 92px;overflow:visible}
+.gtrend b{font-weight:700}
+.ctrend{margin:4px 0 6px}
+.ctrend svg{width:100%;height:auto;display:block;overflow:visible}
+.ctrend text{font-family:inherit}
+.ctsum{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 2px}
+.ctab{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+.ctab td{padding:6px 2px;border-top:1px solid var(--hair);color:var(--ink-2);
+  font-variant-numeric:tabular-nums}
+.ctab td.n{text-align:right;font-weight:700;color:var(--ink)}
+.ctab td.c{text-align:right;width:56px;font-weight:600}
 /* State of play sits above the band, so it is outside both .vw containers and
    has to be hidden by hand on the half it does not belong to. */
 :root[data-half="crash"] #s-state-of-play{display:none}
@@ -420,6 +462,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
   .gwrap{gap:13px}
   .gwrap>div{min-width:0}
   .glvl{font-size:19px}
+  /* the trend line is a sparkline plus "+19 since 8 Aug" and will not sit on one
+     line beside a gauge at 320; it wraps under itself instead */
+  .gtrend{flex-wrap:wrap;white-space:normal;gap:3px 8px}
+  .gtrend svg{width:72px;flex-basis:72px}
 }
 /* ---- market rows ---------------------------------------------------------
    One line per instrument: name, value, change, direction. Twelve cards with
@@ -737,6 +783,59 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
   <header class="mast">
     <h1 id="masth1">Market Opportunities</h1>
     <div class="mmeta" id="mmeta"></div>
+    <svg class="herog" viewBox="0 0 340 300" aria-hidden="true">
+      <defs>
+        <radialGradient id="hgSweep" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="var(--purple)" stop-opacity=".30"/>
+          <stop offset="70%" stop-color="var(--blue)" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="var(--blue)" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="hgArc" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--blue)"/><stop offset="100%" stop-color="var(--purple)"/>
+        </linearGradient>
+      </defs>
+      <g transform="translate(170 150)">
+        <circle r="140" fill="url(#hgSweep)"/>
+        <circle r="46"  fill="none" stroke="var(--line)"/>
+        <circle r="86"  fill="none" stroke="var(--line)"/>
+        <circle r="126" fill="none" stroke="var(--line)"/>
+        <line x1="-140" y1="0" x2="140" y2="0" stroke="var(--line)"/>
+        <line x1="0" y1="-140" x2="0" y2="140" stroke="var(--line)"/>
+        <!-- The sweep: a leading line with the faded wedge trailing it. Rotation
+             is clockwise (positive in SVG), so the line at 0deg leads and the
+             wedge, which opens towards -45deg, follows behind it. SMIL rather
+             than CSS because it rotates about the group's own origin, which is
+             the radar centre; CSS transform-origin on SVG resolves against the
+             viewport and would swing it round the corner. -->
+        <g class="hgsweep">
+          <path d="M0 0 L126 0 A126 126 0 0 0 89 -89 Z" fill="url(#hgArc)" opacity=".13"/>
+          <line x1="0" y1="0" x2="126" y2="0" stroke="url(#hgArc)" stroke-width="1.4" opacity=".55"/>
+          <animateTransform attributeName="transform" type="rotate"
+            from="0 0 0" to="360 0 0" dur="11s" repeatCount="indefinite"/>
+        </g>
+        <!-- Blobs breathe between their own opacity and a little over half of it,
+             never to nothing; staggered negative delays so they start mid-phase
+             and never fall into step. -->
+        <g stroke="url(#hgArc)" fill="none" stroke-width="1.6" stroke-dasharray="2.6 2.4">
+          <circle class="hgb" style="animation-delay:-1.1s" cx="-96" cy="34"  r="9"/>
+          <circle class="hgb" style="animation-delay:-4.3s" cx="-58" cy="-72" r="7"/>
+        </g>
+        <g fill="var(--purple)">
+          <circle class="hgb" style="animation-delay:-2.6s" cx="-14" cy="-40" r="10" opacity=".55"/>
+          <circle class="hgb" style="animation-delay:-5.4s" cx="34"  cy="-78" r="7"  opacity=".45"/>
+        </g>
+        <g fill="var(--ok)">
+          <circle class="hgb" style="animation-delay:-0.4s" cx="58"  cy="16"  r="17" opacity=".62"/>
+          <circle class="hgb" style="animation-delay:-3.7s" cx="104" cy="-34" r="11" opacity=".5"/>
+          <circle class="hgb" style="animation-delay:-6.2s" cx="22"  cy="62"  r="13" opacity=".45"/>
+        </g>
+        <circle class="hgb" style="animation-delay:-2.0s" cx="118" cy="70" r="8" fill="var(--warn)" opacity=".5"/>
+        <g stroke="var(--dim)" fill="none" stroke-width="1.2">
+          <circle class="hgb" style="animation-delay:-5.0s" cx="-118" cy="94" r="6"/>
+          <circle class="hgb" style="animation-delay:-1.8s" cx="-42" cy="112" r="6"/>
+        </g>
+      </g>
+    </svg>
   </header>
 
   <nav class="pnav" id="pnav"></nav>
@@ -754,7 +853,7 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
     <div class="cond">
       <div class="gauge-card" id="gcard" title="How this number is built">
         <div class="gwrap"><svg class="gauge" id="gauge" viewBox="0 0 118 72"></svg>
-          <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div></div></div>
+          <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div><div class="gtrend" id="gtrend"></div></div></div>
         <div class="gread" id="gread"></div>
       </div>
       <div class="card"><div class="mkt" id="tiles"></div>
@@ -1512,6 +1611,54 @@ document.getElementById("seg").addEventListener("click",e=>{
   view=b.dataset.v;render();
 });
 
+/* ---------- composite history ---------- */
+const SER=(CRASH.series||[]).filter(p=>typeof p.v==="number");
+const dshort=d=>{const t=Date.parse(d+"T00:00:00Z");
+  return isNaN(t)?d:new Date(t).toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"});};
+const bandCol=v=>v>=70?"var(--bad)":v>=40?"var(--warn)":"var(--ok)";
+/* One step path for both sizes. x is time, not index: the readings are about a
+   week apart but not exactly, and spacing them evenly would bend the slope. The
+   last step runs on to today, because the reading is still in force. */
+function stepChart(W,H,P,opts){
+  if(SER.length<2) return "";
+  const o=opts||{}, t=p=>Date.parse(p.d+"T00:00:00Z");
+  const t0=t(SER[0]), t1=Math.max(Date.now(),t(SER[SER.length-1])+864e5);
+  const vs=SER.map(p=>p.v), lo=Math.min(...vs), hi=Math.max(...vs);
+  const pad=Math.max(2,(hi-lo)*.15), y0=lo-pad, y1=hi+pad;
+  const X=ms=>P.l+(ms-t0)/(t1-t0)*(W-P.l-P.r), Y=v=>P.t+(1-(v-y0)/(y1-y0))*(H-P.t-P.b);
+  let d=`M${X(t(SER[0])).toFixed(1)},${Y(SER[0].v).toFixed(1)}`;
+  for(let i=1;i<SER.length;i++){
+    d+=` H${X(t(SER[i])).toFixed(1)} V${Y(SER[i].v).toFixed(1)}`;}
+  d+=` H${X(t1).toFixed(1)}`;
+  const last=SER[SER.length-1], c=bandCol(last.v);
+  let g="";
+  if(o.grid){
+    [lo,hi].forEach(v=>{g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(v)}" y2="${Y(v)}"
+      style="stroke:var(--hair)" stroke-dasharray="3 3"/>`;});
+    g+=`<text x="${P.l}" y="${H-4}" font-size="10.5" style="fill:var(--muted)">${dshort(SER[0].d)}</text>
+      <text x="${W-P.r}" y="${H-4}" font-size="10.5" text-anchor="end" style="fill:var(--muted)">today</text>`;
+  }
+  let dots="";
+  SER.forEach((p,i)=>{const cx=X(t(p)),cy=Y(p.v),isLast=i===SER.length-1;
+    dots+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${o.big?(isLast?4.5:3.2):(isLast?2.6:1.6)}"
+      style="fill:${isLast?c:"var(--sub)"}"><title>${p.v} on ${dshort(p.d)}</title></circle>`;
+    if(o.labels) dots+=`<text x="${cx.toFixed(1)}" y="${(cy-9).toFixed(1)}" font-size="10.5"
+      text-anchor="middle" font-weight="700" style="fill:${isLast?c:"var(--sub)"}">${p.v}</text>`;});
+  return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">${g}
+    <path d="${d}" fill="none" style="stroke:${c}" stroke-width="${o.big?2:1.5}"
+      stroke-linejoin="round" opacity=".9"/>${dots}</svg>`;
+}
+(function(){
+  const el=document.getElementById("gtrend");
+  if(!el||SER.length<2) return;
+  const a=SER[0],b=SER[SER.length-1],dv=b.v-a.v;
+  const arrow=dv>0?"\u2197":dv<0?"\u2198":"\u2192";
+  el.innerHTML=stepChart(92,24,{l:2,r:3,t:3,b:3},{})+
+    `<span><b style="color:${dv>0?"var(--bad)":dv<0?"var(--ok)":"var(--muted)"}">${arrow} ${dv>0?"+":""}${dv}</b>`+
+    ` since ${dshort(a.d)}</span>`;
+  el.title=`${SER.length} computed readings: `+SER.map(p=>p.v).join(" \u2192 ");
+})();
+
 /* ---------- conditions ---------- */
 (function(){
   const g=document.getElementById("gauge"),v=CRASH.v;
@@ -1593,8 +1740,28 @@ document.getElementById("seg").addEventListener("click",e=>{
     openPanel({nm:"Crash risk "+CRASH.v,sub:CRASH.lvl+" · "+CRASH.buckets.length+" buckets · "+nInd+" indicators",
       k:null,logHTML:
       `<div class="phead" style="--pc:${col}">${icon("compass")}<div><div class="pbig">${CRASH.v}</div>
-        <div class="psm">${CRASH.lvl} · composite</div></div></div>
-       <div class="plabel">Why it sits here</div><div class="ptext">${CRASH.read}</div>
+        <div class="psm">${CRASH.lvl} · composite</div></div></div>`+
+      (SER.length<2?"":(()=>{
+        const a=SER[0],b=SER[SER.length-1],dv=b.v-a.v;
+        const rows=SER.slice().reverse().map((p,i,arr)=>{
+          const prev=arr[i+1], ch=prev?p.v-prev.v:null;
+          const cc=ch==null?"var(--muted)":ch>0?"var(--bad)":ch<0?"var(--ok)":"var(--muted)";
+          return `<tr><td>${dshort(p.d)}</td><td class="n">${p.v}</td>
+            <td class="c" style="color:${cc}">${ch==null?"first":ch>0?"+"+ch:ch===0?"\u2014":ch}</td></tr>`;}).join("");
+        return `<div class="plabel">How it has moved</div>
+          <div class="ctrend">${stepChart(500,150,{l:6,r:10,t:20,b:22},{big:1,grid:1,labels:1})}</div>
+          <div class="ctsum">
+            <span class="pchip">${dshort(a.d)} <b>${a.v}</b> \u2192 now <b>${b.v}</b></span>
+            <span class="pchip" style="color:${dv>0?"var(--bad)":dv<0?"var(--ok)":"var(--muted)"}">${dv>0?"+":""}${dv} points</span>
+            <span class="pchip">${SER.length} readings</span>
+          </div>
+          <details class="aud"><summary>${icon("info")}<span>Every reading</span></summary>
+            <table class="ctab">${rows}</table>
+            <p class="audn">Recomputed when the last reading is more than seven days old and carried
+            in between, so these are the measurements and the chart draws them as steps. Read
+            from the data file's own history rather than stored, so it cannot drift from it.</p>
+          </details>`;})())+
+      `<div class="plabel">Why it sits here</div><div class="ptext">${CRASH.read}</div>
        <div class="plabel">How this number is derived</div><div class="ptext">${CRASH.method||""}</div>
        <div class="pchips">
          <span class="pchip">buckets <b>${CRASH.buckets.length}</b></span>
@@ -1724,6 +1891,8 @@ document.getElementById("i2").innerHTML=icon("layers");
 document.getElementById("i3").innerHTML=icon("activity");
 document.getElementById("i4").innerHTML=icon("globe");
 document.getElementById("ilogo").innerHTML=icon("target");
+{const r=document.querySelector(".herog");
+ if(r&&r.pauseAnimations&&matchMedia("(prefers-reduced-motion: reduce)").matches) r.pauseAnimations();}
 {const b=document.getElementById("themetog");
  b.innerHTML=icon("moon","moon")+icon("sun","sun");
  b.setAttribute("aria-label",theme()==="light"?"Switch to the dark theme":"Switch to the light theme");
