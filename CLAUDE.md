@@ -91,9 +91,9 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
    but how high is the crash risk" without switching. The active pill inverts to solid ink and
    the bright semantic tones are unreadable on it in either theme, so the readout takes the
    `--on-ink-*` step when it sits there.
-2. **The masthead** (`.mast`), which scrolls away: "Market Watch" as a small mono kicker, the
-   half's name as the title under it (HeatWatch's arrangement), the freshness stamp, and nothing
-   else — with the radar back to its right at every width (218px desktop, 170px tablet,
+2. **The masthead** (`.mast`), which scrolls away, built as the roadbook's banner: "Market Watch"
+   large in Bricolage (its "Cross-Alps Trip"), the half's name under it in tracked uppercase mono
+   (its "Mid autumn"), then the freshness stamp - 310px tall on desktop, and nothing else — with the radar back to its right at every width (218px desktop, 170px tablet,
    96px phone, dimmed below 380px where the title reaches its corner), now that the
    header is tall enough (min 206px) to hold it rather than have it overhang the navigator. The
    radar moves, lightly: the sweep rotates once every 11s (SMIL, so it turns about the radar's own
@@ -166,6 +166,9 @@ time they are on screen, and both appear as a disc in the half switch.
   last 60 sessions rather than walked out of git, and it is drawn as a line; the composite is
   a handful of judgements and is drawn as steps. It describes the trend, it is not a signal,
   and the page says both.
+- Each card's text is the read, then two short derived lines: **Why** (crash: which buckets are
+  at stress) and **Recent** (how the number got here, from its own series). Kept to a line each
+  on purpose - the detail lives in the pane.
 - High is good on one and bad on the other. The colours are what say which, so do not make
   them match.
 - The notification's title uses the same function, imported from `generator.py` rather than

@@ -122,21 +122,23 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    switch's own label, which is the trade HeatWatch makes too: the switch is a
    control and the heading is what the page is called, and a screen reader needs
    the second one. */
-.mast{position:relative;padding:54px 0 44px;margin:0;min-height:206px;
+.mast{position:relative;padding:80px 0 64px;margin:0;min-height:310px;
   display:flex;flex-direction:column;justify-content:center}
 .mast>*{position:relative;z-index:1}
-.mast h1{font-family:var(--f-display);font-size:42px;line-height:1.04;margin:0;font-weight:800;letter-spacing:-.02em}
-/* the site's name above the half's name - HeatWatch's kicker, the roadbook's eyebrow */
-.mkick{font-family:var(--f-mono);font-size:11px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.26em;color:var(--muted);margin:0 0 12px;display:flex;align-items:center;gap:9px}
-.mkick i{width:18px;height:1px;background:var(--line-2);display:block}
+/* The roadbook's banner: the name large in Bricolage, the page under it in tracked
+   uppercase mono - its "Cross-Alps Trip" over "Mid autumn". Here the name is the
+   site's and the line under it is the half, which changes with the switch. */
+.mast h1{font-family:var(--f-display);font-size:clamp(28px,5.6vw,60px);line-height:.98;
+  margin:0;font-weight:800;letter-spacing:-.03em;max-width:19ch}
+.msub{font-family:var(--f-mono);font-size:clamp(11px,1.5vw,13px);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--sub);margin:12px 0 0;font-weight:500}
 /* The radar is back, and it is sized to sit inside the header rather than hang
    out of it: at 206px of header it has somewhere to be, which it did not when
    the header was 111px and it overhung the navigator. Absolutely positioned, so
    it still costs no height — min-height is what reserves the room, not the SVG.
    Desktop only: on a phone there is no space to its left to be beside. */
-.herog{position:absolute;right:-6px;top:50%;transform:translateY(-50%);
-  width:218px;height:192px;opacity:.72;pointer-events:none;z-index:0}
+.herog{position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+  width:327px;height:288px;opacity:.72;pointer-events:none;z-index:0}
 /* On narrower screens the radar stays, smaller, in the corner the title does not
    reach. Below ~380px the title runs into that corner, so the radar drops back
    behind it rather than being removed - it is ambient, and dimmer is enough. */
@@ -159,7 +161,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
      the footer guard already carries the provenance */
   .mmeta .how{display:none}
   .mast{padding:26px 0 24px;min-height:0;display:block}
-  .mast h1{font-size:26px;letter-spacing:-.4px}
+  .mast h1{font-size:32px}
   .mmeta{margin-top:9px;font-size:11px}
 }
 
@@ -443,6 +445,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .glvl{font-family:var(--f-display);font-size:23px;font-weight:800;line-height:1.1;letter-spacing:-.01em}
 .gsub{font-family:var(--f-mono);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin-bottom:4px}
 .gread{font-size:11px;color:var(--sub);line-height:1.45;margin-top:9px;border-top:1px solid var(--line);padding-top:9px}
+.gread p{margin:0}
+/* two short lines under the read - why it sits there, and how it got there -
+   derived from the data the card already has, so they cannot disagree with it */
+.gread .gline{margin-top:7px;color:var(--muted)}
+.gread .gline b{font-family:var(--f-mono);font-size:9.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--dim);margin-right:8px}
 /* The first band is one section carrying two different things, because the two
    halves ask different questions of it. Crash risk gets the composite and only
    the composite; Market Opportunities gets the market numbers and only those --
@@ -820,8 +828,8 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
   </div></div>
 
   <header class="mast">
-    <div class="mkick">Market Watch<i></i></div>
-    <h1 id="masth1">Market Opportunities</h1>
+    <h1>Market Watch</h1>
+    <div class="msub" id="masth1">Market Opportunities</div>
     <div class="mmeta" id="mmeta"></div>
     <svg class="herog" viewBox="0 0 340 300" aria-hidden="true">
       <defs>
@@ -1829,8 +1837,15 @@ function lineChart(vals,W,H,P,opts){
   const paint=ring(document.getElementById("mgauge"),MKT.bands);
   const lvl=document.getElementById("mlvl"); lvl.textContent=T.lvl; lvl.style.color=col;
   rampIn(card,paint,T.v,lvl);
-  document.getElementById("mread").textContent=T.read;
   const S=T.series||[];
+  {let recent="";
+    if(S.length>5){const a=S[0],z=S[S.length-1],w=S[S.length-6];
+      const lo=Math.min(...S), loAgo=S.length-1-S.lastIndexOf(lo);
+      recent=`${a} \u2192 ${z} over ${S.length} sessions; low of ${lo}, `+
+        (loAgo?`${loAgo} session${loAgo>1?"s":""} ago`:"today")+
+        `, ${z-w>=0?"+":""}${z-w} on the week.`;}
+    document.getElementById("mread").innerHTML=`<p>${T.read}</p>`+
+      (recent?`<p class="gline"><b>Recent</b>${recent}</p>`:"");}
   if(S.length>1){
     const dv=S[S.length-1]-S[0], arr=dv>0?"↗":dv<0?"↘":"→";
     document.getElementById("mtrend").innerHTML=lineChart(S,92,24,{l:2,r:3,t:3,b:3})+
@@ -1876,7 +1891,26 @@ function lineChart(vals,W,H,P,opts){
   lvl.textContent=CRASH.lvl;
   lvl.style.color=col;
   rampIn(document.getElementById("gcard"),paint,v,lvl);
-  document.getElementById("gread").textContent=CRASH.read;
+  {/* Why: the buckets carrying it, named short. Recent: the readings it climbed
+      through. Both derived - the read above them is the daily's own words. */
+    const short=n=>n.split(/ (?:&|\/) /)[0].toLowerCase();
+    /* local, not worstOf: this runs before the detail-half code that defines that,
+       and a const is not usable before its line - the first cut threw here and
+       took the rest of the page script with it */
+    const RK={calm:0,watch:1,stress:2};
+    const worst=b=>b.inds.reduce((m,i)=>RK[i.status]>RK[m]?i.status:m,"calm");
+    const st=CRASH.buckets.filter(b=>worst(b)==="stress").map(b=>short(b.nm));
+    const wa=CRASH.buckets.filter(b=>worst(b)==="watch").length;
+    const why=st.length?`${st.length} of ${CRASH.buckets.length} buckets at stress \u2014 ${st.join(", ")}`+
+      (wa?`; ${wa} on watch.`:"."):`No bucket at stress; ${wa} on watch.`;
+    let recent="";
+    if(SER.length>1){const a=SER[0],z=SER[SER.length-1],p=SER[SER.length-2];
+      const ups=SER.slice(1).filter((x,i)=>x.v>SER[i].v).length;
+      recent=`${a.v} \u2192 ${z.v} since ${dshort(a.d)}, up at ${ups} of ${SER.length-1} readings; `+
+        `last ${z.v>p.v?"+":""}${z.v-p.v} on ${dshort(z.d)}.`;}
+    const esc=t=>String(t).replace(/</g,"&lt;");
+    document.getElementById("gread").innerHTML=`<p>${esc(CRASH.read)}</p>`+
+      `<p class="gline"><b>Why</b>${why}</p>`+(recent?`<p class="gline"><b>Recent</b>${recent}</p>`:"");}
   document.getElementById("gcard").addEventListener("click",()=>{
     const SC={calm:"var(--ok)",watch:"var(--warn)",stress:"var(--bad)"};
     const TA={up:"\u2197",flat:"\u2192",down:"\u2198"};
