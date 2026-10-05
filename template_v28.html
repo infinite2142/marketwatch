@@ -6,9 +6,9 @@
 <!-- The site never declared an icon, and all three sites share the origin
      infinite2142.github.io, whose root has no favicon.ico - so browsers showed
      whichever icon they had cached for the origin, which was the roadbook's
-     mountain. Declared explicitly, inline, as the brand mark: literal colours,
+     mountain. Declared explicitly, inline, as the brand mark (a trend line in a circle): literal colours,
      because a favicon cannot read the page's custom properties. -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNnKSIvPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA5MDkwYiIgc3Ryb2tlLXdpZHRoPSIyLjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQgNCkiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjkuNSIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjUuNSIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEuNiIgZmlsbD0iIzA5MDkwYiIvPjwvZz48L3N2Zz4=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9InVybCgjZykiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0IDQuNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA5MDkwYiIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTQuNSAxNS41IDkgMTFsMy41IDNMMTkgNy41Ii8+PGNpcmNsZSBjeD0iMTkiIGN5PSI3LjUiIHI9IjEuOSIgZmlsbD0iIzA5MDkwYiIgc3Ryb2tlPSJub25lIi8+PC9nPjwvc3ZnPg==">
 <!--HEADMETA--><script>
 (function(){try{var t=localStorage.getItem("mw-theme");
   if(t==="light") document.documentElement.setAttribute("data-theme","light");}catch(e){}})();
@@ -82,7 +82,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .brandinner>:last-child{justify-self:end}
 .blink{display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;
   justify-self:start;min-width:0}
-.blogo{width:26px;height:26px;border-radius:7px;flex:0 0 26px;
+.blogo{width:26px;height:26px;border-radius:50%;flex:0 0 26px;
   background:linear-gradient(135deg,var(--blue),var(--purple));
   display:flex;align-items:center;justify-content:center;color:var(--on-accent)}
 .blogo svg{width:15px;height:15px}
@@ -124,7 +124,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    Desktop only: on a phone there is no space to its left to be beside. */
 .herog{position:absolute;right:-6px;top:50%;transform:translateY(-50%);
   width:218px;height:192px;opacity:.72;pointer-events:none;z-index:0}
-@media (max-width:1000px){.herog{display:none}}
+/* On narrower screens the radar stays, smaller, in the corner the title does not
+   reach. Below ~380px the title runs into that corner, so the radar drops back
+   behind it rather than being removed - it is ambient, and dimmer is enough. */
+@media (max-width:1000px){.herog{width:170px;height:150px;right:0;opacity:.65}}
+@media (max-width:760px){.herog{width:96px;height:85px;top:10px;transform:none;opacity:.5}}
+@media (max-width:380px){.herog{opacity:.32}}
 /* Motion, lightly. fill- and stroke-opacity multiply with each blob's own
    opacity, so a blob dims to a little over half of itself and back rather than
    blinking out — this is ambient, not a light show. */
@@ -448,7 +453,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    has to be hidden by hand on the half it does not belong to. */
 :root[data-half="crash"] #s-state-of-play{display:none}
 :root[data-half="crash"] .cond > .card{display:none}
-:root[data-half="crash"] #tf{display:none}
+:root[data-half="crash"] #tf{visibility:hidden}
+/* visibility, not display. The section head is a three-column grid - rule, control,
+   rule - and display:none takes the control out of the grid, which drops the
+   right-hand rule into the middle column, where an empty div is zero wide. The
+   heading then showed only its left half. Hidden-but-present keeps the column. */
 @media (min-width:761px){
   :root[data-half="crash"] .gauge-card{flex-direction:row;align-items:center;
     gap:28px;padding:24px 28px}
@@ -999,6 +1008,7 @@ const ICONS={
  globe:'<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
  moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+ trend:'<path d="M4.5 15.5 9 11l3.5 3L19 7.5"/><circle cx="19" cy="7.5" r="1.6" fill="currentColor" stroke="none"/>',
  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
  up:'<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
  down:'<path d="m7 7 10 10"/><path d="M17 7v10"/>',
@@ -1896,7 +1906,7 @@ document.getElementById("i1").innerHTML=icon("compass");
 document.getElementById("i2").innerHTML=icon("layers");
 document.getElementById("i3").innerHTML=icon("activity");
 document.getElementById("i4").innerHTML=icon("globe");
-document.getElementById("ilogo").innerHTML=icon("target");
+document.getElementById("ilogo").innerHTML=icon("trend");
 {const r=document.querySelector(".herog");
  if(r&&r.pauseAnimations&&matchMedia("(prefers-reduced-motion: reduce)").matches) r.pauseAnimations();}
 {const b=document.getElementById("themetog");

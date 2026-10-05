@@ -82,7 +82,8 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
 
 1. **The brand row** (`.brandrow`), sticky at the top, a `1fr auto 1fr` grid holding the three
    things that are true of the whole page: the brandmark (left, and the way back to the top),
-   the half switch (centre), the theme toggle (right). Below 620px the wordmark drops and the
+   the half switch (centre), the theme toggle (right). The brandmark and the favicon are the same
+   mark: a stylised trend line in a gradient circle (it was a bullseye). Below 620px the wordmark drops and the
    mark stands alone, so the switch keeps the middle.
    **Each switch button carries its half's state**, shown whether or not you are on that half —
    the composite in its band colour for Crash Risk, and for Market Opportunities the net
@@ -91,7 +92,8 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
    the bright semantic tones are unreadable on it in either theme, so the readout takes the
    `--on-ink-*` step when it sits there.
 2. **The masthead** (`.mast`), which scrolls away: the half's name and the freshness stamp, and
-   nothing else — with the radar back to its right on desktop (hidden below 1000px), now that the
+   nothing else — with the radar back to its right at every width (218px desktop, 170px tablet,
+   96px phone, dimmed below 380px where the title reaches its corner), now that the
    header is tall enough (min 206px) to hold it rather than have it overhang the navigator. The
    radar moves, lightly: the sweep rotates once every 11s (SMIL, so it turns about the radar's own
    centre) and the blobs breathe between their own opacity and a little over half of it, on
