@@ -436,7 +436,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    That is a headline band rather than a narrow card with a lot of empty space
    to its right. Below 760px it folds back to a column. */
 :root[data-half="themes"] #gcard{display:none}
-:root[data-half="crash"] #mcard{display:none}
+:root[data-half="crash"] #s-trend{display:none}
 /* ---- composite history ---------------------------------------------------
    Steps, not a line. The composite is recomputed on an age trigger and carried
    in between, so the history is a handful of real readings; a smooth line would
@@ -860,6 +860,15 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
   <nav class="pnav" id="pnav"></nav>
 
 
+  <div class="sec" id="s-trend" data-only="themes">
+    <div class="sechead"><div class="lhs"><span id="i16"></span><h2>Market Trend</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
+      <div class="gauge-card" id="mcard" title="How this number is built">
+        <div class="gwrap"><svg class="gauge" id="mgauge" viewBox="0 0 120 120"></svg>
+          <div><div class="gsub">Equity indices</div><div class="glvl" id="mlvl"></div><div class="gtrend" id="mtrend"></div></div></div>
+        <div class="gread" id="mread"></div>
+      </div>
+  </div>
+
   <div class="sec" id="s-state-of-play" data-only="themes">
     <div class="sechead"><div class="lhs"><span id="i6"></span><h2>State of play</h2><div class="rule"></div></div><span></span><div class="rule"></div></div>
     <div class="card"><p class="sop" id="sop"></p>
@@ -874,11 +883,6 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
         <div class="gwrap"><svg class="gauge" id="gauge" viewBox="0 0 120 120"></svg>
           <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div><div class="gtrend" id="gtrend"></div></div></div>
         <div class="gread" id="gread"></div>
-      </div>
-      <div class="gauge-card" id="mcard" title="How this number is built">
-        <div class="gwrap"><svg class="gauge" id="mgauge" viewBox="0 0 120 120"></svg>
-          <div><div class="gsub">Market trend</div><div class="glvl" id="mlvl"></div><div class="gtrend" id="mtrend"></div></div></div>
-        <div class="gread" id="mread"></div>
       </div>
       <div class="card"><div class="mkt" id="tiles"></div>
       <p class="mnote" id="mktnote"></p></div>
@@ -1700,21 +1704,27 @@ const BANDRD={Low:"ok",Moderate:"ok",Guarded:"warn",Elevated:"bad",Severe:"bad",
 const bandOf=(v,bands)=>bands.find(b=>v>=b.lo&&v<=b.hi)||
   (bands.length?bands[v<bands[0].lo?0:bands.length-1]:{nm:"",lo:0,hi:100});
 function ring(svg,bands){
-  const C=60,R=48,W=10,GAP=1.2;
-  const ang=v=>(-90+3.6*v)*Math.PI/180, pt=v=>[C+R*Math.cos(ang(v)),C+R*Math.sin(ang(v))];
+  /* The Autonomy Index's ring, matched rather than approximated: proportions from
+     its 200-unit gauge (radius 0.42 of the box, stroke 0.055), one continuous track,
+     one reading arc in a single colour - the band the reading sits in, nothing
+     else - with a round end, and thin cuts in the card's own colour at the band
+     boundaries, drawn last so they cross the track and the arc alike. The cuts are
+     the "markers"; the colour is the rating. Each band keeps an invisible, wider
+     hover target that names it. */
+  const C=60,R=50,W=6.6,TK=W*.82;
+  const ang=v=>(-90+3.6*v)*Math.PI/180, pt=(v,r)=>[C+r*Math.cos(ang(v)),C+r*Math.sin(ang(v))];
   const arc=(a,z)=>{z=Math.min(z,99.95); if(z<=a) return "";
-    const [x0,y0]=pt(a),[x1,y1]=pt(z);
+    const [x0,y0]=pt(a,R),[x1,y1]=pt(z,R);
     return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${z-a>50?1:0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;};
   const mk=(t,at)=>{const e=document.createElementNS(NS,t);for(const k in at)setA(e,k,at[k]);
     svg.appendChild(e);return e;};
   const spans=bands.map((b,i)=>[b, b.lo, i<bands.length-1?bands[i+1].lo:100]);
-  spans.forEach(([b,a,z])=>mk("path",{d:arc(a+GAP,z-GAP),fill:"none","stroke-width":W,
-    stroke:`color-mix(in srgb,${BANDCOL[b.nm]||"var(--line)"} 24%,transparent)`}));
-  /* The reading is drawn as the same segments, lit up to the value, gaps kept and
-     each in its own band's colour - a single solid arc over the track hid the bands
-     on exactly the part of the ring that matters. Butt caps, or the gaps fill in. */
-  const lit=spans.map(([b])=>mk("path",{fill:"none","stroke-width":W,"pointer-events":"none",
-    stroke:BANDCOL[b.nm]||"var(--ink)"}));
+  mk("circle",{cx:C,cy:C,r:R,fill:"none","stroke-width":W,stroke:"var(--line)"});
+  const val=mk("path",{fill:"none","stroke-width":W,"stroke-linecap":"round","pointer-events":"none"});
+  spans.forEach(([b,a])=>{ if(a<=0) return;
+    const [x0,y0]=pt(a,R-TK),[x1,y1]=pt(a,R+TK);
+    mk("line",{x1:x0.toFixed(2),y1:y0.toFixed(2),x2:x1.toFixed(2),y2:y1.toFixed(2),
+      stroke:"var(--card)","stroke-width":1.8,"pointer-events":"none"}); });
   const num=mk("text",{x:C,y:C,"text-anchor":"middle","dominant-baseline":"central",
     "font-size":34,class:"rnum","pointer-events":"none"});
   let cur=null;
@@ -1729,11 +1739,8 @@ function ring(svg,bands){
     h.addEventListener("mouseleave",()=>{tip.style.opacity=0;});
   });
   /* zero draws nothing: an arc whose ends meet is omitted, so the ramp starts clean */
-  return x=>{const b=bandOf(Math.round(x),bands), c=BANDCOL[b.nm]||"var(--ink)";
-    cur=bandOf(Math.round(x),bands);
-    spans.forEach(([bb,a,z],i)=>lit[i].setAttribute("d",
-      x>a+GAP ? arc(a+GAP,Math.min(x,z-GAP)) : ""));
-    num.style.fill=c;
+  return x=>{cur=bandOf(Math.round(x),bands); const c=BANDCOL[cur.nm]||"var(--ink)";
+    val.setAttribute("d",arc(0,x)); val.style.stroke=c; num.style.fill=c;
     num.textContent=Math.round(x);};
 }
 /* ---- the reading ramps up from zero the first time it is seen --------------
@@ -2463,6 +2470,7 @@ document.getElementById("scnnote").textContent=
 
 renderBucketSummary();
 document.getElementById("i8").innerHTML=icon("activity");
+{const e=document.getElementById("i16"); if(e) e.innerHTML=icon("compass");}
 document.getElementById("i9").innerHTML=icon("network");
 document.getElementById("i10").innerHTML=icon("down");
 document.getElementById("i11").innerHTML=icon("landmark");

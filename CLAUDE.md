@@ -138,9 +138,11 @@ right in dark and wrong in light, and only in light.
 
 ## The two headline numbers
 
-Added 2026-10-05. Each half leads with a 0-100 number in a segmented ring - a full circle from
-twelve o'clock, the Autonomy Index's shape, one segment per band, lit up to the reading in each
-band's own colour, every segment naming its band on hover. Both ramp up from zero the first
+Added 2026-10-05. Each half leads with a 0-100 number in a ring styled exactly as the Autonomy
+Index's: a full circle from twelve o'clock, one continuous track, one reading arc in a single
+colour - the colour of the band the reading sits in, and only that - with thin cuts in the card's
+colour marking the band boundaries. Every band names itself on hover. Market Trend is its own
+first section on Market Opportunities, in the slot Crash Risk holds on the other half. Both ramp up from zero the first
 time they are on screen, and both appear as a disc in the half switch.
 
 - **Crash risk** is the daily's judgement (`crash_risk.composite`). Bands are equal fifths -
