@@ -401,6 +401,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .sechead .lhs .rule{flex:1;height:1px;background:var(--line)}
 .sechead>.rule{height:1px;background:var(--line)}
 .sechead .seg{justify-self:center}
+/* A heading with nothing in its middle column is one continuous rule. The three-
+   column layout exists to centre a control in a break in the line; with no
+   control the break is just a gap, and it was a different width on each heading
+   - on Crash Risk it was the width of the period selector hidden there. Which
+   headings are plain is decided in script, since it changes with the half. */
+.sechead.plain{grid-template-columns:1fr}
+.sechead.plain>:not(.lhs){display:none}
 .ic{width:14px;height:14px;flex:0 0 14px;display:block}
 .sechead .ic{color:var(--sub);width:16px;height:16px;flex:0 0 16px}
 .sechead h2{font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink);margin:0;font-weight:700;white-space:nowrap}
@@ -2491,6 +2498,20 @@ renderScen();
 /* Market Opportunities leads: it is the larger half and the one most visits are
    for. Each row carries a short label for the phone, where the full one will not
    fit beside a readout. */
+/* A heading is plain when its middle column holds no visible control - empty, or
+   hidden on this half. Re-run on resize, because the book's view switch hides
+   itself on narrow screens. */
+function plainHeads(){
+  document.querySelectorAll(".sechead").forEach(h=>{
+    const m=h.children[1];
+    let plain=!m;
+    if(m){const cs=getComputedStyle(m);
+      plain=cs.display==="none"||cs.visibility==="hidden"||
+        (!m.children.length&&!m.textContent.trim());}
+    h.classList.toggle("plain",plain);
+  });
+}
+addEventListener("resize",()=>{clearTimeout(window.__phT);window.__phT=setTimeout(plainHeads,150);});
 const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
              ["crash","Crash Risk","Crash Risk","alert"]];
 (function(){
@@ -2543,6 +2564,8 @@ const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
   function build(){
     document.querySelectorAll(".vw").forEach(v=>v.classList.toggle("on",v.id==="v-"+half));
     document.documentElement.setAttribute("data-half",half);
+    /* after this tick: some controls are filled in by code that runs later */
+    setTimeout(plainHeads,0);
     if(window.__gaugeCheck) window.__gaugeCheck();
     vsw.querySelectorAll("button").forEach(b=>{
       const on=b.dataset.v===half;
