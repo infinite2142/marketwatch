@@ -136,6 +136,30 @@ property instead (`setA`). That is what makes a theme switch instant: nothing is
 browser re-resolves. Adding a raw hex to a chart is the one thing that breaks this — it will look
 right in dark and wrong in light, and only in light.
 
+## The two headline numbers
+
+Added 2026-10-05. Each half leads with a 0-100 number in a segmented ring - a full circle from
+twelve o'clock, the Autonomy Index's shape, one segment per band, lit up to the reading in each
+band's own colour, every segment naming its band on hover. Both ramp up from zero the first
+time they are on screen, and both appear as a disc in the half switch.
+
+- **Crash risk** is the daily's judgement (`crash_risk.composite`). Bands are equal fifths -
+  Low, Moderate, Guarded, **Elevated (60-79)**, Severe - placed so every reading the daily has
+  ever labelled "Elevated" sits in the band of that name. `generator.py` warns if
+  `crash_risk.level` and the band disagree; it does not override either.
+- **Market trend** is a formula (`market_trend()` in `generator.py`), computed every render from
+  the five equity indices' stored prices: four equal parts of 25 - share above the 50-day
+  average, share with the 50-day above the 200-day, share up over 22 sessions, and closeness to
+  the 52-week high (full at the high, none 20% below). Bands are quarters: Weak, Soft, Firm,
+  Strong. Because it is a formula over stored prices, its history is **recomputed** for the
+  last 60 sessions rather than walked out of git, and it is drawn as a line; the composite is
+  a handful of judgements and is drawn as steps. It describes the trend, it is not a signal,
+  and the page says both.
+- High is good on one and bad on the other. The colours are what say which, so do not make
+  them match.
+- The notification's title uses the same function, imported from `generator.py` rather than
+  copied, so the page and the phone cannot disagree about the same morning.
+
 ## Two halves, one page
 
 Added 2026-09-29. The page splits into **Crash risk** and **Opportunities** behind a segmented

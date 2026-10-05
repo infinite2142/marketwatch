@@ -783,6 +783,111 @@ def head_meta(data, report_date):
 # `dir` that fetch_data.py owns; a tie or a miss reads flat rather than guessing.
 EQUITY_TILES = ["S&P 500", "STOXX 600", "FTSE 100", "Nikkei 225", "MSCI EM"]
 
+# ---- bands -------------------------------------------------------------------
+# Both headline numbers run 0-100 and are drawn as segmented rings, one segment
+# per band, each with its name on hover. The crash bands are equal fifths, placed
+# so that every reading the daily has ever labelled "Elevated" (60-79, Aug-Oct
+# 2026) sits in the band called Elevated: the ring must not contradict the word
+# beside it. The trend bands are quarters, one per component of the score.
+CRASH_BANDS = [(0, 19, "Low"), (20, 39, "Moderate"), (40, 59, "Guarded"),
+               (60, 79, "Elevated"), (80, 100, "Severe")]
+TREND_BANDS = [(0, 24, "Weak"), (25, 49, "Soft"), (50, 74, "Firm"), (75, 100, "Strong")]
+
+def band_name(v, bands):
+    for lo, hi, nm in bands:
+        if lo <= v <= hi:
+            return nm
+    return bands[-1][2] if v > bands[-1][1] else bands[0][2]
+
+
+def _mean(xs):
+    return sum(xs) / len(xs)
+
+
+def _trend_at(hs, i):
+    """The four parts of the trend score on day i (an index into each series,
+    aligned from the end). Each part is the share of the five indices passing a
+    test, so each is 0-1; the score is 25 x their sum."""
+    a = b = c = d = 0.0
+    for h in hs:
+        w = h[:i + 1]
+        p = w[-1]
+        m50 = _mean(w[-50:])
+        a += p > m50
+        b += m50 > _mean(w[-200:])
+        c += p > w[-22]
+        d += max(0.0, min(1.0, 1 + (p / max(w[-250:]) - 1) / 0.20))
+    n = float(len(hs))
+    return [a / n, b / n, c / n, d / n]
+
+
+def market_trend(tiles, days=60):
+    """A 0-100 read on the state of the equity market, excluding risk, computed
+    from the price history fetch_data.py already stores. Mechanical on purpose:
+    it updates every day by itself, it is never carried, and because it is a
+    formula over stored prices its history can be recomputed for every day the
+    data covers rather than walked out of git.
+
+    Same five indices as the switch's arrow used to vote on, for the same reason:
+    a rise in the VIX or the dollar is not the same thing as a rise in an index.
+    Four equal parts of 25 - above the 50-day average, 50-day above the 200-day,
+    up over the past month (22 sessions), and distance from the 52-week high
+    (at the high = full marks, 20% or more below = none).
+
+    It describes the trend. It is not a signal and the page says so.
+    """
+    by = {t["lbl"]: t for t in tiles}
+    hs, names = [], []
+    for k in EQUITY_TILES:
+        h = [x for x in ((by.get(k) or {}).get("hist") or []) if isinstance(x, (int, float))]
+        if len(h) >= 200:
+            hs.append(h); names.append(k)
+    if not hs:
+        print("WARN: no equity history long enough for the trend score", file=sys.stderr)
+        return None
+    L = min(len(h) for h in hs)
+    hs = [h[-L:] for h in hs]                         # align from the end
+    series = []
+    for i in range(max(199, L - days), L):
+        parts = _trend_at(hs, i)
+        series.append(int(round(25 * sum(parts))))
+    parts = _trend_at(hs, L - 1)
+    v = series[-1]
+
+    # per-index detail for the panel and the one-line read
+    rows = []
+    for k, h in zip(names, hs):
+        p, m50 = h[-1], _mean(h[-50:])
+        rows.append(dict(nm=k, a50=p > m50, t200=m50 > _mean(h[-200:]),
+                         m1=round((p / h[-22] - 1) * 100, 1),
+                         hi=round((p / max(h[-250:]) - 1) * 100, 1)))
+    n = len(rows)
+    t2 = sum(r["t200"] for r in rows)
+    below = [r["nm"] for r in rows if not r["a50"]]
+    up1 = sum(r["m1"] > 0 for r in rows)
+    off = _mean([-r["hi"] for r in rows])
+    if t2 == n:
+        s1 = "Long-term uptrend intact in all %d." % n
+    elif t2 == 0:
+        s1 = "Long-term trend down in all %d." % n
+    else:
+        s1 = "Long-term uptrend intact in %d of %d." % (t2, n)
+    if not below:
+        s2 = "All %d above their 50-day average" % n
+    elif len(below) == n:
+        s2 = "All %d below their 50-day average" % n
+    else:
+        s2 = "%s below %s 50-day average" % (" and ".join(below) if len(below) < 3
+             else ", ".join(below[:-1]) + " and " + below[-1],
+             "its" if len(below) == 1 else "their")
+    s3 = "%d of %d up over the month, on average %.1f%% off the 52-week high." % (up1, n, off)
+    read = "%s %s; %s" % (s1, s2, s3)
+
+    asof = max([(by[k].get("meta") or {}).get("as_of", "") for k in names] or [""])
+    return dict(v=v, lvl=band_name(v, TREND_BANDS), parts=[round(x * 25, 1) for x in parts],
+                rows=rows, read=read, series=series, asOf=asof, n=n)
+
+
 def market_read(tiles):
     by = {t["lbl"]: t for t in tiles}
     seen = [by[k] for k in EQUITY_TILES if k in by]
@@ -1042,6 +1147,14 @@ def build_v28(data):
                  for b in (cr.get("buckets") or [])])
 
     crash["series"] = derive_composite_series(cr.get("composite"), cm.get("as_of"))
+    # The label is the daily's to write, but it has to agree with the band the
+    # number sits in or the ring contradicts the word beside it. Say so loudly
+    # rather than quietly override either.
+    if isinstance(cr.get("composite"), (int, float)):
+        want = band_name(cr["composite"], CRASH_BANDS)
+        if (cr.get("level") or "").strip().lower() != want.lower():
+            print("WARN: crash_risk.level is %r but %s sits in the %r band"
+                  % (cr.get("level"), cr["composite"], want), file=sys.stderr)
 
     # ---- the crash-risk half: scenarios, depth, precedents, what next ------
     # Everything here is analytical state the daily owns (see daily-task.md).
@@ -1200,7 +1313,10 @@ def build_v28(data):
                         drvcats=drv_cats, total=len(sigs)),
         "CRASH": crash, "WINDOWS": data.get("windows", {}), "STATE": state,
         "CHANGELOG": derive_changelog({m["id"]: m.get("audit") or [] for m in marks}),
-        "MKT": market_read(tiles),
+        "MKT": dict(market_read(tiles), trend=market_trend(
+                        data.get("state_of_play", {}).get("tiles", [])),
+                    bands=[dict(lo=a, hi=b, nm=n) for a, b, n in TREND_BANDS],
+                    crashBands=[dict(lo=a, hi=b, nm=n) for a, b, n in CRASH_BANDS]),
         "META": dict(build=(meta.get("last_fetch") or "")[:10],
                      buildTime=(meta.get("last_fetch") or "")[11:16],
                      report=meta.get("report_date", ""),

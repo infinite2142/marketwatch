@@ -415,7 +415,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
 .gauge-card:hover{border-color:var(--line-2)}
 .gauge-card{background:linear-gradient(150deg,var(--raise),var(--card));border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column}
 .gwrap{display:flex;align-items:center;gap:18px}
-.gauge{width:164px;height:100px;flex:0 0 164px}
+.gauge{width:124px;height:124px;flex:0 0 124px;overflow:visible}
+/* the ring's band segments carry their own hover target, wider than the drawn
+   stroke so a 10px arc is not a 10px aim */
+.gauge .rhit{fill:none;stroke:transparent;stroke-width:24;cursor:help}
+.gauge .rnum{font-weight:700;font-variant-numeric:tabular-nums}
 .glvl{font-size:22px;font-weight:600;line-height:1.15}
 .gsub{font-size:10px;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
 .gread{font-size:11px;color:var(--sub);line-height:1.45;margin-top:9px;border-top:1px solid var(--line);padding-top:9px}
@@ -431,7 +435,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    side there: gauge and level left, the read beside it rather than under it.
    That is a headline band rather than a narrow card with a lot of empty space
    to its right. Below 760px it folds back to a column. */
-:root[data-half="themes"] .gauge-card{display:none}
+:root[data-half="themes"] #gcard{display:none}
+:root[data-half="crash"] #mcard{display:none}
 /* ---- composite history ---------------------------------------------------
    Steps, not a line. The composite is recomputed on an age trigger and carried
    in between, so the history is a handful of real readings; a smooth line would
@@ -459,13 +464,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    right-hand rule into the middle column, where an empty div is zero wide. The
    heading then showed only its left half. Hidden-but-present keeps the column. */
 @media (min-width:761px){
-  :root[data-half="crash"] .gauge-card{flex-direction:row;align-items:center;
-    gap:28px;padding:24px 28px}
-  :root[data-half="crash"] .gwrap{flex:0 0 auto;gap:22px}
-  :root[data-half="crash"] .gauge{width:230px;height:140px;flex:0 0 230px}
-  :root[data-half="crash"] .gsub{font-size:11px;letter-spacing:1.3px;margin-bottom:5px}
-  :root[data-half="crash"] .glvl{font-size:29px;letter-spacing:-.4px}
-  :root[data-half="crash"] .gread{margin-top:0;padding:4px 0 4px 28px;flex:1;
+  .gauge-card{flex-direction:row;align-items:center;gap:28px;padding:22px 28px}
+  .gwrap{flex:0 0 auto;gap:24px}
+  .gauge{width:150px;height:150px;flex:0 0 150px}
+  .gsub{font-size:11px;letter-spacing:1.3px;margin-bottom:5px}
+  .glvl{font-size:29px;letter-spacing:-.4px}
+  .gread{margin-top:0;padding:4px 0 4px 28px;flex:1;
     border-top:0;border-left:1px solid var(--line);font-size:13px;line-height:1.6;
     max-width:86ch}
 }
@@ -473,7 +477,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system
    word "Elevated" at 22px is wider than the card's inner width at 320. It steps
    down rather than the label wrapping under it, which would cost a line. */
 @media (max-width:440px){
-  .gauge{width:132px;height:81px;flex:0 0 132px}
+  .gauge{width:104px;height:104px;flex:0 0 104px}
   .gwrap{gap:13px}
   .gwrap>div{min-width:0}
   .glvl{font-size:19px}
@@ -867,9 +871,14 @@ ul.lst li .ol{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:
       <div class="seg" id="tf"></div><div class="rule"></div></div>
     <div class="cond">
       <div class="gauge-card" id="gcard" title="How this number is built">
-        <div class="gwrap"><svg class="gauge" id="gauge" viewBox="0 0 118 72"></svg>
+        <div class="gwrap"><svg class="gauge" id="gauge" viewBox="0 0 120 120"></svg>
           <div><div class="gsub">Composite</div><div class="glvl" id="glvl"></div><div class="gtrend" id="gtrend"></div></div></div>
         <div class="gread" id="gread"></div>
+      </div>
+      <div class="gauge-card" id="mcard" title="How this number is built">
+        <div class="gwrap"><svg class="gauge" id="mgauge" viewBox="0 0 120 120"></svg>
+          <div><div class="gsub">Market trend</div><div class="glvl" id="mlvl"></div><div class="gtrend" id="mtrend"></div></div></div>
+        <div class="gread" id="mread"></div>
       </div>
       <div class="card"><div class="mkt" id="tiles"></div>
       <p class="mnote" id="mktnote"></p></div>
@@ -1675,78 +1684,170 @@ function stepChart(W,H,P,opts){
   el.title=`${SER.length} computed readings: `+SER.map(p=>p.v).join(" \u2192 ");
 })();
 
+/* ---------- rings ----------
+   Both headline numbers run 0-100, so both are full circles from twelve o'clock,
+   the Autonomy Index's shape: the track is drawn as one segment per band, tinted
+   in the band's colour with a small gap between, the reading is a solid arc over
+   it, and each segment names its band on hover. The hover target is a wider
+   transparent copy of the segment drawn on top, so a 10px arc is not a 10px aim.
+   The bands themselves come from generator.py, not from here. */
+const BANDCOL={Low:"var(--ok)",Moderate:"var(--ok-2)",Guarded:"var(--warn)",
+  Elevated:"var(--bad-2)",Severe:"var(--bad)",
+  Weak:"var(--bad)",Soft:"var(--warn)",Firm:"var(--ok-2)",Strong:"var(--ok)"};
+/* the switch's disc uses the coarse three-way classes, which have on-ink variants */
+const BANDRD={Low:"ok",Moderate:"ok",Guarded:"warn",Elevated:"bad",Severe:"bad",
+  Weak:"bad",Soft:"warn",Firm:"ok",Strong:"ok"};
+const bandOf=(v,bands)=>bands.find(b=>v>=b.lo&&v<=b.hi)||
+  (bands.length?bands[v<bands[0].lo?0:bands.length-1]:{nm:"",lo:0,hi:100});
+function ring(svg,bands){
+  const C=60,R=48,W=10,GAP=1.2;
+  const ang=v=>(-90+3.6*v)*Math.PI/180, pt=v=>[C+R*Math.cos(ang(v)),C+R*Math.sin(ang(v))];
+  const arc=(a,z)=>{z=Math.min(z,99.95); if(z<=a) return "";
+    const [x0,y0]=pt(a),[x1,y1]=pt(z);
+    return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${z-a>50?1:0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;};
+  const mk=(t,at)=>{const e=document.createElementNS(NS,t);for(const k in at)setA(e,k,at[k]);
+    svg.appendChild(e);return e;};
+  const spans=bands.map((b,i)=>[b, b.lo, i<bands.length-1?bands[i+1].lo:100]);
+  spans.forEach(([b,a,z])=>mk("path",{d:arc(a+GAP,z-GAP),fill:"none","stroke-width":W,
+    stroke:`color-mix(in srgb,${BANDCOL[b.nm]||"var(--line)"} 24%,transparent)`}));
+  /* The reading is drawn as the same segments, lit up to the value, gaps kept and
+     each in its own band's colour - a single solid arc over the track hid the bands
+     on exactly the part of the ring that matters. Butt caps, or the gaps fill in. */
+  const lit=spans.map(([b])=>mk("path",{fill:"none","stroke-width":W,"pointer-events":"none",
+    stroke:BANDCOL[b.nm]||"var(--ink)"}));
+  const num=mk("text",{x:C,y:C,"text-anchor":"middle","dominant-baseline":"central",
+    "font-size":34,class:"rnum","pointer-events":"none"});
+  let cur=null;
+  spans.forEach(([b,a,z])=>{
+    const h=mk("path",{d:arc(a,z),class:"rhit","aria-label":`${b.nm}, ${b.lo} to ${b.hi}`});
+    const show=e=>{const c=BANDCOL[b.nm]||"var(--ink)";
+      tip.innerHTML=`<b style="color:${c}">${b.nm}</b> &middot; ${b.lo}–${b.hi}`+
+        (cur&&cur.nm===b.nm?` &middot; <span style="color:var(--muted)">now</span>`:"");
+      tip.style.left=Math.min(e.clientX+14,innerWidth-272)+"px";
+      tip.style.top=(e.clientY+14)+"px"; tip.style.opacity=1;};
+    h.addEventListener("mouseenter",show); h.addEventListener("mousemove",show);
+    h.addEventListener("mouseleave",()=>{tip.style.opacity=0;});
+  });
+  /* zero draws nothing: an arc whose ends meet is omitted, so the ramp starts clean */
+  return x=>{const b=bandOf(Math.round(x),bands), c=BANDCOL[b.nm]||"var(--ink)";
+    cur=bandOf(Math.round(x),bands);
+    spans.forEach(([bb,a,z],i)=>lit[i].setAttribute("d",
+      x>a+GAP ? arc(a+GAP,Math.min(x,z-GAP)) : ""));
+    num.style.fill=c;
+    num.textContent=Math.round(x);};
+}
+/* ---- the reading ramps up from zero the first time it is seen --------------
+   The Autonomy Index's treatment: 1.1s, ease-out cubic, counted from zero. Started
+   by a visibility test on scroll, resize and the half switch rather than an
+   IntersectionObserver, and settled by a timer whatever requestAnimationFrame
+   does: a ring left part-way up does not read as an animation that stalled, it
+   reads as a number - 5, in green, is a claim that nothing is wrong. Each card
+   ramps the first time it is actually on screen, so the half you arrive on
+   animates and the other one waits for you. Reduced motion gets the final state. */
+const RINGCHECKS=[];
+window.__gaugeCheck=()=>RINGCHECKS.forEach(f=>f());
+function rampIn(card,paint,v,lvl){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){ paint(v); return; }
+  paint(0); if(lvl) lvl.style.opacity=0;
+  let started=false;
+  const run=()=>{
+    if(started) return; started=true;
+    const dur=1100, t0=performance.now(); let done=false;
+    const settle=()=>{ if(done) return; done=true; paint(v); if(lvl) lvl.style.opacity=""; };
+    (function step(now){
+      if(done) return;
+      const p=Math.min((now-t0)/dur,1), e=1-Math.pow(1-p,3);
+      paint(e*v); if(lvl) lvl.style.opacity=e;
+      if(p<1) requestAnimationFrame(step); else settle();
+    })(performance.now());
+    setTimeout(settle,dur+600);
+  };
+  const onScreen=()=>{ if(!card.offsetParent) return false;
+    const r=card.getBoundingClientRect(); return r.bottom>0 && r.top<innerHeight; };
+  const check=()=>{ if(!started && onScreen()) run(); };
+  addEventListener("scroll",check,{passive:true}); addEventListener("resize",check);
+  RINGCHECKS.push(check);
+  /* after the nav has set the half, or both cards look visible on the first tick */
+  setTimeout(check,0);
+}
+/* a plain line for a daily series - the trend score is computed every session,
+   so unlike the composite it is drawn as a line, not as steps */
+function lineChart(vals,W,H,P,opts){
+  if(!vals||vals.length<2) return "";
+  const o=opts||{}, lo=Math.min(...vals), hi=Math.max(...vals), pad=Math.max(2,(hi-lo)*.12);
+  const y0=lo-pad, y1=hi+pad;
+  const X=i=>P.l+i/(vals.length-1)*(W-P.l-P.r), Y=v=>P.t+(1-(v-y0)/(y1-y0))*(H-P.t-P.b);
+  const last=vals[vals.length-1], c=BANDCOL[bandOf(last,(MKT.bands||[])).nm]||"var(--ink)";
+  let g="";
+  if(o.grid){
+    (MKT.bands||[]).forEach(b=>{ if(b.lo>y0&&b.lo<y1)
+      g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(b.lo).toFixed(1)}" y2="${Y(b.lo).toFixed(1)}"
+        style="stroke:var(--hair)" stroke-dasharray="3 3"/><text x="${W-P.r}" y="${(Y(b.lo)-3).toFixed(1)}"
+        font-size="9.5" text-anchor="end" style="fill:var(--dim)">${b.nm} from ${b.lo}</text>`;});
+    g+=`<text x="${P.l}" y="${H-4}" font-size="10.5" style="fill:var(--muted)">${vals.length} sessions ago</text>
+      <text x="${W-P.r}" y="${H-4}" font-size="10.5" text-anchor="end" style="fill:var(--muted)">today</text>`;
+  }
+  const d=vals.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
+  return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">${g}<path d="${d}" fill="none"
+    style="stroke:${c}" stroke-width="${o.big?1.8:1.4}" stroke-linejoin="round" opacity=".9"/>
+    <circle cx="${X(vals.length-1).toFixed(1)}" cy="${Y(last).toFixed(1)}" r="${o.big?4:2.4}"
+    style="fill:${c}"/></svg>`;
+}
+/* ---------- the market trend card ---------- */
+(function(){
+  const T=MKT.trend; const card=document.getElementById("mcard");
+  if(!T||!card){ if(card) card.style.display="none"; return; }
+  const b0=bandOf(T.v,MKT.bands), col=BANDCOL[b0.nm];
+  const paint=ring(document.getElementById("mgauge"),MKT.bands);
+  const lvl=document.getElementById("mlvl"); lvl.textContent=T.lvl; lvl.style.color=col;
+  rampIn(card,paint,T.v,lvl);
+  document.getElementById("mread").textContent=T.read;
+  const S=T.series||[];
+  if(S.length>1){
+    const dv=S[S.length-1]-S[0], arr=dv>0?"↗":dv<0?"↘":"→";
+    document.getElementById("mtrend").innerHTML=lineChart(S,92,24,{l:2,r:3,t:3,b:3})+
+      `<span><b style="color:${dv>0?"var(--ok)":dv<0?"var(--bad)":"var(--muted)"}">${arr} ${dv>0?"+":""}${dv}</b>`+
+      ` over ${S.length} sessions</span>`;
+  }
+  const PARTS=[["Above the 50-day average","how many of the five are"],
+    ["50-day above the 200-day","the long-term trend"],
+    ["Up over the past month","22 sessions"],
+    ["Near the 52-week high","full marks at the high, none 20% below"]];
+  const yes=x=>x?`<span style="color:var(--ok)">✓</span>`:`<span style="color:var(--bad)">✗</span>`;
+  const pct=x=>`<span style="color:${x>0?"var(--ok)":x<0?"var(--bad)":"var(--muted)"}">${x>0?"+":""}${x}%</span>`;
+  card.addEventListener("click",()=>openPanel({nm:"Market trend "+T.v,
+    sub:T.lvl+" · "+T.n+" equity indices · computed daily",k:null,logHTML:
+    `<div class="phead" style="--pc:${col}">${icon("activity")}<div><div class="pbig">${T.v}</div>
+      <div class="psm">${T.lvl} · market trend</div></div></div>
+     <div class="plabel">How it has moved</div>
+     <div class="ctrend">${lineChart(S,500,150,{l:6,r:10,t:14,b:22},{big:1,grid:1})}</div>
+     <div class="plabel">What it is reading</div><div class="ptext">${T.read}</div>
+     <div class="plabel">How the number is built</div>
+     <table class="ctab">`+PARTS.map(([a,h],i)=>`<tr><td>${a}<br><span style="color:var(--muted);font-size:11px">${h}</span></td>
+       <td class="n">${T.parts[i]}</td><td class="c" style="color:var(--muted)">/ 25</td></tr>`).join("")+
+     `</table>
+     <div class="plabel">Index by index</div>
+     <table class="ctab"><tr><td style="color:var(--muted)"></td><td style="color:var(--muted);font-size:11px">&gt;50d</td>
+       <td style="color:var(--muted);font-size:11px">50&gt;200</td><td class="c" style="color:var(--muted);font-size:11px">1M</td>
+       <td class="c" style="color:var(--muted);font-size:11px">off high</td></tr>`+
+       T.rows.map(r=>`<tr><td>${r.nm}</td><td>${yes(r.a50)}</td><td>${yes(r.t200)}</td>
+         <td class="c">${pct(r.m1)}</td><td class="c">${pct(r.hi)}</td></tr>`).join("")+
+     `</table>
+     <div class="psrc">Calculated every day from the index prices on this page, as of
+       ${dlong(T.asOf)} - a formula, not a judgement, so it is never carried and its history
+       is recomputed rather than recorded. It describes the trend. It is not a signal, and
+       it says nothing about risk; that is the other half of the page.</div>`}));
+})();
+
 /* ---------- conditions ---------- */
 (function(){
-  const g=document.getElementById("gauge"),v=CRASH.v;
-  const band=x=>x>=70?"var(--bad)":x>=40?"var(--warn)":"var(--ok)";
-  const col=band(v);
-  const cx=58,cy=60,r=44;
-  const mk=(t,at)=>{const e=document.createElementNS(NS,t);for(const k in at)setA(e,k,at[k]);
-    g.appendChild(e);return e;};
-  mk("path",{d:`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}`,fill:"none",stroke:"var(--line)","stroke-width":9,"stroke-linecap":"round"});
-  const arc=mk("path",{fill:"none",stroke:col,"stroke-width":9,"stroke-linecap":"round"});
-  const num=mk("text",{x:cx,y:cy-4,"text-anchor":"middle","font-size":25,"font-weight":700,fill:col});
+  const bands=MKT.crashBands||[], v=CRASH.v, b0=bandOf(v,bands);
+  const col=BANDCOL[b0.nm]||"var(--bad)";
+  const paint=ring(document.getElementById("gauge"),bands);
   const lvl=document.getElementById("glvl");
   lvl.textContent=CRASH.lvl;
   lvl.style.color=col;
-  /* Paint the gauge at any value, not just its own. An arc whose end point equals
-     its start is omitted by the renderer, so zero draws nothing rather than a
-     stray dot, which is what makes starting from zero clean. */
-  function paint(x){
-    const a=Math.PI*(1-x/100), c=band(x);
-    arc.setAttribute("d",`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 `+
-      `${(cx+r*Math.cos(a)).toFixed(1)} ${(cy-r*Math.sin(a)).toFixed(1)}`);
-    arc.style.stroke=c; num.style.fill=c; num.textContent=Math.round(x);
-  }
-  /* ---- the composite ramps up from zero the first time it is seen ----------
-     The Autonomy Index's treatment: 1.1s, ease-out cubic, counted from zero.
-     Started by an IntersectionObserver rather than on load, because the gauge is
-     hidden on the opportunities half — a deep link to #themes would otherwise
-     spend the animation on a display:none element and the reader would arrive at
-     a gauge that had already finished. The arc, the number and their colour move
-     together, so the reading is seen climbing through calm and watch into the
-     band it ends in, and the level word fades in behind it. Reduced motion gets
-     the final state and no animation at all. */
-  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(reduced){ paint(v); }
-  else{
-    paint(0); lvl.style.opacity=0;
-    let started=false;
-    const run=()=>{
-      if(started) return; started=true;
-      const dur=1100, t0=performance.now();
-      let done=false;
-      /* A gauge left part-way up does not read as an animation that stalled, it
-         reads as a number: 5, in green, is a claim that nothing is wrong. rAF is
-         throttled to nothing in a background tab and can be driven at zero in
-         some embedded views, so a timer settles the true value either way. */
-      const settle=()=>{ if(done) return; done=true; paint(v); lvl.style.opacity=""; };
-      (function step(now){
-        if(done) return;
-        const p=Math.min((now-t0)/dur,1), e=1-Math.pow(1-p,3);
-        paint(e*v); lvl.style.opacity=e;
-        if(p<1) requestAnimationFrame(step); else settle();
-      })(performance.now());
-      setTimeout(settle,dur+600);
-    };
-    /* Trigger on plain visibility rather than an IntersectionObserver. The
-       observer is the tidier API but it is also the one that can quietly never
-       deliver — and the failure mode here is the worst one available: a gauge
-       frozen at 0, in green, reading as "no crash risk" rather than as an
-       animation that did not play. A rect test cannot not-fire. */
-    const card=document.getElementById("gcard");
-    const onScreen=()=>{
-      if(!card.offsetParent) return false;              // display:none on the other half
-      const r=card.getBoundingClientRect();
-      return r.bottom>0 && r.top<innerHeight;
-    };
-    const check=()=>{ if(!started && onScreen()) run(); };
-    addEventListener("scroll",check,{passive:true});
-    addEventListener("resize",check);
-    /* the half switch reveals the card without scrolling, so it asks too */
-    window.__gaugeCheck=check;
-    check();
-  }
+  rampIn(document.getElementById("gcard"),paint,v,lvl);
   document.getElementById("gread").textContent=CRASH.read;
   document.getElementById("gcard").addEventListener("click",()=>{
     const SC={calm:"var(--ok)",watch:"var(--warn)",stress:"var(--bad)"};
@@ -1850,11 +1951,10 @@ function renderTiles(){
   if(window.__mktBadge) window.__mktBadge(marketDir());
   const note=document.getElementById("mktnote");
   if(note){const m=marketDir();
-    note.innerHTML=`<b>*</b> The ${m.n} equity indices behind the trend arrow in the switch `+
-      `above \u2014 one vote each, over the window shown. `+
-      `${m.up} up and ${m.down} down over ${win}. `+
-      `The other rows are read alongside them but do not vote: a rise in the dollar or in `+
-      `volatility does not mean the same thing as a rise in an index.`;}
+    note.innerHTML=`<b>*</b> The ${m.n} equity indices the Market Trend score above is built `+
+      `from. Over ${win}, ${m.up} rose and ${m.down} fell. The other rows are shown alongside `+
+      `but not counted: a rise in the dollar or in volatility does not mean the same thing as `+
+      `a rise in an index.`;}
 }
 document.getElementById("tf").innerHTML=WINKEYS.map(k=>
   `<button data-w="${k}"${k===win?' class="on"':''}>${k}</button>`).join("");
@@ -2411,15 +2511,20 @@ const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
      whole reason they are here. */
   const BAND=v=>v>=70?"bad":v>=40?"warn":"ok";
   const DIRC={up:"ok",down:"bad",flat:"flat"};
+  /* Both halves show a 0-100 number now, so both discs are numbers, coloured by
+     the band each sits in on its own scale - high is good on one and bad on the
+     other, and the colour is what says which. */
+  const TR=MKT.trend;
   const readout={
     crash:CRASH.v==null?"" :
-      `<span class="rd ${BAND(CRASH.v)}">${CRASH.v}</span>`,
-    themes:!MKT.n?"" : `<span class="rd flat" id="mktrd"></span>`
+      `<span class="rd ${BANDRD[bandOf(CRASH.v,MKT.crashBands||[]).nm]||"flat"}">${CRASH.v}</span>`,
+    themes:!TR?"" :
+      `<span class="rd ${BANDRD[bandOf(TR.v,MKT.bands||[]).nm]||"flat"}">${TR.v}</span>`
   };
   const TITLES={
     crash:CRASH.v==null?"Crash risk":
-      `Crash risk composite ${CRASH.v} of 100 \u2014 ${CRASH.lvl}`,
-    themes:"Net direction of the equity indices"
+      `Crash risk ${CRASH.v} of 100 \u2014 ${CRASH.lvl}`,
+    themes:!TR?"Markets":`Market trend ${TR.v} of 100 \u2014 ${TR.lvl}`
   };
   vsw.innerHTML=VIEWS.map(([k,l,short,ic])=>
     `<button data-v="${k}" aria-pressed="${k===half}" title="${TITLES[k]}">${icon(ic)}`+
@@ -2478,16 +2583,6 @@ const VIEWS=[["themes","Market Opportunities","Markets","sparkles"],
 
   /* The badge is owned here but written by renderTiles, which is the only thing
      that knows which window is on screen. */
-  window.__mktBadge=m=>{
-    const el=document.getElementById("mktrd"); if(!el) return;
-    el.className="rd "+(DIRC[m.dir]||"flat");
-    el.textContent=ARROW[m.dir]||"";
-    const b=el.closest("button");
-    if(b) b.title=`${m.up} of ${m.n} equity indices up over ${win}, ${m.down} down `+
-      `\u2014 ${(MKT.keys||[]).join(", ")}`;
-  };
-  if(typeof marketDir==="function") window.__mktBadge(marketDir());
-
   const bl=document.getElementById("blink");
   if(bl) bl.addEventListener("click",e=>{e.preventDefault();
     scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});});
