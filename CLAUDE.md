@@ -91,8 +91,9 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
    but how high is the crash risk" without switching. The active pill inverts to solid ink and
    the bright semantic tones are unreadable on it in either theme, so the readout takes the
    `--on-ink-*` step when it sits there.
-2. **The masthead** (`.mast`), which scrolls away: the half's name and the freshness stamp, and
-   nothing else — with the radar back to its right at every width (218px desktop, 170px tablet,
+2. **The masthead** (`.mast`), which scrolls away: "Market Watch" as a small mono kicker, the
+   half's name as the title under it (HeatWatch's arrangement), the freshness stamp, and nothing
+   else — with the radar back to its right at every width (218px desktop, 170px tablet,
    96px phone, dimmed below 380px where the title reaches its corner), now that the
    header is tall enough (min 206px) to hold it rather than have it overhang the navigator. The
    radar moves, lightly: the sweep rotates once every 11s (SMIL, so it turns about the radar's own
@@ -112,6 +113,14 @@ Added 2026-09-29, matching HeatWatch's shape. The page opens with three bands:
 the navigator instead of at the top of its section.** The heights are declared once as
 `--brandh` and `--navh`; `.sec`'s `scroll-margin-top` and the nav's own `jump()` and scroll-spy
 both derive from them. Nothing hardcodes 54.
+
+### Type
+
+The roadbook's pair (cross-alps-roadbook), from Google Fonts: **Bricolage Grotesque** for display
+- the title, section headings, the level words, the ring numbers, panel titles - and **IBM Plex
+Mono** for small uppercase labels - the kicker, the section navigator, card and panel labels.
+Body text stays on the system stack. Both are `--f-display` / `--f-mono`, whose fallbacks are the
+system fonts, so a blocked font server degrades to the old look rather than a broken one.
 
 ### Light and dark
 
