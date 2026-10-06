@@ -6,7 +6,12 @@ name: Build and deploy Market Watch
 # page when the mini pushes, and checks freshness on a schedule.
 on:
   schedule:
-    - cron: "0 8 * * *"        # staleness check only; does not build or commit
+    # Staleness check and the did-it-run alarm; does not build or commit. Not on
+    # the hour: GitHub's scheduler is most congested at :00 and was running this
+    # 5-9 hours late (14:00-18:00 UK, Sep-Oct 2026). 08:41 UTC is after the mini's
+    # 07:00-local run has finished in both BST and GMT, so an early fire cannot
+    # mistake a run still in progress for a missing one.
+    - cron: "41 8 * * *"
   workflow_dispatch:
   push:
     branches: [main]
@@ -111,11 +116,16 @@ jobs:
               print("::warning::%s" % line)
           EOF
 
-  # Independent heartbeat. The mini notifies its own runs, but a notification
-  # from the mini cannot tell you the mini is dead -- silence and "no news yet"
-  # look identical on a phone. This fires from GitHub's cron instead, so a day
-  # with no mini run still produces a message. Runs on the schedule only; a
-  # heartbeat on every laptop push would be noise. No-ops without the secret.
+  # Independent did-it-run alarm. The mini notifies its own failures, but a
+  # message from the mini cannot tell you the mini is dead. This fires from
+  # GitHub's cron instead, so a day with no mini run still produces a message.
+  #
+  # It used to send every day, "analysis current" included - a daily message
+  # saying nothing had gone wrong, and it arrived mid-afternoon because GitHub
+  # ran it hours late. It is now SILENT when the analysis is dated today and
+  # sends only when it is not, so a notification from it always means "look".
+  # The mini's own morning notification is the news; this is only the alarm.
+  # Runs on the schedule only. No-ops without the secret.
   heartbeat:
     needs: staleness
     if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
@@ -144,11 +154,12 @@ jobs:
           EOF
           read REPORT GAP < hb.txt
           if [ "$GAP" -le 0 ]; then
-            TITLE="Market Watch: analysis current"; TAG="heartbeat"; PRIO="low"
+            echo "analysis dated $REPORT is current -- nothing to report, no message sent"
+            exit 0
           elif [ "$GAP" -eq 1 ]; then
-            TITLE="Market Watch: analysis 1 day behind"; TAG="warning"; PRIO="default"
+            TITLE="Market Watch: today's run has not landed"; TAG="warning"; PRIO="high"
           else
-            TITLE="Market Watch: analysis $GAP days behind"; TAG="rotating_light"; PRIO="high"
+            TITLE="Market Watch: no run for $GAP days"; TAG="rotating_light"; PRIO="urgent"
           fi
           curl -fsS --max-time 15 \
             -H "Title: $TITLE" -H "Tags: $TAG" -H "Priority: $PRIO" \
@@ -157,4 +168,4 @@ jobs:
           analysis dated $REPORT
           https://infinite2142.github.io/marketwatch/
           MSG
-          echo "heartbeat sent: $TITLE ($REPORT, ${GAP}d)"
+          echo "alarm sent: $TITLE ($REPORT, ${GAP}d)"

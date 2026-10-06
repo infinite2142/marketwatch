@@ -313,6 +313,20 @@ date — a dated snapshot rather than a false claim of freshness. Regenerate it 
 composite moves; the `og:image` URL carries `?v=<the commit date of preview.png>`, so
 caches refetch when the picture changes and not on every render.
 
+## Notifications
+
+Two sources, and each says only what it is for:
+
+- **The mini** sends one message per run, straight after it: on a good run the news digest
+  (`notify_digest.py`), on a bad one the run's vitals with the news underneath, and an urgent
+  "FAILED" if the run aborts. The 11:00 and 15:00 retries exit silently when the day is done.
+- **GitHub** (`heartbeat` job in `deploy.yml`, 08:41 UTC) is the alarm for a mini that never
+  ran at all - the one thing the mini cannot report about itself. It is **silent when the
+  analysis is dated today** and sends only when it is not: "today's run has not landed" at one
+  day behind, urgent at two or more. Until 2026-10-06 it also sent "analysis current" every
+  day, which arrived mid-afternoon because GitHub ran it 5-9 hours late; a message from it now
+  always means look.
+
 ## Publish path
 
 Edit the JSON or the template → commit → push to `main` → Actions renders `index.html` and
